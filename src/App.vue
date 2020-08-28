@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import SideBar from '@/components/SideBar.vue'
-import Header from '@/components/Header.vue'
+import SideBar from '@/components/Skeleton/SideBar.vue'
+import Header from '@/components/Skeleton/Header.vue'
 import { EventBus } from "@/main";
 export default {
   data(){

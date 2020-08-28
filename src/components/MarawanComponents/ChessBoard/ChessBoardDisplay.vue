@@ -1,0 +1,6 @@
+//TODO import chessboard and jqary in index.html (5min)
+//TODO create board div(5min)
+//TODO creat new board(3min)
+//TODO add event bus (10min)
+//TODO get the envent bus data(5min)
+//TODO dispaly the insered move in the board(10min)

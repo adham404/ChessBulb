@@ -1,0 +1,5 @@
+//TODO create html input (2mmin)
+//TODO create upload file in html (2min)
+//TODO make the file uploader accepet pgn only (10min)
+//FIXME how to make file input accepet a file type (15min)
+//TODO upload file to firebase (3min)

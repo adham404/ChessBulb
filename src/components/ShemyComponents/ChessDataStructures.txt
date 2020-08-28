@@ -1,0 +1,62 @@
+
+ChessToDo Structures
+
+
+-----------------------PostStroyContent-----------------------
+ChessMoveObject Structure
+[
+{
+  Line: 1,
+  Moves:[E3E2,E3E2,E3E2,E3E2,E3E2,E3E2,E3E2,E3E2,E3E2,E3E2]
+},
+{
+  Line: 2,
+  Moves:[A1A2,A1A2,A1A2,A1A2,A1A2,A1A2,A1A2,A1A2,A1A2,A1A2]
+},
+]
+
+StoryDataObject Structure
+{
+ StoryID:'',
+ StoryPGN:{},
+ Moves: ChessMoveObject[],
+ Type:'',
+ Description:''
+}
+------------------------------------------------------------------
+
+
+-----------------------Courses-----------------------------------
+CoursesData
+[
+  {
+    CourseID: CH123,
+    CourseTitle: The Scicilian,
+    CourseInstructor: 'Ahmed Zahran',
+    CourseDescription: "This Is the Best Chess Course Ever ... Ready to take the huge step ???!",
+    Rating:'4', 
+    InstructorID:''
+  }
+]
+
+
+FindCourseIconID is a firebase cloud function that takes two parameters
+FilterationInput is array of two elements .... The first element is the (Course Name) the Second Element is the (Course Difficulty)
+FilterationInput[0] = The Scicilian
+FilterationInput[1] = Beginner 
+if there is no input in search engine ........ FilterationInput[0] = All
+if there is no input in Filter ........ FilterationInput[1] = All
+(CoursesID) = FindCourseIconID(CoursesType, FilterationInput)
+
+VideoPlayer Synchronization with ChessBoard ....... like Subtitle File Work 
+
+VideoRecordPGNObject:[
+  {
+    Time:"1.2222223",
+    Move:"A1A2"
+  },
+  {
+    Time:"10.5",
+    Move:"E2E4"
+  }
+]

@@ -1,0 +1,7 @@
+//TODO make html (5min)
+//TODO add the stock fish files to the public folder(2min)
+//TODO import the stockfish engine(2min)
+//TODO insert the fen to the engine(3min)
+//TODO get the best move(3min)
+//TODO pase the info to get evaluation(10min)
+//TODO calculate the evaluation(3min)

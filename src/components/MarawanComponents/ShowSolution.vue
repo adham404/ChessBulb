@@ -1,0 +1,6 @@
+//TODO create html (10min)
+//TODO get story id (3min)
+//TODO access the story object in firestore (5min)
+//TODO get the pgn file(5min)
+//TODO import move preview(3min)
+//TODO insert pgn (3min)

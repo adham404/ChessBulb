@@ -1,0 +1,6 @@
+//TODO get the pgn of the submited solution(10min)
+//TODO add function for searching for the right solution(10min)
+//TODO add for loop for looping in the solution object(10min)
+//TODO if the move is wrong check if there is anthor line(10min)
+//TODO if there is no righe moves exit the loop and display wrong solution(10min)
+//TODO if there is no movers lift exit the loop and display right solution(10min) 

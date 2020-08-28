@@ -1,0 +1,44 @@
+<template>
+  <div>
+    //TODO using the (ChessBoard component) passing data (2 minutes)
+    //TODO using the (BreadCrumbs Component) passing data (2 minutes)
+    //TODO paragraph tag for the players' names using pgn file (2 minutes)
+    //TODO Component flag for switching the middle view (passing data)(2 minutes)
+    //TODO using the (SideBar Component) (2 minutes)
+    //TODO using the (DownloadPgn Component) (2 minutes)
+    //TODO make Add Analysis line button @click using fuction to switch to (AddAnalysis Component) (2 minutes)
+  </div>
+</template>
+
+<script>
+//TODO importing the (ChessBoard Component)(3 minutes)
+//TODO importing the (PGNReview Component)(3 minutes)
+//TODO importing the (BreadCrumbs Component)(3 minutes)
+//TODO importing the (SideBar Component)(3 minutes)
+//TODO importing the (DownloadPgn Component)(3 minutes)
+//TODO importing the (AddAnalysis Component)(3 minutes)
+//TODO importing the (SeeReplies Component)(3 minutes)
+//TODO importing the (AnalysisLines Component)(3 minutes)
+//TODO importing EventBus (1 minute)
+export default {
+  //TODO making props object to get the match (2 minutes)
+  //TODO making the component object (2 minutes)
+  //TODO making the ComponentName variable and set its default to "AnalysisLines" (2 minutes)
+  //TODO making a boolean variable using it in switching component to (AnalysisLines Component) and set it to false (1 minute)
+  //TODO making a variable that stores the analysisLine object (2 minutes)
+  //TODO making a variable that stores the Current Move (2 minutes)
+  //TODO making a boolean variable using it in switching component to (AddAnalysis Component) and set it to false (1 minute)
+  //TODO making a boolean variable using it in switching component to (SeeReplies Component) and set it to false (1 minute)
+  //TODO in "mounted" using EventBus.$on see replies is clicked and assign the recieving  data to the object and switch the boolean variable to true, if true change the ComponentName to "SeeReplies" (5 minutes)
+  //TODO in "mounted" using EventBus.$on Reply clicked and assign the recieving data and switch the boolean variable to true, if true change the ComponentName to "AddAnalysis" (5 minutes)
+  //TODO in "mounted" using EventBus.$on Add Analysis Line clicked and assign the recieving data switch the boolean variable to true, if true change the ComponentName to "AddAnalysis" (5 minutes)
+};
+</script>
+
+
+<style scoped>
+/*TODO using the css ids from tettra (2 minutes)*/
+</style>
+
+//TODO Testing time (30 minutes)
+//TODO Expected Time (100 minutes)

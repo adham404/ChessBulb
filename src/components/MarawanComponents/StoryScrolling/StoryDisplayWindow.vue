@@ -1,0 +1,8 @@
+//TODO get storys ids array(5min)
+//TODO if it is null add route to add story (5min)
+//TODO add scroll buttoms (5min)
+//TODO create a scroll funcation(10min)
+//TODO get the current story id (2min)
+//TODO get the current story data from database(3min)
+//TODO display the data (4min)
+//TODO add a funcation to dispaly route to add story if their is no storys lift(5min)

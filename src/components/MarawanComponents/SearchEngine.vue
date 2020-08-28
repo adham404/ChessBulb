@@ -1,0 +1,8 @@
+//TODO create search filde (3min)
+//TODO create search bottoms(5min)
+//TODO add funcation for querying  (5min)
+//TODO get the name of the colection to scearch in(5min)
+//TODO get the querying data (5min)
+//TODO search the data from the input(4min)
+//TODO return the searched data (4min)
+//FIXME how to use Algolia (30min)
