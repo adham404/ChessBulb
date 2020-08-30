@@ -35,17 +35,17 @@ const routes = [
     component: HomePage,
   },
   {
-    path: '/Create Course',
+    path: '/CreateCourse',
     name: 'CreateCourse',
     component: CreateCourse
   },
   {
-    path: '/Post Game',
+    path: '/PostGame',
     name: 'PostGame',
     component: PostGame,
   },
   {
-    path: '/Post Story',
+    path: '/PostStory',
     name: 'PostStory',
     component: AddStory
   },
@@ -118,7 +118,7 @@ const routes = [
     ]
   },
   {
-    path: '/Instructor Registration',
+    path: '/InstructorRegistration',
     name: 'InstructorRegistration',
     component: InstructorProfile
   },
@@ -128,7 +128,7 @@ const routes = [
     component: Purchase
   },
   {
-    path: '/Find Players',
+    path: '/FindPlayers',
     name: 'Explore',
     component: FindPlayers
   }
