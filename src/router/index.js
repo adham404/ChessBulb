@@ -35,17 +35,17 @@ Vue.use(VueRouter)
     component: HomePage,
   },
   {
-    path: '/Create Course',
+    path: '/CreateCourse',
     name: 'CreateCourse',
     component: CreateCourse
   },
   {
-    path: '/Post Game',
+    path: '/PostGame',
     name: 'PostGame',
     component: PostGame,
   },
   {
-    path: '/Post Story',
+    path: '/PostStory',
     name: 'PostStory',
     component: AddStory
   },
@@ -117,7 +117,7 @@ Vue.use(VueRouter)
     ]
   },
   {
-    path: '/Instructor Registration',
+    path: '/InstructorRegistration',
     name: 'InstructorRegistration',
     component: InstructorProfile
   },
@@ -127,7 +127,7 @@ Vue.use(VueRouter)
     component: Purchase
   },
   {
-    path: '/Find Players',
+    path: '/FindPlayers',
     name: 'Explore',
     component: FindPlayers
   }
