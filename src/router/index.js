@@ -23,7 +23,7 @@ import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'ProductiveToggle',
@@ -77,12 +77,13 @@ Vue.use(VueRouter)
   {
     path: '/Academies',
     name: 'Academies',
-    component: Academies
+    component: Academies,
+    props: true
   },
   {
     path: '/Academies/:id',
     name: 'AcademyPage',
-    component: CheckItOut
+    component: CheckItOut,
   },
   {
     path: '/Login',
@@ -99,7 +100,7 @@ Vue.use(VueRouter)
     name: 'Profile',
     component: UserProfile,
     children: [
-      { 
+      {
         path: 'Courses',
         name: 'UserCourses',
         component: Courses

@@ -2,7 +2,7 @@
   <div>
     //TODO Make div for the (ChessBoard Component) (2 minutes)
     //TODO Make div for the (StockFish Component) (2 minutes)
-    //TODO Make div for the (Players'Names Component) (2 minutes)
+    //TODO Make div for the white player and black player inputs (2 minutes)
     //TODO Make div for the (PGNReview Component) (2 minutes)
     //TODO Make div for the (SideBar Component) (2 minutes)
     //FIXME Make div for the (Upload Component) (2 minutes)
