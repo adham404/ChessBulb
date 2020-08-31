@@ -6,7 +6,7 @@ import CreateCourse from '@/components/ShemyComponents/CreateCourse.vue';
 import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
 import AddStory from '@/components/ShemyComponents/AddStory.vue'
 import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
-import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryDisplayWindow.vue'
+import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
 import Courses from '@/components/ShemyComponents/Courses.vue'
 import CoursePreview from '@/components/ShemyComponents/CoursePreview.vue'
 import Streaming from '@/components/ShemyComponents/Streaming.vue'
