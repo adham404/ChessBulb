@@ -1,24 +1,74 @@
 <template>
-  <div>
-    //TODO make a paragraph for displaying the academy name (2 minutes)
-    //TODO make Course button @click Course function (2 minutes)
-    //TODO make LiveSessions Button @click Live function (2 minutes)
-    //TODO make About button @click about functoin (2 minutes)
-    //TODO make Component flag for switching between the (LiveSessions Component), (Course Component) and (About Component) passing data (5 minutes)
-  </div>
+	<div>
+		<!-- <img src="" > -->
+		<div>
+			<!-- //(Done) make a paragraph for displaying the academy name (2 minutes) -->
+			<p>{{ Academy.AcademyName }}</p>
+			<!-- //(Done) make Course button @click Course function (2 minutes) -->
+			<button @click="courses">Courses</button>
+			<!-- //(Done) make LiveSessions Button @click Live function (2 minutes) -->
+			<button @click="live">Live Sessions</button>
+			<!-- //(Done) make About button @click about functoin (2 minutes) -->
+			<button @click="about">About</button>
+		</div>
+		<div>
+			<!-- //(DONE) make Component flag for switching between the (LiveSessions
+		Component), (Course Component) and (About Component) passing data (5
+		minutes) -->
+			<component :is="ComponentName" :Academy="Academy"></component>
+		</div>
+	</div>
 </template>
 
 <script>
-//TODO importing the (LiveSessions Component) (2 minutes)
-//TODO importing the (Course Component)(2 minutes)
-//TODO importing the (About Component) (2 minutes)
+//(Done) importing the (LiveSessions Component) (2 minutes)
+import LiveSessions from "./LiveSessions";
+//(Done) importing the (Course Component)(2 minutes)
+import Courses from "../../ShemyComponents/Courses";
+//(Done) importing the (About Component) (2 minutes)
+import About from "./About";
+import { EventBus } from "@/main";
 export default {
-  //TODO use props to get the academy data (2 minutes)
-  //TODO make the component object (3 minutes)
-  //TODO make a boolean variables that linked with the buttons when it's clicked and set it to false(3 minutes) (2 minutes)
-  //TODO course function: change the ComponentName to Course (5 minutes)
-  //TODO Live function: change the ComponentName to LiveSeesions (5 minutes)
-  //TODO About function: change the ComponentName to About (5 minutes)
+	name: "AcademyPage",
+	//(done) make the component object (3 minutes)
+	components: {
+		About,
+		LiveSessions,
+		Courses,
+	},
+	//(Done) use query to get the academy data (2 minutes)
+	data() {
+		return {
+			Academy: this.$route.query.Academy,
+			ComponentName: "About",
+		};
+	},
+
+	methods: {
+		//(Done) About function: change the ComponentName to About (5 minutes)
+		about() {
+			EventBus.$emit("about");
+		},
+		//(Done) Live function: change the ComponentName to LiveSeesions (5 minutes)
+		live() {
+			EventBus.$emit("live");
+		},
+		//(Done) course function: change the ComponentName to Course (5 minutes)
+		courses() {
+			EventBus.$emit("courses");
+		},
+	},
+	mounted() {
+		EventBus.$on("about", () => {
+			this.ComponentName = "About";
+		});
+		EventBus.$on("live", () => {
+			this.ComponentName = "LiveSessions";
+		});
+		EventBus.$on("courses", () => {
+			this.ComponentName = "Courses";
+		});
+	},
 };
 </script>
 
