@@ -1,5 +1,7 @@
 <template>
     <div>
+        <router-link to="/Stories/1" >Stories</router-link>
+        <router-view></router-view>
 
     </div>
 </template>
@@ -15,5 +17,6 @@
 </script>
 
 <style scoped>
+
 
 </style>

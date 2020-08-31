@@ -22,51 +22,47 @@
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {};
 </script>
 
 <style  scoped>
-    a{
-        text-decoration: none;
-    }
-    *{
-        margin: 0px;
-
-    }
-    svg{
-        width: 220px;
-        margin-left: 1rem;
-    }
-    .Header{
-        height: 80px;
-        background-color: #00112C;
-        display: flex;
-        flex-direction: row;
-    }
-    #logo{
-        display: flex;
-        width: 55%;
-        position: relative;
-        align-items: center;
-    }
-    #links{
-        display: flex;
-        width: 45%;
-        position: relative;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-    }
-    h3{
-        font-family: Quicksand-Regular, Quicksand;
-        color: white;
-        font-size: 1.1rem;
-        font-weight: lighter;
-    }
-    h3:hover{
-        color: #1DACA8;
-    }
-
+a {
+	text-decoration: none;
+}
+* {
+	margin: 0px;
+}
+svg {
+	width: 220px;
+	margin-left: 1rem;
+}
+.Header {
+	height: 80px;
+	background-color: #00112c;
+	display: flex;
+	flex-direction: row;
+}
+#logo {
+	display: flex;
+	width: 55%;
+	position: relative;
+	align-items: center;
+}
+#links {
+	display: flex;
+	width: 45%;
+	position: relative;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+h3 {
+	font-family: Quicksand-Regular, Quicksand;
+	color: white;
+	font-size: 1.1rem;
+	font-weight: lighter;
+}
+h3:hover {
+	color: #1daca8;
+}
 </style>
