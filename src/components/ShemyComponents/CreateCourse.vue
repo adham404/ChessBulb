@@ -1,11 +1,13 @@
 <template>
   <div>
-        //TODO add [ChessBoard] to the left (2min)
-        //TODO add [VideoRecording] to the right (2min) 
-        //TODO add (CourseData.Title) under the [VideoRecording] (2min) 
-        //TODO add [PGNReview] under (CourseData.Title) (2min)
-        //TODO add Two buttons one of them 'Upload Pgn' the other is 'Post Course' (2min)
-        //TODO assign {UploadPgn} and {PostCourse} to the buttons (2min)
+        <div>ChessBoard</div>
+        <button>Post Course</button>
+        <!-- TODO add [ChessBoard] to the left (2min) -->
+        <!-- TODO add [VideoRecording] to the right (2min)  -->
+        <!-- TODO add (CourseData.Title) under the [VideoRecording] (2min)  -->
+        <!-- TODO add [PGNReview] under (CourseData.Title) (2min) -->
+        <!-- TODO add Two buttons one of them 'Upload Pgn' the other is 'Post Course' (2min) -->
+        <!-- TODO assign {UploadPgn} and {PostCourse} to the buttons (2min) -->
   </div>
 </template>
 
