@@ -3,7 +3,7 @@
       //TODO Create Courses Header Div That Includes [CreateCourse] [SearchEngine] [Filter] 5MIN
       //TODO Router link to [CreateCourse] when 'Create a Course' button is clicked 2MIN
       //TODO Create Div that loops over the (CoursesID) Array and pass (CoursesID) to [CourseCard] 5MIN 
-      //TODO Router link to [AboutCourse] to each [CourseCard] 4MIN
+      //TODO Router link to [CoursePreview] to each [CourseCard] and pass CourseID using Router props 4MIN
   </div>
 </template>
 
