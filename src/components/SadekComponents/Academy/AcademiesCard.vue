@@ -46,7 +46,8 @@
 							name: 'Purchase',
 							params: { AcademyId: Academy.AcademyId },
 						}"
-						><button id="SendRight" class="Shadow">
+						id="SendRight"
+						><button  class="Shadow">
 							Enroll
 						</button></router-link
 					>
