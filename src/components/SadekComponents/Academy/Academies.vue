@@ -1,23 +1,99 @@
 <template>
-  <div>//TODO make Component flag to switch between the (AcademiesList Component), the (CheckItOut Component) and the (Purchase Component) passing the Academies data and boolean for userID or not (5 minutes)</div>
+	<div>
+		<!-- // (DONE) using the (SearchEngine Component) (2 minutes) -->
+		<SearchEngine />
+		<!-- //(DONE) loop through the object (5 minutes) -->
+		<div class="Container">
+			<div v-for="Academy in Academies" :key="Academy.id">
+				<!-- //(DONE) using the (AcademiesCard Component) pass the object of each academy and the boolean userId (2 minutes) -->
+				<AcademiesCard
+					:Academy="Academy"
+					:allAcademies="allAcademies"
+					:AcademiesId="AcademiesId"
+				/>
+			</div>
+		</div>
+		<!--  -->
+	</div>
 </template>
-
 <script>
-//TODO importing firebase (3 minutes)
-//TODO importing the (AcademiesList Component)(3 minutes)
-//TODO importing the (CheckItOut Component)(3 minutes)
-//TODO importing the (Purchase Component)(3 minutes)
-
+//(DONE) importing the firebase (1 minute)
+import firebase from "firebase";
+import { EventBus } from "@/main";
+//(DONE) importing the (SearchEngine Component) (1 minute)
+import SearchEngine from "../../MarawanComponents/SearchEngine";
+//(DONE) importing the (AcademiesCard Component) (1 minute)
+import AcademiesCard from "./AcademiesCard";
+// import { EventBus } from "@/main";
 export default {
-  //TODO make the component object (3 minutes)
-  //TODO use props to get UserID boolean, if the link in profile card clicked, the UserId will be true, if the link in the navbar clicked then the UserID is false (3 minutes)
-  //TODO making the ComponentName variable and set its default to "AcademiesList" (5 minutes)
-  //TODO make a boolean variable that linked with the Check it out button when it's clicked and set it to false(3 minutes)
-  //TODO make a boolean variable that linked with the Enroll button when it's clicked and set it to false(3 minutes)
-  //TODO in "mounted" if user id == false then get  the whole academies object from database and assign it to the "Academies" variable, else get every academy id that contains the user id and then get the Academies object and assign it to the variable (15 minutes)
-  //TODO in "mounted" using EventBus.$on the Check it out or enroll clicked and assign the recieving  data to the variables and switch the boolean variables to true, if true change the ComponentName (15 minutes)
+	name: "Academies",
+	//(Done) using props to get the passed boolean userID(2 minute)
+	props: {
+		allAcademies: {
+			type: Boolean,
+			default: true,
+		},
+	},
+	components: {
+		AcademiesCard,
+		SearchEngine,
+	},
+	data() {
+		return {
+			data: "",
+			Academies: [],
+			AcademiesId: [],
+		};
+	},
+	//(Done) in "mounted" if user id == false then get  the whole academies object from database and assign it to the "Academies" variable, else get every academy id that contains the user id and then get the Academies object and assign it to the variable (15 minutes)
+	mounted() {
+		EventBus.$emit("Toggle", false);
+		//(Done) get current user
+		// var user = firebase.auth().currentUser;
+		var self = this;
+		firebase
+			.firestore()
+			.collection("AcademyEnrollments")
+			.where("UserId", "==", "123456789")
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					self.AcademiesId.push(doc.data().AcademyId);
+					console.log(self.AcademiesId);
+				});
+			});
+		if (this.allAcademies == true) {
+			firebase
+				.firestore()
+				.collection("Academies")
+				.get()
+				.then(function (querySnapshot) {
+					querySnapshot.forEach(function (doc) {
+						self.Academies.push(doc.data());
+						console.log(self.Academies);
+					});
+				});
+		} else {
+			firebase
+				.firestore()
+				.collection("Academies")
+				.get()
+				.then((querySnapshot) => {
+					querySnapshot.forEach((doc) => {
+						for (var a = 0; a < self.AcademiesId.length; a++) {
+							if (self.AcademiesId[a] == doc.data().AcademyId) {
+								self.Academies.push(doc.data());
+								console.log(self.Academies);
+							}
+						}
+					});
+				});
+		}
+	},
 };
 </script>
+/*TODO use the css ids from tettra (3 minutes) */
+<style scoped src = '@/assets/CSS/Academies.css'/>
 
-//TODO Testing Time (30 minutes)
-//TODO Expected Time (95 minutes)
+//TODO Testing Time (10 minutes)
+//TODO Expected Time (32 minutes)

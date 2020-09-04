@@ -4,8 +4,7 @@
       //TODO add [VideoPlayer] to the right (5min)
       //TODO add Course Title under the [VideoPlayer] and pass (CourseData.ID) to it (4min)
       //TODO under the [VideoPlayer] add Div containing the property (CoursePGN) to show PGN Review under the Course Title containing (CourseData.Title) (5min)
-      //TODO under the div showing the PGN review add two buttons at the end under the [PGNReview] and Assign it to the two Functions {DownloadPGN} and {RateTheCourse} that routes to [RateTheCourse] after passing to it the (CourseData.ID) (10min)
-
+      //TODO under the div showing the PGN review add two buttons at the end under the [PGNReview] and Assign it to the two Functions {DownloadPGN} and {RateTheCourse} that routes to [Rate] after passing to it the (CourseData.ID) (10min)
   </div>
 </template>
 

@@ -1,22 +1,25 @@
 <template>
   <div>
-            //TODO add [ChessBoard] To the left and pass (ChessPGNStartup) property recieved from [PositionSetup] To Show the starting position of the game (2min)
-            //TODO add AddMove div to the right of [ChessBoard] (2min)
-            //TODO Add Lines div inside the AddMove div containing Lines of possible moves and loop through it according to the number of arrays in the (ChessMoveObject) (3min)
-            //TODO Add inside the Line div li tags that hold the Moves of each line that represent the element of each nested array with a title a head of it such as Move#1 Solution#2 etc.. (2min)
-            //TODO assign the Move content to each li tag (1min)
-            //TODO assign {PressMove} function to each li tag and execute it when each move is clicked and pass Line.LineCounter and Move  (1min)
-            //TODO Add right to the Lines div another div inside the AddMove div that contain the two button options which is assigned to the variable (LinesOptionFlag) (2min) 
-            //TODO assign the two functions {OverWrite} and {OpenNewLine} to the buttons (1min)
-            //TODO assign a boolean flag (PressMoveFlag) data property to the div of two buttons (1min)
-            //TODO Add div right to the AddMove div that contains 3 execution buttons (2min)  
-            //TODO assign {PostMove} function to the 'Post as a move' button (2min)
-            //TODO assign {PostPuzzle} function to the 'Post as a puzzle' button (2min)
-            //TODO add PostAsMove div that contain Puzzle explanation form and Starting move input miniform assign the input field to (PuzzleDescription) (5min)
-            //TODO the PostAsMove div form is shown with the data property (MoveFormFlag) using v-if (3min)
-            //TODO add PostAsPuzzle div that contain Puzzle explanation form and Starting move input miniform assign the input field to (PuzzleDescription) (5min)
-            //TODO the PostAsPuzzle div form is shown with the data property (PuzzleFormFlag) using v-if (3min)
-            //TODO add router link to the 'Setup Position again' button that redirects to [AddStory] (2min)
+            <!-- TODO add [ChessBoard] To the left and pass (ChessPGNStartup) property recieved from [PositionSetup] To Show the starting position of the game (2min) -->
+            <div>ChessBoard</div>
+            <div>Moves</div>
+            <button>Post Your Story</button>
+            <!-- TODO add AddMove div to the right of [ChessBoard] (2min) -->
+            <!-- TODO Add Lines div inside the AddMove div containing Lines of possible moves and loop through it according to the number of arrays in the (ChessMoveObject) (3min) -->
+            <!-- TODO Add inside the Line div li tags that hold the Moves of each line that represent the element of each nested array with a title a head of it such as Move#1 Solution#2 etc.. (2min) -->
+            <!-- TODO assign the Move content to each li tag (1min) -->
+            <!-- TODO assign {PressMove} function to each li tag and execute it when each move is clicked and pass Line.LineCounter and Move  (1min) -->
+            <!-- TODO Add right to the Lines div another div inside the AddMove div that contain the two button options which is assigned to the variable (LinesOptionFlag) (2min)  -->
+            <!-- TODO assign the two functions {OverWrite} and {OpenNewLine} to the buttons (1min) -->
+            <!-- TODO assign a boolean flag (PressMoveFlag) data property to the div of two buttons (1min) -->
+            <!-- TODO Add div right to the AddMove div that contains 3 execution buttons (2min)   -->
+            <!-- TODO assign {PostMove} function to the 'Post as a move' button (2min) -->
+            <!-- TODO assign {PostPuzzle} function to the 'Post as a puzzle' button (2min) -->
+            <!-- TODO add PostAsMove div that contain Puzzle explanation form and Starting move input miniform assign the input field to (PuzzleDescription) (5min) -->
+            <!-- TODO the PostAsMove div form is shown with the data property (MoveFormFlag) using v-if (3min) -->
+            <!-- TODO add PostAsPuzzle div that contain Puzzle explanation form and Starting move input miniform assign the input field to (PuzzleDescription) (5min) -->
+            <!-- TODO the PostAsPuzzle div form is shown with the data property (PuzzleFormFlag) using v-if (3min) -->
+            <!-- TODO add router link to the 'Setup Position again' button that redirects to [AddStory] (2min) -->
  </div>
 </template>
 

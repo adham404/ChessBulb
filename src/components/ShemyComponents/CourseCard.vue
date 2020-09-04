@@ -1,7 +1,12 @@
 <template>
   <div>
-        //TODO Create Div with a background image of Template image which Diplay the Following Properties (CourseData.CourseTitle) and (CourseData.Rating) (5MIN)
-        //FIXME Show Star Rating according to the Rating Number ................. Search for Star ratings plugins in js (10min)
+        <div style="border:1px solid #ccc">
+        <!-- TODO Create Div with a background image of Template image which Diplay the Following Properties (CourseData.CourseTitle) and (CourseData.Rating) (5MIN) -->
+          <div>#CourseIMG</div>
+          <div>#CourseTitle</div>
+        <!-- FIXME Show Star Rating according to the Rating Number ................. Search for Star ratings plugins in js (10min) -->
+          <div>#CourseRating</div>
+        </div>
   </div>
 </template>
 

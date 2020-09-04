@@ -1,0 +1,103 @@
+.AcademyCard{
+    display: flex;
+    width: 90% ;
+    /* background-color: white; */
+    margin-left: 5%;
+    margin-top: 4rem;
+    height: 300px;
+}
+#LegoLeft{
+    display: flex;
+    width: 70%;
+    background-color: white;
+    border-radius: 1rem;
+}
+#LeftBlock{
+    display: flex;
+    width: 50%;
+    /* background-color: teal; */
+    border-radius: 1rem;
+}
+#LeftBlock img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 1rem;
+}
+#RightBlock{
+    width: 50%;
+}
+#UpperPiece{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    align-items: center;
+    padding-top: 10px;
+}
+#UpperPiece h2{
+    font-family: 'Raleway', sans-serif;
+    margin: 5px;
+}
+#RightBlock svg{
+    width: 400px;
+}
+button{
+    height: 30px;
+    width: 100px;
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    font-family: 'Raleway', sans-serif;
+    background-color: #00112c;
+    color: white;
+}
+#LowerPiece {
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    width: 95%;
+    justify-content: space-between;
+}
+#LowerPiece h4{
+    font-family: 'Raleway', sans-serif;
+    margin: 7px;
+}
+#SendRight{
+    margin-left: auto;
+}
+#LegoRight{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+#Center{
+    align-self: center;
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    font-weight: lighter;
+
+}
+#TextCenter{
+    /* text-align: center; */
+    position: relative;
+    margin-left: 10%;
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    font-weight: lighter;
+    margin-top: 0px ;
+}
+#LegoRight img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    align-self: center;
+}
+.Shadow{
+    -webkit-box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+    box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+}
+button:hover{
+    cursor: pointer;
+}

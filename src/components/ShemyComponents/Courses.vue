@@ -1,15 +1,39 @@
 <template>
   <div>
-      //TODO Create Courses Header Div That Includes [CreateCourse] [SearchEngine] [Filter] 5MIN
-      //TODO Router link to [CreateCourse] when 'Create a Course' button is clicked 2MIN
-      //TODO Create Div that loops over the (CoursesID) Array and pass (CoursesID) to [CourseCard] 5MIN 
-      //TODO Router link to [AboutCourse] to each [CourseCard] 4MIN
+      <!-- TODO Create Courses Header Div That Includes [CreateCourse] [SearchEngine] [Filter] 5MIN -->
+      <div style="display: flex">
+      <!-- DONE Router link to [CreateCourse] when 'Create a Course' button is clicked 2MIN -->
+        <router-link to="/CreateCourse">
+        <button>Create Course</button>        
+        </router-link>
+        <input type="text" placeholder="Search Engine">
+        <div style="margin-left:5%; display:flex" >
+          <button>Beginner</button>
+          <button>Intermediate</button>
+          <button>Advanced</button>
+        </div>
+      </div>
+      <div style="margin-top:2%; display:flex">
+        <component v-for="n in 5" v-bind:key="n" :is="ComponentName"></component>
+      </div>
+      <!-- TODO Create Div that loops over the (CoursesID) Array and pass (CoursesID) to [CourseCard] 5MIN  -->
+      <!-- TODO Router link to [CoursePreview] to each [CourseCard] and pass CourseID using Router props 4MIN -->
   </div>
 </template>
 
 <script>
+import CourseCard from "../ShemyComponents/CourseCard";
 export default {
     //TODO Assign Data Properties in the vue data object which are ( CoursesID(A), CourseType(S), FilterationInput(A) ) 3min
+    data: function()
+    {
+      return {
+        ComponentName: "CourseCard" 
+      }
+    },
+    components:{
+      CourseCard
+    }
     //TODO Assign EventBus (1min) 
     //TODO Assign Firebase (1min) 
     //TODO Declare Mounted Property (1min)
