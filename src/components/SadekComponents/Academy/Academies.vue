@@ -1,8 +1,7 @@
 <template>
 	<div>
 		<!-- // (DONE) using the (SearchEngine Component) (2 minutes) -->
-		<!-- <SearchEngine :usrid /> -->
-		<input type="text" placeholder="Search Engine" v-model="data" />
+		<SearchEngine />
 		<!-- //(DONE) loop through the object (5 minutes) -->
 		<div class="Container">
 			<div v-for="Academy in Academies" :key="Academy.id">
@@ -22,7 +21,7 @@
 import firebase from "firebase";
 import { EventBus } from "@/main";
 //(DONE) importing the (SearchEngine Component) (1 minute)
-// import SearchEngine from "../../MarawanComponents/SearchEngine";
+import SearchEngine from "../../MarawanComponents/SearchEngine";
 //(DONE) importing the (AcademiesCard Component) (1 minute)
 import AcademiesCard from "./AcademiesCard";
 // import { EventBus } from "@/main";
@@ -37,7 +36,7 @@ export default {
 	},
 	components: {
 		AcademiesCard,
-		// SearchEngine,
+		SearchEngine,
 	},
 	data() {
 		return {
