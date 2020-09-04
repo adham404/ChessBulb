@@ -1,0 +1,40 @@
+.CourseCard{
+    display: flex;
+    flex-direction: column-reverse;
+    height: 220px;
+    width: 210px;
+    border-top-left-radius: 0.4rem ;
+    border-top-right-radius: 0.4rem;
+    border-bottom-left-radius: 0.7rem;
+    border-bottom-right-radius: 0.7rem;
+    background: url(../../assets/AcademyPic.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+  }
+  .CourseData{
+    height: 70px;
+    background-color: white;
+    border-radius: 0.7rem;
+  }
+  h4{
+    margin: 3px;
+    margin-left: 1rem;
+    font-size: 1rem;
+  }
+  #Instructor{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+  
+  }
+  #CourseName{
+    font-family: 'Quick Sand', sans-serif;
+    font-weight: lighter;
+  }
+  .rating{
+    margin-left: 1rem;
+    display: flex;
+  }
+  .rating svg{
+    margin-right: 3px;
+  }
