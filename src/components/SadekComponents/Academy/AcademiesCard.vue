@@ -1,25 +1,65 @@
 <template>
-	<div>
-		<!-- //(Done) make an img tag for the academy photo (2 minutes) -->
-		<!-- <img src=""> -->
-		<!-- //(Done) Make paragraph tag for the Academy Name (2 minutes) -->
-		<p>{{ Academy.AcademyName }}</p>
-		<!-- //(Done) Make a paragraph tag for displaying the describtion (2 minutes) -->
-		<p>{{ Academy.About }}</p>
-		<!-- //(Done) make Check it out button @click run the CheckItOut function (2 minutes) -->
-		<router-link
-			:to="{
-				path: `/Academies/${Academy.AcademyId}`,
-				query: { Academy: Academy },
-			}"
-			><h3>Check It Out</h3></router-link
-		>
-		<!-- //(Done) make Enroll button @click run the Enroll function (hide if userId true) (2 minutes) -->
-		<router-link
-			v-if="notEnrolled"
-			:to="{ name: 'Purchase', params: { AcademyId: Academy.AcademyId } }"
-			><h3>Enroll</h3></router-link
-		>
+	<div class="AcademyCard">
+		<div id="LegoLeft" class="Shadow">
+			<div id="LeftBlock">
+				<!-- //(Done) make an img tag for the academy photo (2 minutes) -->
+				<img src="../../../assets/AcademyPic.jpg" alt="" />
+			</div>
+			<div id="RightBlock">
+				<div id="UpperPiece">
+					<!-- //(Done) Make header tag for the Academy Name (2 minutes) -->
+					<h2>{{ Academy.AcademyName }}</h2>
+					<!-- //(Done) make Check it out button @click run the CheckItOut function (2 minutes) -->
+					<router-link
+						:to="{
+							path: `/Academies/${Academy.AcademyId}`,
+							query: { Academy: Academy },
+						}"
+						><button class="Shadow">
+							Check It Out
+						</button></router-link
+					>
+				</div>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="594"
+					height="1"
+					viewBox="0 0 594 1"
+				>
+					<line
+						id="Line_14"
+						data-name="Line 14"
+						x2="594"
+						transform="translate(0 0.5)"
+						fill="none"
+						stroke="#707070"
+						stroke-width="1"
+					/>
+				</svg>
+				<div id="LowerPiece">
+					<h4>
+						{{ Academy.About }}
+					</h4>
+					<router-link
+						v-if="notEnrolled"
+						:to="{
+							name: 'Purchase',
+							params: { AcademyId: Academy.AcademyId },
+						}"
+						><button id="SendRight" class="Shadow">
+							Enroll
+						</button></router-link
+					>
+				</div>
+			</div>
+		</div>
+		<div id="LegoRight">
+			<img src="../../../assets/ProfilePic.jpg" alt="NO PHOTO" />
+			<h3 id="Center">About the Owner:</h3>
+			<h3 id="TextCenter">
+				{{ Academy.AboutOwner }}
+			</h3>
+		</div>
 	</div>
 </template>
 <script>
@@ -44,9 +84,9 @@ export default {
 	},
 };
 </script>
-<style scoped>
+
 /*TODO use the css ids from tettra (3 minuts) */
-</style>
+<style scoped src ="@/assets/CSS/AcademiesCard.css"/>
 
 //TODO Testing Time (10 minutes)
 //TODO Expected Time (36 minutes)
