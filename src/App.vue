@@ -5,8 +5,8 @@
       <router-view/>
     </div>
     <div v-if="productive" id="productive">
-      <SideBar/>
       <router-view/>
+      <SideBar/>
     </div>
   </div>
 

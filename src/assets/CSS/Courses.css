@@ -1,0 +1,15 @@
+.Courses{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    }
+  .CourseList{
+    width: 90%;
+    margin-left: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .ListRow{
+    margin-top: 2rem;
+  }
