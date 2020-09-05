@@ -1,7 +1,7 @@
 <template>
   <div>
             <!-- TODO add [ChessBoard] To the left and pass (ChessPGNStartup) property recieved from [PositionSetup] To Show the starting position of the game (2min) -->
-            <div>ChessBoard</div>
+            <div id="board1"></div>
             <div>Moves</div>
             <button>Post Your Story</button>
             <!-- TODO add AddMove div to the right of [ChessBoard] (2min) -->
@@ -24,11 +24,45 @@
 </template>
 
 <script>
+  //DONE Assign EventBus (1min) 
+  // import {EventBus} from "../../main"
+  import Chessboard from "chessboardjs";
+  // import { ChessGame } from "../../main"
+
 export default {
-    //TODO Assign Data Properties in  the vue data object which are (PressMoveFlag(B), ChessPGNStartup(S), ChessCurrentMove(S), ChessMoveObject(A), LineObject(O), LineCounter(I), LinesOptionFlag(B), OverWriteLineCounter(I), OverWriteCurrentMove(I), MovesArrayDummy(A), PuzzleFormFlag(B), MoveFormFlag(B) PuzzleDescription(S), RestOfThePGN(S), StoryData(O)) (3min)
-    //TODO Assign EventBus (1min) 
-    //TODO Declare Mounted Property (1min)
+    //TODO Assign Data Properties in  the vue data object which are (PressMoveFlag(B), Fen(S), ChessCurrentMove(S), ChessMoveObject(A), LineObject(O), LineCounter(I), LinesOptionFlag(B), OverWriteLineCounter(I), OverWriteCurrentMove(I), MovesArrayDummy(A), PuzzleFormFlag(B), MoveFormFlag(B) PuzzleDescription(S), RestOfThePGN(S), StoryData(O)) (3min)
+    data: function()
+    {
+      return{
+        Fen:"",
+        ChessBoard:""
+      }
+    },
     //TODO recieve ChessObject from [PositionSetup] and assign it to ChessPGNStartup property (2min)
+    props:["FenObject"],
+      //DONE Declare Mounted Property (1min)
+    mounted(){
+          function piecelink(piece){
+          return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
+      }
+      var config = {
+        draggable: true,
+        showErrors : 'alert',
+        position: this.FenObject,
+        pieceTheme: piecelink,
+
+      }
+      this.ChessBoard = Chessboard('board1', config);
+      console.log("Recieved a :")
+      console.log(this.FenObject);
+      // console.log("New Position: ");
+      // console.log(StartingBoard.position())  
+    },
+    updated()
+    {
+      console.log("New Position: ");
+      console.log(this.ChessBoard.position())  
+    }
     //TODO recieve the current move from the [ChessBoard] component and assign it to ChessCurrentMove property(3min)
     //TODO ChessMoveObject[LineCounter].Moves.push(ChessCurrentMove) (1min)
     //TODO ChessMoveObject[LineCounter].NumberOfMoves++; (1min)

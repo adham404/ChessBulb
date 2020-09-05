@@ -65,9 +65,10 @@ const routes = [
     component: Courses
   },
   {
-    path: '/Courses/:id/Course Preview',
+    path: '/Courses/:id/CoursePreview',
     name: 'CoursePreview',
-    component: CoursePreview
+    component: CoursePreview,
+    props: true
   },
   {
     path: '/Courses/CourseStreaming/:id',
