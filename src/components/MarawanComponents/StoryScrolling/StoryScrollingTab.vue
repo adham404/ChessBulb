@@ -3,15 +3,14 @@
         <ChessBoardDisplay id="1" :fen='boardfen'></ChessBoardDisplay>
         <button @click="move1" >move 1 </button>
         <button @click="move2" >move 1 </button>
-        <ChessBoardDisplay id="2" :fen='boardfen2'></ChessBoardDisplay>
+        <StockFish></StockFish>
         
-        <button @click="move12" >move 1-2 </button>
-        <button @click="move22" >move 1-2 </button>
     </div>
 </template>
 
 <script>
 import ChessBoardDisplay from '@/components/MarawanComponents/ChessBoard/ChessBoardDisplay.vue'
+import StockFish from '@/components/MarawanComponents/StockFish.vue'
 //TODO make a story div(5min)
 //TODO add it in v for(3min)
 //TODO get following users id array(5min)
@@ -28,7 +27,8 @@ export default {
         }
     },
     components:{
-        ChessBoardDisplay
+        ChessBoardDisplay,
+        StockFish,
     },
     methods:{
         move1(){
