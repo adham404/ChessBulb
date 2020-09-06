@@ -10,7 +10,7 @@
   <div>
       Stock Fish Engine<br/>
       <button @click="fish" >Run StockFish</button>
-      <button @click="re" >reinit StockFish</button><br>
+      <button >reinit StockFish</button><br>
       <label >insert fen</label>
       <input type="text" name="fen" v-model="fen">
       <button @click="move1">get move</button>
