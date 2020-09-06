@@ -1,13 +1,12 @@
 <template>
-  <div>
-        <div style="border:1px solid #ccc">
+  <div class="CourseCard">
+        <div class="CourseData" style="border:1px solid #ccc">
         <!-- TODO Create Div with a background image of Template image which Diplay the Following Properties (CourseData.CourseTitle) and (CourseData.Rating) (5MIN) -->
-          <div>#CourseIMG</div>
           <!-- <div>Test Name</div> -->
-          <div>{{CourseName}}</div>
+          <h4 id="CourseName">{{CourseName}}</h4>
         <!-- FIXME Show Star Rating according to the Rating Number ................. Search for Star ratings plugins in js (10min) -->
           <!-- <div>Test Price</div> -->
-          <div> Rate: {{CourseRate}}</div>
+          <div class="rating">Rate: {{CourseRate}}</div>
         </div>
   </div>
 </template>
@@ -32,7 +31,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped src="@/assets/CSS/CourseCard.css">
   /* TODO import Styling script from Documentation and Adjust the Component (5min) */
 
 </style>

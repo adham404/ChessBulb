@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="Courses">
       <!-- TODO Create Courses Header Div That Includes [CreateCourse] [SearchEngine] [Filter] 5MIN -->
       <div style="display: flex">
       <!-- DONE Router link to [CreateCourse] when 'Create a Course' button is clicked 2MIN -->
@@ -9,10 +9,11 @@
         <input type="text" placeholder="Search Engine">
         <FilterSearch></FilterSearch>
       </div>
-      <div style="margin-top:2%; display:flex">
+      <div class="CourseList">
         <router-link v-for="Course in Courses" v-bind:key="Course" :to="{
-          path: `/Courses/${Course.CourseId}/CoursePreview`
-          }"><component :is="ComponentName" :CourseName="Course.CourseName" :CourseRate="Course.Rating"></component>
+          path: `/Courses/${Course.CourseId}/CoursePreview`,
+          params: { CoursesID: Course.Id}
+          }"><component class="ListRow" :is="ComponentName" :CourseName="Course.CourseName" :CourseRate="Course.Rating"></component>
         </router-link>
 
       </div>
@@ -69,7 +70,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped src="@/assets/CSS/Courses.css">
   /* TODO import Styling script from Documentation and Adjust the Component (5min) */
 </style>
 

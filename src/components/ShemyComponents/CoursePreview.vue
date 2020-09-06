@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div>This is a good course mate {{ CourseId }}</div>
+    <div>This is a good course mate {{ CoursesID }}</div>
     <!-- TODO Create Div on the left that contain the following data properties (CourseData.CourseTitle) and (CourseData.Rating) (5min) -->
     <!-- TODO Create Div on the Right that contain the following data property (CourseData.CourseDescription) (5min) -->
     <!-- TODO Create under The Right Div a swaping DIV passed on v-if = data property (PurchaseFlag) (2min) -->
@@ -22,7 +22,7 @@ export default {
 
         }
     },
-    props:["CourseId"]
+    props:["CoursesID"]
     //TODO Assign Data Properties in the vue data object which are (PurchaseFlag(B), CourseData(O), PreviewFlag(B)) (1min)
     //TODO Declare Mounted Property (1min)
     //TODO Recieve and assign (CourseData) from firebase using Passed Course ID returned from the props (10min)
