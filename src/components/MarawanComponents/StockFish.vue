@@ -8,9 +8,13 @@
 
 <template>
   <div>
-      Stock Fish Engine
+      Stock Fish Engine<br/>
       <button @click="fish" >Run StockFish</button>
-      <button @click="re" >reinit StockFish</button>
+      <button @click="re" >reinit StockFish</button><br>
+      <label >insert fen</label>
+      <input type="text" name="fen" v-model="fen">
+      <button @click="move1">get move</button>
+      <button @click="eval">calculate move</button>
   </div>
 </template>
 
@@ -21,6 +25,7 @@ import {send , massage} from '@/ChessEngine/fish.js'
 export default {
     data(){
         return{
+            fen : null
         }
     },
     mounted(){
@@ -33,8 +38,16 @@ export default {
         
         send("uci")
         },
-        re(){
+        move1(){
+            send(`position fen ${this.fen}`);
+            console.log(`postion is ${this.fen}`)
             
+
+        },
+        eval(){
+            send('d')
+            send("go ponder");setTimeout(function (){send("stop");console.log('stop')}, 1000 * 10);
+
         }
     }
 
