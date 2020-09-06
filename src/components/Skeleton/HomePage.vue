@@ -2,6 +2,8 @@
     <div>
         <router-link to="/Stories/1" >Stories</router-link>
         <tr></tr>
+        <router-link to="/Marwan" >Marwan Testing Page</router-link>
+        <tr></tr>
         <router-link to="/PostStory">Post Story</router-link>
         <router-view></router-view>
 

@@ -10,25 +10,31 @@
   <div>
       Stock Fish Engine
       <button @click="fish" >Run StockFish</button>
+      <button @click="re" >reinit StockFish</button>
   </div>
 </template>
 
 <script>
 
-import {StockFish} from '@/main.js'
+import {send , massage} from '@/ChessEngine/fish.js'
+// var engine
 export default {
+    data(){
+        return{
+        }
+    },
     mounted(){
-        
+        // engine = new Worker('')
     },
     methods:{
         fish(){
-        // var engine = new Worker('StockFish/stockfish.js')
-        var engine = StockFish
-        engine.onmessage = function(event) {console.log(event.data);}
-        function send(uci){
-            engine.postMessage(uci);
-        }
+        
+        massage.onmessage = function(event) {console.log(event.data);}
+        
         send("uci")
+        },
+        re(){
+            
         }
     }
 
@@ -36,5 +42,8 @@ export default {
 </script>
 
 <style>
+div{
+    color: white ;
+}
 
 </style>
