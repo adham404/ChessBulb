@@ -3,6 +3,10 @@
         <router-link to="/Stories/1" >Stories</router-link>
         <tr></tr>
         <router-link to="/PostStory">Post Story</router-link>
+        <tr></tr>
+        <router-link to="/SignUp">Sign UP</router-link>
+        <tr></tr>
+        <router-link to="/Login">Login</router-link>
         <router-view></router-view>
 
     </div>

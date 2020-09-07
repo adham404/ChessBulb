@@ -1,8 +1,9 @@
 <template>
   <div>
-      //TODO create anchor tag that routes to [Login] (2min)
-      //TODO Create Form with 5 input field and assign them to the following data properties (FirstName, LastName, UserEmail, UserPassword, ConfirmPassword) (5min)
-      //TODO Create 'SignUp' button assigned to the function {SignUp} (2min)
+      <div>please sign up</div>
+      <!-- TODO create anchor tag that routes to [Login] (2min) -->
+      <!-- TODO Create Form with 5 input field and assign them to the following data properties (FirstName, LastName, UserEmail, UserPassword, ConfirmPassword) (5min) -->
+      <!-- TODO Create 'SignUp' button assigned to the function {SignUp} (2min) -->
   </div>
 </template>
 

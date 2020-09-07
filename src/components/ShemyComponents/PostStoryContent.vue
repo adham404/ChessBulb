@@ -32,7 +32,7 @@
   //DONE Assign EventBus (1min) 
   // import {EventBus} from "../../main"
   import Chessboard from "chessboardjs";
-  // import { ChessGame } from "../../main"
+  import { ChessGame } from "../../main"
 
 export default {
     //TODO Assign Data Properties in  the vue data object which are (PressMoveFlag(B), Fen(S), ChessCurrentMove(S), ChessMoveObject(A), LineObject(O), LineCounter(I), LinesOptionFlag(B), OverWriteLineCounter(I), OverWriteCurrentMove(I), MovesArrayDummy(A), PuzzleFormFlag(B), MoveFormFlag(B) PuzzleDescription(S), RestOfThePGN(S), StoryData(O)) (3min)
@@ -44,11 +44,16 @@ export default {
         ChessMoveObject:[
           {
             Line:1,
-            Moves:[]
+            Moves:[],
+            WhiteMoves:[],
+            BlackMoves:[],
+            WhiteMovesFen:[],
+            BlackMovesFen:[]
           }
         ],
         LineCounter:0,
-        ChessCurrentMove:""
+        ChessCurrentMove:"",
+        PlayerMove:"white"
       }
     },
     //DONE recieve Chess Fen from [PositionSetup] and assign it to (Fen) property (2min)
@@ -64,8 +69,8 @@ export default {
         showErrors : 'alert',
         position: this.FenObject,
         onDrop: this.onDrop,
-        pieceTheme: piecelink,
-
+        onDragStart: this.onDragStart,
+        pieceTheme: piecelink
       }
       this.ChessBoard = Chessboard('board1', config);
       console.log("Recieved a :")
@@ -85,7 +90,7 @@ export default {
         console.log("New Position: ");
         console.log(this.ChessBoard.position())  
       },
-      onDrop(source, target, piece, newPos, oldPos, orientation)
+      onDrop(source, target)
       {
           console.log('Source: ' + source)
           console.log('Target: ' + target)
@@ -93,14 +98,45 @@ export default {
       //DONE ChessMoveObject[LineCounter].Moves.push(ChessCurrentMove) (1min)
           this.ChessCurrentMove = target;
           this.ChessMoveObject[this.LineCounter].Moves.push(this.ChessCurrentMove);
-          console.log('Piece: ' + piece)
-          console.log('New position: ' + newPos)
-          console.log('Old position: ' + oldPos)
-          console.log('Orientation: ' + orientation)
-          console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-      }
+          console.log("This Move PGN is: ");
+          console.log(this.ChessBoard.fen());
+          if(ChessGame.turn() === 'w')
+          {
+            console.log("whiiiiiiiiiite")
+            this.PlayerMove = "black"
+          }
+          if(ChessGame.turn() === 'b')
+          {
+            console.log("blaaaaaaaaaack")
+            this.PlayerMove = "white"
+          }
+            // var move = ChessGame.move({
+            //   from: source,
+            //   to: target
+            //   // promotion: 'q' // NOTE: always promote to a queen for example simplicity
+            //   })
+            //   // illegal move
+            //   if (move === null) return 'snapback'
 
-    }
+          // if(piece[0]=="w")
+          // {
+          //   console.log("This Was the white Move")
+          // }
+          // if(piece[0]=="b")
+          // {
+          //   console.log("This Was the Black Move")
+          // }
+          console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+      },
+      onDragStart()
+      {
+      }
+      },
+      // onSnapEnd()
+      // {
+      //   this.ChessBoard.position(ChessGame.fen())
+      // }
+    
     //TODO ChessMoveObject[LineCounter].NumberOfMoves++; (1min)
     //TODO Declare {PressMove} function (1min)
     //TODO When a move is clicked LinesOptionFlag is set to true (1min)
