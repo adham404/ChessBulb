@@ -26,6 +26,15 @@ export default {
     },
     
     mounted(){
+        //FIXME add to the docs
+        EventBus.$on('boardmove', async inmove => {
+            
+            var mm = await game.move( inmove, { sloppy: true })
+            await board.move(inmove);
+            await board.position(game.fen())
+            console.log(mm)
+            console.log('move happend in board from the bus')
+            });
         var game;
         if (this.start == null){
                 this.startpos = 'start'
@@ -68,12 +77,18 @@ export default {
                 return 'snapback'
             }
             //DONE emit the move(5min)
-            EventBus.$emit('newmove',source + target)
+            
             }
             function onSnapEnd(){
                 board.position(game.fen())
                 console.log(game.fen())
                 }
+            //FIXME add to the docs
+            function onChange(source , target){
+                EventBus.$emit('newmove',source + target);
+                EventBus.$emit('newfen',game.fen());
+                console.log('move happend from the board')
+            }
             
             
             
@@ -83,6 +98,7 @@ export default {
                 draggable: true,
                 position: this.startpos,
                 onDragStart: onDragStart,
+                onChange: onChange,
                 onDrop: onDrop,
                 onSnapEnd: onSnapEnd,
                 showErrors : 'alert',
