@@ -18,6 +18,7 @@ import UserProfile from '@/components/ShemyComponents/UserProfile.vue'
 import Notifications from '@/components/ShemyComponents/Notifications.vue'
 import InstructorProfile from '@/components/MarawanComponents/InstructorProfile.vue'
 import Purchase from '@/components/MarawanComponents/Purchase.vue'
+import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
 
 
@@ -48,6 +49,11 @@ const routes = [
     path: '/PostStory',
     name: 'PostStory',
     component: AddStory
+  },
+  {
+    path: '/Marwan',
+    name: 'Marwan',
+    component: MarwanTest
   },
   {
     path: '/Posts/:id',

@@ -2,12 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import firebase from 'firebase'
-import Chess from 'chess.js'
 
-export const ChessGame = new Chess();
 export const EventBus  = new Vue();
 
-export let StockFish = new Worker( 'StockFish/stockfish.js')
+export let StockFish = new Worker( 'StockFish/stockfish.js');
 Vue.use(firebase)
 var firebaseConfig = {
   apiKey: "AIzaSyDdsjuIqIrD415e2ILt_zPs9E0ikPT5Mug",
@@ -27,6 +25,5 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
-  Chess,
   render: h => h(App)
 }).$mount('#app')

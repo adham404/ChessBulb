@@ -32,7 +32,8 @@
   //DONE Assign EventBus (1min) 
   // import {EventBus} from "../../main"
   import Chessboard from "chessboardjs";
-  import { ChessGame } from "../../main"
+  // import { ChessGame } from "../../main"
+  import * as Chess from "chess.js";
 
 export default {
     //TODO Assign Data Properties in  the vue data object which are (PressMoveFlag(B), Fen(S), ChessCurrentMove(S), ChessMoveObject(A), LineObject(O), LineCounter(I), LinesOptionFlag(B), OverWriteLineCounter(I), OverWriteCurrentMove(I), MovesArrayDummy(A), PuzzleFormFlag(B), MoveFormFlag(B) PuzzleDescription(S), RestOfThePGN(S), StoryData(O)) (3min)
@@ -92,6 +93,7 @@ export default {
       },
       onDrop(source, target)
       {
+          var ChessGame = Chess();
           console.log('Source: ' + source)
           console.log('Target: ' + target)
       //DONE recieve the current move and assign it to ChessCurrentMove property(3min)
