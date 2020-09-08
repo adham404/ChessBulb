@@ -1,7 +1,7 @@
 <template>
 	<div class="SideBar">
 		<div id="links">
-			<router-link to="/Home">
+			<div @click="emitlink('/Home')">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="40.503"
@@ -16,8 +16,8 @@
 						fill="#fff"
 					/>
 				</svg>
-			</router-link>
-			<router-link to="/Courses">
+			</div>
+			<div  @click="emitlink('/Courses')" >
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="39.503"
@@ -32,9 +32,8 @@
 						fill="#fff"
 					/>
 				</svg>
-			</router-link>
-			<router-link
-				:to="{ name: 'Academies', params: { allAcademies: false } }"
+			</div>
+			<div  @click="emitlink('/Academies')" 
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -58,8 +57,8 @@
 						</g>
 					</g>
 				</svg>
-			</router-link>
-			<router-link to="/Play">
+			</div>
+			<div  @click="emitlink('/Play')" >
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="35.257"
@@ -74,10 +73,10 @@
 						fill="#fff"
 					/>
 				</svg>
-			</router-link>
+			</div>
 		</div>
 		<div id="controls">
-			<svg
+			<svg  @click="emitcontrol('back')"
 				xmlns="http://www.w3.org/2000/svg"
 				width="34.875"
 				height="34.875"
@@ -91,7 +90,7 @@
 					fill="#fefafa"
 				/>
 			</svg>
-			<svg
+			<svg @click="emitcontrol('next')"
 				xmlns="http://www.w3.org/2000/svg"
 				width="34.875"
 				height="34.875"
@@ -105,7 +104,7 @@
 					fill="#fff"
 				/>
 			</svg>
-			<svg
+			<svg  @click="emitcontrol('first')"
 				xmlns="http://www.w3.org/2000/svg"
 				width="31.5"
 				height="20.531"
@@ -119,7 +118,7 @@
 					fill="#fff"
 				/>
 			</svg>
-			<svg
+			<svg  @click="emitcontrol('end')"
 				xmlns="http://www.w3.org/2000/svg"
 				width="31.5"
 				height="20.531"
@@ -138,7 +137,19 @@
 </template>
 
 <script>
-export default {};
+import {EventBus} from '@/main.js'
+export default {
+	methods:{
+		emitcontrol(data){
+			EventBus.$emit('Control',data)
+			console.log(data)
+		},
+		emitlink(data){
+			EventBus.$emit('Link',data)
+			console.log(data)
+		},
+	}
+};
 </script>
 
 <style  scoped>
@@ -159,7 +170,9 @@ svg {
 	height: 40%;
 	justify-content: space-around;
 }
-
+#links div{
+	cursor: pointer;
+}
 #controls {
 	display: flex;
 	flex-direction: column;
@@ -170,5 +183,6 @@ svg {
 #controls svg {
 	margin: 1rem;
 	width: 25px;
+	cursor: pointer;
 }
 </style>
