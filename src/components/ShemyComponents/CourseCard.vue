@@ -3,10 +3,10 @@
         <div class="CourseData" style="border:1px solid #ccc">
         <!-- TODO Create Div with a background image of Template image which Diplay the Following Properties (CourseData.CourseTitle) and (CourseData.Rating) (5MIN) -->
           <!-- <div>Test Name</div> -->
-          <h4 id="CourseName">{{CourseName}}</h4>
+          <h4 style="color:black" id="CourseName">{{CourseName}}</h4>
         <!-- FIXME Show Star Rating according to the Rating Number ................. Search for Star ratings plugins in js (10min) -->
           <!-- <div>Test Price</div> -->
-          <div class="rating">Rate: {{CourseRate}}</div>
+          <div style="color:black" class="rating">Rate: {{CourseRate}}</div>
         </div>
   </div>
 </template>

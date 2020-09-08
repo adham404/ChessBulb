@@ -11,8 +11,8 @@
       </div>
       <div class="CourseList">
         <router-link v-for="Course in Courses" v-bind:key="Course" :to="{
-          path: `/Courses/${Course.CourseId}/CoursePreview`,
-          params: { CoursesID: Course.Id}
+          path: `/Courses/CoursePreview/${Course.CourseId}`,
+          params: {CoursesID: Course.CourseId}
           }"><component class="ListRow" :is="ComponentName" :CourseName="Course.CourseName" :CourseRate="Course.Rating"></component>
         </router-link>
 

@@ -71,14 +71,15 @@ const routes = [
     component: Courses
   },
   {
-    path: '/Courses/:id/CoursePreview',
-    name: 'CoursePreview',
+    path: '/Courses/CoursePreview/:CoursesID',
+    name: 'CoursePreview', 
     component: CoursePreview,
     props: true
   },
   {
-    path: '/Courses/CourseStreaming/:id',
+    path: '/Courses/CourseStreaming/:CourseID',
     name: 'CourseStreaming',
+    props:true,
     component: Streaming
   },
   {
@@ -130,8 +131,9 @@ const routes = [
     component: InstructorProfile
   },
   {
-    path: '/Purchase',
+    path: '/Purchase/:CourseID',
     name: 'Purchase',
+    props:true,
     component: Purchase
   },
   {
