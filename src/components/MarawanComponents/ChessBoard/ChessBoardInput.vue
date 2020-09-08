@@ -28,7 +28,9 @@ export default {
     mounted(){
         //FIXME add to the docs
         EventBus.$on('boardmove', async inmove => {
-            
+            if(game.game_over()){
+                alert('game is over ')
+            }
             await game.move( inmove, { sloppy: true })
             await board.move(inmove);
             await board.position(game.fen())
@@ -52,14 +54,15 @@ export default {
                 return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
             }
         //DONE get if the match ended and if disable the input(5min)
-        function onDragStart (source, piece, position, orientation) {
+        function onDragStart (source, piece /*, position, orientation*/) {
             if (game.game_over()){
+                
                 return false
             }else if ((game.turn() === 'w' && piece.search(/^b/) !== -1) || (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
                    return false
             }
-            console.log(position)
-            console.log(orientation)
+            // console.log(position)
+            // console.log(orientation)
             
 
             }
@@ -81,7 +84,7 @@ export default {
             }
             function onSnapEnd(){
                 board.position(game.fen())
-                console.log(game.fen())
+                // console.log(game.fen())
                 }
             //FIXME add to the docs
             function onChange(source , target){
@@ -111,7 +114,7 @@ export default {
     },
     methods:{
         printmove(){
-            console.log(this.newmove)
+            // console.log(this.newmove)
         }      
         
     },

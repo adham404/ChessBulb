@@ -5,7 +5,6 @@ import firebase from 'firebase'
 
 export const EventBus  = new Vue();
 
-export let StockFish = new Worker( 'StockFish/stockfish.js');
 Vue.use(firebase)
 var firebaseConfig = {
   apiKey: "AIzaSyDdsjuIqIrD415e2ILt_zPs9E0ikPT5Mug",
