@@ -1,16 +1,60 @@
 <template>
     <div>
-        //TODO Create Two input fields one for Email and one for password and assign them to (UserEmail) and (UserPassword) (5MIN)
-        //TODO Create 'Login' button and assign the button to the function {Login} (2min)
+        <h1>Please Login</h1>
+        <!-- DONE Create Two input fields one for Email and one for password and assign them to (UserEmail) and (UserPassword) (5MIN) -->
+        <div style="display:flex; flex-direction:column; width:50%;">
+        <label for="Email">Email:</label>
+        <input v-model="UserEmail" type="email" name="" id="Email">
+        <label for="Password">Password</label>
+        <input v-model="UserPassword" type="password" name="" id="Password">
+        <!-- DONE Create 'Login' button and assign the button to the function {Login} (2min) -->
+        <button @click="Login">Login</button>
+        </div>
     </div>
 </template>
 
 <script>
+//DONE Assign Firebase (1min) 
+import firebase from "firebase";
 export default {
-    //TODO Assign Data Properties in the vue data object which are (UserEmail(S), UserPassword(S)) (1min)
-    //TODO Assign Firebase (1min) 
-    //TODO define Login Function (1min)
-    //FIXME use firebase Auth to login using the two data properties (UserEmail) and (UserPassword) (25min)
+    //DONE Assign Data Properties in the vue data object which are (UserEmail(S), UserPassword(S)) (1min)
+    data: function()
+    {
+        return{
+            UserEmail:"",
+            UserPassword:"",
+            LoginCorrect:false
+        }
+    },
+//DONE define Login Function (1min)
+    methods:{
+        Login()
+        {
+        this.LoginCorrect = this.Validate();
+        if(this.LoginCorrect)
+        {            
+            //DONE use firebase Auth to login using the two data properties (UserEmail) and (UserPassword) (25min)
+                const auth = firebase.auth();
+                auth.signInWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
+                    console.log(error.message);
+                })
+                auth.onAuthStateChanged((user)=>{
+                    console.log("Welcome in " + user.uid);
+                })
+
+        }    
+        },
+        Validate(){
+            if(this.UserEmail == "" || this.UserPassword == "")
+            {
+                alert("Please fill in the missing content")
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    }
 
 }
 </script>

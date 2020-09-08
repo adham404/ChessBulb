@@ -1,13 +1,18 @@
 <template>
   <div>
             <!-- TODO add [ChessBoard] To the left and pass (ChessPGNStartup) property recieved from [PositionSetup] To Show the starting position of the game (2min) -->
-            <div>ChessBoard</div>
-            <div>Moves</div>
-            <button>Post Your Story</button>
+            <div id="board1"></div>
+            <button @click="UpdateMoves">Post Your Story</button>
             <!-- TODO add AddMove div to the right of [ChessBoard] (2min) -->
-            <!-- TODO Add Lines div inside the AddMove div containing Lines of possible moves and loop through it according to the number of arrays in the (ChessMoveObject) (3min) -->
+            <div style="color:white">Moves:</div>
+            <!-- DONE Add Lines div inside the AddMove div containing Lines of possible moves and loop through it according to the number of arrays in the (ChessMoveObject) (3min) -->
+            <div style="display:block" v-for="Line in ChessMoveObject" v-bind:key="Line">
             <!-- TODO Add inside the Line div li tags that hold the Moves of each line that represent the element of each nested array with a title a head of it such as Move#1 Solution#2 etc.. (2min) -->
-            <!-- TODO assign the Move content to each li tag (1min) -->
+              <div style="display:block; color:white;" v-for="Move in Line.Moves" v-bind:key="Move" >
+            <!-- DONE assign the Move content to each div tag (1min) -->
+                <div>{{Move}}</div>
+              </div>
+            </div>
             <!-- TODO assign {PressMove} function to each li tag and execute it when each move is clicked and pass Line.LineCounter and Move  (1min) -->
             <!-- TODO Add right to the Lines div another div inside the AddMove div that contain the two button options which is assigned to the variable (LinesOptionFlag) (2min)  -->
             <!-- TODO assign the two functions {OverWrite} and {OpenNewLine} to the buttons (1min) -->
@@ -24,15 +29,117 @@
 </template>
 
 <script>
+  //DONE Assign EventBus (1min) 
+  // import {EventBus} from "../../main"
+  import Chessboard from "chessboardjs";
+  // import { ChessGame } from "../../main"
+  import * as Chess from "chess.js";
+
 export default {
-    //TODO Assign Data Properties in  the vue data object which are (PressMoveFlag(B), ChessPGNStartup(S), ChessCurrentMove(S), ChessMoveObject(A), LineObject(O), LineCounter(I), LinesOptionFlag(B), OverWriteLineCounter(I), OverWriteCurrentMove(I), MovesArrayDummy(A), PuzzleFormFlag(B), MoveFormFlag(B) PuzzleDescription(S), RestOfThePGN(S), StoryData(O)) (3min)
-    //TODO Assign EventBus (1min) 
-    //TODO Declare Mounted Property (1min)
-    //TODO recieve ChessObject from [PositionSetup] and assign it to ChessPGNStartup property (2min)
-    //TODO recieve the current move from the [ChessBoard] component and assign it to ChessCurrentMove property(3min)
-    //TODO ChessMoveObject[LineCounter].Moves.push(ChessCurrentMove) (1min)
+    //TODO Assign Data Properties in  the vue data object which are (PressMoveFlag(B), Fen(S), ChessCurrentMove(S), ChessMoveObject(A), LineObject(O), LineCounter(I), LinesOptionFlag(B), OverWriteLineCounter(I), OverWriteCurrentMove(I), MovesArrayDummy(A), PuzzleFormFlag(B), MoveFormFlag(B) PuzzleDescription(S), RestOfThePGN(S), StoryData(O)) (3min)
+    data: function()
+    {
+      return{
+        Fen:"",
+        ChessBoard:"",
+        ChessMoveObject:[
+          {
+            Line:1,
+            Moves:[],
+            WhiteMoves:[],
+            BlackMoves:[],
+            WhiteMovesFen:[],
+            BlackMovesFen:[]
+          }
+        ],
+        LineCounter:0,
+        ChessCurrentMove:"",
+        PlayerMove:"white"
+      }
+    },
+    //DONE recieve Chess Fen from [PositionSetup] and assign it to (Fen) property (2min)
+    props:["FenObject"],
+      //DONE Declare Mounted Property (1min)
+    mounted(){
+          function piecelink(piece){
+          return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
+      }
+      this.Fen = this.FenObject;
+      var config = {
+        draggable: true,
+        showErrors : 'alert',
+        position: this.FenObject,
+        onDrop: this.onDrop,
+        onDragStart: this.onDragStart,
+        pieceTheme: piecelink
+      }
+      this.ChessBoard = Chessboard('board1', config);
+      console.log("Recieved a :")
+      console.log(this.FenObject);
+      // console.log("New Position: ");
+      // console.log(StartingBoard.position())  
+    },
+    updated()
+    {
+      console.log("New Position: ");
+      console.log(this.ChessBoard.position())  
+    },
+      //DONE define Methods property (1min)
+    methods:{
+      UpdateMoves()
+      {
+        console.log("New Position: ");
+        console.log(this.ChessBoard.position())  
+      },
+      onDrop(source, target)
+      {
+          var ChessGame = Chess();
+          console.log('Source: ' + source)
+          console.log('Target: ' + target)
+      //DONE recieve the current move and assign it to ChessCurrentMove property(3min)
+      //DONE ChessMoveObject[LineCounter].Moves.push(ChessCurrentMove) (1min)
+          this.ChessCurrentMove = target;
+          this.ChessMoveObject[this.LineCounter].Moves.push(this.ChessCurrentMove);
+          console.log("This Move PGN is: ");
+          console.log(this.ChessBoard.fen());
+          if(ChessGame.turn() === 'w')
+          {
+            console.log("whiiiiiiiiiite")
+            this.PlayerMove = "black"
+          }
+          if(ChessGame.turn() === 'b')
+          {
+            console.log("blaaaaaaaaaack")
+            this.PlayerMove = "white"
+          }
+            // var move = ChessGame.move({
+            //   from: source,
+            //   to: target
+            //   // promotion: 'q' // NOTE: always promote to a queen for example simplicity
+            //   })
+            //   // illegal move
+            //   if (move === null) return 'snapback'
+
+          // if(piece[0]=="w")
+          // {
+          //   console.log("This Was the white Move")
+          // }
+          // if(piece[0]=="b")
+          // {
+          //   console.log("This Was the Black Move")
+          // }
+          console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+      },
+      onDragStart()
+      {
+      }
+      },
+      // onSnapEnd()
+      // {
+      //   this.ChessBoard.position(ChessGame.fen())
+      // }
+    
     //TODO ChessMoveObject[LineCounter].NumberOfMoves++; (1min)
-    //TODO define Methods property (1min)
     //TODO Declare {PressMove} function (1min)
     //TODO When a move is clicked LinesOptionFlag is set to true (1min)
     //TODO assign passed move to (OverWriteCurrentMove) assign passed Line number to (OverWriteLineCounter) (2min)
@@ -71,6 +178,10 @@ export default {
 
 <style>
   /* TODO import Styling script from Documentation and Adjust the Component (5min) */
+   #board1{
+ width: 50%;
+ height: 50%;
+}
 
 </style>
 

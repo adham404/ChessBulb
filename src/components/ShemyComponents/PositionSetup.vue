@@ -13,8 +13,9 @@
 <script>
   //DONE assign EventBus method (1min)
   import {EventBus} from "../../main"
-  import  Chessboard from "chessboardjs";
-
+  import Chessboard from "chessboardjs";
+  // import { ChessGame } from "../../main"
+  // import * as ChessGame from "chess.js";
 
 export default {
     //TODO Assign Data Properties in  the vue data object which are (PoisitionCorrect(B), PositionValidationMsg(S), StartupObject(o), SwapFlag(B)) (3min) 
@@ -24,19 +25,41 @@ export default {
         PositionCorrect: false,
         StartupObject:{
 
-        }
+          },
+          Hamada:"2na ba3mel test"
       }
     },
     methods:{
-    //TODO create Save Function (1min)
+      //TODO create Save Function (1min)
     Save: function()
     {
-      this.PositionCorrect = true;
-      EventBus.$emit("PositionIsSet",this.PositionCorrect);
+      var objectvalidate = this.StartupObject.position()
+      var fenObject = this.StartupObject.fen()
+      console.log(fenObject);
+      //FIXME Validate Fen Object using Chess.js because of the format of the fen object genereated by Chessboard.js
+      // var ValidateFenObject = ChessGame.validate_fen(fenObject);
+      console.log("The Fen Status:");
+      // console.log(ValidateFenObject);
+      //DONE Validate Fen Object if it contains content (2min)
+      if( Object.entries(objectvalidate).length == 0)
+      { 
+        //DONE If the Chess Object is empty Launch a Validation Msg (1min) 
+        alert("Position is empty ... please setup chess position in board then submit");
+        this.PositionCorrect = false;
+      }
+      else{
+        this.PositionCorrect = true;
+      //DONE If the Fen Object is not empty and validated Send Fen Object data to [PostStoryContent] component and send SwapFlag Property to [AddStory] Component using EventBus Sending Signals (5min) 
+        EventBus.$emit("PositionIsSet",this.PositionCorrect);
+        EventBus.$emit("SendPosition",fenObject);
+        console.log("Reprint of Fen object");
+        console.log(fenObject);
+
+      }
     }
     },
     mounted(){
-    //Take from [ChessBoardDisplay] component
+    //Taken from [ChessBoardDisplay] component
     function piecelink(piece){
           return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
       }
@@ -48,13 +71,10 @@ export default {
         pieceTheme: piecelink,
 
       }
+    //DONE Recieve Chess Object with the Setup Position From ChessBoard.js (2min)
       var StartingBoard = Chessboard('Board1', config);
-      console.log(StartingBoard)
+      this.StartupObject = StartingBoard;
     }
-    //TODO Recieve Fen Object with the Setup Position From ChessBoard.js (2min)
-    //TODO Validate Fen Object in chess.js using Chess.Validate(Fen) (2min)
-    //TODO If the Chess Object is empty Launch a Validation Msg (1min) 
-    //TODO If the Fen Object is not empty and validated Send Fen Object data to [PostStoryContent] component and send SwapFlag Property to [AddStory] Component using EventBus Sending Signals (5min) 
 }
 </script>
 
