@@ -29,11 +29,11 @@ export default {
         //FIXME add to the docs
         EventBus.$on('boardmove', async inmove => {
             
-            var mm = await game.move( inmove, { sloppy: true })
+            await game.move( inmove, { sloppy: true })
             await board.move(inmove);
             await board.position(game.fen())
-            console.log(mm)
-            console.log('move happend in board from the bus')
+            // console.log(mm)
+            // console.log('move happend in board from the bus')
             });
         var game;
         if (this.start == null){
@@ -87,7 +87,7 @@ export default {
             function onChange(source , target){
                 EventBus.$emit('newmove',source + target);
                 EventBus.$emit('newfen',game.fen());
-                console.log('move happend from the board')
+                // console.log('move happend from the board')
             }
             
             

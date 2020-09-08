@@ -12,10 +12,9 @@
       <div> Engine is running  {{isEngineRunning}}</div>
       <div v-if="loading" > Loading...</div>
      <div id="stockcontaner">
-          <div v-for="(line,index) in lines" :key="index" >
+        <div v-for="(line,index) in lines" :key="index" >
               <button @click="emitmove(line.move)" > {{line.move}} --->  {{line.score}}</button>
-              
-          </div>
+        </div>
       </div>
       
   </div>
@@ -80,82 +79,80 @@ export default {
             
         });
         let self = this
-            massage.onmessage = function resive (event) {
+            massage.onmessage = function receive (event) {
                 
                 var line;
                 if (event && typeof event === "object") {
                     line = event.data;
-    } else {
-        line = event;
-    }
-    
-        // console.log("Reply: " + line)
+                } else {
+                    line = event;
+                }
+                
+                    console.log("Reply: " + line)
 
 
-    if(line == 'uciok') {
-        engineStatus.engineLoaded = true;
-        console.log('The Engine is Loaded')
-    } else if(line == 'readyok') {
-        engineStatus.engineReady = true;
-    } else {
-        var match = line.match(/^bestmove ([a-h][1-8])([a-h][1-8])([qrbn])?/);
-        /// Did the AI move?
-        if(match) {
-            self.isEngineRunning = false;
-            console.log(isEngineRunning)
-            engineStatus.bestmove = match[1]+match[2]
-            console.log(match)
+                if(line == 'uciok') {
+                    engineStatus.engineLoaded = true;
+                    console.log('The Engine is Loaded')
+                } else if(line == 'readyok') {
+                    engineStatus.engineReady = true;
+                } else {
+                    var match = line.match(/^bestmove ([a-h][1-8])([a-h][1-8])([qrbn])?/);
+                    /// Did the AI move?
+                    if(match) {
+                        self.isEngineRunning = false;
+                        console.log(isEngineRunning)
+                        engineStatus.bestmove = match[1]+match[2]
+                        console.log(match)
 
-            // game.move({from: match[1], to: match[2], promotion: match[3]});
-            // prepareMove();
-            // uciCmd("eval", evaler)
-            // evaluation_el.textContent = "";
-            //uciCmd("eval");
-        /// Is it sending feedback?
-        } else if(line.match(/^info .*\bdepth (\d+) .*\bnps (\d+)/)) {
-            self.isEngineRunning = true;
-            match = line.match(/^info .*\bdepth (\d+) .*\bnps (\d+)/)
-            engineStatus.search = 'Depth: ' + match[1] + ' Nps: ' + match[2];
-        }
-        
-        /// Is it sending feed back with a score?
-        if( line.match(/^info .*\bscore (\w+) (-?\d+)/)) {
-            match = line.match(/^info .*\bscore (\w+) (-?\d+)/)
-            var score = parseInt(match[2])
-            /// Is it measuring in centipawns?
-            if(match[1] == 'cp') {
-                engineStatus.score =(score > 0 ? '+' : '') + (score / 100.0).toFixed(2);
-            /// Did it find a mate?
-            } else if(match[1] == 'mate') {
-                engineStatus.score = 'Mate in ' + Math.abs(score);
+                        // game.move({from: match[1], to: match[2], promotion: match[3]});
+                        // prepareMove();
+                        // uciCmd("eval", evaler)
+                        // evaluation_el.textContent = "";
+                        //uciCmd("eval");
+                    /// Is it sending feedback?
+                    } else if(line.match(/^info .*\bdepth (\d+) .*\bnps (\d+)/)) {
+                        self.isEngineRunning = true;
+                        match = line.match(/^info .*\bdepth (\d+) .*\bnps (\d+)/)
+                        engineStatus.search = 'Depth: ' + match[1] + ' Nps: ' + match[2];
+                    }
+                    
+                    /// Is it sending feed back with a score?
+                    if( line.match(/^info .*\bscore (\w+) (-?\d+)/)) {
+                        match = line.match(/^info .*\bscore (\w+) (-?\d+)/)
+                        var score = parseInt(match[2])
+                        /// Is it measuring in centipawns?
+                        if(match[1] == 'cp') {
+                            engineStatus.score =(score > 0 ? '+' : '') + (score / 100.0).toFixed(2);
+                        /// Did it find a mate?
+                        } else if(match[1] == 'mate') {
+                            engineStatus.score = 'Mate in ' + Math.abs(score);
+                        }
+                        
+                        /// Is the score bounded?
+                        // if(match = line.match(/\b(upper|lower)bound\b/)) {
+                        //     engineStatus.score = ((match[1] == 'upper') == (game.turn() == 'w') ? '<= ' : '>= ') + engineStatus.score
+                        // }
+                    }
+                    if (line.match(/^info .*\bpv ([a-h][1-8])([a-h][1-8])([qrbn])?/)) {
+                        var m = line.match(/^info .*\bpv ([a-h][1-8])([a-h][1-8])([qrbn])?/)
+                        // console.log(m[1]+m[2]+' '+engineStatus.score )
+                        var po = { move: m[1]+'-'+m[2] , score : engineStatus.score}
+                        if(self.showmoves){
+                            self.lines.unshift(po)
+                        }
+                        
+                        
+                        
+                    }
+                }
+            
             }
-            
-            /// Is the score bounded?
-            // if(match = line.match(/\b(upper|lower)bound\b/)) {
-            //     engineStatus.score = ((match[1] == 'upper') == (game.turn() == 'w') ? '<= ' : '>= ') + engineStatus.score
-            // }
-        }
-        if (line.match(/^info .*\bpv ([a-h][1-8])([a-h][1-8])([qrbn])?/)) {
-            var m = line.match(/^info .*\bpv ([a-h][1-8])([a-h][1-8])([qrbn])?/)
-            // console.log(m[1]+m[2]+' '+engineStatus.score )
-            var po = { move: m[1]+'-'+m[2] , score : engineStatus.score}
-            if(self.showmoves){
-                self.lines.unshift(po)
-            }
-            
-            
-            
-        }
-    }
-  
-}
         
         send("uci")
     },
     methods:{
-        fish(){
-            
-        },
+        
         move1(){
             this.lines=[]
             send(`position fen ${this.fen}`);
