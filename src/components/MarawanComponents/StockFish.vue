@@ -25,7 +25,7 @@ import {send , massage} from '@/ChessEngine/fish.js'
 import {EventBus} from '@/main.js'
 // import Chess from "chess.js"
 var engineStatus = {};
-var isEngineRunning 
+// var isEngineRunning 
 // var engine
 var newfen 
 export default {
@@ -40,7 +40,7 @@ export default {
         }
     },
     watch:{
-        isEngineRunning:function(){
+        isEngineRunning:  function(){
             if(!this.isEngineRunning){
                 if(newfen){
                 send(`position fen ${newfen}`);
@@ -50,7 +50,7 @@ export default {
                 this.loading = false
 
                 newfen = null 
-                console.log('احلي تحيه من الفانكشن الشقيه ')
+                console.log('2-2 engine stoped new fen is searched')
 
                 }
                 
@@ -62,18 +62,21 @@ export default {
             
         
         EventBus.$on('newfen',  fen1 => {
-            console.log('move happend from event bus')
+            // console.log('move happend from event bus')
             this.lines=[]
-            send('stop')
+            
             if(!this.isEngineRunning){
+                console.log('1-1 new fen engine stop')
                  send(`position fen ${fen1}`);
                  send("go depth 20");
             }else{
+                send('stop')
+                console.log('2-1 new fen engine running loading is true ')
                 this.loading = true
                 self.showmoves = false
                 newfen = fen1
             }
-            console.log(fen1)
+            // console.log(fen1)
            
            
             
@@ -88,7 +91,7 @@ export default {
                     line = event;
                 }
                 
-                    console.log("Reply: " + line)
+                    // console.log("Reply: " + line)
 
 
                 if(line == 'uciok') {
@@ -101,9 +104,9 @@ export default {
                     /// Did the AI move?
                     if(match) {
                         self.isEngineRunning = false;
-                        console.log(isEngineRunning)
+                        // console.log(isEngineRunning)
                         engineStatus.bestmove = match[1]+match[2]
-                        console.log(match)
+                        // console.log(match)
 
                         // game.move({from: match[1], to: match[2], promotion: match[3]});
                         // prepareMove();

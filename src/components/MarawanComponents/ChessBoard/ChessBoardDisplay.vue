@@ -11,6 +11,7 @@
 import  Chessboard from "chessboardjs";
 // jquery
 global.jQuery = require('jquery');
+import {EventBus} from "@/main.js"
 var $ = global.jQuery;
 window.$ = $; 
 export default {
@@ -22,6 +23,10 @@ export default {
         }
     },
     mounted(){
+        EventBus.$on("displayboardfen",move =>{
+            this.board.position(move)
+
+        })
         
         //DONE creat new board(3min)
         //this toke about 2 hours because a problem with pieces images
