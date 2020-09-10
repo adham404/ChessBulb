@@ -41,6 +41,7 @@ export default {
     {
       return{
         Fen:"",
+        ChessGame:"",
         ChessBoard:"",
         ChessMoveObject:[
           {
@@ -61,8 +62,8 @@ export default {
     props:["FenObject"],
       //DONE Declare Mounted Property (1min)
     mounted(){
-          function piecelink(piece){
-          return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
+      function piecelink(piece){
+        return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
       }
       this.Fen = this.FenObject;
       var config = {
@@ -74,6 +75,11 @@ export default {
         pieceTheme: piecelink
       }
       this.ChessBoard = Chessboard('board1', config);
+      // var pos = this.ChessBoard.position();
+      console.log("Pre Position is: ")
+      console.log(this.ChessBoard.position());
+      // var fen = this.Fen;
+      this.ChessGame = new Chess();
       console.log("Recieved a :")
       console.log(this.FenObject);
       // console.log("New Position: ");
@@ -93,7 +99,6 @@ export default {
       },
       onDrop(source, target)
       {
-          var ChessGame = Chess();
           console.log('Source: ' + source)
           console.log('Target: ' + target)
       //DONE recieve the current move and assign it to ChessCurrentMove property(3min)
@@ -102,16 +107,18 @@ export default {
           this.ChessMoveObject[this.LineCounter].Moves.push(this.ChessCurrentMove);
           console.log("This Move PGN is: ");
           console.log(this.ChessBoard.fen());
-          if(ChessGame.turn() === 'w')
+          if(this.ChessGame.turn() === 'w')
           {
             console.log("whiiiiiiiiiite")
             this.PlayerMove = "black"
           }
-          if(ChessGame.turn() === 'b')
+          if(this.ChessGame.turn() === 'b')
           {
             console.log("blaaaaaaaaaack")
             this.PlayerMove = "white"
           }
+          console.log("Chess Moves hoped to be like:")
+          console.log(this.ChessGame.ascii());
             // var move = ChessGame.move({
             //   from: source,
             //   to: target
