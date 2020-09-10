@@ -6,12 +6,20 @@
             <!-- TODO add AddMove div to the right of [ChessBoard] (2min) -->
             <div style="color:white">Moves:</div>
             <!-- DONE Add Lines div inside the AddMove div containing Lines of possible moves and loop through it according to the number of arrays in the (ChessMoveObject) (3min) -->
-            <div style="display:block" v-for="Line in ChessMoveObject" v-bind:key="Line">
-            <!-- TODO Add inside the Line div li tags that hold the Moves of each line that represent the element of each nested array with a title a head of it such as Move#1 Solution#2 etc.. (2min) -->
-              <div style="display:block; color:white;" v-for="Move in Line.Moves" v-bind:key="Move" >
+            <div class="Lines">
+            <div class="LineWithTitle" v-for="Line in ChessMoveObject" v-bind:key="Line">
+            <p>Solution Number {{Line.Line}}</p>
+            <div class="Line">
+            <div class="ColorCol">
             <!-- DONE assign the Move content to each div tag (1min) -->
-                <div>{{Move}}</div>
+                <div v-for="WhiteMove in Line.WhiteMoves" v-bind:key="WhiteMove">{{WhiteMove}}</div>
               </div>
+              <div class="ColorCol">
+                  <div style="color:red" v-for="BlackMove in Line.BlackMoves" v-bind:key="BlackMove">{{BlackMove}}</div>
+              </div>
+            </div>
+            <!-- DONE Add inside the Line div li tags that hold the Moves of each line that represent the element of each nested array with a title a head of it such as Move#1 Solution#2 etc.. (2min) -->            
+            </div>
             </div>
             <!-- TODO assign {PressMove} function to each li tag and execute it when each move is clicked and pass Line.LineCounter and Move  (1min) -->
             <!-- TODO Add right to the Lines div another div inside the AddMove div that contain the two button options which is assigned to the variable (LinesOptionFlag) (2min)  -->
@@ -65,7 +73,7 @@ export default {
       function piecelink(piece){
         return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
       }
-      this.Fen = this.FenObject;
+      this.Fen = this.FenObject + ' w - - 0 1';  //Converting the chessboard fen format to the chess.js fen format 
       var config = {
         draggable: true,
         showErrors : 'alert',
@@ -76,10 +84,8 @@ export default {
       }
       this.ChessBoard = Chessboard('board1', config);
       // var pos = this.ChessBoard.position();
-      console.log("Pre Position is: ")
-      console.log(this.ChessBoard.position());
       // var fen = this.Fen;
-      this.ChessGame = new Chess();
+      this.ChessGame = new Chess(this.Fen);
       console.log("Recieved a :")
       console.log(this.FenObject);
       // console.log("New Position: ");
@@ -103,42 +109,40 @@ export default {
           console.log('Target: ' + target)
       //DONE recieve the current move and assign it to ChessCurrentMove property(3min)
       //DONE ChessMoveObject[LineCounter].Moves.push(ChessCurrentMove) (1min)
-          this.ChessCurrentMove = target;
-          this.ChessMoveObject[this.LineCounter].Moves.push(this.ChessCurrentMove);
+          // this.ChessCurrentMove = target;
           console.log("This Move PGN is: ");
+          console.log(this.ChessGame.pgn());
+          var move = this.ChessGame.move({
+            from: source,
+            to: target,
+            promotion: 'q'
+          })
+          // illegal move
+          if (move === null) return 'snapback'
           console.log(this.ChessBoard.fen());
-          if(this.ChessGame.turn() === 'w')
+          console.log("A test for a move is ");
+          console.log(move);
+          if(move.color === "w")
           {
-            console.log("whiiiiiiiiiite")
-            this.PlayerMove = "black"
+            console.log("E7M the pure move of the white piece is "+ move.san);
+            this.ChessMoveObject[this.LineCounter].WhiteMoves.push(move.san);
           }
-          if(this.ChessGame.turn() === 'b')
+          else if(move.color === "b")
           {
-            console.log("blaaaaaaaaaack")
-            this.PlayerMove = "white"
+            console.log("E7M the pure move of the black piece is "+ move.san);
+             this.ChessMoveObject[this.LineCounter].BlackMoves.push(move.san);
           }
           console.log("Chess Moves hoped to be like:")
           console.log(this.ChessGame.ascii());
-            // var move = ChessGame.move({
-            //   from: source,
-            //   to: target
-            //   // promotion: 'q' // NOTE: always promote to a queen for example simplicity
-            //   })
-            //   // illegal move
-            //   if (move === null) return 'snapback'
-
-          // if(piece[0]=="w")
-          // {
-          //   console.log("This Was the white Move")
-          // }
-          // if(piece[0]=="b")
-          // {
-          //   console.log("This Was the Black Move")
-          // }
           console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
       },
-      onDragStart()
+      // only pick up pieces for the side to move
+      onDragStart(source, piece)
       {
+         if ((this.ChessGame.turn() === 'w' && piece.search(/^b/) !== -1) ||
+              (this.ChessGame.turn() === 'b' && piece.search(/^w/) !== -1)) {
+           return false
+              }
       }
       },
       // onSnapEnd()
@@ -188,6 +192,17 @@ export default {
    #board1{
  width: 50%;
  height: 50%;
+}
+.Lines{
+  position: absolute;  
+}
+.Line{
+  display: flex;
+}
+.ColorCol{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
 }
 
 </style>
