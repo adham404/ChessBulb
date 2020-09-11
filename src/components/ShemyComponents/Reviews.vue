@@ -1,8 +1,9 @@
 <template>
   <div>
-    //TODO Add container that contain (ContentRate.UserName) (ContentRate.ReviewDate) (2min) 
-    //FIXME Add Star rating system that takes the value (ContentRate.NumberOfStars) and turns them to NumberOfStars (10MIN)
-    //TODO Add (ContentRate.RateComment) (3MIN)
+    <div>Reviews and Ratings</div>
+    <!-- TODO Add container that contain (ContentRate.UserName) (ContentRate.ReviewDate) (2min)  -->
+    <!-- FIXME Add Star rating system that takes the value (ContentRate.NumberOfStars) and turns them to NumberOfStars (10MIN) -->
+    <!-- TODO Add (ContentRate.RateComment) (3MIN) -->
   </div>
 </template>
 

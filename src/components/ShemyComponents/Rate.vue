@@ -1,8 +1,9 @@
 <template>
   <div>
-      //TODO Create container that Contain Input Field assigned to (RateComment) (2MIN)
-      //FIXME Create Star rating interface that assign number of Stars to (NumberOfStars) (10MIN)
-      //TODO Create Button 'Submit' which is assigned to the function {Submit} (2min)
+      <input placeholder="Enter your review" type="text">
+      <!-- TODO Create container that Contain Input Field assigned to (RateComment) (2MIN) -->
+      <!-- FIXME Create Star rating interface that assign number of Stars to (NumberOfStars) (10MIN) -->
+      <!-- TODO Create Button 'Submit' which is assigned to the function {Submit} (2min) -->
   </div>
 </template>
 

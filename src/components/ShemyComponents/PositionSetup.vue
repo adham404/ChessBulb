@@ -15,7 +15,7 @@
   import {EventBus} from "../../main"
   import Chessboard from "chessboardjs";
   // import { ChessGame } from "../../main"
-  // import * as ChessGame from "chess.js";
+  import * as Chess from "chess.js";
 
 export default {
     //TODO Assign Data Properties in  the vue data object which are (PoisitionCorrect(B), PositionValidationMsg(S), StartupObject(o), SwapFlag(B)) (3min) 
@@ -26,6 +26,7 @@ export default {
         StartupObject:{
 
           },
+          ChessGame:"",
           Hamada:"2na ba3mel test"
       }
     },
@@ -34,12 +35,14 @@ export default {
     Save: function()
     {
       var objectvalidate = this.StartupObject.position()
-      var fenObject = this.StartupObject.fen()
+      var fenObject = this.StartupObject.fen() + ' w - - 0 1';
       console.log(fenObject);
+      this.ChessGame = new Chess();
+      var ValidateFenObject = this.ChessGame.validate_fen(fenObject);
+      console.log("The Fen Status:");
+      console.log(ValidateFenObject);
       //FIXME Validate Fen Object using Chess.js because of the format of the fen object genereated by Chessboard.js
       // var ValidateFenObject = ChessGame.validate_fen(fenObject);
-      console.log("The Fen Status:");
-      // console.log(ValidateFenObject);
       //DONE Validate Fen Object if it contains content (2min)
       if( Object.entries(objectvalidate).length == 0)
       { 
