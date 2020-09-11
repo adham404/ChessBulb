@@ -40,8 +40,14 @@ export default {
 
         }
     },
+    destroyed(){
+        EventBus.$emit('Toggle',false)
+    },
     async mounted(){
         // console.log(this.pgn)
+        EventBus.$on('Link', link=>{
+            this.$router.push({ path: link })
+        })
         game = await new Chess()
         chess = await new Chess()
         var commentsengine = await new Chess()

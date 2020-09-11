@@ -59,7 +59,8 @@ export default {
     },
     mounted(){
         
-            
+        send(`position startpos `);
+        send("go depth 20");
         
         EventBus.$on('newfen',  fen1 => {
             // console.log('move happend from event bus')

@@ -1,30 +1,67 @@
 <template>
   <div>
-      <h1>Welcome to Marwan Testing Page</h1>
-      <p> if your name is Shemy please leave the page </p>
-      <ChessBoardDisplay id="1" />
-      <PgnReviewOutput :pgn='pgnv'  />
+     
+      
+          <div v-if="review" >
+              <div style="display:flex" > 
+              <ChessBoardDisplay id="1" />
+              <div>
+                  <h1>Welcome to Marwan Testing Page</h1>
+                  <p> if your name is Shemy please leave the page </p>
+                  <PgnReviewOutput :pgn='pgnv'  />
+                </div>
+              </div>
+            </div>
+            <div v-if="!review" >
+                <div style="display:flex" > 
+                    <ChessBoardInput id="1" />
+                    <div>
+                        <h1>Welcome to Marwan Testing Page</h1>
+                        <p> if your name is Shemy please leave the page </p>
+                        <StockFish />
+                        <PgnReviewInput   />
+                    </div>
+                </div>
+            </div>
+        
+     
+      
   </div>
 </template>
 
 <script>
 import ChessBoardDisplay from '@/components/MarawanComponents/ChessBoard/ChessBoardDisplay.vue'
+import ChessBoardInput from '@/components/MarawanComponents/ChessBoard/ChessBoardInput.vue'
 import PgnReviewOutput from '@/components/MarawanComponents/PgnReview/PgnReviewOutput.vue'
+import PgnReviewInput from '@/components/MarawanComponents/PgnReview/PgnReviewInput.vue'
+import StockFish from '@/components/MarawanComponents/StockFish.vue'
+import {EventBus} from "@/main.js"
 
 export default {
     components:{
         ChessBoardDisplay,
-        PgnReviewOutput
+        PgnReviewOutput,
+        ChessBoardInput,
+        PgnReviewInput,
+        StockFish,
+
         
     },
     mounted(){
-       
+        setTimeout(()=>{EventBus.$emit('Toggle',true)},100) 
+        EventBus.$on('Link', link=>{
+            this.$router.push({ path: link })
+        })
     },
     methods:{
         
     },
+    destroyed(){
+        EventBus.$emit('Toggle',false)
+    },
     data(){
         return{
+            review : false ,
             pgnv :  `[Event "Budapest m"]
 [Site "Budapest"]
 [Date "1895.11.25"]

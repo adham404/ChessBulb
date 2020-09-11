@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="" :id="id" style=" width: 40%;"  ></div>
+      <div class="" :id="id" style=" width: 50vw;"  ></div>
   </div>
 </template>
 
@@ -27,6 +27,12 @@ export default {
     
     mounted(){
         //FIXME add to the docs
+        EventBus.$on('boradfen',async infen =>{
+             game = await new Chess(infen)
+            
+            await board.position(game.fen())
+            EventBus.$emit('newfen',infen);
+        })
         EventBus.$on('boardmove', async inmove => {
             if(game.game_over()){
                 alert('game is over ')
@@ -34,6 +40,12 @@ export default {
             await game.move( inmove, { sloppy: true })
             await board.move(inmove);
             await board.position(game.fen())
+            var lastmove = game.history()
+                lastmove = lastmove[lastmove.length -1]
+                EventBus.$emit('newmove',lastmove);
+                
+                console.log(lastmove)
+                EventBus.$emit('newfen',game.fen());
             // console.log(mm)
             // console.log('move happend in board from the bus')
             });
@@ -84,12 +96,17 @@ export default {
             }
             function onSnapEnd(){
                 board.position(game.fen())
+                var lastmove = game.history()
+                lastmove = lastmove[lastmove.length -1]
+                EventBus.$emit('newmove',lastmove);
+                
+                console.log(lastmove)
+                EventBus.$emit('newfen',game.fen());
                 // console.log(game.fen())
                 }
             //FIXME add to the docs
-            function onChange(source , target){
-                EventBus.$emit('newmove',source + target);
-                EventBus.$emit('newfen',game.fen());
+            function onChange(){
+                
                 // console.log('move happend from the board')
             }
             
