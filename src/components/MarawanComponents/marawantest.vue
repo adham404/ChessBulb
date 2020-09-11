@@ -61,7 +61,7 @@ export default {
     },
     data(){
         return{
-            review : false ,
+            review : true ,
             pgnv :  `[Event "Budapest m"]
 [Site "Budapest"]
 [Date "1895.11.25"]

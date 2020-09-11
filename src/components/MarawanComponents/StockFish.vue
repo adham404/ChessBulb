@@ -148,6 +148,9 @@ export default {
                         
                         
                         
+                    }else if(line == "info depth 0 score mate 0"){
+                        console.log('gameover')
+                         
                     }
                 }
             
