@@ -1,21 +1,37 @@
 <template>
-  <div>//TODO making a Component flag (binding ComponentName) switchin from (NewsFeedView Component) to (Analyze Component) passing the match object (3 minutes)</div>
+  <div>
+    //TODO using the (Header Component) passing the user id and players' names from pgn (2 minutes)
+    //TODO using the (ChessBoard Component) passing the pgn of the match (2 minutes)
+    //TODO using the (PGNReview Component) passing the pgn (2 minutes)
+    //TODO Paragraph tag that shows the (NoOfBrilliants) (2 minutes)
+    //TODO Paragraph tag that shows the (NoOfAnalysis) (2 minutes)
+    //TODO brilliant button @click using brilliant function (2 minutes)
+    //TODO Analyze routerlink pass data (3 minutes)
+    //TODO Using the (Share Component) passing the match id (3 minutes)
+  </div>
 </template>
 
+
 <script>
-//TODO importing (NewsFeedView Component) (1 minute)
-//TODO importing (Analyze Component) (1 minute)
-//TODO importing EventBus (1 minute)
+//TODO importing the (Header Component)  (3 minutes)
+//TODO importing the (ChessBoard Component)(3 minutes)
+//TODO importing the (PGNReview Component)(3 minutes)
+//TODO importing the (Share Component)(3 minutes)
+//TODO importing firebase (3 minutes)
 export default {
-  //TODO using props to get the match object
-  //TODO making the component object (2 minutes)
-  //TODO making the ComponentName variable and set its default to "NewsFeedView" (2 minutes)
-  //TODO Making a variable that store the match object from EventBus (2 minutes)
-  //TODO making a boolean variable using it in switching component and set it to false (1 minute)
-  //TODO in "mounted" using EventBus.$on the analyze clicked and assign the recieving match object to the variable and switch the boolean variable to true, if true change the ComponentName to "Analyze" (5 minutes)
+  //TODO make the component object (3 minutes)
+  //TODO GET the match object from props(3 minutes)
+  //TODO make NoOfAnalysis variable stores the number of analysis(3 minutes)
+  //TODO make a boolean variable that linked with the brilliant button when it's clicked and set it to false(3 minutes)
+  //TODO make brilliant function, if the boolean variable is false increase the NoOfBrilliants by 1, if the brilliant button is clicked then decrease it by 1 (5 minutes)
+  //TODO in "mounted" use the match object to figure the noOfAnalysis out and assign that to NoOfAnalysis variable (5 minutes)
+  //FIXME when the component is destroyed update the database.
 };
 </script>
 
 
-//TODO Testing time (5 minutes)
-//TODO Expected Time (20 minutes)
+<style scoped>
+/*TODO using the css ids from tettra (3 minutes)*/
+</style>
+//TODO Testing (10 minutes)
+//TODO Expected time (83 minutes)

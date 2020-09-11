@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "firebase": "^7.19.1",
     "firebase-tools": "^8.9.2",
+    "flat": "^5.0.2",
     "jquery": "^3.5.1",
     "moment": "^2.27.0",
     "vue": "^2.6.11",

@@ -19,6 +19,7 @@ import Notifications from '@/components/ShemyComponents/Notifications.vue'
 import InstructorProfile from '@/components/MarawanComponents/InstructorProfile.vue'
 import Purchase from '@/components/MarawanComponents/Purchase.vue'
 import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
+import SadekTest from '@/components/SadekComponents/SadekTest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
 
 
@@ -72,14 +73,14 @@ const routes = [
   },
   {
     path: '/Courses/CoursePreview/:CoursesID',
-    name: 'CoursePreview', 
+    name: 'CoursePreview',
     component: CoursePreview,
     props: true
   },
   {
     path: '/Courses/CourseStreaming/:CourseID',
     name: 'CourseStreaming',
-    props:true,
+    props: true,
     component: Streaming
   },
   {
@@ -133,13 +134,18 @@ const routes = [
   {
     path: '/Purchase/:CourseID',
     name: 'Purchase',
-    props:true,
+    props: true,
     component: Purchase
   },
   {
     path: '/FindPlayers',
     name: 'Explore',
     component: FindPlayers
+  },
+  {
+    path: '/Sadek',
+    name: 'Sadek',
+    component: SadekTest
   }
 ]
 
