@@ -11,8 +11,9 @@
               <span v-for="(i,index) in pgnoutput  " :key="index" >
                   <span>{{i.number}}.</span>
                   <span class="pgnmove" @click="moveto(i.move1num)" >{{i.move1}} </span>
+                  <span>{{i.comment1}} </span>
                   <span class="pgnmove" @click="moveto(i.move2num)">{{i.move2}} </span>
-                  <span>{{i.comment}} </span>
+                  <span>{{i.comment2}} </span>
               </span>
           </div>
          
@@ -59,7 +60,8 @@ export default {
             
         }
         //------------------------------------------------------------
-        for(var i = 0 ; i <= moves.length;){
+        comments = [];
+        for(var i = 0 ; i <= moves.length-1;){
             if(commentsengine.get_comment() == undefined){
                 await comments.unshift(null)
             }else {
@@ -69,7 +71,7 @@ export default {
             await commentsengine.undo()
             await i++
         }
-        // console.log(comments)
+        console.log(comments)
         //-------------------------------------------------------------
         //DONE get the move to every move in png(5min) 
         var counter = 1
@@ -81,7 +83,8 @@ export default {
                move2 : moves[index +1],
                move1num : index,
                move2num : index+1,
-               comment : comments[index] || comments[index+1]
+               comment1 : comments[index] ,
+               comment2 : comments[index+1],
            }
            this.pgnoutput.push(p)
            counter++
@@ -131,30 +134,16 @@ export default {
         async moveto(i){
             if(currentmove<i){
                 for (let index = currentmove; index <= i; index++) {
-                await chess.move(moves[index],{ sloppy: true })
-                // console.log(moves[index])
-                
-               
-                
-                    
+                await chess.move(moves[index],{ sloppy: true })   
                 }
                 await EventBus.$emit("displayboardfen",chess.fen())
-                currentmove = i
-                // console.log('moved++')
-                // console.log(currentmove)
-                // console.log(chess.ascii())
-                
+                currentmove = i   
             }else if(currentmove>i){
                 for (let index = currentmove; index > i; index--) {
                 await chess.undo()
-                // console.log(moves[index])
-                // console.log(index)
-            }
+                }
                 await EventBus.$emit("displayboardfen",chess.fen())
                 currentmove = i
-                // console.log('moved++')
-                // console.log(currentmove)
-                // console.log(chess.ascii())
             }
         },
         

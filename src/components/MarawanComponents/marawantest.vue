@@ -1,68 +1,61 @@
 <template>
   <div>
-     
-      
-          <div v-if="review" >
-              <div style="display:flex" > 
-              <ChessBoardDisplay id="1" />
-              <div>
-                  <h1>Welcome to Marwan Testing Page</h1>
-                  <p> if your name is Shemy please leave the page </p>
-                  <PgnReviewOutput :pgn='pgnv'  />
-                </div>
-              </div>
-            </div>
-            <div v-if="!review" >
-                <div style="display:flex" > 
-                    <ChessBoardInput id="1" />
-                    <div>
-                        <h1>Welcome to Marwan Testing Page</h1>
-                        <p> if your name is Shemy please leave the page </p>
-                        <StockFish />
-                        <PgnReviewInput   />
-                    </div>
-                </div>
-            </div>
-        
-     
-      
+    <div v-if="review">
+      <div style="display:flex">
+        <ChessBoardDisplay id="1" />
+        <div>
+          <h1>Welcome to Marwan Testing Page</h1>
+          <p>if your name is Shemy please leave the page</p>
+          <PgnReviewOutput :pgn="pgnv" />
+        </div>
+      </div>
+    </div>
+    <div v-if="!review">
+      <div style="display:flex">
+        <ChessBoardInput id="1" />
+        <div>
+          <h1>Welcome to Marwan Testing Page</h1>
+          <p>if your name is Shemy please leave the page</p>
+          <StockFish />
+          <PgnReviewInput />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import ChessBoardDisplay from '@/components/MarawanComponents/ChessBoard/ChessBoardDisplay.vue'
-import ChessBoardInput from '@/components/MarawanComponents/ChessBoard/ChessBoardInput.vue'
-import PgnReviewOutput from '@/components/MarawanComponents/PgnReview/PgnReviewOutput.vue'
-import PgnReviewInput from '@/components/MarawanComponents/PgnReview/PgnReviewInput.vue'
-import StockFish from '@/components/MarawanComponents/StockFish.vue'
-import {EventBus} from "@/main.js"
+import ChessBoardDisplay from "@/components/MarawanComponents/ChessBoard/ChessBoardDisplay.vue";
+import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput.vue";
+import PgnReviewOutput from "@/components/MarawanComponents/PgnReview/PgnReviewOutput.vue";
+import PgnReviewInput from "@/components/MarawanComponents/PgnReview/PgnReviewInput.vue";
+import StockFish from "@/components/MarawanComponents/StockFish.vue";
+import { EventBus } from "@/main.js";
 
 export default {
-    components:{
-        ChessBoardDisplay,
-        PgnReviewOutput,
-        ChessBoardInput,
-        PgnReviewInput,
-        StockFish,
-
-        
-    },
-    mounted(){
-        setTimeout(()=>{EventBus.$emit('Toggle',true)},100) 
-        EventBus.$on('Link', link=>{
-            this.$router.push({ path: link })
-        })
-    },
-    methods:{
-        
-    },
-    destroyed(){
-        EventBus.$emit('Toggle',false)
-    },
-    data(){
-        return{
-            review : true ,
-            pgnv :  `[Event "Budapest m"]
+  components: {
+    ChessBoardDisplay,
+    PgnReviewOutput,
+    ChessBoardInput,
+    PgnReviewInput,
+    StockFish,
+  },
+  mounted() {
+    setTimeout(() => {
+      EventBus.$emit("Toggle", true);
+    }, 100);
+    EventBus.$on("Link", (link) => {
+      this.$router.push({ path: link });
+    });
+  },
+  methods: {},
+  destroyed() {
+    EventBus.$emit("Toggle", false);
+  },
+  data() {
+    return {
+      review: false,
+      pgnv: `[Event "Budapest m"]
 [Site "Budapest"]
 [Date "1895.11.25"]
 [Round "7"]
@@ -78,17 +71,14 @@ export default {
 16.Qc5 Qb6 17.Bb4 e4 18.dxe4 dxe4 19.Ng5 Qxc5 20.Bxc5 h6 21.Rfd1 Nf6 22.Be7 hxg5
 23.Bxf6 Be6 24.Bxg7 Kxg7 25.a4 Rfc8 26.Rb4 Rc2 27.e3 Rac8 28.Rbd4 Ra2 29.R1d2 Rxd2
 30.Rxd2 Rc4 31.a5 Rc1+ 32.Kh2 Ra1 33.Rc2 Rxa5 34.Rc7+ Kf6 35.Rxb7 Bc4 36.b6 a6
-37.Rc7 Bd3 38.b7 Rb5 39.Rc6+ Kg7 40.Rxa6 Rxb7 41.Ra1 Rb2 42.Kg1   1/2-1/2`
-
-        }
-    }
-
-}
+37.Rc7 Bd3 38.b7 Rb5 39.Rc6+ Kg7 40.Rxa6 Rxb7 41.Ra1 Rb2 42.Kg1   1/2-1/2`,
+    };
+  },
+};
 </script>
 
 <style>
-div{
-    color: white;
+div {
+  color: white;
 }
-
 </style>
