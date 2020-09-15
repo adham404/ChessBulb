@@ -1,3 +1,161 @@
+<template>
+  <div>
+    
+    <!-- <video id="myVideo" width="320" height="240" controls>
+      <source id="mp4_src" v-bind:src="url" type="video/mp4">
+Your browser does not support the video tag.
+</video> -->
+    <video id="recorder" ref="recorder"  ></video><br>
+    <button id="btnstart" v-on:click="startrecord">START RECORD</button>
+    <button id="btnstop"  v-on:click="stoprecord">STOP</button>
+    <button id="btnstop"  v-on:click="puserecording">PUSE</button>
+    <button id="btnstop"  v-on:click="resumerecording">RESUME</button>
+    <button id="btnstop"  v-on:click="showtime">showtime</button>
+  </div>
+</template>
+
+<script>
+import { EventBus } from '../../main';
+const {stopwatch} = require('durations')
+ let mediaRecorder
+//  let blobrecorded 
+ var timestamps =[]  ;
+export default {
+   data:()=>{
+     return{
+       url : null,
+       clock:null
+  }},
+  mounted(){
+      EventBus.$on("newmove",move =>{
+          this.addatimestamp(move)
+          console.log(timestamps)
+      });
+    this.clock = stopwatch()
+    let constraintObj = { 
+            audio: true, 
+            video: { 
+                facingMode: "user", 
+                width: { min: 640, ideal: 1280, max: 1920 },
+                height: { min: 480, ideal: 720, max: 1080 } 
+            } 
+        }; 
+        // width: 1280, height: 720  -- preference only
+        // facingMode: {exact: "user"}
+        // facingMode: "environment"
+        
+        //handle older browsers that might implement getUserMedia in some way
+        if (navigator.mediaDevices === undefined) {
+            navigator.mediaDevices = {};
+            navigator.mediaDevices.getUserMedia = function(constraintObj) {
+                let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                if (!getUserMedia) {
+                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                }
+                return new Promise(function(resolve, reject) {
+                    getUserMedia.call(navigator, constraintObj, resolve, reject);
+                });
+            }
+        }else{
+            navigator.mediaDevices.enumerateDevices()
+            .then(devices => {
+                // devices.forEach(device=>{
+                //     console.log(device.kind.toUpperCase(), device.label);
+                //     //, device.deviceId
+                // }
+                // )
+                return devices ;
+            })
+            .catch(err=>{
+                console.log(err.name, err.message);
+            })
+        }
+
+        navigator.mediaDevices.getUserMedia(constraintObj)
+        .then(function(mediaStreamObj) {
+            //connect the media stream to the first video element
+            let video = document.getElementById("recorder");
+            video.muted = true;
+            if ("srcObject" in video) {
+                video.srcObject = mediaStreamObj;
+            } else {
+                //old version
+                video.src = window.URL.createObjectURL(mediaStreamObj);
+            }
+            
+            video.onloadedmetadata = function() {
+                //show in the video element what is being captured by the webcam
+                video.play();
+            };
+             mediaRecorder = new MediaRecorder(mediaStreamObj);
+             let chunks = [];
+             mediaRecorder.ondataavailable = function(ev) {
+                chunks.push(ev.data);
+            }
+            mediaRecorder.onstop = ()=>{
+                let blob = new Blob(chunks, { 'type' : 'video/mp4;' });
+                chunks = [];
+                // let videoURL = window.URL.createObjectURL(blob);
+                EventBus.$emit('newvideo',blob)
+                // blobrecorded = blob
+                // console.log(videoURL) ;
+                // document.getElementById("mp4_src").src = videoURL ;
+                // document.getElementById("myVideo").load(); 
+            }
+             })
+        .catch(function(err) { 
+            console.log(err.name, err.message); 
+        });
+
+  },
+ 
+  methods:{
+      addatimestamp(e){
+          var newst = {
+              time : this.clock.duration().seconds() ,
+              event : e
+          }
+          timestamps.push(newst)
+      },
+
+  startrecord(){
+    timestamps = []
+    EventBus.$emit('boradfen', 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+    mediaRecorder.start();
+    console.log(mediaRecorder.state);
+    this.clock.reset()
+    this.clock.start()
+           
+  },
+   stoprecord(){
+    mediaRecorder.stop();
+    console.log(mediaRecorder.state);
+    this.clock.stop()
+    
+  },
+  puserecording(){
+    mediaRecorder.pause();
+    console.log(mediaRecorder.state);
+    this.clock.stop()
+  },
+  resumerecording(){
+    mediaRecorder.resume();
+    console.log(mediaRecorder.state);
+    this.clock.start()
+  },
+  showtime(){
+      console.log(this.$refs["recorder"].currentTime )
+    
+  }
+  
+  }
+}
+</script>
+
+<style>
+
+</style>
+
 //DONE make a flow chart
 //TODO create video tag(3min)
 //TODO add a funcation to handle camera requaset(5min)

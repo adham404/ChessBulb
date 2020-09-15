@@ -1,6 +1,7 @@
-//TODO if the change event tregared in the board (5min) //TODO get the pgn from
-the board(5min) //TODO import pgnreview output(5min) //TODO make the last move
-highlight(5min)
+//TODO if the change event tregared in the board (5min) 
+//TODO get the pgn from the board(5min) 
+//TODO import pgnreview output(5min) 
+//TODO make the last movehighlight(5min)
 <template>
   <div>
     hi iam pgnreview
@@ -26,7 +27,7 @@ var currentmove = -1;
 export default {
   data() {
     return {
-      pgn: null,
+      
       pgnoutput:[],
     };
   },
@@ -38,7 +39,6 @@ export default {
         console.log(await game.move(move));
         console.log(move);
         moves = await game.history();
-        this.pgn = game.pgn();
         currentmove++;
         console.log(currentmove);
         console.log(moves.length);
@@ -49,7 +49,6 @@ export default {
         await game.load_pgn(chess.pgn(), { sloppy: true });
         moves = await game.history();
         currentmove++;
-        this.pgn = game.pgn();
         console.log("currentmove=" + currentmove);
         console.log("moves.length" + moves.length);
       }
@@ -58,12 +57,12 @@ export default {
     EventBus.$on("Control", async (data) => {
       console.log(moves);
       if (data == "next") {
-        await console.log("currentmove = " + currentmove);
-        console.log("moves.length = " + moves.length);
+        // await console.log("currentmove = " + currentmove);
+        // console.log("moves.length = " + moves.length);
         if (currentmove < moves.length - 1) {
           await currentmove++;
           await chess.move(moves[currentmove], { sloppy: true });
-          console.log(moves[currentmove]);
+          // console.log(moves[currentmove]);
           //DONE find out which is best to send fen or the move"B2B5"
           await EventBus.$emit("boradfen", chess.fen());
           // console.log('moved++')
@@ -72,7 +71,7 @@ export default {
         }
       } else if (data == "back") {
         if (currentmove > -1) {
-          console.log(currentmove);
+          // console.log(currentmove);
           await currentmove--;
 
           await chess.undo();
@@ -82,7 +81,7 @@ export default {
       } else if (data == "first") {
         this.moveto(-1);
       } else if (data == "end") {
-        this.moveto(moves.length);
+        this.moveto(moves.length -1);
       }
     });
   },
