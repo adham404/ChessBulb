@@ -73,7 +73,7 @@ export default {
       function piecelink(piece){
         return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
       }
-      this.Fen = this.FenObject + ' w - - 0 1';  //Converting the chessboard fen format to the chess.js fen format 
+      this.Fen = this.FenObject;  //Converting the chessboard fen format to the chess.js fen format 
       var config = {
         draggable: true,
         showErrors : 'alert',

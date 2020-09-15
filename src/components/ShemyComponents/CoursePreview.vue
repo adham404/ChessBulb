@@ -31,6 +31,7 @@
     <hr>
     <!-- DONE Right To the Left DIV put [AboutInstructor] and pass user id (5min)  -->
     <AboutInstructor :ID="Courses.InstructorId"></AboutInstructor>
+    <!-- <component :ID="Courses.InstructorId" :is="AboutInstructor"></component> -->
     <hr>
     <!-- DONE Under the Left DIV put [Reviews] and pass (CourseData.ID) (5min) -->
     <Reviews :CourseID="Courses.CourseId"></Reviews>
@@ -42,6 +43,7 @@
 
 <script>
 import firebase from "firebase";
+import { EventBus } from "../../main";
 import AboutInstructor from "../ShemyComponents/AboutInstructor"
 import Reviews from "../ShemyComponents/Reviews"
 import Rate from "../ShemyComponents/Rate"
@@ -51,7 +53,8 @@ export default {
     {
         return{
             Courses:{},
-            PurchaseFlag:false
+            PurchaseFlag:false,
+            AboutInstructor:"AboutInstructor"
         }
     },
     components:{
@@ -71,6 +74,8 @@ export default {
             if(query.exists)
             {
                 self.Courses = query.data();
+                //Send Instructor ID to AboutInstructor component
+                EventBus.$emit("InstructorID",self.Courses.InstructorId)
             }
             else
             {

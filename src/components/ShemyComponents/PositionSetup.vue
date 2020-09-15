@@ -22,43 +22,33 @@ export default {
     data: function()
     {
       return{
-        PositionCorrect: false,
-        StartupObject:{
-
-          },
-          ChessGame:"",
-          Hamada:"2na ba3mel test"
+        ChessBoard:"",  //a ChessBoard.js instance object
+        ChessGame:"", //a Chess.js instance object
+        Fen:"" //The Fen object of the ChessBoard
       }
     },
     methods:{
       //TODO create Save Function (1min)
     Save: function()
     {
-      var objectvalidate = this.StartupObject.position()
-      var fenObject = this.StartupObject.fen() + ' w - - 0 1';
-      console.log(fenObject);
-      this.ChessGame = new Chess();
-      var ValidateFenObject = this.ChessGame.validate_fen(fenObject);
+      this.Fen = this.Chessboard.fen() + ' w - - 0 1';  // Convert ChessBoard.js Fen format to Chess.js Fen format
+      this.ChessGame = new Chess();  //Create Chess.js instance
+      //FIXME Validate Fen Object using Chess.js because of the format of the fen object genereated by Chessboard.js
+      var ValidateFenObject = this.ChessGame.load(this.Fen); //Create a variable that holds the message of chess.js fen validation
       console.log("The Fen Status:");
       console.log(ValidateFenObject);
-      //FIXME Validate Fen Object using Chess.js because of the format of the fen object genereated by Chessboard.js
-      // var ValidateFenObject = ChessGame.validate_fen(fenObject);
-      //DONE Validate Fen Object if it contains content (2min)
-      if( Object.entries(objectvalidate).length == 0)
-      { 
-        //DONE If the Chess Object is empty Launch a Validation Msg (1min) 
-        alert("Position is empty ... please setup chess position in board then submit");
-        this.PositionCorrect = false;
-      }
-      else{
-        this.PositionCorrect = true;
       //DONE If the Fen Object is not empty and validated Send Fen Object data to [PostStoryContent] component and send SwapFlag Property to [AddStory] Component using EventBus Sending Signals (5min) 
-        EventBus.$emit("PositionIsSet",this.PositionCorrect);
-        EventBus.$emit("SendPosition",fenObject);
-        console.log("Reprint of Fen object");
-        console.log(fenObject);
+      EventBus.$emit("PositionIsSet");
+      EventBus.$emit("SendPosition",this.Fen);
+      //FIXME Validate Fen Object if it contains content (2min)
+      // if(Object.entries(objectvalidate).length == 0)
+      // { 
+      //   //DONE If the Chess Object is empty Launch a Validation Msg (1min) 
+      //   alert("Position is empty ... please setup chess position in board then submit");
+      // }
+      // else{
 
-      }
+      // }
     }
     },
     mounted(){
@@ -75,8 +65,8 @@ export default {
 
       }
     //DONE Recieve Chess Object with the Setup Position From ChessBoard.js (2min)
-      var StartingBoard = Chessboard('Board1', config);
-      this.StartupObject = StartingBoard;
+    var Board = Chessboard('Board1', config); //Create a ChessBoard.js instance
+    this.Chessboard = Board;
     }
 }
 </script>
