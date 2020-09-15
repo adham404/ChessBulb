@@ -1,44 +1,37 @@
 <template>
   <div>
-    <div v-if="review">
-      <div style="display:flex">
-        <ChessBoardDisplay id="1" />
-        <div>
-          <h1>Welcome to Marwan Testing Page</h1>
-          <p>if your name is Shemy please leave the page</p>
-          <PgnReviewOutput :pgn="pgnv" />
-        </div>
+    <div style="display :flex" >
+      <ChessBoardInput id="1" />
+      <div>
+        <VideoRecording />
+        <PgnReviewInput/>
+        <UploadPgn/>
       </div>
+      
     </div>
-    <div v-if="!review">
-      <div style="display:flex">
-        <ChessBoardInput id="1" />
-        <div>
-          <h1>Welcome to Marwan Testing Page</h1>
-          <p>if your name is Shemy please leave the page</p>
-          <StockFish />
-          <PgnReviewInput />
-        </div>
-      </div>
-    </div>
+    <CourseForm/>
+    
   </div>
 </template>
 
 <script>
-import ChessBoardDisplay from "@/components/MarawanComponents/ChessBoard/ChessBoardDisplay.vue";
 import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput.vue";
-import PgnReviewOutput from "@/components/MarawanComponents/PgnReview/PgnReviewOutput.vue";
+import VideoRecording from "@/components/MarawanComponents/VideoRecording.vue";
+import UploadPgn from "@/components/MarawanComponents/UploadPgn.vue";
+import CourseForm from "@/components/MarawanComponents/CourseForm.vue";
 import PgnReviewInput from "@/components/MarawanComponents/PgnReview/PgnReviewInput.vue";
-import StockFish from "@/components/MarawanComponents/StockFish.vue";
+
+
 import { EventBus } from "@/main.js";
 
 export default {
   components: {
-    ChessBoardDisplay,
-    PgnReviewOutput,
+   
     ChessBoardInput,
+    VideoRecording,
     PgnReviewInput,
-    StockFish,
+    UploadPgn,
+    CourseForm
   },
   mounted() {
     setTimeout(() => {
