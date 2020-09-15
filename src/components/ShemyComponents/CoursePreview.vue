@@ -16,13 +16,13 @@
     <div style="border:1px solid #ccc">
         Price: {{Courses.Price}}
     </div>
-    <router-link :to="{
+    <!-- <router-link :to="{
         path:`/Purchase/${CoursesID}`,
         params:{CourseID: CoursesID}
     }">
         <button>Purchase Course</button>
-    </router-link>
-    <router-link v-if="PurchaseFlag" :to="{
+    </router-link> -->
+    <router-link  :to="{
         path:`/Courses/CourseStreaming/${CoursesID}`,
         params:{CourseID: CoursesID}
         }">
@@ -36,7 +36,7 @@
     <!-- DONE Under the Left DIV put [Reviews] and pass (CourseData.ID) (5min) -->
     <Reviews :CourseID="Courses.CourseId"></Reviews>
     <!-- DONE Under [Reviews] put [Rate] and pass Boolean Value (PreviewFlag) (5min) -->
-    <Rate></Rate>
+    <RateCourse :CourseID="Courses.CourseId"></RateCourse>
 </div>
   
 </template>
@@ -46,7 +46,7 @@ import firebase from "firebase";
 import { EventBus } from "../../main";
 import AboutInstructor from "../ShemyComponents/AboutInstructor"
 import Reviews from "../ShemyComponents/Reviews"
-import Rate from "../ShemyComponents/Rate"
+import RateCourse from "../ShemyComponents/RateCourse"
     //TODO Assign Data Properties in the vue data object which are (PurchaseFlag(B), CourseData(O), PreviewFlag(B)) (1min)
 export default {
     data: function()
@@ -60,7 +60,7 @@ export default {
     components:{
         AboutInstructor,
         Reviews,
-        Rate
+        RateCourse
     },
     props:["CoursesID"],
     //DONE Declare Mounted Property (1min)
@@ -75,8 +75,12 @@ export default {
             {
                 self.Courses = query.data();
                 //Send Instructor ID to AboutInstructor component
-                EventBus.$emit("InstructorID",self.Courses.InstructorId)
-            }
+                EventBus.$emit("InstructorID",self.Courses.InstructorId);
+                //Send CourseID to Review and Rate component
+                EventBus.$emit("CourseIDToReview",self.Courses.CourseId);
+                EventBus.$emit("Rate",self.Courses.CourseId);
+
+}
             else
             {
                 console.log("No Doc in here");
