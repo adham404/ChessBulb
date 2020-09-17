@@ -25,7 +25,12 @@ export default {
   },
 
   mounted() {
+    var isboeardactive = true
     //FIXME add to the docs
+    EventBus.$on('boardactive',data =>{
+      isboeardactive = data
+    })
+    
     EventBus.$on("boradfen", async (infen) => {
       game = await new Chess(infen);
 
@@ -44,6 +49,7 @@ export default {
         EventBus.$emit("newmove", lastmove);
         console.log(lastmove);
         EventBus.$emit("newfen", game.fen());
+        EventBus.$emit("newfenAndmove", [game.fen(),lastmove]);
       }
     });
     var game;
@@ -69,6 +75,8 @@ export default {
         (game.turn() === "b" && piece.search(/^w/) !== -1)
       ) {
         return false;
+      }else if(!isboeardactive){
+        return false
       }
       // console.log(position)
       // console.log(orientation)
@@ -94,6 +102,7 @@ export default {
       lastmove = lastmove[lastmove.length - 1];
       EventBus.$emit("newmove", lastmove);
       EventBus.$emit("newfen", game.fen());
+      EventBus.$emit("newfenAndmove", [game.fen(),lastmove]);
     }
 
     //DONE valitade move(20min)

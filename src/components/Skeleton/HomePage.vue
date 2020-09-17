@@ -4,6 +4,8 @@
 		<tr></tr>
 		<router-link to="/Marwan">Marwan Testing Page</router-link>
 		<tr></tr>
+		<router-link to="/CreateCourse">Create Course</router-link>
+		<tr></tr>
 		<router-link to="/Sadek">Sadek Testing Page</router-link>
 		<tr></tr>
 		<router-link to="/PostStory">Post Story</router-link>

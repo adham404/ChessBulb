@@ -6,32 +6,27 @@
 Your browser does not support the video tag.
 </video> -->
     <video id="recorder" ref="recorder"  ></video><br>
+    <div>{{status}}</div>
     <button id="btnstart" v-on:click="startrecord">START RECORD</button>
     <button id="btnstop"  v-on:click="stoprecord">STOP</button>
     <button id="btnstop"  v-on:click="puserecording">PUSE</button>
     <button id="btnstop"  v-on:click="resumerecording">RESUME</button>
-    <button id="btnstop"  v-on:click="showtime">showtime</button>
   </div>
 </template>
 
 <script>
 import { EventBus } from '../../main';
-const {stopwatch} = require('durations')
  let mediaRecorder
 //  let blobrecorded 
- var timestamps =[]  ;
 export default {
    data:()=>{
      return{
        url : null,
-       clock:null
+       clock:null,
+       status : null,
   }},
   mounted(){
-      EventBus.$on("newmove",move =>{
-          this.addatimestamp(move)
-          console.log(timestamps)
-      });
-    this.clock = stopwatch()
+      this.status = "NOT RECORDING"
     let constraintObj = { 
             audio: true, 
             video: { 
@@ -110,43 +105,49 @@ export default {
   },
  
   methods:{
-      addatimestamp(e){
-          var newst = {
-              time : this.clock.duration().seconds() ,
-              event : e
-          }
-          timestamps.push(newst)
-      },
-
+     
   startrecord(){
-    timestamps = []
-    EventBus.$emit('boradfen', 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
-    mediaRecorder.start();
-    console.log(mediaRecorder.state);
-    this.clock.reset()
-    this.clock.start()
+    
+    
+    if(mediaRecorder.state == 'inactive'){
+        this.status = "RECORDING"
+        EventBus.$emit('boradfen', 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+        mediaRecorder.start();
+        console.log(mediaRecorder.state);
+        EventBus.$emit('StartRecording')
+    }
            
   },
    stoprecord(){
-    mediaRecorder.stop();
-    console.log(mediaRecorder.state);
-    this.clock.stop()
+   
+    if(mediaRecorder.state != 'inactive'){
+      this.status = "NOT RECORDING"
+        mediaRecorder.stop();
+        console.log(mediaRecorder.state);
+        EventBus.$emit('StopRecording')
+    }
+    
     
   },
   puserecording(){
-    mediaRecorder.pause();
-    console.log(mediaRecorder.state);
-    this.clock.stop()
+      if(mediaRecorder.state != 'inactive'){
+      this.status = "NOT RECORDING"
+        mediaRecorder.pause();
+        console.log(mediaRecorder.state);
+        EventBus.$emit('PuseRecording')
+      }
+
   },
   resumerecording(){
-    mediaRecorder.resume();
-    console.log(mediaRecorder.state);
-    this.clock.start()
+      if(mediaRecorder.state != 'inactive'){
+      this.status = "NOT RECORDING"
+        mediaRecorder.resume();
+        console.log(mediaRecorder.state);
+        EventBus.$emit('ResumeRecording')
+      }
+
   },
-  showtime(){
-      console.log(this.$refs["recorder"].currentTime )
-    
-  }
+  
   
   }
 }
