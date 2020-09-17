@@ -1,16 +1,30 @@
 <template>
-  <div>
-      //TODO add [ChessBoard] to the left and pass (PGNMOVE) with Stock fish enabled (10min)
-      //TODO add [VideoPlayer] to the right (5min)
-      //TODO add Course Title under the [VideoPlayer] and pass (CourseData.ID) to it (4min)
-      //TODO under the [VideoPlayer] add Div containing the property (CoursePGN) to show PGN Review under the Course Title containing (CourseData.Title) (5min)
-      //TODO under the div showing the PGN review add two buttons at the end under the [PGNReview] and Assign it to the two Functions {DownloadPGN} and {RateTheCourse} that routes to [Rate] after passing to it the (CourseData.ID) (10min)
+  <div style="display:flex;" >
+      <!-- TODO add [ChessBoard] to the left and pass (PGNMOVE) with Stock fish enabled (10min) -->
+      <ChessBoardDisplay id='1' />
+      <!-- TODO add [VideoPlayer] to the right (5min) -->
+      <VideoPlayer />
+      <!-- TODO add Course Title under the [VideoPlayer] and pass (CourseData.ID) to it (4min) -->
+      <!-- TODO under the [VideoPlayer] add Div containing the property (CoursePGN) to show PGN Review under the Course Title containing (CourseData.Title) (5min) -->
+        <!-- TODO under the div showing the PGN review add two buttons at the end under the [PGNReview] and Assign it to the two Functions {DownloadPGN} and {RateTheCourse} that routes to [Rate] after passing to it the (CourseData.ID) (10min) -->
   </div>
 </template>
 
 <script>
+import ChessBoardDisplay from "../MarawanComponents/ChessBoard/ChessBoardDisplay";
+import VideoPlayer from "../ShemyComponents/VideoPlayer";
 export default {
     //TODO Assign Data Properties in the vue data object which are (CourseData(O), CoursePGN(O), PGNMove(S)) (1min)
+    data: function()
+    {
+      return{
+
+      }
+    },
+    components:{
+      ChessBoardDisplay,
+      VideoPlayer
+    }
     //TODO Assign EventBus (1min) 
     //TODO Assign Firebase (1min) 
     //TODO Declare Mounted Property (1min)

@@ -18,8 +18,9 @@
 
 </template>
 <script>
+  //DONE assign Firebase (1min)
   import firebase from "firebase";
-  import { EventBus } from "../../main";
+  // import { EventBus } from "../../main";
 export default {
     //TODO Assign Data Properties in the vue data object which are (RateComment(S), NumberOfStars(I), DateOfReview(D), ContentRate(O)) (1min)
     data:function(){
@@ -32,45 +33,51 @@ export default {
         UserPurchased:true
       }
     },
+    //DONE Recieve Academy/CourseID from the router props (5min) 
+    props:['CourseID'],
     methods:{
+    //DONE define the function Submit (1min)
       Submit(){
+        console.log("The Course ID is "+ this.CourseID);
         console.log("The User's Review is");
         console.log("Comment: "+ this.Review.Comment);
         console.log("The User's Rate is");
         console.log("Rate: "+ this.Review.Rate);
-        EventBus.$on("Rate",(ID)=>{
-          console.log("ID is: "+ ID);
-          this.Review.CourseID = ID
+        this.Review.CourseID = this.CourseID;
+        //TODO Check for Current UserID with the CourseID inside the CourseOrders Table after it's added in purchase 
           if(this.UserPurchased)
           {
+              console.log("The ID is "+ this.Review.CourseID);
             //Post Review to FireStore
+          //TODO Get UserID and assign User's First Name to (FirstName) and assign User's Last Name to (LastName) (10min)
+          let self = this;
           var Db = firebase.firestore();
           var DbRef = Db.collection("Reviews");
+          //FIXME Create ReviewID (10min)
+          //DONE Send Data object (Review) to the Firestore (5min)
           DbRef.doc("123456777").set({
             AcademyId:"12345678",
-            Comment:this.Review.Comment,
-            CourseId:this.Review.CourseID,
+            Comment: self.Review.Comment,
+            CourseId: self.Review.CourseID,
             DateOfReview:"15 Sep 2020 at 11:11:43 UTC+2 ",
             FirstName:"Gustavo",
             LastName:"Fring",
-            NumberOfStars:this.Review.Rate,
+            NumberOfStars: self.Review.Rate,
             ReviewId:"12345699",
             UserID:"12345699"
           })
+          alert("Your Rate has been Posted Successfully thanks for your Feedback");
+          this.Review.Comment="";
+          this.Review.Rate = 0;
         }
-        })
+        else{
+          alert("You Should Purchase the Course in order to Submit your feedback and thanks!");
+          this.Review.Comment="";
+          this.Review.Rate = 0;
+        }
+
         }
     }    
-    //TODO assign Firebase (1min)
-    //TODO assign EventBus (1min)
-    //TODO When Mount Recieve (PreviewFlag) using router props if true Check for userID inside the Courses and if found proceed to submit Rating (10min)
-    //TODO if not Pop up message indicating that user must be enrolled to submit his review (3min)
-    //TODO define the function Submit (1min)
-    //TODO Get UserID and assign User's First Name to (FirstName) and assign User's Last Name to (LastName) (10min)
-    //FIXME Create ReviewID (10min)
-    //TODO Recieve Academy/CourseID from the router props (5min) 
-    //TODO set (RateComment, NumberOfStars, DateOfReview, FirstName, LastName, ReviewID, UserID, Academy/CourseID) to the object ContentRate (10min)
-    //TODO Send Data object (ContentRate) to the Firestore (5min)
 }
 </script>
 

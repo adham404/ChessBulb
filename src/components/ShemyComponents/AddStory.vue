@@ -26,11 +26,8 @@ export default {
     //DONE set up a mounted method (1min)
     mounted(){
     //DONE Inside mounted method ... Recieve Signal from EventBus from the [PositionSetup] and assign it to the PositionSetupFlag property(2min)
-    EventBus.$on("PositionIsSet", (flag)=>{
-        if(flag)
-        {
+    EventBus.$on("PositionIsSet", ()=>{
           this.CurrentComponent = "PostStoryContent"
-        }
     })
     EventBus.$on("SendPosition", (Fen) => {
         this.FenObject = Fen
