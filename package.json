@@ -19,7 +19,8 @@
     "moment": "^2.27.0",
     "vue": "^2.6.11",
     "vue-chat-scroll": "^1.4.0",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vue-video-player": "^5.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.0",
