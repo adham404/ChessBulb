@@ -38,16 +38,10 @@ export default {
     methods:{
     //DONE define the function Submit (1min)
       Submit(){
-        console.log("The Course ID is "+ this.CourseID);
-        console.log("The User's Review is");
-        console.log("Comment: "+ this.Review.Comment);
-        console.log("The User's Rate is");
-        console.log("Rate: "+ this.Review.Rate);
         this.Review.CourseID = this.CourseID;
         //TODO Check for Current UserID with the CourseID inside the CourseOrders Table after it's added in purchase 
           if(this.UserPurchased)
           {
-              console.log("The ID is "+ this.Review.CourseID);
             //Post Review to FireStore
           //TODO Get UserID and assign User's First Name to (FirstName) and assign User's Last Name to (LastName) (10min)
           let self = this;

@@ -30,11 +30,11 @@
     </router-link>
     <hr>
     <!-- DONE Right To the Left DIV put [AboutInstructor] and pass user id (5min)  -->
-    <AboutInstructor :ID="Courses.InstructorId"></AboutInstructor>
+    <AboutInstructor></AboutInstructor>
     <!-- <component :ID="Courses.InstructorId" :is="AboutInstructor"></component> -->
     <hr>
     <!-- DONE Under the Left DIV put [Reviews] and pass (CourseData.ID) (5min) -->
-    <Reviews :CourseID="Courses.CourseId"></Reviews>
+    <Reviews></Reviews>
     <!-- DONE Under [Reviews] put [Rate] and pass Boolean Value (PreviewFlag) (5min) -->
     <RateCourse :CourseID="Courses.CourseId"></RateCourse>
 </div>
@@ -62,32 +62,39 @@ export default {
         Reviews,
         RateCourse
     },
+    methods:{
+        async RecieveCoursesData()
+        {
+            var id = this.CoursesID;
+            let self = this;
+            var db = firebase.firestore();
+            //DONE Recieve and assign (CourseData) from firebase using Passed Course ID returned from the props (10min)
+            var docRef = db.collection("Courses").doc(id);
+            let response = await docRef.get().then((query)=>{
+                if(query.exists)
+                {
+                    self.Courses = query.data();
+                    //Send Instructor ID to AboutInstructor component
+                    EventBus.$emit("InstructorID",self.Courses.InstructorId);
+                    //Send CourseID to Review and Rate component
+                    EventBus.$emit("CourseIDToReview",self.Courses.CourseId);
+                    EventBus.$emit("Rate",self.Courses.CourseId);
+                    // EventBus.$emit("Streaming",self.Courses.CourseId);
+                }
+                else
+                {
+                    console.log("No Doc in here");
+                }
+            }).catch((error)=>{
+                console.log("Error getting document: ", error);
+            });
+            console.log(response);
+        }
+    },
     props:["CoursesID"],
     //DONE Declare Mounted Property (1min)
     mounted(){
-        var id = this.CoursesID;
-        let self = this;
-        var db = firebase.firestore();
-        //DONE Recieve and assign (CourseData) from firebase using Passed Course ID returned from the props (10min)
-        var docRef = db.collection("Courses").doc(id);
-        docRef.get().then((query)=>{
-            if(query.exists)
-            {
-                self.Courses = query.data();
-                //Send Instructor ID to AboutInstructor component
-                EventBus.$emit("InstructorID",self.Courses.InstructorId);
-                //Send CourseID to Review and Rate component
-                EventBus.$emit("CourseIDToReview",self.Courses.CourseId);
-                EventBus.$emit("Rate",self.Courses.CourseId);
-
-}
-            else
-            {
-                console.log("No Doc in here");
-            }
-        }).catch((error)=>{
-            console.log("Error getting document: ", error);
-        });
+        this.RecieveCoursesData();
     }
     //FIXME Check For the (CourseData.ID) if it matches one of the courses ID inside the User Object using UserID (10min)
     //TODO If it's True set (PurchaseFlag) False else set True (2min)  

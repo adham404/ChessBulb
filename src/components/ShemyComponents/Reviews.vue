@@ -29,8 +29,6 @@ export default {
     mounted()
     {
       EventBus.$on("CourseIDToReview",(ID)=>{
-        console.log("The Course ID of The following courses is: "+ ID);
-        console.log("Holla")
       var db = firebase.firestore()
       let self = this;
       var DbRef = db.collection("Reviews").where("CourseId", "==", ID);

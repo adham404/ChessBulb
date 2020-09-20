@@ -41,26 +41,26 @@ export default {
       CourseCard,
       FilterSearch
     },
+    methods:{
+      async RecieveCoursesID()
+      {
+        let self = this;
+        var db = firebase.firestore();
+        var docRef = db.collection("Courses");
+        let response = await docRef.get().then((query)=>{
+          query.forEach((doc) => {
+            self.Courses.push(doc.data());
+          });
+        }).catch((error) =>{
+          console.log("Error Recieving Courses: "+error);
+        })
+        console.log(response);
+      }
+    },
   //DONE Declare Mounted Property (1min)
     mounted()
     {
-      let self = this;
-      var db = firebase.firestore();
-      var docRef = db.collection("Courses");
-      docRef.get().then((query)=>{
-        query.forEach((doc) => {
-          self.Courses.push(doc.data());
-        });
-      });
-      // for(let ball of self.Courses)
-      // {
-      //   console.log(ball)
-      // }
-      // console.log(self.Courses);
-      // self.Courses.forEach((X) => {
-      //   console.log("First Document is: ")
-      //   console.log(X);
-      // })
+      this.RecieveCoursesID();
     }
     //TODO Assign EventBus (1min) 
     //TODO Recieve (CourseType) Data property using EventBus signal from [Homepage] and [Profile] (3min)

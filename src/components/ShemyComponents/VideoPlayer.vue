@@ -1,26 +1,6 @@
 <template>
   <div>
       <!-- FIXME add div containing VideoPlayer that is playing (CourseVideo) (20min) -->
-      <!-- <videoPlayer
-        :options="playerOptions"      
-        class="video-player-box"
-        :playsinline="true"
-        ref="videoPlayer"
-        
-        customEventName="customstatechangedeventname"
-        @play="onPlayerPlay($event)"
-        @pause="onPlayerPause($event)"
-        @ended="onPlayerEnded($event)"
-        @waiting="onPlayerWaiting($event)"
-        @playing="onPlayerPlaying($event)"
-        @loadeddata="onPlayerLoadeddata($event)"
-        @timeupdate="onPlayerTimeupdate($event)"
-        @canplay="onPlayerCanplay($event)"
-        @canplaythrough="onPlayerCanplaythrough($event)"
-
-        @statechanged="playerStateChanged($event)"
-        @ready="playerReadied"
-      ></videoPlayer> -->
       <video
       id="myVideo"
       class="video-js vjs-default-skin"
@@ -28,6 +8,11 @@
       >
       <source :src="video" type="video/mp4" />
       </video>
+      <p>معلش بنعالج ال انستراكتور بتاعنا</p>
+      <!-- <p>{{this.VideoID}}</p> -->
+      <button @click="SkipFive">Jump To Five Second in video</button>
+      <button @click="BeginVideo">Begin</button>
+      <button @click="EndVideo">End</button>
       <!-- <video controls>
       <source src="../../assets/Test.mp4" type="video/mp4" />
       </video> -->
@@ -35,6 +20,7 @@
 </template>
 
 <script>
+// import {EventBus} from "../../main";
 import firebase from "firebase"
 import videojs from "video.js"
 import 'video.js/dist/video-js.css'
@@ -50,6 +36,7 @@ export default {
                     controls: true,
                     autoplay: false,
                     fluid: false,
+                    oncontextmenu: false,
                     loop: false,
                     width: 500,
                     height: 500,
@@ -60,23 +47,45 @@ export default {
                 video:"",
                 VideoSrc:"",
                 VideoRef:"",
-                gsRef:""
+                gsRef:"",
+                IDVIDEO:""
         }
     },
-    mounted(){
+    props:["VID"],
+    methods:{
+        async GetVideoLink()
+        {
+        // console.log("assurance: "+ ID);
         var StorageRef = firebase.storage();
-        this.VideoRef = StorageRef.ref('Courses/Course1.mp4');
+        this.VideoRef = StorageRef.ref(`Courses/${this.VID}.mp4`);
         let self = this;
-        self.VideoRef.getDownloadURL().then(function(url) {
-        // `url` is the download URL for 'images/stars.jpg'
-        console.log("The Url is: "+url);
-        self.video = url.toString();
-        console.log("The Url again is: "+ self.video);
-        self.player = videojs('#myVideo', self.options);
+        let response = await self.VideoRef.getDownloadURL().then(function(url) {
+        self.video = url;
         }).catch(function(error) {
             console.log("error downloading: "+ error);
         // Handle any errors
         });
+        self.player = videojs('#myVideo', self.options);
+        console.log(response);
+        },
+        SkipFive()
+        {
+            this.player.currentTime(5);
+        },
+        BeginVideo()
+        {
+            this.player.currentTime(0);
+        },
+        EndVideo()
+        {
+            this.player.currentTime(25);
+        }
+    },
+    mounted(){
+        this.GetVideoLink();
+        // EventBus.$on("VideoPlayer",(ID)=>{
+        //     console.log("ID Recieved for de video is: "+ ID);
+        // })
         //TODO Assign EventBus (1min) 
         //TODO Assign Firebase (1min) 
         //TODO Declare Mounted Property (1min)
@@ -84,8 +93,6 @@ export default {
         //FIXME Recieve (CourseVideo) from Firebase Cloud storage using CourseID (20min)
         //FIXME Recieve (VideoRecordPGNObject) from Firebase Cloud storage using CourseID (5min)
         //TODO if(VideoRecordPGNObject[VideoCounter].Time == CourseVideo.currentTime){ send VideoRecordPGNObject[VideoCounter].Move using EventBus signal to [Streaming] and increment (VideoCounter)} (5min)
-    },
-    components:{
     },
     beforeDestroy() {
         if (this.player) {

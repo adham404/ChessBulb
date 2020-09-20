@@ -19,14 +19,13 @@ export default {
             AboutInstructor:"",
         }
     },
-    mounted(){
-            //DONE Get Instructor ID from EventBus signal(2min)
-            //Recieve Instructor ID using EventBus and use this ID to query through the Firestore doc inside the EventBus as Passing props doesn't work due to a synchronization problem 
-            EventBus.$on("InstructorID", (ID)=>{
-            console.log("Signal Recieved with an ID of " + ID);
+    methods:{
+        async GetInstructorData(ID)
+        {
+            var id = ID
             var db = firebase.firestore();
-            var Dbref = db.collection("Users").doc(ID);
-            Dbref.get().then((doc) => {
+            var Dbref = db.collection("Users").doc(id);
+            let response = await Dbref.get().then((doc) => {
             if(doc.exists)
             {
                 //DONE Assign the returned value to the Data Property (1min)
@@ -38,10 +37,18 @@ export default {
             }
             }).catch((error)=>{
             console.log("Some sort of an error: "+error);
-        })
+        })            
+            console.log(response);
+        }
+    },
+            mounted(){
+            //DONE Get Instructor ID from EventBus signal(2min)
+            //Recieve Instructor ID using EventBus and use this ID to query through the Firestore doc inside the EventBus as Passing props doesn't work due to a synchronization problem 
+            // var Id = this.$props.ID;
+            EventBus.$on("InstructorID", (ID)=>{
+                this.GetInstructorData(ID);
         })
     }
-
 }
 </script>
 
