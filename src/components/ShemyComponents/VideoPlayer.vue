@@ -5,14 +5,17 @@
       id="myVideo"
       class="video-js vjs-default-skin"
       playsinline
+      @play="TimeUpdate"
       >
       <source :src="video" type="video/mp4" />
       </video>
       <p>معلش بنعالج ال انستراكتور بتاعنا</p>
       <!-- <p>{{this.VideoID}}</p> -->
-      <button @click="SkipFive">Jump To Five Second in video</button>
+      <button @click="GetCurrentTime">Get Current Time</button>
       <button @click="BeginVideo">Begin</button>
       <button @click="EndVideo">End</button>
+      <div>TimeStamp Review Goes Here:</div>
+      <TimeStampDisplay :ID="VID"></TimeStampDisplay>
       <!-- <video controls>
       <source src="../../assets/Test.mp4" type="video/mp4" />
       </video> -->
@@ -20,11 +23,11 @@
 </template>
 
 <script>
-// import {EventBus} from "../../main";
+import {EventBus} from "../../main";
 import firebase from "firebase"
 import videojs from "video.js"
 import 'video.js/dist/video-js.css'
-
+import TimeStampDisplay from "../ShemyComponents/TimeStampDisplay";
 // import { videoPlayer } from "vue-video-player"
 export default {
     //TODO Assign Data Properties in the vue data object which are (CourseVideo(V), CourseID(S), VideoCounter(I), VideoRecordPGNObject(A)) (1min)
@@ -45,11 +48,15 @@ export default {
                     },
                 },
                 video:"",
+                CurrentTime:0,
                 VideoSrc:"",
                 VideoRef:"",
                 gsRef:"",
                 IDVIDEO:""
         }
+    },
+    components:{
+        TimeStampDisplay
     },
     props:["VID"],
     methods:{
@@ -68,9 +75,17 @@ export default {
         self.player = videojs('#myVideo', self.options);
         console.log(response);
         },
-        SkipFive()
+        TimeUpdate()
         {
-            this.player.currentTime(5);
+            this.player.on('timeupdate', ()=>{
+            console.log('the time was updated to: ' + this.player.currentTime());
+            EventBus.$emit("SendTime",this.player.currentTime());
+        });
+        },
+        GetCurrentTime()
+        {
+            console.log(this.player.currentTime());
+        // this.player.currentTime(5);
         },
         BeginVideo()
         {
@@ -79,13 +94,22 @@ export default {
         EndVideo()
         {
             this.player.currentTime(25);
+        },
+        ComunicateWithTimeStamp()
+        {
+            EventBus.$emit("TimeStamp",this.VID);
+        },
+        TimeRecieve()
+        {
+            EventBus.$on("Navigate",(time) => {
+                this.player.currentTime(time);
+            })
         }
     },
     mounted(){
         this.GetVideoLink();
-        // EventBus.$on("VideoPlayer",(ID)=>{
-        //     console.log("ID Recieved for de video is: "+ ID);
-        // })
+        this.ComunicateWithTimeStamp();
+        this.TimeRecieve()
         //TODO Assign EventBus (1min) 
         //TODO Assign Firebase (1min) 
         //TODO Declare Mounted Property (1min)
