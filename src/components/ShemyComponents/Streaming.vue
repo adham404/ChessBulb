@@ -6,7 +6,6 @@
       <div>
       <VideoPlayer :VID="CourseID" />
       <!-- <p> ID is: {{VideoID}}</p> -->
-      <div>TimeStamp Review Goes Here:</div>
       </div>
       <!-- TODO add Course Title under the [VideoPlayer] and pass (CourseData.ID) to it (4min) -->
       <!-- TODO under the [VideoPlayer] add Div containing the property (CoursePGN) to show PGN Review under the Course Title containing (CourseData.Title) (5min) -->
@@ -36,7 +35,7 @@ export default {
         {
           this.VideoID = this.CourseID;
           EventBus.$emit("VideoPlayer",this.VideoID);
-          console.log("The CourseID of the Video isa is: "+ this.CourseID);
+          // console.log("The CourseID of the Video isa is: "+ this.CourseID);
         }
       },
     mounted()

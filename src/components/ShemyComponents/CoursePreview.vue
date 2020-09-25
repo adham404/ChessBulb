@@ -67,7 +67,7 @@ export default {
         {
             var id = this.CoursesID;
             let self = this;
-            var db = firebase.firestore();
+            var db = firebase.firestore();  
             //DONE Recieve and assign (CourseData) from firebase using Passed Course ID returned from the props (10min)
             var docRef = db.collection("Courses").doc(id);
             let response = await docRef.get().then((query)=>{
