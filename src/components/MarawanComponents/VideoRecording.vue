@@ -88,7 +88,8 @@ export default {
                 chunks.push(ev.data);
             }
             mediaRecorder.onstop = ()=>{
-                let blob = new Blob(chunks, { 'type' : 'video/mp4;' });
+                let blob =  blob = new File(chunks, "video.mp4",{type:"video/mp4", lastModified:new Date()})
+                // let blob = new Blob(chunks, { 'type' : 'video/webm' });
                 chunks = [];
                 // let videoURL = window.URL.createObjectURL(blob);
                 EventBus.$emit('newvideo',blob)
