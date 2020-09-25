@@ -52,6 +52,7 @@ export default {
       this.form = false
     });
     EventBus.$on('gitTheForm',()=>{
+      console.log('we want the form ')
       EventBus.$emit('CourseForm',formdata)
     })
   },

@@ -38,7 +38,7 @@ export default {
         }
     },
     mounted(){
-        EventBus.$emit('gitTheForm')
+        
         var button = this.$refs["button"] 
         button.disabled = true;
         EventBus.$on("StopRecording",()=>{
@@ -50,12 +50,14 @@ export default {
             console.log(blob)
         })
         EventBus.$on("TimeStamp",timestamp =>{
+            EventBus.$emit('gitTheForm')
             console.log("hi from uploading")
             console.log(timestamp)
             data.TimeStamps = timestamp
             
           
         })
+        
         EventBus.$on("CourseForm",CourseForm =>{
             data.CourseName = CourseForm.name
             data.Difficulty = CourseForm.difficulty

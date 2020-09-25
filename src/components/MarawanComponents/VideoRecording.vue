@@ -18,6 +18,7 @@ Your browser does not support the video tag.
 import { EventBus } from '../../main';
  let mediaRecorder
 //  let blobrecorded 
+var stopcam ;
 export default {
    data:()=>{
      return{
@@ -25,6 +26,10 @@ export default {
        clock:null,
        status : null,
   }},
+  destroyed(){
+      stopcam()
+
+  },
   mounted(){
       this.status = "NOT RECORDING"
     let constraintObj = { 
@@ -68,6 +73,11 @@ export default {
 
         navigator.mediaDevices.getUserMedia(constraintObj)
         .then(function(mediaStreamObj) {
+            stopcam = function(){
+                mediaStreamObj.getTracks().forEach(function(track) {
+                    track.stop();
+                    });
+            }
             //connect the media stream to the first video element
             let video = document.getElementById("recorder");
             video.muted = true;
@@ -88,6 +98,7 @@ export default {
                 chunks.push(ev.data);
             }
             mediaRecorder.onstop = ()=>{
+                
                 let blob =  blob = new File(chunks, "video.mp4",{type:"video/mp4", lastModified:new Date()})
                 // let blob = new Blob(chunks, { 'type' : 'video/webm' });
                 chunks = [];

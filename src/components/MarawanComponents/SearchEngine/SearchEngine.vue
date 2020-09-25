@@ -2,6 +2,14 @@
   <div>
       <input type="text"  placeholder="Search" v-model="qurey" >
    <input type="submit" value="search" @click="search">
+   <div v-if="ShowFilters" >
+    <input type="checkbox" v-model="checkedFilters" value="Difficulty:Beginner" id="Beginner">
+    <label for="Beginner">Beginner</label>
+    <input type="checkbox" v-model="checkedFilters" value="Difficulty:Intermediate" id="Intermediate">
+    <label for="Intermediate">Intermediate</label>
+    <input type="checkbox" v-model="checkedFilters" value="Difficulty:Advanced" id="Advanced">
+    <label for="Advanced">Advanced</label>
+   </div>
   </div>
 </template>
 
@@ -9,25 +17,43 @@
 // import firebase from 'firebase'
 //firebase functions:config:set algolia.app=6QLSJPKZLF algolia.key=73c12cce64ff2c58497bac33bc843859
 import algoliasearch from 'algoliasearch/lite';
+import {EventBus} from '@/main.js'
 var  index ;
 export default {
+    props:[
+        'ShowFilters',
+        'SearchIndex'
+        ],
     async mounted(){
         const client = await algoliasearch('6QLSJPKZLF', '3cd07d257f7f35161891483bda18ed92');
-        index = await client.initIndex('Courses');
+        if(this.SearchIndex){
+            index = await client.initIndex(this.SearchIndex);
+        }
+        EventBus.$on('SearchIndex',ind =>{
+            index =  client.initIndex(ind);
+        })
+
         
+
     },
     data(){
         return{
-            qurey : null
+            checkedFilters:[],
+            qurey : ''
         }
     },
     methods:{
         async search(){
+            var options = '';
+            this.checkedFilters.forEach((i,index) =>{
+                options += (index==this.checkedFilters.length-1) ?  i :  i +' OR '
+            })
+            // console.log(options)
             var val =  await index.search(this.qurey,{
-                restrictSearchableAttributes: ['privileges'],
-                // filters: 'CourseName:new course 1 '
+                filters: options
             })
             var res = []
+            // console.log(val)
             await val.hits.forEach(doc=>{res.push(doc.objectID)})
             await console.log(res)
             
