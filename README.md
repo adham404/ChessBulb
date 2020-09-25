@@ -1,5 +1,8 @@
 # chessbulb
+A social network for chess players
 
+## The cloud Functions repo
+see [repo](https://github.com/technoo0/ChessBulbFunctions)
 ## Project setup
 ```
 npm install
@@ -19,6 +22,7 @@ npm run build
 ```
 npm run lint
 ```
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
