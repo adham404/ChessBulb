@@ -38,6 +38,7 @@ export default {
         }
     },
     mounted(){
+        
         var button = this.$refs["button"] 
         button.disabled = true;
         EventBus.$on("StopRecording",()=>{
@@ -45,19 +46,24 @@ export default {
         })
         EventBus.$on("newvideo",blobrecording=>{
             blob = blobrecording
+            // blob = new File([blobrecording], "video.mp4",{type:"video/mp4", lastModified:new Date()})
+            console.log(blob)
         })
         EventBus.$on("TimeStamp",timestamp =>{
+            EventBus.$emit('gitTheForm')
             console.log("hi from uploading")
             console.log(timestamp)
             data.TimeStamps = timestamp
             
           
         })
+        
         EventBus.$on("CourseForm",CourseForm =>{
             data.CourseName = CourseForm.name
             data.Difficulty = CourseForm.difficulty
             data.Price = CourseForm.price
             data.privileges = CourseForm.privileges
+            console.log('post course hava the form')
         })
         },
         
@@ -72,9 +78,9 @@ export default {
             data.Video = `Courses/${courseid}.mp4`
             uploadTask = ref.put(blob)
             uploadTask.on('state_changed', function(snapshot){
-                var progress = (snapshot.bytesTransferred / snapshot.totalBytes).toFixed(0) * 100;
-                console.log('Upload is ' + progress + '% done');
-                self.uplaoading = 'Upload is ' + progress + '% done' 
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress.toFixed(0) + '% done');
+                self.uplaoading = 'Upload is ' + progress.toFixed(0) + '% done' 
                  switch (snapshot.state) {
                     case firebase.storage.TaskState.PAUSED: // or 'paused'
                     console.log('Upload is paused');

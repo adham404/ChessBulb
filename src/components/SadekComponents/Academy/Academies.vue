@@ -21,7 +21,7 @@
 import firebase from "firebase";
 import { EventBus } from "@/main";
 //(DONE) importing the (SearchEngine Component) (1 minute)
-import SearchEngine from "../../MarawanComponents/SearchEngine";
+import SearchEngine from "../../MarawanComponents/SearchEngine/SearchEngine";
 //(DONE) importing the (AcademiesCard Component) (1 minute)
 import AcademiesCard from "./AcademiesCard";
 // import { EventBus } from "@/main";

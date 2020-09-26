@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
 import HomePage from '@/components/Skeleton/HomePage.vue'
+// import CourseForm from '@/components/MarawanComponents/CourseForm.vue';
 import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
 import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
 import AddStory from '@/components/ShemyComponents/AddStory.vue'
@@ -39,7 +40,7 @@ const routes = [
   {
     path: '/CreateCourse',
     name: 'CreateCourse',
-    component: CreateCourse
+    component: CreateCourse,
   },
   {
     path: '/PostGame',
