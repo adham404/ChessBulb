@@ -19,7 +19,7 @@ import UserProfile from '@/components/ShemyComponents/UserProfile.vue'
 import Notifications from '@/components/ShemyComponents/Notifications.vue'
 import InstructorProfile from '@/components/MarawanComponents/InstructorProfile.vue'
 import Purchase from '@/components/MarawanComponents/Purchase/Purchase.vue'
-import Subscripe from '@/components/MarawanComponents/Purchase/Subscripe.vue'
+import Subscribe from '@/components/MarawanComponents/Purchase/Subscribe.vue'
 import PurchaseSuccess from '@/components/MarawanComponents/Purchase/PurchaseSuccess.vue'
 import PurchaseCancel from '@/components/MarawanComponents/Purchase/PurchaseCancel.vue'
 import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
@@ -144,10 +144,10 @@ const routes = [
     
   },
   {
-    path: '/Subscripe/:id',
-    name: 'Subscripe',
+    path: '/Subscribe/:id',
+    name: 'Subscribe',
     props: true,
-    component: Subscripe,
+    component: Subscribe,
     
   },
   {

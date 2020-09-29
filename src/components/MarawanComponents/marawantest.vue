@@ -1,7 +1,7 @@
 <template>
   <div>
    <router-link to="/Purchase/price_1HVqJXC7X3YpNau36qSerzer" >CheckOut</router-link>
-   <router-link to="/Subscripe/price_1HWe12C7X3YpNau3GI4EWGwI" >Subscripe</router-link>
+   <router-link to="/Subscribe/price_1HWe12C7X3YpNau3GI4EWGwI" >Subscribe</router-link>
   
    <router-view></router-view>
   </div>
