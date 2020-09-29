@@ -1,5 +1,6 @@
 <template>
   <div>
+      <h1>Lodding...</h1>
       <router-view></router-view>
   </div>
 </template>
@@ -11,10 +12,8 @@ var stripePromise = loadStripe('pk_test_51GxIWeC7X3YpNau3ctZKcMgsMjexF4GBs9aFmF0
 export default {
     async mounted(){      
             const stripe = await stripePromise;
-            const createsetion = await firebase.functions().httpsCallable('stripe_sessions_functions-createcheckoutsub');
-            var data =  await firebase.firestore().collection('Academies').doc(this.$route.params.id).get()
-            console.log(data.data())
-            createsetion({id:data.data().PriceId}).then(res =>{
+            const createsetion = await firebase.functions().httpsCallable('stripe_sessions_functions-createcheckout');
+            createsetion({id:this.$route.params.id}).then(res =>{
                 console.log(res.data)
                 stripe.redirectToCheckout({ sessionId: res.data });
             }).catch(e=>{
