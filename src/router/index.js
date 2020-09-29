@@ -19,6 +19,8 @@ import UserProfile from '@/components/ShemyComponents/UserProfile.vue'
 import Notifications from '@/components/ShemyComponents/Notifications.vue'
 import InstructorProfile from '@/components/MarawanComponents/InstructorProfile.vue'
 import Purchase from '@/components/MarawanComponents/Purchase.vue'
+import PurchaseSuccess from '@/components/MarawanComponents/Purchase/PurchaseSuccess.vue'
+import PurchaseCancel from '@/components/MarawanComponents/Purchase/PurchaseCancel.vue'
 import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
 import SadekTest from '@/components/SadekComponents/SadekTest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
@@ -55,7 +57,8 @@ const routes = [
   {
     path: '/Marwan',
     name: 'Marwan',
-    component: MarwanTest
+    component: MarwanTest,
+    
   },
   {
     path: '/Posts/:id',
@@ -133,10 +136,21 @@ const routes = [
     component: InstructorProfile
   },
   {
-    path: '/Purchase/:CourseID',
+    path: '/Purchase/:id',
     name: 'Purchase',
     props: true,
-    component: Purchase
+    component: Purchase,
+    
+  },
+  {
+    path:'/Purchase/success/:sessionid',
+    name:'success',
+    component : PurchaseSuccess
+  },
+  {
+    path:'/Purchase/cancel/:sessionid',
+    name:'cancel',
+    component : PurchaseCancel
   },
   {
     path: '/FindPlayers',

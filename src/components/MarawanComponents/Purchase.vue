@@ -1,3 +1,37 @@
+<template>
+  <div>
+      <router-view></router-view>
+  </div>
+</template>
+
+<script>
+import firebase from "firebase"
+import { loadStripe } from '@stripe/stripe-js';
+var stripePromise = loadStripe('pk_test_51GxIWeC7X3YpNau3ctZKcMgsMjexF4GBs9aFmF0O6NDacFWfonAXZ3txdVQpTs15iDJ7rQH2G3uk5YQGMcTN4ExJ00MLwC9DVY');
+export default {
+    async mounted(){      
+            const stripe = await stripePromise;
+            const createsetion = await firebase.functions().httpsCallable('stripe_sessions_functions-createcheckoutsub');
+            var data =  await firebase.firestore().collection('Academies').doc(this.$route.params.id).get()
+            console.log(data.data())
+            createsetion({id:data.data().PriceId}).then(res =>{
+                console.log(res.data)
+                stripe.redirectToCheckout({ sessionId: res.data });
+            }).catch(e=>{
+                console.log(e.code)
+                console.log(e.massage)
+                console.log(e.details)
+            })
+            console.log(this.$route.params.id)
+        
+    }
+
+}
+</script>
+
+<style>
+
+</style>
 //TODO get the object that is will be purchased(5min)
 //TODO add a cloud funcation for giveing every user a stripe id(10min)
 //TODO add a cloud funcation for savaing the card detaels (15min)

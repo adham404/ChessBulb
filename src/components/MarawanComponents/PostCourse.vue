@@ -27,6 +27,7 @@ var data = {
     InstructorId : "testing",
     TimeStamps : null,
     Price : null ,
+    PriceId : null ,
     privileges :null,
     Rating : 0,
     Video : null
