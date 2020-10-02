@@ -56,6 +56,7 @@ export default {
             // console.log(val)
             await val.hits.forEach(doc=>{res.push(doc.objectID)})
             await console.log(res)
+            EventBus.emit("TheSearchResult",res)
             
         }
     }

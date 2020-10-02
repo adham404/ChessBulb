@@ -9,6 +9,7 @@ import AddStory from '@/components/ShemyComponents/AddStory.vue'
 import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
 import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
 import Courses from '@/components/ShemyComponents/Courses.vue'
+import MyCourses from '@/components/MarawanComponents/MyCourses.vue'
 import CoursePreview from '@/components/ShemyComponents/CoursePreview.vue'
 import Streaming from '@/components/ShemyComponents/Streaming.vue'
 import Academies from '@/components/SadekComponents/Academy/Academies.vue'
@@ -23,6 +24,7 @@ import Subscribe from '@/components/MarawanComponents/Purchase/Subscribe.vue'
 import PurchaseSuccess from '@/components/MarawanComponents/Purchase/PurchaseSuccess.vue'
 import PurchaseCancel from '@/components/MarawanComponents/Purchase/PurchaseCancel.vue'
 import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
+import AcademyForm from '@/components/MarawanComponents/AcademyForm.vue'
 import SadekTest from '@/components/SadekComponents/SadekTest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
 
@@ -54,6 +56,11 @@ const routes = [
     path: '/PostStory',
     name: 'PostStory',
     component: AddStory
+  },
+  {
+    path: '/AcademyForm',
+    name: 'AcademyForm',
+    component: AcademyForm
   },
   {
     path: '/Marwan',
@@ -117,7 +124,7 @@ const routes = [
       {
         path: 'Courses',
         name: 'UserCourses',
-        component: Courses
+        component: MyCourses
       },
       {
         path: 'Academies',
@@ -150,16 +157,18 @@ const routes = [
     component: Subscribe,
     
   },
+  
   {
-    path:'/Purchase/success/:sessionid',
-    name:'success',
+    path:'/Success/:id',
+    name:'Success',
     component : PurchaseSuccess
   },
   {
-    path:'/Purchase/cancel/:sessionid',
-    name:'cancel',
+    path:'/Cancel/:id',
+    name:'Cancel',
     component : PurchaseCancel
   },
+
   {
     path: '/FindPlayers',
     name: 'Explore',
