@@ -1,8 +1,29 @@
-//TODO get storys ids array(5min)
-//TODO if it is null add route to add story (5min)
-//TODO add scroll buttoms (5min)
-//TODO create a scroll funcation(10min)
-//TODO get the current story id (2min)
-//TODO get the current story data from database(3min)
-//TODO display the data (4min)
-//TODO add a funcation to dispaly route to add story if their is no storys lift(5min)
+<template>
+    <div class="StoriesWindow" >
+        <div v-for="n in 9" :key="n" >
+            <img class="ProfileImage" src="../../../assets/ProfilePic.jpg" alt="">
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default {
+        
+    }
+</script>
+
+<style scoped>
+    .ProfileImage{
+		height: 100px;
+		width: 100px;
+		border-radius: 5px;
+        margin-left: 10px;
+	}
+    .StoriesWindow{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+</style>
