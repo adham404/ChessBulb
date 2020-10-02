@@ -32,9 +32,6 @@ export default {
         EventBus.$on('SearchIndex',ind =>{
             index =  client.initIndex(ind);
         })
-
-        
-
     },
     data(){
         return{
