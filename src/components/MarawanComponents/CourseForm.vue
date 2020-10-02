@@ -46,6 +46,7 @@ export default {
         }
     },methods:{
          validate(){
+            var go = 0 ;
             console.log(this.course)
             this.errors.name = (this.course.name.length >= 5 ) ? 'ok' :  'error' ; 
             this.errors.difficulty = (this.course.difficulty ) ? 'ok' :  'error' ; 
@@ -54,8 +55,12 @@ export default {
             console.log(this.errors)
             for(var i in this.errors){
                 if(this.errors[i]== 'ok' ){
-                    this.submit()
+                    go += 1 
                 }
+
+            }
+            if(go == 4 ){
+                this.submit()
             }
             
         },
