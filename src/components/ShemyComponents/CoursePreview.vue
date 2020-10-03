@@ -35,7 +35,7 @@
                 </p>
                 <div class="Purchase">
                     <h4>This course is in some state</h4>
-                    <button>Enroll</button>
+                    <router-link to="path"><button>Enroll</button></router-link>
                 </div>
                 
 
