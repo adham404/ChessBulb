@@ -3,19 +3,28 @@
             <!-- TODO add [ChessBoard] To the left and pass (ChessPGNStartup) property recieved from [PositionSetup] To Show the starting position of the game (2min) -->
             <div id="board1"></div>
             <button @click="UpdateMoves">Post Your Story</button>
+            <button @click="Test">Reload Progress</button>
             <!-- TODO add AddMove div to the right of [ChessBoard] (2min) -->
             <div style="color:white">Moves:</div>
             <!-- DONE Add Lines div inside the AddMove div containing Lines of possible moves and loop through it according to the number of arrays in the (ChessMoveObject) (3min) -->
             <div class="Lines">
-            <div class="LineWithTitle" v-for="Line in ChessMoveObject" v-bind:key="Line">
-            <p>Solution Number {{Line.Line}}</p>
+            <div   class="LineWithTitle" v-for="Line in ChessMoveObject" v-bind:key="Line">
+            <p @click="GoToLine(Line.Line)" :style="Line.LineStyle">Solution Number {{Line.Line}}</p>
             <div class="Line">
             <div class="ColorCol">
             <!-- DONE assign the Move content to each div tag (1min) -->
-                <div v-for="WhiteMove in Line.WhiteMoves" v-bind:key="WhiteMove">{{WhiteMove}}</div>
+                <div v-for="(WhiteMove, x) in Line.WhiteMoves" v-bind:key="x">
+                    <div @click="WhiteMoveClicked(Line.Line,WhiteMove)">{{WhiteMove}}</div>
+                </div>
               </div>
               <div class="ColorCol">
-                  <div style="color:red" v-for="BlackMove in Line.BlackMoves" v-bind:key="BlackMove">{{BlackMove}}</div>
+                  <div  v-for="(BlackMove, x) in Line.BlackMoves" v-bind:key="x">
+                    <div style="color:red" @click="BlackMoveClicked(Line.Line, BlackMove)">{{BlackMove}}</div>
+                  </div>
+              </div>
+              <div v-if="Line.MoveClicked" class="Buttons">
+                  <button @click="OverWriteMove">OverWrite old move</button>
+                  <button @click="OpenLine">Open new Line</button>
               </div>
             </div>
             <!-- DONE Add inside the Line div li tags that hold the Moves of each line that represent the element of each nested array with a title a head of it such as Move#1 Solution#2 etc.. (2min) -->            
@@ -51,18 +60,27 @@ export default {
         Fen:"",
         ChessGame:"",
         ChessBoard:"",
+        MoveClicked:false,
         ChessMoveObject:[
           {
-            Line:1,
+            Line:0,
             Moves:[],
             WhiteMoves:[],
             BlackMoves:[],
+            LineStyle:{
+              cursor:"pointer"
+            },
+            LastFen:"",
             WhiteMovesFen:[],
-            BlackMovesFen:[]
+            BlackMovesFen:[],
+            MoveClicked:false
           }
         ],
         LineCounter:0,
-        ChessCurrentMove:"",
+        ChessCurrentWhiteMovePos:"",
+        ChessCurrentBlackMovePos:"",
+        CurrentLine:0,
+        OverWriteType:"",
         PlayerMove:"white"
       }
     },
@@ -70,10 +88,12 @@ export default {
     props:["FenObject"],
       //DONE Declare Mounted Property (1min)
     mounted(){
+      //Function to load the Chess pieces icons
       function piecelink(piece){
         return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
       }
       this.Fen = this.FenObject;  //Converting the chessboard fen format to the chess.js fen format 
+      //ChessBoard Config
       var config = {
         draggable: true,
         showErrors : 'alert',
@@ -82,14 +102,10 @@ export default {
         onDragStart: this.onDragStart,
         pieceTheme: piecelink
       }
+      //Create a ChessBoard object with the passed config
       this.ChessBoard = Chessboard('board1', config);
-      // var pos = this.ChessBoard.position();
-      // var fen = this.Fen;
+      //Create a Chess.js Object with the Recieved Fen from the PositionSetup
       this.ChessGame = new Chess(this.Fen);
-      console.log("Recieved a :")
-      console.log(this.FenObject);
-      // console.log("New Position: ");
-      // console.log(StartingBoard.position())  
     },
     updated()
     {
@@ -103,6 +119,167 @@ export default {
         console.log("New Position: ");
         console.log(this.ChessBoard.position())  
       },
+      WhiteMoveClicked(LineCounter,WhiteMove)
+      {
+        console.log("Current Line is: "+ LineCounter);
+        if(this.ChessMoveObject[LineCounter].MoveClicked)
+        {
+          this.ChessMoveObject[LineCounter].MoveClicked = false;
+        }
+        else
+        {
+          this.ChessMoveObject[LineCounter].MoveClicked = true;
+        }
+        var WhiteLength = this.ChessMoveObject[LineCounter].WhiteMoves.length;
+        for (let i = 0; i < WhiteLength; i++) {
+          if (this.ChessMoveObject[LineCounter].WhiteMoves[i] == WhiteMove) {
+            this.ChessCurrentWhiteMovePos = i;
+            this.ChessCurrentBlackMovePos = i;
+            break;
+          }
+        }
+          this.OverWriteType = "white";
+          this.LineCounter = LineCounter;
+        console.log("White Move is clicked!");
+      },
+      GoToLine(LineCounter)
+      {
+        console.log("Hi");
+        // console.log(Indicator);
+        // console.log("Current Line is: "+ this.LineCounter);
+        if (this.LineCounter != LineCounter) {
+          console.log("General Line is: "+ this.LineCounter);
+          console.log("the Passed Line is: "+ LineCounter);
+          this.StoreCurrentFen();
+          this.LineCounter = LineCounter;
+          this.LoadTargetFen(LineCounter);
+        }
+      },
+      Test()
+      {
+        this.ChessGame.load(this.Fen);
+        this.ChessBoard.position(this.Fen);
+      },
+      StoreCurrentFen()
+      {
+        var CurrentFen = this.ChessGame.fen();
+        this.ChessMoveObject[this.LineCounter].LastFen = CurrentFen;
+      },
+      LoadTargetFen(LineCounter)
+      {
+        var CurrentFen = this.ChessMoveObject[LineCounter].LastFen;
+        this.ChessGame.load(CurrentFen);
+        this.ChessBoard.position(CurrentFen);          
+      },
+      BlackMoveClicked(LineCounter, BlackMove)
+      {
+        console.log("Current Line is: "+ LineCounter);
+        if(this.ChessMoveObject[LineCounter].MoveClicked)
+        {
+          this.ChessMoveObject[LineCounter].MoveClicked = false;
+        }
+        else{
+          this.ChessMoveObject[LineCounter].MoveClicked = true;
+        }
+        var BlackLength = this.ChessMoveObject[LineCounter].BlackMoves.length;
+        for (let i = 0; i < BlackLength; i++) {
+          if (this.ChessMoveObject[LineCounter].BlackMoves[i] == BlackMove) {
+            this.ChessCurrentWhiteMovePos = i;
+            this.ChessCurrentBlackMovePos = i;
+            break;
+          }
+        }
+          this.OverWriteType = "Black";
+          this.LineCounter = LineCounter;
+
+      console.log("Black Move is clicked!");
+      },
+    OverWriteMove()
+      {
+        console.log("--------------2wlan Keda----------------");
+        console.log("Current White Move Pos To be OverWritten: "+ this.ChessCurrentWhiteMovePos);
+        console.log("Current Black Move Pos To be OverWritten: "+ this.ChessCurrentBlackMovePos);
+        console.log("OverWrite Move Type: "+ this.OverWriteType);
+        console.log("Current Line is: "+ this.CurrentLine);
+        var WhiteLength = 0; 
+        var BlackLength = 0;
+        if (this.OverWriteType == "white") {
+          WhiteLength = this.ChessMoveObject[this.LineCounter].WhiteMoves.length;
+          BlackLength = this.ChessMoveObject[this.LineCounter].BlackMoves.length;
+            for (let i = WhiteLength; i > this.ChessCurrentWhiteMovePos; i--) {
+              var WhiteMove = this.ChessMoveObject[this.LineCounter].WhiteMoves[i];
+              var BlackMove = this.ChessMoveObject[this.LineCounter].BlackMoves[i];
+              var CurrentFen;              
+              this.ChessMoveObject[this.LineCounter].WhiteMoves.pop()
+              if(WhiteLength == BlackLength)
+              {
+                this.ChessGame.undo(BlackMove);
+                CurrentFen = this.ChessGame.fen(); 
+                this.ChessBoard.position(CurrentFen)
+                this.ChessMoveObject[this.LineCounter].BlackMoves.pop()
+              }
+                this.ChessGame.undo(WhiteMove);              
+                CurrentFen = this.ChessGame.fen(); 
+                this.ChessBoard.position(CurrentFen)
+                console.log(i);
+            }
+          this.ChessMoveObject[this.LineCounter].MoveClicked = false;
+        }
+        else
+        {
+          WhiteLength = this.ChessMoveObject[this.LineCounter].WhiteMoves.length;
+          BlackLength = this.ChessMoveObject[this.LineCounter].BlackMoves.length;
+          for (let i = this.ChessCurrentBlackMovePos; i < BlackLength; i++) {
+                this.ChessGame.undo(BlackMove);
+                CurrentFen = this.ChessGame.fen(); 
+                this.ChessBoard.position(CurrentFen)
+                this.ChessMoveObject[this.LineCounter].BlackMoves.pop()            
+          }
+          for (let i = this.ChessCurrentBlackMovePos; i < WhiteLength-1; i++) {
+                this.ChessGame.undo(WhiteMove);
+                CurrentFen = this.ChessGame.fen(); 
+                this.ChessBoard.position(CurrentFen)
+                this.ChessMoveObject[this.LineCounter].WhiteMoves.pop()            
+          }
+          this.ChessMoveObject[this.LineCounter].MoveClicked = false;
+                              
+        }
+    },
+    OpenLine()
+    {
+      console.log("Hi From Here");
+      var WhiteMoves = [];
+      var BlackMoves = [];
+      this.ChessMoveObject[this.LineCounter].LastFen = this.ChessGame.fen();
+      var ChessDummy = new Chess(this.Fen);
+      for (let i = 0; i <= this.ChessCurrentWhiteMovePos; i++) {
+        var WhiteMove = this.ChessMoveObject[this.LineCounter].WhiteMoves[i];
+        var BlackMove = this.ChessMoveObject[this.LineCounter].BlackMoves[i];
+        WhiteMoves.push(WhiteMove);
+        BlackMoves.push(BlackMove);
+        ChessDummy.move(WhiteMove);
+        ChessDummy.move(BlackMove)        
+      }
+      // for (let i = 0; i <= this.ChessCurrentBlackMovePos; i++) {
+      //   var BlackMove2 = this.ChessMoveObject[this.LineCounter].BlackMoves[i+1];
+      // }
+      // var LastBlackMove = this.ChessMoveObject[this.LineCounter].WhiteMoves[this.ChessCurrentWhiteMovePos+1]
+      // ChessDummy.move()
+      var DummyFen = ChessDummy.fen();
+      var SolutionLine = this.ChessMoveObject.length;
+      var ChessObject = 
+      {
+        Line: SolutionLine,
+        WhiteMoves: WhiteMoves,
+        BlackMoves: BlackMoves,
+        MoveClicked: false,
+        LastFen: DummyFen
+      }
+      this.ChessMoveObject.push(ChessObject)
+      this.ChessMoveObject[this.LineCounter].MoveClicked = false;
+      this.LineCounter = SolutionLine;
+      this.LoadTargetFen(this.LineCounter);
+    },
       onDrop(source, target)
       {
           console.log('Source: ' + source)
@@ -126,11 +303,14 @@ export default {
           {
             console.log("E7M the pure move of the white piece is "+ move.san);
             this.ChessMoveObject[this.LineCounter].WhiteMoves.push(move.san);
+            console.log("Current Line is: "+ this.LineCounter);
           }
           else if(move.color === "b")
           {
             console.log("E7M the pure move of the black piece is "+ move.san);
-             this.ChessMoveObject[this.LineCounter].BlackMoves.push(move.san);
+            this.ChessMoveObject[this.LineCounter].BlackMoves.push(move.san);
+            console.log("Current Line is: "+ this.LineCounter);
+
           }
           console.log("Chess Moves hoped to be like:")
           console.log(this.ChessGame.ascii());
@@ -144,7 +324,8 @@ export default {
            return false
               }
       }
-      },
+      }
+
       // onSnapEnd()
       // {
       //   this.ChessBoard.position(ChessGame.fen())
@@ -195,14 +376,20 @@ export default {
 }
 .Lines{
   position: absolute;  
+  display: flex;
 }
 .Line{
   display: flex;
+}
+.LineWithTitle{
+  margin-right: 15px;
+  /* border: 1px solid #ccc; */
 }
 .ColorCol{
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
+  cursor: pointer;
 }
 
 </style>

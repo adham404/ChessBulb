@@ -1,55 +1,24 @@
 <template>
   <div style="display:flex;" >
-      <!-- TODO add [ChessBoard] to the left and pass (PGNMOVE) with Stock fish enabled (10min) -->
+      <!-- DONE add [ChessBoard] to the left (10min) -->
       <ChessBoardDisplay id='1' />
-      <!-- TODO add [VideoPlayer] to the right (5min) -->
+      <!-- DONE add [VideoPlayer] to the right (5min) -->
       <div>
       <VideoPlayer :VID="CourseID" />
-      <!-- <p> ID is: {{VideoID}}</p> -->
       </div>
-      <!-- TODO add Course Title under the [VideoPlayer] and pass (CourseData.ID) to it (4min) -->
-      <!-- TODO under the [VideoPlayer] add Div containing the property (CoursePGN) to show PGN Review under the Course Title containing (CourseData.Title) (5min) -->
-        <!-- TODO under the div showing the PGN review add two buttons at the end under the [PGNReview] and Assign it to the two Functions {DownloadPGN} and {RateTheCourse} that routes to [Rate] after passing to it the (CourseData.ID) (10min) -->
   </div>
 </template>
 
 <script>
 import ChessBoardDisplay from "../MarawanComponents/ChessBoard/ChessBoardDisplay";
 import VideoPlayer from "../ShemyComponents/VideoPlayer";
-import {EventBus} from "../../main";
 export default {
-    //TODO Assign Data Properties in the vue data object which are (CourseData(O), CoursePGN(O), PGNMove(S)) (1min)
-    data: function()
-    {
-      return{
-        VideoID:"ahmed"
-      }
-    },  
     props:["CourseID"],
     components:{
       ChessBoardDisplay,
       VideoPlayer
-    },
-      methods:{
-        RecieveAndSendVideoID()
-        {
-          this.VideoID = this.CourseID;
-          EventBus.$emit("VideoPlayer",this.VideoID);
-          // console.log("The CourseID of the Video isa is: "+ this.CourseID);
-        }
-      },
-    mounted()
-    {
-      this.RecieveAndSendVideoID();
     }
-    //TODO Assign EventBus (1min) 
-    //TODO Assign Firebase (1min) 
-    //TODO Declare Mounted Property (1min)
-    //TODO Recieve and assign (CourseData) from firebase using Passed Course ID returned from the props (10min)
-    //TODO Recieve Eventbus signal from [VideoPlayer] and assign it to (PGNMove) (5min) 
-    //TODO Concatenate (PGNMOVE) and assign it to (CoursePGN)
-    //TODO Define {DownloadPGN} (1min)
-    //FIXME Download (CoursePGN) Locally to user's device (10min)    
+    //DONE Recieve CourseID from props and pass it to VideoPlayer using props
 }
 </script>
 

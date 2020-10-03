@@ -1,5 +1,6 @@
 <template>
   <div>
+      <div>{{CourseTitle}}</div>
       <div class="TimeStampPanel">
       <div class="COL">
           <div v-for="(time,x) in timestampSec" v-bind:key="x">
@@ -27,7 +28,8 @@ export default {
         timestampEvent:[], //array for events to be shown of the timestamp recieved
         TimeCounter:0, //The index of the current element of the timestamp array
         TimeLength:true, //Boolean value to stop reshowing the seconds and events when the video is replayed 
-        DisplayCounter:-1
+        DisplayCounter:-1,
+        CourseTitle:""
 }
     },
     props:['ID'],
@@ -40,6 +42,7 @@ export default {
                 if(query.exists)
                 {
                     this.timestampOrginal = query.data().TimeStamps
+                    this.CourseTitle = query.data().CourseName
                     console.log("Time Stamp array is: "+ this.timestampOrginal);
                 }
                 else{
@@ -90,16 +93,6 @@ export default {
                     console.log("Match Happend between: "+ this.timestampOrginal[this.TimeCounter].time+" and "+ time);
                     this.DisplayTimeStamp();
                     this.SendFenToBoard();
-                    // if(this.TimeLength)
-                    // {
-                    // }
-                    // this.TimeCounter++;
-                    // if(this.TimeCounter >= this.timestampOrginal.length)
-                    // {
-                    //     console.log("TimeStamp finished")
-                    //     this.TimeLength = false;
-                    //     this.TimeCounter = 0;
-                    // }
                     break;
                 }            
                 }

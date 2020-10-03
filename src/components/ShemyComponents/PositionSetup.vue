@@ -6,6 +6,7 @@
       <div>Please Setup the game position</div>
       <!-- DONE Create Save Button (1min) -->
       <button @click="Save">Save Position</button>
+      <button @click="QuickPos">QuickPos</button>
       <!-- TODO Create div that contains the Validation content with v-if a (PoisitionCorrect) data property and holding the Message as string intorplation with a data property called (PositionValidationMsg) (1min) -->
   </div>
 </template>
@@ -49,7 +50,13 @@ export default {
       // else{
 
       // }
-    }
+    },
+     QuickPos()
+     {
+      this.Fen = "3k4/2qrb3/8/8/8/8/2QRB3/3K4 w - - 0 1";
+      EventBus.$emit("PositionIsSet");
+      EventBus.$emit("SendPosition",this.Fen);
+     }
     },
     mounted(){
     //Taken from [ChessBoardDisplay] component

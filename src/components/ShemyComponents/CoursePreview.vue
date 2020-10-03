@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div>This is a good course mate {{ CoursesID }}</div>
+    <div>This is a good course mate</div>
     <!-- DONE Create Div on the left that contain the following data properties (CourseData.CourseTitle) and (CourseData.Rating) (5min) -->
     <div style="border:1px solid #ccc">
     <div>CourseName: {{Courses.CourseName}}</div>
@@ -78,7 +78,7 @@ export default {
                     EventBus.$emit("InstructorID",self.Courses.InstructorId);
                     //Send CourseID to Review and Rate component
                     EventBus.$emit("CourseIDToReview",self.Courses.CourseId);
-                    EventBus.$emit("Rate",self.Courses.CourseId);
+                    // EventBus.$emit("Rate",self.Courses.CourseId);
                     // EventBus.$emit("Streaming",self.Courses.CourseId);
                 }
                 else
@@ -96,8 +96,7 @@ export default {
     mounted(){
         this.RecieveCoursesData();
     }
-    //FIXME Check For the (CourseData.ID) if it matches one of the courses ID inside the User Object using UserID (10min)
-    //TODO If it's True set (PurchaseFlag) False else set True (2min)  
+    //TODO Check in CourseOrders Field for a doc that have both the CourseID and the UserID if there is a match then (PurchaseFlag) False else set True
 }
 </script>
 

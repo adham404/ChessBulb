@@ -1,6 +1,6 @@
 <template>
   <div>
-      <!-- FIXME add div containing VideoPlayer that is playing (CourseVideo) (20min) -->
+      <!-- DONE add div containing VideoPlayer that is playing (CourseVideo) (20min) -->
       <video
       id="myVideo"
       class="video-js vjs-default-skin"
@@ -16,21 +16,23 @@
       <button @click="EndVideo">End</button>
       <div>TimeStamp Review Goes Here:</div>
       <TimeStampDisplay :ID="VID"></TimeStampDisplay>
-      <!-- <video controls>
-      <source src="../../assets/Test.mp4" type="video/mp4" />
-      </video> -->
+      <div style="display: flex">
+          <button>Download PGN</button>
+          <button>Rate this Course</button>
+      </div>
   </div>
 </template>
 
 <script>
+//DONE Assign EventBus (1min) 
+//DONE Assign Firebase (1min) 
 import {EventBus} from "../../main";
 import firebase from "firebase"
 import videojs from "video.js"
 import 'video.js/dist/video-js.css'
 import TimeStampDisplay from "../ShemyComponents/TimeStampDisplay";
-// import { videoPlayer } from "vue-video-player"
 export default {
-    //TODO Assign Data Properties in the vue data object which are (CourseVideo(V), CourseID(S), VideoCounter(I), VideoRecordPGNObject(A)) (1min)
+    //TODO Assign Data Properties in the vue data object which are (video(U), VideoRef(O), VideoCounter(I), player(O), options(o) VideoRecordPGNObject(A)) (1min)
     data:function()
     {
       return{
@@ -48,11 +50,7 @@ export default {
                     },
                 },
                 video:"",
-                CurrentTime:0,
-                VideoSrc:"",
-                VideoRef:"",
-                gsRef:"",
-                IDVIDEO:""
+                VideoRef:""
         }
     },
     components:{
@@ -106,17 +104,11 @@ export default {
             })
         }
     },
+        //TODO Declare Mounted Property (1min)
     mounted(){
         this.GetVideoLink();
         this.ComunicateWithTimeStamp();
         this.TimeRecieve()
-        //TODO Assign EventBus (1min) 
-        //TODO Assign Firebase (1min) 
-        //TODO Declare Mounted Property (1min)
-        //TODO Recievng (CourseID) from props (2min)
-        //FIXME Recieve (CourseVideo) from Firebase Cloud storage using CourseID (20min)
-        //FIXME Recieve (VideoRecordPGNObject) from Firebase Cloud storage using CourseID (5min)
-        //TODO if(VideoRecordPGNObject[VideoCounter].Time == CourseVideo.currentTime){ send VideoRecordPGNObject[VideoCounter].Move using EventBus signal to [Streaming] and increment (VideoCounter)} (5min)
     },
     beforeDestroy() {
         if (this.player) {

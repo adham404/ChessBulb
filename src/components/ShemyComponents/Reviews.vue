@@ -17,11 +17,10 @@
 import firebase from "firebase";
 import { EventBus } from "../../main";
 export default {
-    //DONE Assign Data Properties in the vue data object which are (ContentRate(O), Purchased(B)) (1min)
+    //DONE Assign Data Properties in the vue data object which are (Reviews(A), Purchased(B)) (1min)
     data: function()
     {
       return{
-        ReviewObject:"",
         Reviews:[]
       }
     },
@@ -36,7 +35,7 @@ export default {
       .get()
       .then((query)=>{
         query.forEach((doc)=>{
-        //DONE When Mount Recieve from the firestore the Review data object and assign it to (ContentRate) (10min) 
+        //DONE When Mount Recieve from the firestore the Review data object and assign it to (Reviews) (10min) 
           self.Reviews.push(doc.data());
         })
       })

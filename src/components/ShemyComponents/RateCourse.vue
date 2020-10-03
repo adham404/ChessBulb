@@ -1,6 +1,6 @@
 <template>
   <div style="border: 1px solid #ccc">
-      <!-- TODO Create container that Contain Input Field assigned to (RateComment) (2MIN) -->
+      <!-- DONE Create container that Contain Input Field assigned to (RateComment) (2MIN) -->
       <input v-model="Review.Comment" placeholder="Enter your review" type="text">
       <!-- FIXME Create Star rating interface that assign number of Stars to (NumberOfStars) (10MIN) -->
       <div>Select Rate: 
@@ -12,7 +12,7 @@
           <option>5</option>
         </select>
       </div>
-      <!-- TODO Create Button 'Submit' which is assigned to the function {Submit} (2min) -->
+      <!-- DONE Create Button 'Submit' which is assigned to the function {Submit} (2min) -->
       <button @click="Submit">Submit</button>
   </div>
 
@@ -22,7 +22,7 @@
   import firebase from "firebase";
   // import { EventBus } from "../../main";
 export default {
-    //TODO Assign Data Properties in the vue data object which are (RateComment(S), NumberOfStars(I), DateOfReview(D), ContentRate(O)) (1min)
+    //TODO Assign Data Properties in the vue data object which are ( Review(O), UserPurchased(B)) (1min)
     data:function(){
       return{
         Review:{
@@ -39,7 +39,7 @@ export default {
     //DONE define the function Submit (1min)
       Submit(){
         this.Review.CourseID = this.CourseID;
-        //TODO Check for Current UserID with the CourseID inside the CourseOrders Table after it's added in purchase 
+        //TODO Check the PurchaseFlag prop 
           if(this.UserPurchased)
           {
             //Post Review to FireStore
