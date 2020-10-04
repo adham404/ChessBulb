@@ -53,6 +53,7 @@ export default {
         console.log("moves.length" + moves.length);
       }
       this.displaypgn()
+      EventBus.$emit('newPgn',game.pgn())
     });
     EventBus.$on("Control", async (data) => {
       console.log(moves);
