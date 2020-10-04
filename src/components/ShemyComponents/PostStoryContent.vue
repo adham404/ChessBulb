@@ -6,15 +6,22 @@
             <button>Undo Move</button>
             <div>
               <button @click="PostMove">Post as a Move</button>
-              <button>Post as a chess puzzle</button>
-              <button>Setup Position again</button>
+              <button @click="PostPuzzle">Post as a chess puzzle</button>
+              <div v-if="this.PuzzleFormFlag">
+              <div>Add a Puzzle Explanation To Other Players</div>
+              <input v-model="PuzzleExplanation" type="text">
+              </div>
+              <button @click="ResetPosition">Setup Position again</button>
             </div>
             <!-- DONE add AddMove div to the right of [ChessBoard] (2min) -->
             <div style="color:white">Moves:</div>
             <!-- DONE Add Lines div inside the AddMove div containing Lines of possible moves and loop through it according to the number of arrays in the (ChessMoveObject) (3min) -->
             <div class="Lines">
-            <div   class="LineWithTitle" v-for="Line in ChessMoveObject" v-bind:key="Line">
+            <div class="LineWithTitle" v-for="Line in ChessMoveObject" v-bind:key="Line">
+            <div style="display:flex">
             <p @click="GoToLine(Line.Line)">Solution Number {{Line.Line}}</p>
+            <p @click="DeleteLine(Line.Line)" style="border: 1px solid #ccc; cursor: pointer;">X</p>
+            </div>
             <div class="Line">
             <div class="ColorCol">
             <!-- DONE assign the Move content to each div tag (1min) -->
@@ -57,6 +64,7 @@
   import firebase from "firebase";
   // import { ChessMoveObject[this.LineCounter].ChessEngine } from "../../main"
   import * as Chess from "chess.js";
+import { EventBus } from '../../main';
 
 export default {
     //TODO Assign Data Properties in  the vue data object which are (PressMoveFlag(B), Fen(S), ChessCurrentMove(S), ChessMoveObject(A), LineObject(O), LineCounter(I), LinesOptionFlag(B), OverWriteLineCounter(I), OverWriteCurrentMove(I), MovesArrayDummy(A), PuzzleFormFlag(B), MoveFormFlag(B) PuzzleDescription(S), RestOfThePGN(S), StoryData(O)) (3min)
@@ -76,6 +84,8 @@ export default {
             MoveClicked:false
           }
         ],
+        PuzzleExplanation:"",
+        PuzzleFormFlag:false,
         LineCounter:0, //Hold the Counter of the Current Line in action 
         ChessCurrentMovePos:"", //Hold the Position value of the White Move in the White moves array of the current child in the main object
         OverWriteType:"" //Hold the Type overwrite if it's an overwrite for White Moves or black moves
@@ -114,10 +124,28 @@ export default {
         var ArrayToSend = [];
         var TimeOfCreation = new Date();
         for (let i = 0; i < this.ChessMoveObject.length; i++) {
+          var WhiteLength = this.ChessMoveObject[i].WhiteMoves.length;
+          var BlackLength = this.ChessMoveObject[i].BlackMoves.length;
+          var BlackMove = "";
+          for (let j = 0; j < WhiteLength; j++) {
+            var WhiteMove = this.ChessMoveObject[i].WhiteMoves[j];
+            this.ChessMoveObject[i].Moves.push(WhiteMove);
+            if (WhiteLength > BlackLength) {
+              console.log("Here Where Shit takes place");
+              if (j != WhiteLength) {
+              BlackMove = this.ChessMoveObject[i].BlackMoves[j];
+              this.ChessMoveObject[i].Moves.push(BlackMove);                
+              }
+            }
+            else
+            {
+              BlackMove = this.ChessMoveObject[i].BlackMoves[j];
+              this.ChessMoveObject[i].Moves.push(BlackMove);
+            }
+          }
           var MovesObject = "";
           MovesObject = {
-            WhiteMoves: this.ChessMoveObject[i].WhiteMoves,
-            BlackMoves: this.ChessMoveObject[i].BlackMoves,
+            Moves: this.ChessMoveObject[i].Moves,
             Line: this.ChessMoveObject[i].Line
           }
           ArrayToSend.push(MovesObject);
@@ -130,6 +158,68 @@ export default {
           StoryID: StoryID,
           UserID: UserID
         })
+        alert("your Story has been Posted Successfully as a Move");
+      },
+      ResetPosition()
+      {
+        EventBus.$emit("ResetPosition");
+        console.log("Position Reset");
+      },
+      DeleteLine()
+      {
+        console.log("Line is deleted");
+      },
+      PostPuzzle()
+      {
+        this.PuzzleFormFlag = !this.PuzzleFormFlag;
+        if (this.PuzzleExplanation == "") {
+          alert("Please Enter Puzzle Explanation Then Post your Puzzle");          
+        }
+        else
+        {
+        var db = firebase.firestore()
+        var StoryID = Math.floor((Math.random() * 100)) + "S" + "T";
+        var UserID = Math.floor((Math.random() * 100)) + "U" + "D";
+        var ArrayToSend = [];
+        var TimeOfCreation = new Date();
+        for (let i = 0; i < this.ChessMoveObject.length; i++) {
+          var WhiteLength = this.ChessMoveObject[i].WhiteMoves.length;
+          var BlackLength = this.ChessMoveObject[i].BlackMoves.length;
+          var BlackMove = "";
+          for (let j = 0; j < WhiteLength; j++) {
+            var WhiteMove = this.ChessMoveObject[i].WhiteMoves[j];
+            this.ChessMoveObject[i].Moves.push(WhiteMove);
+            if (WhiteLength > BlackLength) {
+              console.log("Here Where Shit take place");
+              if (j != WhiteLength-1) {
+              BlackMove = this.ChessMoveObject[i].BlackMoves[j];
+              this.ChessMoveObject[i].Moves.push(BlackMove);                
+              }
+            }
+            else
+            {
+              BlackMove = this.ChessMoveObject[i].BlackMoves[j];
+              this.ChessMoveObject[i].Moves.push(BlackMove);
+            }
+          }
+          var MovesObject = "";
+          MovesObject = {
+            Moves: this.ChessMoveObject[i].Moves,
+            Line: this.ChessMoveObject[i].Line
+          }
+          ArrayToSend.push(MovesObject);
+        }        
+        db.collection("ChessStories").doc(StoryID).set({
+          Moves: ArrayToSend,
+          TimeOfCreation: TimeOfCreation,
+          Type: "Puzzle",
+          PuzzleExplanation: this.PuzzleExplanation,
+          StartingFen: this.Fen,
+          StoryID: StoryID,
+          UserID: UserID
+        })
+        alert("your Story has been Posted Successfully as a puzzle")
+        }
       },
       WhiteMoveClicked(LineCounter,WhiteMove)  //This Function Update the status of the Move and Line ready for action when a White move is clicked
       {
@@ -237,6 +327,7 @@ export default {
           Line: SolutionLine,
           WhiteMoves: [],
           BlackMoves: [],
+          Moves: [],
           MoveClicked: false,
           ChessEngine:""
         }
