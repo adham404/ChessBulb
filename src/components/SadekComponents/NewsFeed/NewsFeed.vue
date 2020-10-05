@@ -95,7 +95,7 @@
         <h2>Brilliant</h2>
       </div>
       <div class="Analyze">
-        <h2>Analyze</h2>
+        <router-link to="/Posts/:id"><h2>Analyze</h2></router-link>
       </div>
       <div class="Share">
         <svg xmlns="http://www.w3.org/2000/svg" width="26.271" height="30.024" viewBox="0 0 26.271 30.024">
@@ -127,6 +127,9 @@
 </script>
 
 <style scoped>
+  a{
+    text-decoration: none;
+  }
   .NewsFeedContainer{
     width: 100%;
     height: 600px;

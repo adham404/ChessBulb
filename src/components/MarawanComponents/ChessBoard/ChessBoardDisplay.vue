@@ -2,7 +2,7 @@
 <template>
   <div>
       <!-- //DONE create board div(5min) -->
-      <div class="" :id="id" style=" width: 100%"  ></div>
+      <div class="" :id="id"   ></div>
       </div>
 </template>
 

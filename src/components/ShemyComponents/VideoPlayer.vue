@@ -9,13 +9,13 @@
       >
       <source :src="video" type="video/mp4" />
       </video>
-      <p>معلش بنعالج ال انستراكتور بتاعنا</p>
+      <!-- <p>معلش بنعالج ال انستراكتور بتاعنا</p> -->
       <!-- <p>{{this.VideoID}}</p> -->
-      <button @click="GetCurrentTime">Get Current Time</button>
+      <!-- <button @click="GetCurrentTime">Get Current Time</button>
       <button @click="BeginVideo">Begin</button>
       <button @click="EndVideo">End</button>
-      <div>TimeStamp Review Goes Here:</div>
-      <TimeStampDisplay :ID="VID"></TimeStampDisplay>
+      <div>TimeStamp Review Goes Here:</div> -->
+      <!-- <TimeStampDisplay :ID="VID"></TimeStampDisplay> -->
       <!-- <video controls>
       <source src="../../assets/Test.mp4" type="video/mp4" />
       </video> -->
@@ -27,7 +27,7 @@ import {EventBus} from "../../main";
 import firebase from "firebase"
 import videojs from "video.js"
 import 'video.js/dist/video-js.css'
-import TimeStampDisplay from "../ShemyComponents/TimeStampDisplay";
+// import TimeStampDisplay from "../ShemyComponents/TimeStampDisplay";
 // import { videoPlayer } from "vue-video-player"
 export default {
     //TODO Assign Data Properties in the vue data object which are (CourseVideo(V), CourseID(S), VideoCounter(I), VideoRecordPGNObject(A)) (1min)
@@ -38,11 +38,10 @@ export default {
                 options: {
                     controls: true,
                     autoplay: false,
-                    fluid: false,
+                    fluid: true,
+                    aspectRatio: "16:7",
                     oncontextmenu: false,
                     loop: false,
-                    width: 500,
-                    height: 500,
                     controlBar: {
                         volumePanel: true
                     },
@@ -52,11 +51,12 @@ export default {
                 VideoSrc:"",
                 VideoRef:"",
                 gsRef:"",
-                IDVIDEO:""
+                IDVIDEO:"",
+                
         }
     },
     components:{
-        TimeStampDisplay
+        // TimeStampDisplay
     },
     props:["VID"],
     methods:{

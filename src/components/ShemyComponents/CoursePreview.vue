@@ -35,7 +35,7 @@
                 </p>
                 <div class="Purchase">
                     <h4>This course is in some state</h4>
-                    <router-link to="path"><button>Enroll</button></router-link>
+                    <router-link to="/Courses/CourseStreaming/:CourseID"><button @click="ToggleHeader">Enroll</button></router-link>
                 </div>
                 
 
@@ -74,6 +74,11 @@ export default {
         Reviews,
         RateCourse
     },
+    methods:{
+        ToggleHeader(){
+            EventBus.$emit('Toggle', true )
+        }
+    }
 }
 </script>
 

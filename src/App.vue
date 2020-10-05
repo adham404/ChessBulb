@@ -1,12 +1,15 @@
 <template>
   <div id="app">
-    <div v-if="!productive" id="social">
+    <div v-if="!productive&&LoggedIn" id="social">
       <Header/>
       <router-view/>
     </div>
-    <div v-if="productive" id="productive">
+    <div v-if="productive&&LoggedIn" id="productive">
       <router-view/>
       <SideBar/>
+    </div>
+    <div v-if="productive">
+      <router-view/>
     </div>
   </div>
 
@@ -20,6 +23,7 @@ export default {
   data(){
     return{
       productive: false,
+      LoggedIn: true,
     }
   },
   components: {
@@ -27,8 +31,11 @@ export default {
     Header
   },
    mounted() {
-    EventBus.$on("Toggle", data => {
-      this.productive = data
+    // EventBus.$on("Toggle", data => {
+    //   this.productive = data
+    // });
+    EventBus.$on("LoggedIn", data => {
+      this.LoggedIn = data
     });
 }
 }

@@ -1,23 +1,24 @@
 <template>
 	<div>
-		//TODO using the (SearchEngine Component) //TODO using the (Filter
-		Component) //TODO loop through liveSessions //TODO using the
-		(LiveSessionCard Component) pass the data of each live session, the
-		userId and AcademyID (2 minutes)
+		<SearchEngine/>
+		<div v-for="n in 20" :key="n">
+			<LiveSessionCard/>
+		</div>
+		
 	</div>
 </template>
 
 <script>
-//TODO importing the (LiveSessionCard Component)
-//TODO importing firebase
-export default {
-	name: "LiveSessions",
-	//TODO using props to get the Academy data
-	//TODO get userID
-	//TODO make an array for liveSessions
-	//TODO in "mounted" get the live session of the academy using its ID and save them in the array
-};
+	import LiveSessionCard from '@/components/SadekComponents/Academy/LiveSessionCard.vue'
+	import SearchEngine from '@/components/MarawanComponents/SearchEngine/SearchEngine.vue'
+	export default {
+		components: {
+			LiveSessionCard,
+			SearchEngine
+		}
+	}
 </script>
 
 <style scoped>
+
 </style>
