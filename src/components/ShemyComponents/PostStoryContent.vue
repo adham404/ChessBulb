@@ -165,9 +165,12 @@ export default {
         EventBus.$emit("ResetPosition");
         console.log("Position Reset");
       },
-      DeleteLine()
+      DeleteLine(LineCounter)
       {
         console.log("Line is deleted");
+        if (LineCounter != 0) {
+          this.ChessMoveObject.splice(LineCounter,1);
+        }
       },
       PostPuzzle()
       {
