@@ -3,10 +3,8 @@
         <ChessBoardDisplay id="1" :fen='boardfen'></ChessBoardDisplay>
         <button @click="move1" >move 1 </button>
         <button @click="move2" >move 1 </button>
-        <ChessBoardDisplay id="2" :fen='boardfen2'></ChessBoardDisplay>
+
         
-        <button @click="move12" >move 1-2 </button>
-        <button @click="move22" >move 1-2 </button>
     </div>
 </template>
 
@@ -28,7 +26,8 @@ export default {
         }
     },
     components:{
-        ChessBoardDisplay
+        ChessBoardDisplay,
+        
     },
     methods:{
         move1(){

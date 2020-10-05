@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './router'
 import firebase from 'firebase'
 
+export const EventBus  = new Vue();
 
-export const EventBus = new Vue();
 Vue.use(firebase)
 var firebaseConfig = {
   apiKey: "AIzaSyDdsjuIqIrD415e2ILt_zPs9E0ikPT5Mug",

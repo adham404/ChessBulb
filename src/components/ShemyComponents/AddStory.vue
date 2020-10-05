@@ -1,7 +1,7 @@
 <template>
   <div>
-      <!-- TODO Add One Dynamic Component that Swap Between [PositionSetup] & [PostStoryContent] according to the PositionSetupFlag property(2min)  -->
-      <component :is="CurrentComponent"></component>
+      <!-- DONE Add One Dynamic Component that Swap Between [PositionSetup] & [PostStoryContent] according to the PositionSetupFlag property(2min)  -->
+      <component :FenObject="FenObject" :is="CurrentComponent"></component>
       
   </div>
 </template>
@@ -15,7 +15,8 @@ export default {
     data: function()
     {
       return{
-        CurrentComponent:"PositionSetup"
+        CurrentComponent:"PositionSetup",
+        FenObject:""
       }
     },
     components:{
@@ -24,12 +25,15 @@ export default {
     },
     //DONE set up a mounted method (1min)
     mounted(){
-      //DONE Inside mounted method ... Recieve Signal from EventBus from the [PositionSetup] and assign it to the PositionSetupFlag property(2min)
-    EventBus.$on("PositionIsSet", (flag)=>{
-        if(flag)
-        {
+    //DONE Inside mounted method ... Recieve Signal from EventBus from the [PositionSetup] and assign it to the PositionSetupFlag property(2min)
+    EventBus.$on("PositionIsSet", ()=>{
           this.CurrentComponent = "PostStoryContent"
-        }
+    })
+    EventBus.$on("SendPosition", (Fen) => {
+        this.FenObject = Fen
+    })
+    EventBus.$on("ResetPosition", () => {
+        this.CurrentComponent = "PositionSetup";
     })
     }
 }

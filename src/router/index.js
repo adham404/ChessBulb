@@ -2,12 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
 import HomePage from '@/components/Skeleton/HomePage.vue'
-import CreateCourse from '@/components/ShemyComponents/CreateCourse.vue';
+// import CourseForm from '@/components/MarawanComponents/CourseForm.vue';
+import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
 import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
 import AddStory from '@/components/ShemyComponents/AddStory.vue'
 import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
 import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
 import Courses from '@/components/ShemyComponents/Courses.vue'
+import MyCourses from '@/components/MarawanComponents/MyCourses.vue'
 import CoursePreview from '@/components/ShemyComponents/CoursePreview.vue'
 import Streaming from '@/components/ShemyComponents/Streaming.vue'
 import Academies from '@/components/SadekComponents/Academy/Academies.vue'
@@ -17,7 +19,13 @@ import SignUp from '@/components/ShemyComponents/SignUp.vue'
 import UserProfile from '@/components/ShemyComponents/UserProfile.vue'
 import Notifications from '@/components/ShemyComponents/Notifications.vue'
 import InstructorProfile from '@/components/MarawanComponents/InstructorProfile.vue'
-import Purchase from '@/components/MarawanComponents/Purchase.vue'
+import Purchase from '@/components/MarawanComponents/Purchase/Purchase.vue'
+import Subscribe from '@/components/MarawanComponents/Purchase/Subscribe.vue'
+import PurchaseSuccess from '@/components/MarawanComponents/Purchase/PurchaseSuccess.vue'
+import PurchaseCancel from '@/components/MarawanComponents/Purchase/PurchaseCancel.vue'
+import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
+import AcademyForm from '@/components/MarawanComponents/AcademyForm.vue'
+import SadekTest from '@/components/SadekComponents/SadekTest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
 
 
@@ -37,7 +45,7 @@ const routes = [
   {
     path: '/CreateCourse',
     name: 'CreateCourse',
-    component: CreateCourse
+    component: CreateCourse,
   },
   {
     path: '/PostGame',
@@ -48,6 +56,17 @@ const routes = [
     path: '/PostStory',
     name: 'PostStory',
     component: AddStory
+  },
+  {
+    path: '/AcademyForm',
+    name: 'AcademyForm',
+    component: AcademyForm
+  },
+  {
+    path: '/Marwan',
+    name: 'Marwan',
+    component: MarwanTest,
+    
   },
   {
     path: '/Posts/:id',
@@ -65,13 +84,15 @@ const routes = [
     component: Courses
   },
   {
-    path: '/Courses/:id/Course Preview',
+    path: '/Courses/CoursePreview/:CoursesID',
     name: 'CoursePreview',
-    component: CoursePreview
+    component: CoursePreview,
+    props: true
   },
   {
-    path: '/Courses/CourseStreaming/:id',
+    path: '/Courses/CourseStreaming/:CourseID',
     name: 'CourseStreaming',
+    props: true,
     component: Streaming
   },
   {
@@ -103,7 +124,7 @@ const routes = [
       {
         path: 'Courses',
         name: 'UserCourses',
-        component: Courses
+        component: MyCourses
       },
       {
         path: 'Academies',
@@ -123,14 +144,40 @@ const routes = [
     component: InstructorProfile
   },
   {
-    path: '/Purchase',
+    path: '/Purchase/:id',
     name: 'Purchase',
-    component: Purchase
+    props: true,
+    component: Purchase,
+    
   },
+  {
+    path: '/Subscribe/:id',
+    name: 'Subscribe',
+    props: true,
+    component: Subscribe,
+    
+  },
+  
+  {
+    path:'/Success/:id',
+    name:'Success',
+    component : PurchaseSuccess
+  },
+  {
+    path:'/Cancel/:id',
+    name:'Cancel',
+    component : PurchaseCancel
+  },
+
   {
     path: '/FindPlayers',
     name: 'Explore',
     component: FindPlayers
+  },
+  {
+    path: '/Sadek',
+    name: 'Sadek',
+    component: SadekTest
   }
 ]
 
