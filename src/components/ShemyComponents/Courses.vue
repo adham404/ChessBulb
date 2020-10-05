@@ -18,7 +18,6 @@
           params: {CoursesID: Course.CourseId}
           }"><component class="ListRow" :is="ComponentName" :CourseName="Course.CourseName" :CourseRate="Course.Rating"></component>
         </router-link>
-
       </div>
   </div>
 </template>

@@ -9,6 +9,8 @@
         <input v-model="UserPassword" type="password" name="" id="Password">
         <!-- DONE Create 'Login' button and assign the button to the function {Login} (2min) -->
         <button @click="Login">Login</button>
+        <div>---------------------------------------</div>
+        <button @click="CheckAuth">Check User Credentials</button>
         </div>
     </div>
 </template>
@@ -38,10 +40,7 @@ export default {
                 auth.signInWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
                     console.log(error.message);
                 })
-                auth.onAuthStateChanged((user)=>{
-                    console.log("Welcome in " + user.uid);
-                })
-
+                alert("Real Great You are in. you've logged in");
         }    
         },
         Validate(){
@@ -53,9 +52,23 @@ export default {
             else{
                 return true;
             }
-        }
-    }
+        },
+        CheckAuth(){
+        firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+		  console.log("Current User Logged in is: ")
+          console.log(user.email);
+          console.log(user.uid);
+				// User is signed in.
+            } 
+        else {
+				console.log("Bateee5")
+		// No user is signed in.
+			}
 
+        })
+        }
+}
 }
 </script>
 
