@@ -22,11 +22,17 @@ import Purchase from '@/components/MarawanComponents/Purchase.vue'
 import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
 import SadekTest from '@/components/SadekComponents/SadekTest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
+import Teach from '@/components/Skeleton/Teach.vue'
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/Teach',
+    name: 'Teach',
+    component: Teach
+  },
   {
     path: '/',
     name: 'SignUp',
