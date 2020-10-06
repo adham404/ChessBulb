@@ -1,16 +1,19 @@
 <template>
   <div>
-      <div class="TimeStampPanel">
+      <div class="TimeStamps">
+      <h2 id="SmallHeader">TimeStamps</h2>
+      <div style="display: flex">
       <div class="COL">
           <div v-for="(time,x) in timestampSec" v-bind:key="x">
-            <div @click="NavigateVideoTime(time)"> {{time}}: </div>  
+            <p @click="NavigateVideoTime(time)"> {{time}}: </p>  
           </div>
       </div>
       <div class="COL">
           <div v-for="(event,x) in timestampEvent" v-bind:key="x">
-            <div @click="NavigateVideoMove(event)"> {{event}} </div>    
+            <p @click="NavigateVideoMove(event)"> {{event}} </p>    
           </div>
-      </div>
+      </div>      
+      </div>      
       </div>
   </div>
 </template>
@@ -108,12 +111,32 @@ export default {
 }
 </script>
 
-<style>
-.TimeStampPanel{
-    display: flex;
-}
+<style scoped>
+/* .TimeStamps{
+  width: 100%;
+  background-color:#1DACA8 ;
+  border-radius: 10px;
+} */
 .COL{
     display: block;
     cursor: pointer;
 }
+p{
+  margin: 5px 0px 5px 10px;
+  font-family: 'QuickSand', sans-serif;
+  font-weight: bold;
+  color: black;
+}
+#SmallHeader{
+  border-bottom: 3px solid white;
+  font-size: 1.3rem;
+}
+h2{
+  margin: 2px 0px 10px 2px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size: 1.7rem;
+}
+
 </style>

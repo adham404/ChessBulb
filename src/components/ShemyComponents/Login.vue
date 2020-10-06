@@ -54,8 +54,8 @@ export default {
                     console.log(error.message);
                 })
                 auth.onAuthStateChanged((user)=>{
-                    console.log("Welcome in " + user.uid);
                     this.$router.push('/Home')
+                    console.log("Welcome in " + user.uid);
                     EventBus.$emit("LoggedIn", true)
                 })
 

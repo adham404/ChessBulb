@@ -37,6 +37,7 @@
 <script>
   //DONE Assign Firebase (1min)
 import firebase from "firebase";
+import {EventBus} from "../../main";
 export default {
   //DONE Assign Data Properties in the vue data object which are (FirstName(S), LastName(S), UserEmail(S), UserPassword(S), ConfirmPassword(S)) (1min)
     data:function(){
@@ -50,9 +51,13 @@ export default {
         UserID:""
       }
     },
+    mounted()
+    {
+      this.CheckUser();
+    },
     methods:{
       //DONE Define SignUp function (1min)
-      SignUp()
+      async SignUp()
       {
         this.UserValidate = this.ValidateInput();
       //DONE use firebase auth to sign up user account using the following data properties (FirstName, LastName, UserEmail, UserPassword) (20MIN)
@@ -60,7 +65,7 @@ export default {
         {
           alert("Sign Up Succesfull");
           const auth = firebase.auth();
-            auth.createUserWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
+             await auth.createUserWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
             alert(error.message);
             })
             auth.onAuthStateChanged((user)=>{
@@ -69,25 +74,26 @@ export default {
                 console.log("User IS in with email "+ user.email);
                 console.log("User IS in with ID "+ user.uid);
                 this.UserID = user.uid;
+              var DB = firebase.firestore();
+              var DBref = DB.collection("Users");
+              DBref.doc(this.UserID).set({
+                  AcademyInstructor: "false",
+                  Email: this.UserEmail,
+                  FirstName: this.FirstName,
+                  Instructor: false,
+                  LastName: this.LastName,
+                  Password: this.UserPassword,
+                  UserBio: "null",
+                  UserId: this.UserID,
+                  UserPhoto: "null"
+              })
                 this.$router.push('/Home')
+                EventBus.$emit("LoggedIn",true);
               }
               else{
                 console.log("User is out");
               }
             console.log("The Best ID is "+ this.UserID);
-              // var DB = firebase.firestore();
-              // var DBref = DB.collection("Users");
-              // DBref.doc(this.UserID).set({
-              //     AcademyInstructor: "false",
-              //     Email: this.UserEmail,
-              //     FirstName: this.FirstName,
-              //     Instructor: false,
-              //     LastName: this.LastName,
-              //     Password: this.UserPassword,
-              //     UserBio: "null",
-              //     UserId: this.UserID,
-              //     UserPhoto: "null"
-              // })
             })
             //TODO create a user field in the user database
             if(this.UserID != "")
@@ -116,6 +122,20 @@ export default {
           }
         }
       },
+      CheckUser()
+      {
+			let self = this;
+			firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+        EventBus.$emit("LoggedIn",true);
+        self.$router.push('/Home')
+				// User is signed in.
+			} else {
+				console.log("Bateee5")
+		// No user is signed in.
+			}
+			});		
+      }
       // SignOut()
       // {
       //   const auth = firebase.auth();

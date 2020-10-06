@@ -1,22 +1,23 @@
 <template>
   <div class="Productive">
     <div class="ChessBoard">
-      <ChessBoardDisplay :id = 'id'  :fen = "boardfen" :key = 'id' />
+      <ChessBoardDisplay :id = 'id' />
     </div>
 
     <div class="CourseStream">
       <div class="VideoPlayer">
-        <VideoPlayer :VID = 'VID'/>
+        <VideoPlayer :VID = 'CourseID'/>
         <h2>The sicillian najdorf by Mostafa Hamido</h2>
       </div>
       <div class="CourseData">
-        <div class="TimeStamps">
+        <TimeStampDisplay class="TimeStamps" :ID= "CourseID" />
+        <!-- <div class="TimeStamps">
           <h2 id="SmallHeader">TimeStamps</h2>
           <p>14:00 Nf3</p>
           <p>14:00 Nf3</p>
           <p>14:00 Nf3</p>
           <p>14:00 Nf3</p>
-        </div>
+        </div> -->
         <div class="ChessEngine">
           <h2 id="SmallHeader">StockFish</h2>
           <p>Nf3 +3</p>
@@ -34,6 +35,7 @@
   /*eslint-disable*/
   import ChessBoardDisplay from '@/components/MarawanComponents/ChessBoard/ChessBoardDisplay'
   import VideoPlayer from '@/components/ShemyComponents/VideoPlayer'
+  import TimeStampDisplay from "../ShemyComponents/TimeStampDisplay";
   import {EventBus} from '@/main.js'
   export default {
     data(){
@@ -44,9 +46,11 @@
 
       }
     },
+    props:["CourseID"],    
     components:{
       ChessBoardDisplay,
-      VideoPlayer
+      VideoPlayer,
+      TimeStampDisplay
     },
     mounted(){
       EventBus.$emit('Toggle', true)
@@ -100,6 +104,7 @@ h2{
 .CourseData{
   display: flex;
   height: 45%;
+  width: 100%;
   /* background-color: yellowgreen; */
 }
 .TimeStamps{

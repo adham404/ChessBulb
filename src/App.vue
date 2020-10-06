@@ -8,7 +8,7 @@
       <router-view/>
       <SideBar/>
     </div>
-    <div v-if="productive">
+    <div v-if="!LoggedIn">
       <router-view/>
     </div>
   </div>
@@ -23,7 +23,7 @@ export default {
   data(){
     return{
       productive: false,
-      LoggedIn: true,
+      LoggedIn: false,
     }
   },
   components: {

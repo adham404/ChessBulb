@@ -4,7 +4,7 @@
             <div class="CourseCard">
                 <div class="CourseData">
                     <h4 id="Instructor">Garry Kasparov</h4>
-                    <h4 id="CourseName">The Sicillian</h4>
+                    <h4 id="CourseName">{{Courses.CourseName}}</h4>
                     <div class="rating">
                         <svg v-if="rating >= 1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 15.751 15.113">
                             <path id="Icon_awesome-star" data-name="Icon awesome-star" d="M8.016.489l-1.8,3.645L2.2,4.721a.881.881,0,0,0-.487,1.5L4.618,9.06,3.93,13.065a.88.88,0,0,0,1.277.928l3.6-1.891,3.6,1.891a.881.881,0,0,0,1.277-.928L12.993,9.06,15.9,6.224a.881.881,0,0,0-.487-1.5l-4.022-.586L9.6.489A.882.882,0,0,0,8.016.489Z" transform="translate(-0.93 0.501)" stroke="#000" stroke-width="1"/>
@@ -26,6 +26,7 @@
             </div>
             <div class="CourseDescription">
                 <p>
+                    {{Courses.privileges}}
                     This will be a short introduction to the course like blabalaldsjfaklfdjasdfk any words will do just filling text here you know that
                      guy who used to smoke alot of weed with bob marley and he felt like everything is falling apar well yeah that is him
                      This will be a short introduction to the course like blabalaldsjfaklfdjasdfk any words will do just filling text here you know that
@@ -35,18 +36,27 @@
                 </p>
                 <div class="Purchase">
                     <h4>This course is in some state</h4>
-                    <router-link to="/Courses/CourseStreaming/:CourseID"><button @click="ToggleHeader">Enroll</button></router-link>
+                    <router-link style="margin-bottom:5px" :to="{
+                        path:`/Courses/CourseStreaming/${CoursesID}`,
+                        params:{CourseID: CoursesID}
+                }">
+                <button @click="ToggleHeader">Stream</button>
+                </router-link>
+                    <router-link :to="{
+                        path:`/Purchase/${CoursesID}`,
+                        params:{CourseID: CoursesID}
+                }">
+                <button @click="ToggleHeader">Enroll</button>
+                </router-link>
                 </div>
-                
-
             </div>
         </div>
         <div class = "Lower">
             <div class="Reviews">
-                <Reviews/>
+                <Reviews :CourseID = "CoursesID" />
             </div>
             <div class="AboutInstructor">
-                <AboutInstructor/>
+                <AboutInstructor :InstructorID = "Courses.InstructorId"/>
             </div>
         </div>
     </div>
@@ -65,19 +75,47 @@ export default {
     data: function()
     {
         return{
-            rating: 5
-           
+            rating: 5,
+            Courses:{}
         }
     },
+    props:["CoursesID"],
     components:{
         AboutInstructor,
         Reviews,
         RateCourse
     },
+    mounted()
+    {   
+        this.RecieveCoursesData();
+    },
     methods:{
         ToggleHeader(){
             EventBus.$emit('Toggle', true )
+        },
+        async RecieveCoursesData()
+        {
+            var id = this.CoursesID;
+            let self = this;
+            var db = firebase.firestore();  
+            //DONE Recieve and assign (CourseData) from firebase using Passed Course ID returned from the props (10min)
+            var docRef = db.collection("Courses").doc(id);
+            let response = await docRef.get().then((query)=>{
+                if(query.exists)
+                {
+                    self.Courses = query.data();
+                    self.rating = self.Courses.Rating;
+                }
+                else
+                {
+                    console.log("No Doc in here");
+                }
+            }).catch((error)=>{
+                console.log("Error getting document: ", error);
+            });
+            console.log(response);
         }
+        
     }
 }
 </script>
