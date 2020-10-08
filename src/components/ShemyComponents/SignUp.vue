@@ -47,6 +47,7 @@ export default {
       //DONE Define SignUp function (1min)
        async SignUp()
       {
+        
         this.UserValidate = this.ValidateInput();
       //DONE use firebase auth to sign up user account using the following data properties (FirstName, LastName, UserEmail, UserPassword) (20MIN)
         if(this.UserValidate)
@@ -54,10 +55,11 @@ export default {
           alert("Sign Up Succesfull");
           var auth = firebase.auth();
             await auth.createUserWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
-              alert(error.message);
-              this.ErrorAuth = error;
+            alert(error.message);
+            this.ErrorAuth = error
+            
             })
-            // this.CreateAccount();           
+
             auth.onAuthStateChanged((user)=>{
                 if(user)
               {
@@ -112,9 +114,9 @@ export default {
       },
       CheckAuth()
       {
-        			firebase.auth().onAuthStateChanged(function(user) {
+        firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
-				          console.log("Current User Logged in is: ")
+        console.log("Current User Logged in is: ")
           console.log(user.email);
           console.log(user.uid);
 
