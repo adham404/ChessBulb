@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<router-link to="/Stories/1">Stories</router-link>
+		<router-link to="/Stories">Stories</router-link>
 		<tr></tr>
 		<router-link to="/Marwan">Marwan Testing Page</router-link>
 		<tr></tr>
