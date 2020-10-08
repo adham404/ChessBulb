@@ -81,8 +81,8 @@ export default {
 <style>
 /* TODO import Styling script from Documentation and Adjust the Component (5min) */
  #Board1{
- width: 50%;
- height: 50%;
+ width: 30%;
+ height: 30%;
 }
 </style>
 

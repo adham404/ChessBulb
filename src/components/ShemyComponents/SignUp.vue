@@ -17,7 +17,11 @@
       <input v-model="ConfirmPassword" type="password" name="" id="Cpassword">
       <!-- DONE Create 'SignUp' button assigned to the function {SignUp} (2min) -->
       <button @click="SignUp">Sign Up</button>
-      <!-- <button @click="SignOut">Sign Out</button>       -->
+      <div>---------------------------------------------------------</div>
+      <button @click="CheckAuth">Check User Credentials</button>
+      <div>-----------------------------------------------------------------------------------</div>
+      <div>I am Already Signed in i want to sign out</div>
+      <button @click="SignOut">Sign Out</button>      
       </div>
   </div>
 </template>
@@ -35,52 +39,55 @@ export default {
         UserPassword:"",
         ConfirmPassword:"",
         UserValidate:false,
-        UserID:""
+        UserID:"",
+        ErrorAuth:""
       }
     },
     methods:{
       //DONE Define SignUp function (1min)
-      SignUp()
+       async SignUp()
       {
         this.UserValidate = this.ValidateInput();
       //DONE use firebase auth to sign up user account using the following data properties (FirstName, LastName, UserEmail, UserPassword) (20MIN)
         if(this.UserValidate)
         {
           alert("Sign Up Succesfull");
-          const auth = firebase.auth();
-            auth.createUserWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
-            alert(error.message);
+          var auth = firebase.auth();
+            await auth.createUserWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
+              alert(error.message);
+              this.ErrorAuth = error;
             })
+            // this.CreateAccount();           
             auth.onAuthStateChanged((user)=>{
-              if(user)
+                if(user)
               {
                 console.log("User IS in with email "+ user.email);
                 console.log("User IS in with ID "+ user.uid);
                 this.UserID = user.uid;
+                    var DB = firebase.firestore();
+                    var DBref = DB.collection("Users");
+                    DBref.doc(this.UserID).set({
+                        AcademyInstructor: "false",
+                        Email: this.UserEmail,
+                        FirstName: this.FirstName,
+                        Instructor: false,
+                        LastName: this.LastName,
+                        Password: this.UserPassword,
+                        UserBio: "null",
+                        UserId: this.UserID,
+                        UserPhoto: "null"
+                    })
+                            
               }
               else{
-                console.log("User is out");
+                  console.log("No Users here....");
               }
-            console.log("The Best ID is "+ this.UserID);
-              // var DB = firebase.firestore();
-              // var DBref = DB.collection("Users");
-              // DBref.doc(this.UserID).set({
-              //     AcademyInstructor: "false",
-              //     Email: this.UserEmail,
-              //     FirstName: this.FirstName,
-              //     Instructor: false,
-              //     LastName: this.LastName,
-              //     Password: this.UserPassword,
-              //     UserBio: "null",
-              //     UserId: this.UserID,
-              //     UserPhoto: "null"
-              // })
-            })
             //TODO create a user field in the user database
-            if(this.UserID != "")
-            {
-              console("Hey Hey");
-            }
+            })
+        }
+        else 
+        {
+          alert("Enter your Info Correctly");
         }
       },
         //DONE First Check if the (UserPassword) is the same as the (ConfirmPassword) if correct proceed if not check show validation Message (2min)
@@ -103,12 +110,27 @@ export default {
           }
         }
       },
-      // SignOut()
-      // {
-      //   const auth = firebase.auth();
-      //   auth.signOut();
-      //   alert("the User ID right now is " + this.UserID);
-      // }
+      CheckAuth()
+      {
+        			firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				          console.log("Current User Logged in is: ")
+          console.log(user.email);
+          console.log(user.uid);
+
+				// User is signed in.
+			} else {
+				console.log("Bateee5")
+		// No user is signed in.
+			}
+			});		
+      },
+      SignOut()
+      {
+        const auth = firebase.auth();
+        auth.signOut();
+        alert("the User ID right now is " + this.UserID);
+      },
     }
 }
 </script>

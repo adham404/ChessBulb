@@ -31,8 +31,10 @@ export default {
     })
     EventBus.$on("SendPosition", (Fen) => {
         this.FenObject = Fen
-      })
-
+    })
+    EventBus.$on("ResetPosition", () => {
+        this.CurrentComponent = "PositionSetup";
+    })
     }
 }
 </script>
