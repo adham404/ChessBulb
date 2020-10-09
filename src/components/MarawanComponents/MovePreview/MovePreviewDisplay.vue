@@ -21,10 +21,13 @@ export default {
         }
     },
     watch:{
-        moves:function(){
+        moves:async function(){
           this.movesdata = this.moves
           moves1 = this.moves
           console.log(moves1)
+          chess = await new  Chess(this.startpos);
+        await EventBus.$emit("displayboardfen", chess.fen())
+        this.currentmove = -1
         },
         startpos:async function(){
             if(this.startpos){

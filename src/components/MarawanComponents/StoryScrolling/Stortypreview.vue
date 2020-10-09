@@ -1,7 +1,13 @@
 <template>
-  <div>
+  <div style="display:flex">
       <ChessBoardDisplay id='grggr'  style="width : 30vw" ></ChessBoardDisplay>
-      <MovePreviewDisplay :moves='movesdata' :startpos='newpos'></MovePreviewDisplay>
+      <div>
+        <select name="line" id="" v-model="chossedline" @change="check" >
+          <option   v-for="(i,index) in alllines " :key="index"  :value="index">{{index}}line</option>
+        </select>
+        <MovePreviewDisplay :moves='movesdata' :startpos='newpos'></MovePreviewDisplay>
+      </div>
+      
   </div>
 </template>
 
@@ -13,11 +19,19 @@ export default {
     return{
       movesdata : "",
       newpos : '',
+      alllines : null,
+      chossedline : 0,
     }
   },
   components:{
     MovePreviewDisplay,
     ChessBoardDisplay
+  },
+  methods:{
+    check(){
+      this.movesdata = this.moves.Moves[this.chossedline].Moves
+      console.log(this.chossedline)
+    }
   },
     props:["moves"],
     mounted(){
@@ -25,8 +39,10 @@ export default {
     },
     watch:{
         moves:function(){
+          
           if(this.moves.Moves){
-            this.movesdata = this.moves.Moves[0].Moves
+            this.alllines = this.moves.Moves
+            this.movesdata = this.moves.Moves[this.chossedline].Moves
             this.newpos = this.moves.StartingFen
             console.log(this.newpos)
           }
