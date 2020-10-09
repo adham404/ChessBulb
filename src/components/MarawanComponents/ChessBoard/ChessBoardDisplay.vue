@@ -1,9 +1,7 @@
 
 <template>
-  <div>
       <!-- //DONE create board div(5min) -->
-      <div class="" :id="id"   ></div>
-      </div>
+      <div class="" :id="id"   style=" width:98%"></div>
 </template>
 
 <script>

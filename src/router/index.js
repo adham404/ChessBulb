@@ -7,7 +7,7 @@ import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
 import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
 import AddStory from '@/components/ShemyComponents/AddStory.vue'
 import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
-import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
+import StoryScrollingTab from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
 import Courses from '@/components/ShemyComponents/Courses.vue'
 import CoursePreview from '@/components/ShemyComponents/CoursePreview.vue'
 import Streaming from '@/components/ShemyComponents/Streaming.vue'
@@ -23,11 +23,17 @@ import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
 import SadekTest from '@/components/SadekComponents/SadekTest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
 import Teach from '@/components/Skeleton/Teach.vue'
+import Live from '@/components/SadekComponents/Academy/Live'
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path:'/Live',
+    name: 'Live',
+    component: Live
+  },
   {
     path: '/Teach',
     name: 'Teach',
@@ -71,7 +77,7 @@ const routes = [
   {
     path: '/Stories/:id',
     name: 'Stories',
-    component: StoryDisplayWindow,
+    component: StoryScrollingTab,
   },
   {
     path: '/Courses',

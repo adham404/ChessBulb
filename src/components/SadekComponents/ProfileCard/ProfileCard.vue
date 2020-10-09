@@ -7,6 +7,7 @@
 		<h3 class="Links">Joined Academies</h3>
 		<h3 class="Links">Purchased Courses</h3>
 		<h3 class="Links">My Posts</h3>
+		<h3 class="Links">Find Players</h3>
 	</div>
 </template>
 

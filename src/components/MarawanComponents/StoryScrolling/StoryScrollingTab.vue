@@ -1,57 +1,319 @@
 <template>
-    <div>
-        <ChessBoardDisplay id="1" :fen='boardfen'></ChessBoardDisplay>
-        <button @click="move1" >move 1 </button>
-        <button @click="move2" >move 1 </button>
+	<div class="Container">
+        <div class="ChessBoard">
+			<ChessBoardDisplay :id = 'id'/>
+		</div>
+		<div class="StoryData">
+            <div class="DescriptionHeader">
+               <div  class="Header">
+                <div class="UserImage">
+                    <img src="@/assets/ProfilePic.jpg" alt="">
+                </div>
+                <div class="UserBio">
+                    <div class="TextBox Shadow">
+                        <h3 id="MessageHeader">Adham Elshafei</h3>
+                        <p id="Message">I was a great player in a lot of tournaments</p>
+                    </div>
+                </div>
+            </div>
+              
 
-        
+            </div>
+            <div class="Buttons">
+                  <button class="Shadow">Show Solution</button>
+            </div>
+            <div class="StoryMoves">
+                <div class="Scroller">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="103.13" height="103.13" viewBox="0 0 103.13 103.13">
+                    <defs>
+                        <filter id="Icon_ionic-md-arrow-dropright-circle" x="0" y="0" width="103.13" height="103.13" filterUnits="userSpaceOnUse">
+                        <feOffset dy="3" input="SourceAlpha"/>
+                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                        <feFlood flood-opacity="0.161"/>
+                        <feComposite operator="in" in2="blur"/>
+                        <feComposite in="SourceGraphic"/>
+                        </filter>
+                    </defs>
+                    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Icon_ionic-md-arrow-dropright-circle)">
+                        <path id="Icon_ionic-md-arrow-dropright-circle-2" data-name="Icon ionic-md-arrow-dropright-circle" d="M45.94,88.505A42.565,42.565,0,1,0,3.375,45.94,42.565,42.565,0,0,0,45.94,88.505Zm-6.548-22.92V26.295L59.037,45.94Z" transform="translate(97.51 94.51) rotate(180)" fill="#00112c"/>
+                    </g>
+                    </svg>
+                </div>
+                <div class="StorySheet Shadow">
+                    <div class="Data">
+                        <div class="Moves">
+                            <ul>
+                                <h3>Solution #:</h3>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                            </ul>
+                            <ul>
+                                <h3>Solution #:</h3>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                            </ul>
+                            <ul>
+                                <h3>Solution #:</h3>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                            </ul>
+                            <ul>
+                                <h3>Solution #:</h3>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                            </ul>
+                            <ul>
+                                <h3>Solution #:</h3>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                                <li>1.e4 e5</li>
+                            </ul>
+
+                        </div>
+                        <div class="Controls">
+                            <button>overwrite old move</button>
+                            <button>open new line</button>
+
+                        </div>
+                    </div>
+                    <button id="Solution">Submit Solution</button>
+                </div>
+                <div class="Scroller">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="103.625" height="103.625" viewBox="0 0 103.625 103.625">
+                    <defs>
+                        <filter id="Icon_ionic-md-arrow-dropright-circle" x="0" y="0" width="103.625" height="103.625" filterUnits="userSpaceOnUse">
+                        <feOffset dy="3" input="SourceAlpha"/>
+                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                        <feFlood flood-opacity="0.161"/>
+                        <feComposite operator="in" in2="blur"/>
+                        <feComposite in="SourceGraphic"/>
+                        </filter>
+                    </defs>
+                    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Icon_ionic-md-arrow-dropright-circle)">
+                        <path id="Icon_ionic-md-arrow-dropright-circle-2" data-name="Icon ionic-md-arrow-dropright-circle" d="M46.187,89A42.812,42.812,0,1,0,3.375,46.187,42.813,42.813,0,0,0,46.187,89ZM39.6,65.947V26.428l19.76,19.76Z" transform="translate(5.63 2.63)" fill="#00112c"/>
+                    </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import ChessBoardDisplay from '@/components/MarawanComponents/ChessBoard/ChessBoardDisplay.vue'
-//TODO make a story div(5min)
-//TODO add it in v for(3min)
-//TODO get following users id array(5min)
-//TODO get storys ids and put it to an array(5min) 
-//TODO load user profile photo for each story(5min)
-//TODO add route to add story (3min)
-//TODO add route to each story (3min)
-//TODO route storys cards to display story window(3min)
-export default {
-    data(){
-        return{
-            boardfen : null,
-            boardfen2 : null,
-        }
-    },
-    components:{
-        ChessBoardDisplay,
-        
-    },
-    methods:{
-        move1(){
-            this.boardfen = 'rnbqkb1r/ppppppnp/6p1/8/8/4P3/PPPPQPPP/RNB1KBNR b KQkq - 0 1'
-
-        },
-        move2(){
-            this.boardfen = 'rnbqkb1r/1pppppnp/6p1/p7/8/4PQ1P/PPPP1PP1/RNB1KBNR w KQkq - 0 1'
-
-        },
-        move12(){
-            this.boardfen2 = 'rnbqkb1r/1pppp1pp/5n2/p4p2/2P4P/2N5/PP1PPPP1/R1BQKBNR b KQkq - 0 1'
-
-        },
-        move22(){
-            this.boardfen2 = '8/8/3qK3/8/3Qk3/8/7P/8 w - - 0 1'
-
-        }
-    }
-
-}
+import {EventBus} from '@/main.js'
+import ChessBoardDisplay from '@/components/MarawanComponents/ChessBoard/ChessBoardDisplay'
+	export default {
+		data(){
+			return{
+				id: '1',
+			}
+		},
+		components: {
+			ChessBoardDisplay
+		},
+		mounted(){
+				EventBus.$emit('Toggle', true)
+		}
+	}
 </script>
 
+<style scoped>
+.Controls{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h3{
+    margin: 0px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: lighter;
+}
+ul{
+    list-style-type: none;
+    padding-left: 20px;
+    white-space: nowrap;
 
-<style>
+}
+li{
+    font-family: 'Quicksand', sans-serif;
+    font-weight: lighter;
+    white-space: nowrap;
+}
+#Solution{
+    margin-left: auto;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.Moves{
+    width: 60%;
+    height: 100%;
+    /* background-color: darkolivegreen; */
+    display: flex;
+    overflow-x: scroll;
+    color: black;
+}
+.Data{
+    display: flex;
+    width: 100%;
+    height: 90%;
+    /* background-color: green; */
+
+}
+svg{
+    width: 80px;
+}
+button{
+    /* align-self: center; */
+    height: 32px;
+    width: 155px;
+    border: none;
+    outline: none;
+    border-radius: 1.2rem;
+    font-size: 0.85rem;
+    font-family: 'Raleway', sans-serif;
+    background-color: #022A68;
+    color: white;
+}
+
+#MessageHeader{
+    font-size: 1.1rem;
+    margin: 0px;
+}
+#Message{
+    font-size: 0.9rem;
+    margin: 1px;
+}
+.Shadow{
+-webkit-box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+-moz-box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+}
+.TextBox{
+width: 95%;
+/* height: 40px; */
+background-color: white;
+height: 110px;
+border-radius: 12px;
+padding-top: 5px;
+padding-left: 5px;
+color: black;
+font-family: 'Raleway', sans-serif;
+}
+img{
+height: 100px;
+width: 100px;
+border-radius: 100px;
+}
+.Header{
+    display: flex;
+    width: 90%;
+    height: 60px;
+    /* background-color: aqua; */
+    margin-left: 2%;
+}
+.UserImage{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 16%;
+    height: 100%;
+    /* background-color: red; */
+}
+.UserBio{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 84%;
+    height: 100%;
+    /* background-color: royalblue; */
+}
+.StorySheet{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 68%;
+    height: 90%;
+    background-color:white;
+    border-radius: 8px;
+}
+.Scroller{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16%;
+    height: 100%;
+    /* background-color: coral; */
+}
+.StoryMoves{
+    display: flex;
+    height: 70%;
+    width: 100%;
+    /* background-color: chartreuse; */
+
+}
+.Buttons{
+    display: flex;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    /* background-color: cadetblue; */
+    padding-left: 20px;
+}
+.DescriptionHeader{
+    display: flex;
+    align-items: center;
+    height: 20%;
+    widows: 100%;
+    /* background-color: blue; */
+}
+
+.Container{
+	display: flex;
+	height: 100vh;
+	width: 100%;
+}
+.ChessBoard{
+	/* padding-top: 1px; */
+    padding-left: 3px; 
+	width: 50.6%;
+	/* background-color: blue; */
+}
+.StoryData{
+	display: flex;
+	flex-direction: column;
+	width: 49.4%;
+    background-color: white;
+	/* background-color: red; */
+}
 
 </style>
