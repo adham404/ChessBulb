@@ -8,6 +8,7 @@ import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
 import AddStory from '@/components/ShemyComponents/AddStory.vue'
 import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
 import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
+import StoryPreview from '@/components/MarawanComponents/StoryScrolling/Stortypreview.vue'
 import Courses from '@/components/ShemyComponents/Courses.vue'
 import MyCourses from '@/components/MarawanComponents/MyCourses.vue'
 import CoursePreview from '@/components/ShemyComponents/CoursePreview.vue'
@@ -74,9 +75,18 @@ const routes = [
     component: Analyze
   },
   {
-    path: '/Stories/:id',
+    path: '/Stories/',
     name: 'Stories',
     component: StoryDisplayWindow,
+    props: true,
+    children:[
+      {
+        path : ':id',
+        name : "StoryPreview",
+        component : StoryPreview
+
+      }
+    ]
   },
   {
     path: '/Courses',
