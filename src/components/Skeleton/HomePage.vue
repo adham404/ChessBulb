@@ -16,6 +16,10 @@
 		<tr></tr>
 		<router-link style="color: white" to="/Login">Login</router-link>
 		<tr></tr>
+		<router-link style="color: white" :to="{
+			path: `/profile/${UserID}`
+			}">User Profile</router-link>
+		<tr></tr>		
 		<button @click="Check">Check User Creditentials</button>
 		<tr></tr>
 		<div :style="TextColor">{{WelcomeEmail}}</div>
@@ -35,7 +39,8 @@ export default {
 		WelcomeEmail:"",
 		TextColor:{
 			color:"red"
-		}
+		},
+		UserID:""
       }
     },
 	methods:{
@@ -47,11 +52,13 @@ export default {
 			console.log("Current User Logged in is: ")
             console.log(user.email);
 			console.log(user.uid);
+			self.UserID = user.uid;
 			self.WelcomeEmail = "Welcome " + user.email;
 			self.TextColor.color = "green";
 				// User is signed in.
 			} else {
 				console.log("Bateee5")
+				self.UserID = "";
 				self.WelcomeEmail = "No account ... Please Go signup to create an account or login to an existing account"
 				self.TextColor.color = "red";
 		// No user is signed in.

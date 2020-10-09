@@ -10,7 +10,7 @@
       <label for="LastName">Last Name</label>
       <input v-model="LastName" type="text" name="" id="LastName">
       <label for="Email">Email</label>
-      <input v-model="UserEmail" type="email" name="" id="Email">
+      <input v-model="UserEmail" type= "email" name="" id="Email">
       <label for="password">Password</label>
       <input v-model="UserPassword" type="password" name="" id="password">
       <label for="Cpassword">Confirm Password</label>
@@ -112,11 +112,11 @@ export default {
       },
       CheckAuth()
       {
-        			firebase.auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
-				          console.log("Current User Logged in is: ")
-          console.log(user.email);
-          console.log(user.uid);
+  console.log("Current User Logged in is: ")
+  console.log(user.email);
+  console.log(user.uid);
 
 				// User is signed in.
 			} else {

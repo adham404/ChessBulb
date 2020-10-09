@@ -11,6 +11,11 @@
         <button @click="Login">Login</button>
         <div>---------------------------------------</div>
         <button @click="CheckAuth">Check User Credentials</button>
+        <div>--------------------------------------</div>
+        <div>Don't even have an account!</div>
+        <router-link to="/SignUp">
+        <button>Sign Up</button>
+        </router-link>
         </div>
     </div>
 </template>
@@ -56,13 +61,13 @@ export default {
         CheckAuth(){
         firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
-		  console.log("Current User Logged in is: ")
-          console.log(user.email);
-          console.log(user.uid);
+		console.log("Current User Logged in is: ");
+        console.log(user.email);
+        console.log(user.uid);
 				// User is signed in.
             } 
         else {
-				console.log("Bateee5")
+		console.log("Bateee5")
 		// No user is signed in.
 			}
 
