@@ -1,44 +1,65 @@
 <template>
-  <div>
-      <!-- DONE Add One Dynamic Component that Swap Between [PositionSetup] & [PostStoryContent] according to the PositionSetupFlag property(2min)  -->
-      <component :FenObject="FenObject" :is="CurrentComponent"></component>
-      
+  <div class="Container">
+    <div class="ChessBoard">
+      <PositionSetup/>
+    </div>
+    <div class="StoryData">
+      <h1>Please Setup the game position</h1>
+      <button class="Shadow">Save Position</button>
+    </div>
   </div>
 </template>
 
 <script>
-    //DONE Assign EventBus method (1min)
-    import {EventBus} from "../../main"
-    import PositionSetup from "../ShemyComponents/PositionSetup";
-    import PostStoryContent from "../ShemyComponents/PostStoryContent"; 
-export default {
-    data: function()
-    {
-      return{
-        CurrentComponent:"PositionSetup",
-        FenObject:""
-      }
-    },
-    components:{
-      PositionSetup,
-      PostStoryContent
-    },
-    //DONE set up a mounted method (1min)
-    mounted(){
-    //DONE Inside mounted method ... Recieve Signal from EventBus from the [PositionSetup] and assign it to the PositionSetupFlag property(2min)
-    EventBus.$on("PositionIsSet", ()=>{
-          this.CurrentComponent = "PostStoryContent"
-    })
-    EventBus.$on("SendPosition", (Fen) => {
-        this.FenObject = Fen
-      })
-
+import PositionSetup from '@/components/ShemyComponents/PositionSetup.vue'
+  export default {
+    components: {
+      PositionSetup
     }
-}
+    
+  }
 </script>
 
-<style>
-/* TODO import Styling script from Documentation and Adjust the Component (5min) */
+<style scoped>
+button{
+		height: 35px;
+		width: 150px;
+		border: none;
+		outline: none;
+		border-radius: 1.2rem;
+		font-size: 0.9rem;
+		font-family: 'Raleway', sans-serif;
+		background-color: #022A68;
+		color: white;
+	}
+.Shadow{
+		-webkit-box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+		-moz-box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+		box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+}
+h1{
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  color: black;
+}
+.Container{
+	display: flex;
+	height: 100vh;
+	width: 100%;
+}
+.ChessBoard{
+	/* padding-top: 1px; */
+    padding-left: 20px; 
+	width: 45%;
+	/* background-color: blue; */
+}
+.StoryData{
+	display: flex;
+	flex-direction: column;
+	width: 55%;
+    background-color: white;
+  /* background-color: red; */
+  justify-content: center;
+  align-items: center;
+}
 </style>
-
-//TODO Total Time is (11min)

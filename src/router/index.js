@@ -24,11 +24,17 @@ import SadekTest from '@/components/SadekComponents/SadekTest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
 import Teach from '@/components/Skeleton/Teach.vue'
 import Live from '@/components/SadekComponents/Academy/Live'
+import PostStoryContent from '@/components/ShemyComponents/PostStoryContent.vue'
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/PostStoryContent',
+    name: 'PostStoryContent',
+    component: PostStoryContent
+  },
   {
     path:'/Live',
     name: 'Live',

@@ -22,8 +22,8 @@ import { EventBus } from "@/main";
 export default {
   data(){
     return{
-      productive: false,
-      LoggedIn: false,
+      productive: true,
+      LoggedIn: true,
     }
   },
   components: {
