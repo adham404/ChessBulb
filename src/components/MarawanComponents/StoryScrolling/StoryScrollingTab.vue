@@ -1,11 +1,6 @@
 <template>
-    <div>
-        
-        <button @click="move1" >Next </button>
-        <button @click="move2" >Back </button>
-        <StoryPreview :moves="moves"  ></StoryPreview>
-        
-    </div>
+
+        <StoryPreview style="width:100%" :moves="moves"  ></StoryPreview>
 </template>
 
 <script>
@@ -36,6 +31,13 @@ export default {
         }
     },
      mounted(){
+         EventBus.$on('moveStory',data =>{
+             if(data == 'lift'){
+                 this.move2();
+             }else if(data == 'right'){
+                 this.move1()
+             }
+         })
          setTimeout(() => {
       EventBus.$emit("Toggle", true);
     }, 100);
@@ -50,6 +52,9 @@ export default {
         this.moves = data[current]
     //    console.log(this.moves)
     },
+    beforeDestroy () {
+    EventBus.$off('Link')
+ },
     destroyed() {
     EventBus.$emit("Toggle", false);
   },
