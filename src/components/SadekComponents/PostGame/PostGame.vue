@@ -152,6 +152,7 @@ export default {
 				})
 				
 			});
+			console.log(this.UserName)
 	},
 };
 </script>

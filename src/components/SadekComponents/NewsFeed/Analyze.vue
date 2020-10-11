@@ -26,6 +26,8 @@
 			:MainLine="MainLine"
 			:MatchId="MatchId"
 			:add="add"
+			:WhitePlayer="WhitePlayer"
+			:BlackPlayer="BlackPlayer"
 		></component>
 		<!-- //TODO using the (SideBar Component) (2 minutes) -->
 		<!-- //TODO using the (DownloadPgn Component) (2 minutes)  -->
@@ -94,7 +96,9 @@ export default {
 			BreadCrumbs:[],
 			Moves:moves,
 			add:currentMove,
-			id:"123"
+			id:"123",
+			WhitePlayer:this.$route.query.WhitePlayer,
+			BlackPlayer:this.$route.query.BlackPlayer
 		};
 	},
 	//TODO in "mounted" using EventBus.$on see replies is clicked and assign the recieving  data to the object and switch the boolean variable to true, if true change the ComponentName to "SeeReplies" (5 minutes)
@@ -103,6 +107,8 @@ export default {
 	async mounted() {
 		// chess = new chess();
 		EventBus.$emit("Toggle", true);
+		console.log(this.WhitePlayer = this.$route.query.WhitePlayer)
+		console.log(this.BlackPlayer = this.$route.query.BlackPlayer)
 		// let self = this;
 		this.mainMove = currentMove + this.CurrentMove
 		this.getLine();
@@ -200,6 +206,8 @@ export default {
 				console.log(this.BreadCrumbs[0].name)
 				this.getLine();
 			});	
+			console.log(this.WhitePlayer)
+			console.log(this.BlackPlayer)
 	},
 	methods: {
 		async moveto(i) {

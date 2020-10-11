@@ -81,6 +81,7 @@
 		<router-link
 			:to="{
 				path: `Posts/${Match.MatchId}`,
+        query: { WhitePlayer: Match.WhitePlayer, BlackPlayer:Match.BlackPlayer }
 			}"
 			><h2>Analyze</h2></router-link>
 		</div>
