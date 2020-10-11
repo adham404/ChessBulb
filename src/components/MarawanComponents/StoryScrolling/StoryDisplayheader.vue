@@ -51,7 +51,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #StoriesWindowHeader{
     margin-left: 37%;
     margin-top: 5px;

@@ -2,7 +2,6 @@
 	<div class="Productive">
 		<div class="ChessBoard">
 			<ChessBoardInput id =1  />
-
 		</div>
 		<div class="GameData">
 			<div class="EnginePlayers">
