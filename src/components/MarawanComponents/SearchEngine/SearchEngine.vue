@@ -17,11 +17,11 @@
       />
     </svg>
     <div class="Filter" v-if="ShowFilters">
-            <input type="checkbox" v-model="checkedFilters" value="Difficulty:Beginner" id="Beginner">
+            <input @change="search" type="checkbox" v-model="checkedFilters" value="Difficulty:Beginner" id="Beginner">
             <label for="Beginner">Beginner</label>
-            <input type="checkbox" v-model="checkedFilters" value="Difficulty:Intermediate" id="Intermediate">
+            <input @change="search" type="checkbox" v-model="checkedFilters" value="Difficulty:Intermediate" id="Intermediate">
             <label for="Intermediate">Intermediate</label>
-            <input type="checkbox" v-model="checkedFilters" value="Difficulty:Advanced" id="Advanced">
+            <input  @change="search" type="checkbox" v-model="checkedFilters" value="Difficulty:Advanced" id="Advanced">
             <label for="Advanced">Advanced</label>
     </div>
   </div>
@@ -42,6 +42,7 @@ export default {
     );
     if (this.SearchIndex) {
       index = await client.initIndex(this.SearchIndex);
+      this.search();
     }
     EventBus.$on("SearchIndex", (ind) => {
       index = client.initIndex(ind);

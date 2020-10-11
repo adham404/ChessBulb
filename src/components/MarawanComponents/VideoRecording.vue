@@ -1,7 +1,7 @@
 <template>
   <div>
     <div><video id="recorder" ref="recorder"  ></video></div>
-    <div>{{status}}</div>
+    <p>{{status}}</p>
     <div>
         <button id="btnstart" v-on:click="startrecord">START RECORD</button>
         <button id="btnstop"  v-on:click="stoprecord">STOP</button>
@@ -168,6 +168,12 @@ export default {
     width: 100% !important;
   height: auto !important;
     
+}
+p{
+  margin: 5px 0px 5px 10px;
+  font-family: 'QuickSand', sans-serif;
+  font-weight: bold;
+  color: black;
 }
 </style>
 
