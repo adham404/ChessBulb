@@ -56,7 +56,7 @@ export default {
         CheckAuth(){
         firebase.auth().onAuthStateChanged(function(user) {
 		if (user) {
-		  console.log("Current User Logged in is: ")
+            console.log("Current User Logged in is: ")
           console.log(user.email);
           console.log(user.uid);
 				// User is signed in.

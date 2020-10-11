@@ -1,9 +1,10 @@
 <template>
   <div>
-      <div style="display:flex">
+      <h1 id="StoriesWindowHeader">Chess Snapshots</h1>
+      <div class="StoriesWindow" >
           <div  v-for="(story,index) in Stories" :key="index" >
               <router-link :to="{ name: 'Stories' ,params: { data: Stories , current: index  }}" >
-                  <StoryCard :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
+                  <StoryCard class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
               </router-link>
           
             </div>
@@ -51,6 +52,23 @@ export default {
 </script>
 
 <style>
+#StoriesWindowHeader{
+    margin-left: 37%;
+    margin-top: 5px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: lighter;
+}
+.ProfileImage{
+height: 100px;
+width: 100px;
+border-radius: 5px;
+margin-left: 10px;
+}
+.StoriesWindow{
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+}
 
 </style>
 //TODO get storys ids array(5min)

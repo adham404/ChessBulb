@@ -1,7 +1,7 @@
 <template>
   <div style="width:8vw">
       
-      <ChessBoardDisplay   :fen='startpos' :id='chessid' ></ChessBoardDisplay>
+      <ChessBoardDisplay hideNotation="true"   :fen='startpos' :id='chessid' ></ChessBoardDisplay>
   </div>
 </template>
 

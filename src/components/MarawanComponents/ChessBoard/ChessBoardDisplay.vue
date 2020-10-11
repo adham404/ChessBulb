@@ -16,7 +16,7 @@ var $ = global.jQuery;
 window.$ = $; 
 export default {
 //DONE add a fen prop
-    props:['fen','id',],
+    props:['fen','id','hideNotation'],
     data(){
         return{
             board : null,
@@ -37,6 +37,7 @@ export default {
                 return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
             }
             var config = {
+            showNotation: this.hideNotation ? false : true,
             draggable: false,
             position: this.fen ? this.fen : 'start',
             showErrors : 'alert',
