@@ -2,7 +2,6 @@
 	<div class="Productive">
 		<div class="ChessBoard">
 			<ChessBoardInput id =1  />
-
 		</div>
 		<div class="GameData">
 			<div class="EnginePlayers">
@@ -141,6 +140,7 @@ export default {
 				console.log(data);
 			});
 		console.log(this.MatchId);
+		let self = this;
 		firebase
 			.firestore()
 			.collection("Users")

@@ -2,7 +2,7 @@
 	<div class="HomePage">
 		<ProfileCard class="ProfileCard"/>
 		<div class = "MiddleContainer">
-			<h1 id="StoriesWindowHeader">Chess Snapshots</h1>
+			<!-- <h1 id="StoriesWindowHeader">Chess Snapshots</h1> -->
 			<StoryDisplayheader/>
 			<div class="Buttons">
 				<button class="Shadow">Post a Game</button>
