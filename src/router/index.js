@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
+// import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
 import HomePage from '@/components/Skeleton/HomePage.vue'
 // import CourseForm from '@/components/MarawanComponents/CourseForm.vue';
 import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
 import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
 import AddStory from '@/components/ShemyComponents/AddStory.vue'
 import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
+import AddAnalysis from '@/components/SadekComponents/NewsFeed/AddAnalysis.vue'
 import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
 import StoryPreview from '@/components/MarawanComponents/StoryScrolling/Stortypreview.vue'
 import Courses from '@/components/ShemyComponents/Courses.vue'
@@ -35,8 +36,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'ProductiveToggle',
-    component: ProductiveToggle
+    name: 'SignUp',
+    component: SignUp
   },
   {
     path: '/Home',
@@ -47,6 +48,11 @@ const routes = [
     path: '/CreateCourse',
     name: 'CreateCourse',
     component: CreateCourse,
+  },
+  {
+    path: '/AddAnalysis',
+    name: 'AddAnalysis',
+    component: AddAnalysis,
   },
   {
     path: '/PostGame',
