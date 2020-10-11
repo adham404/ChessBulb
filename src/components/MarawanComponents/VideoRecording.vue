@@ -163,7 +163,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #recorder{
     width: 100% !important;
   height: auto !important;
