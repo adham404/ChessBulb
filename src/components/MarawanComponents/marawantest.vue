@@ -9,6 +9,7 @@
    <ChessBoardInput id='ddd' ></ChessBoardInput>
    <MovePreviewInput startpos="3k4/2qrb3/8/8/8/8/2QRB3/3K4 w - - 0 1"></MovePreviewInput>
    <router-view></router-view>
+   <StockFish></StockFish>
   </div>
 </template>
 
@@ -16,12 +17,14 @@
 import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
 import MovePreviewInput from "@/components/MarawanComponents/MovePreview/MovePreviewInput"
 import StoryHeader from "@/components/MarawanComponents/StoryScrolling/StoryDisplayheader"
+import StockFish from "@/components/MarawanComponents/StockFish.vue"
 import {EventBus} from "@/main.js"
 export default {
   components:{
     StoryHeader,
     MovePreviewInput,
-    ChessBoardInput
+    ChessBoardInput,
+    StockFish
   },
   data(){
     return{

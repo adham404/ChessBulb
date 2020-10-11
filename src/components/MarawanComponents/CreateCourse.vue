@@ -1,23 +1,30 @@
 <template>
-  <div>
+  <div >
     <CourseForm v-if="form" />
-    <div id="recording"  v-if="!form" >
-      <div style="display :flex">
+    <div class="Productive"   v-if="!form" >
+
+      <div class="ChessBoard">
         <ChessBoardInput id="1" />
-        <div>
-          <VideoRecording />
-          <TimeStampsRecording />
-          <UploadPgn />
-          <PostCourse />
         </div>
+      <div class="CourseStream">
+        <div class="VideoPlayer">
+          <VideoRecording />
+        </div>
+        <div class="CourseData">
+          <TimeStampsRecording class="TimeStamps"  />
+          <StockFish/>
+          
+        </div>
+        <UploadPgn />
+          <PostCourse />  
       </div>
-      
     </div>
   </div>
 </template>
 
 <script>
 import { EventBus } from "@/main.js";
+import StockFish from "@/components/MarawanComponents/StockFish.vue"
 import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput.vue";
 import VideoRecording from "@/components/MarawanComponents/VideoRecording.vue";
 import UploadPgn from "@/components/MarawanComponents/UploadPgn.vue";
@@ -37,6 +44,7 @@ export default {
     UploadPgn,
     CourseForm,
     PostCourse,
+    StockFish
   },
   mounted() {
     this.form = true
@@ -68,8 +76,66 @@ export default {
 };
 </script>
 
-<style>
-/* TODO import Styling script from Documentation and Adjust the Component (5min) */
+<style scoped>
+p{
+  margin: 5px 0px 5px 10px;
+  font-family: 'QuickSand', sans-serif;
+  font-weight: bold;
+  color: black;
+}
+#SmallHeader{
+  border-bottom: 3px solid white;
+  font-size: 1.3rem;
+}
+h2{
+  margin: 2px 0px 10px 2px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size: 1.7rem;
+}
+.Productive{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+}
+.ChessBoard{ 
+  padding-top: 2px;
+  padding-left: 3px; 
+  width: 50.6%;
+  /* background-color: tomato; */
+  background-color:  #00112c;
+}
+.CourseStream{
+  display: flex;
+  flex-direction: column;
+  width: 49.4%;
+  /* background-color: turquoise; */
+}
+.VideoPlayer{
+  height: 55%;
+  /* background-color:violet; */
+  /* border-bottom: 3px solid grey; */
+}
+.CourseData{
+  display: flex;
+  height: 45%;
+  width: 100%;
+  /* background-color: yellowgreen; */
+}
+.TimeStamps{
+  width: 50%;
+  background-color:#1DACA8 ;
+  border-radius: 10px;
+  /* background-color: aqua; */
+}
+.ChessEngine{
+  width: 50%;
+  background-color:#0487af;
+  border-radius: 10px;
+  /* background-color: blueviolet; */
+}
 </style>
 
 //TODO finish component total time 53min
