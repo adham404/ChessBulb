@@ -6,7 +6,7 @@
         <router-link to="/CreateCourse">
         <button>Create Course</button>
         </router-link>
-        <SearchEngine SearchIndex='Courses' :ShowFilters="true"></SearchEngine>
+        <SearchEngine :ShowFilters="true"></SearchEngine>
         <!-- <input type="text" placeholder="Search Engine">
         <FilterSearch></FilterSearch> -->
       </div>

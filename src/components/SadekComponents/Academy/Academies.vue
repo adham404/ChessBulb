@@ -1,7 +1,8 @@
 <template>
 	<div>
+		<router-link to="/Sadek">Sadek Testing Page</router-link>
 		<!-- // (DONE) using the (SearchEngine Component) (2 minutes) -->
-		<SearchEngine />
+		<SearchEngine SearchIndex="Academies"/>
 		<!-- //(DONE) loop through the object (5 minutes) -->
 		<div class="Container">
 			<div v-for="Academy in Academies" :key="Academy.id">
@@ -89,7 +90,12 @@ export default {
 					});
 				});
 		}
-	},
+		EventBus.on("TheSearchResult",res =>{
+    //res is an array of id 
+    // res = ['re5845','teffg556','fgdw459648' ......]
+    console.log(res)
+})
+	}
 };
 </script>
 /*TODO use the css ids from tettra (3 minutes) */

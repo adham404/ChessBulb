@@ -68,12 +68,18 @@ export default {
              await auth.createUserWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
             alert(error.message);
             })
-            auth.onAuthStateChanged((user)=>{
+            let self = this;
+            await auth.onAuthStateChanged((user)=>{
               if(user)
               {
-                console.log("User IS in with email "+ user.email);
-                console.log("User IS in with ID "+ user.uid);
-                this.UserID = user.uid;
+              self.UserID = user.uid;
+              }
+              else{
+                console.log("User is out");
+              }
+            // console.log("The Best ID is "+ this.UserID);
+            })
+            if (this.UserID != "") {
               var DB = firebase.firestore();
               var DBref = DB.collection("Users");
               DBref.doc(this.UserID).set({
@@ -86,15 +92,12 @@ export default {
                   UserBio: "null",
                   UserId: this.UserID,
                   UserPhoto: "null"
-              }) 
+              })
+                this.CreateFollowDoc();               
                 this.$router.push('/Home')
                 EventBus.$emit("LoggedIn",true);
-              }
-              else{
-                console.log("User is out");
-              }
-            console.log("The Best ID is "+ this.UserID);
-            })
+            }
+
             //TODO create a user field in the user database
             if(this.UserID != "")
             {
@@ -122,6 +125,16 @@ export default {
           }
         }
       },
+      async CreateFollowDoc()
+      {
+        var db = firebase.firestore();
+        var DBref = await db.collection("Follows").doc(this.UserID);
+        DBref.set({
+          Followers:[],
+          Following:[],
+          UserID: this.UserID
+        })
+      },
       CheckUser()
       {
 			let self = this;
@@ -131,17 +144,11 @@ export default {
         self.$router.push('/Home')
 				// User is signed in.
 			} else {
-				console.log("Bateee5")
+				console.log("New User")
 		// No user is signed in.
 			}
 			});		
       }
-      // SignOut()
-      // {
-      //   const auth = firebase.auth();
-      //   auth.signOut();
-      //   alert("the User ID right now is " + this.UserID);
-      // }
     }
 }
 </script>

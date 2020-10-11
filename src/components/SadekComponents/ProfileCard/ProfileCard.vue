@@ -1,49 +1,112 @@
 <template>
 	<div>
-		<!-- //(Done) make img tag for the profile icon (2 minutes) -->
-		<!-- <img :src="User.photo" alt="user photo" /> -->
-		<!-- //(Done) paragraph tag for the user name (1 minutes) -->
-		<!-- <p>{{ User.UserName }}</p> -->
-		<!-- //(Done) make "Profile" routerLink direct to Profile passing
-		props{UserID} (3 minutes) -->
+		<img class="ProfileImage" src="../../../assets/ProfilePic.jpg" alt="">
+		<h1 class="PlayerName">{{UserName}}</h1>
+		<h4 :style="TextColor">Email: {{email}}</h4>
 		<router-link
+		class="Links"
 			:to="{
-				path: `/profile/${123453789}`,
+				path: `/profile/${UserId}`,
 			}"
-			><h3>Pofile</h3></router-link
+			><h3 >Pofile</h3></router-link
 		>
-		<!-- //(Done) make "My Courses" routerLink direct to Courses passing
-		props{allCourses} (3 minutes) -->
 		<router-link
+		class="Links"
 			:to="{
-				name: 'MyCourses',
+				name: 'UserCourses',
 				params: { allCourses: false },
 			}"
-			><h3>My Courses</h3></router-link
+			><h3 >My Courses</h3></router-link
 		>
-		<!-- //(Done) make "Joined Academies" routerLink direct to "MyAcademies" passing {allAcademies} (3
-		minutes) -->
 		<router-link
+		class="Links"
 			:to="{
-				name: 'MyAcademies',
+				name: 'UserAcademies',
 				params: { allAcademies: false },
 			}"
 			><h3>Joined Academies</h3></router-link
 		>
-		<!-- //(Done) make "Notification" routerLink direct to Notification passing(3 minutes) -->
-		<router-link to="UserNotifications">Notifications</router-link>
+		<h3 class="Links">Purchased Courses</h3>
+		<h3 class="Links">My Posts</h3>
+		<!-- <router-link class="Links" ><h3>Purchased Courses</h3></router-link>
+		<router-link class="Links"><h3>My Posts</h3></router-link> -->
+		<router-link class="Links" to="Explore"><h3>Find Players</h3></router-link>
 	</div>
 </template>
 
 <script>
+import firebase from "firebase"
 export default {
-	//(Done) get the user id (5 minutes)
 	name: "ProfileCard",
 	props: ["User"],
+	data() {
+		return {
+			email:"",
+			UserId:"",
+			UserName:"",
+			TextColor:{
+    color:"red"
+    },
+		}
+	},
+	mounted() {
+		let self = this;
+	firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+	console.log("Current User Logged in is: ")
+	console.log(user.email);
+	console.log(user.uid);
+	// self.UserID = user.uid;
+	self.email = user.email;
+	self.TextColor.color = "green";
+	self.UserId = user.uid
+		// User is signed in.
+	} else {
+		console.log("Bateee5")
+		// self.UserID = "";
+		self.email = "No Email Here"
+		self.TextColor.color = "red";
+		// No user is signed in.
+	}
+	});	
+	firebase
+			.firestore()
+			.collection("Users")
+			.where("UserId", "==", `${this.UserId}`)
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc)=>{
+				self.UserName = doc.data().FirstName;
+				})
+				
+			});	
+	},
 };
 </script>
 
 <style scoped>
-/*TODO use the css ids from tettra (2 minutes) */
-</style> 
+.ProfileImage{
+		height: 120px;
+		width: 120px;
+		border-radius: 5px;
+	}
+	.PlayerName{
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.3rem;
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+	.Links{
+		font-family: 'Open Sans', sans-serif;
+		font-size: 1rem;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		font-weight: lighter;
+		color: white;
+		text-decoration: none;
+	}
+	/* .Links:visited{
+		color: inherit;
+	} */
+	</style> 
 //TODO Expected Time (31 minutes)

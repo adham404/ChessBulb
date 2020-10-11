@@ -1,13 +1,69 @@
 <template>
-  <div>//TODO making the Share pop up (10 minutes)</div>
+  <div>
+    <input type="text" placeholder="Add Comment" v-model="comment">
+    <button @click="share">Share</button>
+    <button @click="copy()">Copy Link</button> 
+    <input style="display:none;" type="text" :value="link" ref="link">
+    <!-- <span style="display:none;" id="l">{{link}}</span> -->
+  </div>
 </template>
 
 <script>
 //TODO importing FIREBASE (2 minutes)
+import firebase from "firebase";
 export default {
-  //TODO making props object for the match id (2 minutes)
-  //FIXME making a function if the Share is External that generate a sharable link and copy it to clipboard then direct to Home page ("chessbulb.com/posts/:id") (20 minutes)
-  //TODO making a function if the share is internal that generate (ShareId) and then making the database table of (Shares) passing the MatchId and UserID *comment* then direct to Home page (5 minutes)
+  name:"Share",
+  props:["MatchId"],
+  data() {
+    return {
+      UserId:"123456789",
+      ShareId:null,
+      comment:"",
+      link:"http://localhost:8080/Posts/" + this.MatchId
+    }
+  },
+  methods:{
+    copy () {
+        var copyText = this.$refs.link;
+      /* Select the text field */
+      copyText.select();
+      /* Copy the text inside the text field */
+      document.execCommand("copy");
+      /* Alert the copied text */
+      alert("Link is copied");
+        },
+    generateUID() {
+			this.ShareId = "Share-";
+			var d = new Date().getTime(); //Timestamp
+			var d2 =
+				(performance && performance.now && performance.now() * 1000) ||
+				0; //Time in microseconds since page-load or 0 if unsupported
+			for (var i = 0; i < 5; i++) {
+				var r = Math.random() * 16; //random number between 0 and 16
+				if (d > 0) {
+					//Use timestamp until depleted
+					r = (d + r) % 16 | 0;
+				} else {
+					//Use microseconds since page-load if supported
+					r = (d2 + r) % 16 | 0;
+				}
+				this.ShareId = this.ShareId + r.toString(16);
+			}
+		},
+    share(){
+      this.generateUID()
+      firebase
+					.firestore()
+					.collection("Shares")
+					.doc(this.ShareId)
+					.set({
+						MatchId: this.MatchId,
+						ShareId:this.ShareId,
+            UserId: this.UserId,
+            Comment:this.comment
+					});
+    },
+  },
 };
 </script>
 
