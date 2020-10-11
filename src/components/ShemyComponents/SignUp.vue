@@ -86,7 +86,7 @@ export default {
                   AcademyInstructor: "false",
                   Email: this.UserEmail,
                   FirstName: this.FirstName,
-                  Instructor: true,
+                  Instructor: false,
                   LastName: this.LastName,
                   Password: this.UserPassword,
                   UserBio: "null",

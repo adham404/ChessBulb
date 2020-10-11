@@ -6,7 +6,7 @@
 		<router-link
 		class="Links"
 			:to="{
-				path: `/profile/${UserID}`,
+				path: `/profile/${UserId}`,
 			}"
 			><h3 >Pofile</h3></router-link
 		>
