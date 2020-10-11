@@ -4,6 +4,9 @@ import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
 import HomePage from '@/components/Skeleton/HomePage.vue'
 // import CourseForm from '@/components/MarawanComponents/CourseForm.vue';
 import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
+import LiveForm from '@/components/MarawanComponents/LiveForm.vue';
+import LiveStreamer from '@/components/MarawanComponents/liveStreaming/Streamer.vue';
+import LiveViewer from '@/components/MarawanComponents/liveStreaming/Viewer.vue';
 import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
 import AddStory from '@/components/ShemyComponents/AddStory.vue'
 import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
@@ -52,6 +55,21 @@ const routes = [
     path: '/PostGame',
     name: 'PostGame',
     component: PostGame,
+  },
+  {
+    path: '/LiveStreamer/:id',
+    name: 'LiveStreamer',
+    component: LiveStreamer,
+  },
+  {
+    path: '/LiveForm',
+    name: 'LiveForm',
+    component: LiveForm,
+  },
+  {
+    path: '/LiveViewer/:id',
+    name: 'LiveViewer',
+    component: LiveViewer,
   },
   {
     path: '/PostStory',

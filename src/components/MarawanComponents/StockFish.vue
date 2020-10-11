@@ -1,13 +1,8 @@
 <template>
   <div class="ChessEngine" >
       <h2 id="SmallHeader">StockFish</h2>
-      <div v-if="loading" > Loading...</div>
-      <div id="stockcontaner">
-        <div v-for="(line,index) in lines" :key="index" >
-              <p @click="emitmove(line.move)" > {{line.move}}  {{line.score}}</p>
-        </div>
-      </div>
-      
+      <p v-if="loading" > Loading...</p>
+      <p  v-for="(line,index) in lines" :key="index" @click="emitmove(line.move)" > {{line.move}}  {{line.score}}</p>  
   </div>
 </template>
 
@@ -186,6 +181,7 @@ h2{
   width: 50%;
   background-color:#0487af;
   border-radius: 10px;
+  overflow: auto;
   /* background-color: blueviolet; */
 }
 </style>
