@@ -1,8 +1,11 @@
 <template>
-  <div>moves preview
-      <div v-for="(i,index) in movesdata" :key="index" >
-          <button :class=" currentmove==index ? 'active': '' "  @click="moveto(index)">{{i}}</button> 
-      </div>
+  <div class="Moves">
+      <ul>
+          <!-- <div    v-for="(i,index) in movesdata" :key="index" > -->
+          <li  v-for="(i,index) in movesdata" :key="index" :class=" currentmove==index ? 'active': '' "  @click="moveto(index)">{{i}}</li> 
+      <!-- </div> -->
+      </ul>
+      
   </div>
 </template>
 
@@ -93,6 +96,31 @@ export default {
 </script>
 
 <style scoped>
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+  white-space: nowrap;
+}
+li {
+  font-family: "Quicksand", sans-serif;
+  font-weight: lighter;
+  white-space: nowrap;
+}
+.Moves{
+    width: 60%;
+    height: 100%;
+    /* background-color: darkolivegreen; */
+    display: flex;
+    /* overflow-x: scroll; */
+    color: black;
+}
+.Data{
+    display: flex;
+    width: 100%;
+    height: 90%;
+    /* background-color: green; */
+
+}
 .active{
     background-color: yellow;
 }

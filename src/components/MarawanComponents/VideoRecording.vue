@@ -165,9 +165,9 @@ export default {
 
 <style>
 #recorder{
-    width: 5vw;
-    height: 5vw;
-    object-fit: cover;
+    width: 100% !important;
+  height: auto !important;
+    
 }
 </style>
 
