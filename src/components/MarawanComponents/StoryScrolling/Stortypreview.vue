@@ -153,7 +153,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .TextBox {
   width: 95%;
   /* height: 40px; */
