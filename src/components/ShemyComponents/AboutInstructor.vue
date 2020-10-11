@@ -1,31 +1,29 @@
 <template>
-<div>
-    <!-- DONE Create Basic HTML div template for About Instructor  -->
-    <div>#Intstructor Photo</div>
-    <!-- DONE Fill the div Template with Data Property that hold the content of Instructor (5min) -->
-    <div>About Instructor: {{AboutInstructor}} </div>
-</div>
-
+    <div class="AboutInstructorData">
+        <img src="@/assets/ProfilePic.jpg" alt="">
+        <h2>AboutInstructor:</h2>
+        <p>
+            {{AboutInstructor}}
+        </p>
+    </div>
 </template>
 
 <script>
-//DONE Import Firebase(1min)
-import firebase from "firebase";
-import {EventBus} from "../../main";
-export default {
-    data:function()
-    {
-        return{
-            AboutInstructor:"",
-        }
-    },
-    methods:{
-        async GetInstructorData(ID)
+import firebase from "firebase"
+    export default {
+        data:function()
         {
-            var id = ID
+            return{
+                AboutInstructor:"The instructor is really great he initiated three tournaments and won three gold medals for three different players and has an amazing crowd of really good players"
+
+            }
+        },
+    props:['InstructorID'],
+    mounted()
+    {
             var db = firebase.firestore();
-            var Dbref = db.collection("Users").doc(id);
-            let response = await Dbref.get().then((doc) => {
+            var Dbref = db.collection("Users").doc(this.InstructorID);
+            Dbref.get().then((doc) => {
             if(doc.exists)
             {
                 //DONE Assign the returned value to the Data Property (1min)
@@ -38,23 +36,36 @@ export default {
             }).catch((error)=>{
             console.log("Some sort of an error: "+error);
         })            
-            console.log(response);
-        }
-    },
-            mounted(){
-            //DONE Get Instructor ID from EventBus signal(2min)
-            //Recieve Instructor ID using EventBus and use this ID to query through the Firestore doc inside the EventBus as Passing props doesn't work due to a synchronization problem 
-            // var Id = this.$props.ID;
-            EventBus.$on("InstructorID", (ID)=>{
-                this.GetInstructorData(ID);
-        })
+        
+    }        
     }
-}
 </script>
 
-<style>
-/* TODO Import Styling css (1min)  */
+<style scoped>
+.AboutInstructorData{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'QuickSand',sans-serif;
+    color: black;
+    font-weight: lighter;
+    margin-left: 15px;
+}
+p{
+    margin: 5px;
+    font-size: 1.5rem;
+}
+h2{
+    margin: 5px;
+    font-size: 1.7rem;
+}
+img{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+}
 
 </style>
-
-//TODO Estimated time to finish the component is 15min

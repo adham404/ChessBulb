@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="Container">
       <!-- DONE Add One Dynamic Component that Swap Between [PositionSetup] & [PostStoryContent] according to the PositionSetupFlag property(2min)  -->
       <component :FenObject="FenObject" :is="CurrentComponent"></component>
       
@@ -40,6 +40,11 @@ export default {
 </script>
 
 <style>
+/* .Container{
+	display: flex;
+	height: 100vh;
+	width: 100%;
+} */
 /* TODO import Styling script from Documentation and Adjust the Component (5min) */
 </style>
 

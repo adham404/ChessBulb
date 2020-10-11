@@ -23,6 +23,7 @@
 		<button @click="Check">Check User Creditentials</button>
 		<tr></tr>
 		<div :style="TextColor">{{WelcomeEmail}}</div>
+		<!-- <button @click="CreateFollower">Create Followers Doc For all Users idiot</button> -->
 		<router-view></router-view>
 	</div>
 </template>
@@ -64,13 +65,40 @@ export default {
 		// No user is signed in.
 			}
 			});		
-	}
 	},
+	// async CreateFollower()
+	// {
+	// 	let self = this;
+    //     // await firebase.auth().onAuthStateChanged(async function(user) {
+    //     //     if (user) {
+    //     //         self.UserID = user.uid;
+    //     //                         // User is signed in.
+    //     //     } else {
+    //     //         console.log("No User Signed in")
+    //     //             // No user is signed in.
+    //     //         }
+	// 	// 	})
+	// 	var db = firebase.firestore();
+	// 	var DBref = db.collection("Users");
+	// 	DBref.get().then((query) => {
+	// 		query.forEach((userdata)=> {
+	// 			var DBref2 = db.collection("Follows");
+	// 			DBref2.doc(userdata.data().UserId).set({
+	// 				Followers:[],
+	// 				Following:[],
+	// 				UserID: userdata.data().UserId	
+	// 			})
+	// 		})
+	// 	}).catch((error) => {
+	// 		console.log("Error catching doc: "+ error);
+	// 	})
+	 },
 	mounted()
 	{
 		this.Check();
 	}
-};
+}
+
 </script>
 
 <style scoped>

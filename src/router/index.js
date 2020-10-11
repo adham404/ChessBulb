@@ -129,6 +129,7 @@ const routes = [
   {
     path: '/profile/:id',
     name: 'Profile',
+    props: true,
     component: UserProfile,
     children: [
       {
