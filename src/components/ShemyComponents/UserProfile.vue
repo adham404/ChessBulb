@@ -15,12 +15,13 @@
                 <button v-if="!VisitorFlag && IsInstructor" @click="MyCourses">My Courses</button>
                 <button v-if="!VisitorFlag" @click="PurchasedCourses">Purchased Courses</button>
                 <button v-if="!VisitorFlag" @click="GoToAcademies">Joined Academies</button>
-                <button @click="GoToPosts">My Posts</button>
+                <button @click="MyPost">My Posts</button>
                 <button v-if="VisitorFlag && !Followed" @click="Follow">Follow</button>
                 <button v-if="VisitorFlag && Followed" @click="UnFollow">UnFollow</button>
                 <button v-if="!VisitorFlag" @click="GoToExplore">Find Players</button>
                 <button v-if="!VisitorFlag" @click="SignOut">Sign Out &#128549;</button>
                 <button v-if="VisitorFlag" @click="Back">Go Back to my Profile</button>
+                <button @click="CreateOrder">Create Course Orders</button>
             </div>
 
         </div>
@@ -37,7 +38,7 @@ import Courses from "../ShemyComponents/Courses";
 import MyCourses from "../MarawanComponents/MyCourses";
 import CreatedCourses from "../ShemyComponents/CreatedCourses";
 import Academies from "../SadekComponents/Academy/Academies";
-import Posts from "../SadekComponents/NewsFeed/NewsFeed";
+import NewsFeed from "../SadekComponents/NewsFeed/NewsFeed";
 import {EventBus} from "../../main";
     export default {
         data:function()
@@ -72,6 +73,10 @@ import {EventBus} from "../../main";
                             this.CheckInstructor();                
                             // User is signed in.
             },
+            CreateOrder()
+            {
+                
+            },
             PurchasedCourses()
             {
                 EventBus.$emit("PurchasedCourses");
@@ -99,10 +104,10 @@ import {EventBus} from "../../main";
                 this.CurrentComponent = "Academies";
                 EventBus.$emit("MyAcademies");
             },
-            GoToPosts()
+            MyPost()
             {
-                this.CurrentComponent = "Posts";
-                EventBus.$emit("MyPosts");
+                this.CurrentComponent = "NewsFeed";
+                // EventBus.$emit("MyPosts");
             },
             GoToExplore()
             {
@@ -241,7 +246,7 @@ import {EventBus} from "../../main";
             FindPlayers,
             Courses,
             Academies,
-            Posts,
+            NewsFeed,
             MyCourses,
             CreatedCourses            
         }
