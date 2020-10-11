@@ -14,7 +14,7 @@
     "chessboardjs": "0.0.1",
     "core-js": "^3.6.5",
     "durations": "^3.4.2",
-    "firebase": "^7.19.1",
+    "firebase": "^7.23.0",
     "firebase-tools": "^8.9.2",
     "flat": "^5.0.2",
     "jquery": "^3.5.1",
