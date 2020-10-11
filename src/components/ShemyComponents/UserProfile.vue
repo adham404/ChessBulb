@@ -12,7 +12,8 @@
 
             </div>
             <div class="Buttons">
-                <button v-if="!VisitorFlag" @click="GoToCourses">My Courses</button>
+                <button v-if="!VisitorFlag && IsInstructor" @click="MyCourses">My Courses</button>
+                <button v-if="!VisitorFlag" @click="PurchasedCourses">Purchased Courses</button>
                 <button v-if="!VisitorFlag" @click="GoToAcademies">Joined Academies</button>
                 <button @click="GoToPosts">My Posts</button>
                 <button v-if="VisitorFlag && !Followed" @click="Follow">Follow</button>
@@ -33,6 +34,8 @@
 import firebase from "firebase"
 import FindPlayers from "../MarawanComponents/FindPlayers";
 import Courses from "../ShemyComponents/Courses";
+import MyCourses from "../MarawanComponents/MyCourses";
+import CreatedCourses from "../ShemyComponents/CreatedCourses";
 import Academies from "../SadekComponents/Academy/Academies";
 import Posts from "../SadekComponents/NewsFeed/NewsFeed";
 import {EventBus} from "../../main";
@@ -41,6 +44,7 @@ import {EventBus} from "../../main";
         {
             return{
                 UserLogged:true,
+                IsInstructor:false,
                 UserID:"",
                 UserData:"",
                 UserName:"",
@@ -64,8 +68,14 @@ import {EventBus} from "../../main";
                             var DBref = db.collection("Users").doc(id);
                             await DBref.get().then((query) => {
                                 self.UserData = query.data();
-                            })                
+                            })
+                            this.CheckInstructor();                
                             // User is signed in.
+            },
+            PurchasedCourses()
+            {
+                EventBus.$emit("PurchasedCourses");
+                this.CurrentComponent = "MyCourses";
             },
             ForceUpdate()
             {
@@ -79,9 +89,9 @@ import {EventBus} from "../../main";
             this.$router.push({path: `/profile/${this.UserID}`, params: {id: this.UserID}})
             console.log("User ID is: "+ this.UserID);
             },
-            GoToCourses()
+            MyCourses()
             {
-                this.CurrentComponent = "Courses";
+                this.CurrentComponent = "CreatedCourses";
                 EventBus.$emit("MyCourses");
             },
             GoToAcademies()
@@ -157,7 +167,20 @@ import {EventBus} from "../../main";
                 const auth = firebase.auth();
                 auth.signOut();
                 alert("the User ID right now is " + this.UserID);
+                EventBus.$emit("LoggedIn", false);
                 this.$router.push('/SignUp')                
+            },
+            CheckInstructor()
+            {
+                console.log("am here");
+                console.log("The Instructor Flag is: "+ this.UserData.Instructor);
+                if (this.UserData.Instructor == true) {
+                    this.IsInstructor = true;
+                }
+                else
+                {
+                    this.IsInstructor = false;
+                }
             },
             async UserMount()
             {
@@ -166,6 +189,7 @@ import {EventBus} from "../../main";
                     if (user) {
                         self.UserID = user.uid;
                         self.GetUserData(self.UserID);
+                        // self.CheckInstructor();
                                 // User is signed in.
                     } else {
                     console.log("No User Signed in")
@@ -197,7 +221,7 @@ import {EventBus} from "../../main";
         },
         async mounted()
         {
-            this.GetFollowingIDs();
+            this.GetFollowingIDs(); //Get Following IDs from the user Doc in database
             EventBus.$emit("SendFollowersID",this.FollowingID);
             await EventBus.$on("VisitProfile",(VisitorData) => {
                 this.UserData = VisitorData;
@@ -207,7 +231,6 @@ import {EventBus} from "../../main";
                     if (this.UserData.UserId == this.FollowingID[i]) {
                         this.Followed = true;
                     }
-                    
                 }                               
             })
             if (!this.VisitorFlag) {
@@ -218,7 +241,9 @@ import {EventBus} from "../../main";
             FindPlayers,
             Courses,
             Academies,
-            Posts            
+            Posts,
+            MyCourses,
+            CreatedCourses            
         }
     }
 </script>
