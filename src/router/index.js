@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
+// import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
 import HomePage from '@/components/Skeleton/HomePage.vue'
 // import CourseForm from '@/components/MarawanComponents/CourseForm.vue';
 import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
@@ -35,8 +35,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'ProductiveToggle',
-    component: ProductiveToggle
+    name: 'SignUp',
+    component: SignUp
   },
   {
     path: '/Home',
