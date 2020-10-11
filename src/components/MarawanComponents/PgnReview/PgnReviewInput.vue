@@ -3,17 +3,15 @@
 //TODO import pgnreview output(5min) 
 //TODO make the last movehighlight(5min)
 <template>
-  <div>
-    hi iam pgnreview
-    <div id="png">
-              <span v-for="(i,index) in pgnoutput  " :key="index" >
-                  <span>{{i.number}}.</span>
-                  <span class="pgnmove" @click="moveto(i.move1num)" >{{i.move1}} </span>
-                  <span class="pgnmove" @click="moveto(i.move2num)">{{i.move2}} </span>
-                  <span>{{i.comment}} </span>
-              </span>
-          </div>
-  </div>
+<div class="NewsFeedPgn">
+          <span v-for="(i,index) in pgnoutput  " :key="index" >
+              <span>{{i.number}}.</span>
+              <span class="pgnmove" @click="moveto(i.move1num)" >{{i.move1}} </span>
+              <span class="pgnmove" @click="moveto(i.move2num)">{{i.move2}} </span>
+              <span>{{i.comment}} </span>
+          </span>
+      </div>
+
 </template>
 
 <script>
@@ -134,4 +132,20 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.NewsFeedPgn{
+    height: 85%;
+    /* background-color: pink; */
+    width: 100%;
+    overflow-y: scroll ;
+    font-family: 'open-sans',sans-serif;
+    color: black;
+  }
+  span{
+    margin: 0px;
+    font-family: 'Raleway',sans-serif;
+    font-weight: 600;
+    color: black;
+    font-size: 0.9rem;
+  }
+</style>

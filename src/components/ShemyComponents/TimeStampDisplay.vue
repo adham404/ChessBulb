@@ -1,17 +1,19 @@
 <template>
   <div>
-      <div>{{CourseTitle}}</div>
-      <div class="TimeStampPanel">
+      <div class="TimeStamps">
+      <h2 id="SmallHeader">TimeStamps</h2>
+      <div style="display: flex">
       <div class="COL">
           <div v-for="(time,x) in timestampSec" v-bind:key="x">
-            <div @click="NavigateVideoTime(time)"> {{time}}: </div>  
+            <p @click="NavigateVideoTime(time)"> {{time}}: </p>  
           </div>
       </div>
       <div class="COL">
           <div v-for="(event,x) in timestampEvent" v-bind:key="x">
-            <div @click="NavigateVideoMove(event)"> {{event}} </div>    
+            <p @click="NavigateVideoMove(event)"> {{event}} </p>    
           </div>
-      </div>
+      </div>      
+      </div>      
       </div>
   </div>
 </template>
@@ -28,8 +30,7 @@ export default {
         timestampEvent:[], //array for events to be shown of the timestamp recieved
         TimeCounter:0, //The index of the current element of the timestamp array
         TimeLength:true, //Boolean value to stop reshowing the seconds and events when the video is replayed 
-        DisplayCounter:-1,
-        CourseTitle:""
+        DisplayCounter:-1
 }
     },
     props:['ID'],
@@ -42,7 +43,6 @@ export default {
                 if(query.exists)
                 {
                     this.timestampOrginal = query.data().TimeStamps
-                    this.CourseTitle = query.data().CourseName
                     console.log("Time Stamp array is: "+ this.timestampOrginal);
                 }
                 else{
@@ -93,6 +93,16 @@ export default {
                     console.log("Match Happend between: "+ this.timestampOrginal[this.TimeCounter].time+" and "+ time);
                     this.DisplayTimeStamp();
                     this.SendFenToBoard();
+                    // if(this.TimeLength)
+                    // {
+                    // }
+                    // this.TimeCounter++;
+                    // if(this.TimeCounter >= this.timestampOrginal.length)
+                    // {
+                    //     console.log("TimeStamp finished")
+                    //     this.TimeLength = false;
+                    //     this.TimeCounter = 0;
+                    // }
                     break;
                 }            
                 }
@@ -101,12 +111,32 @@ export default {
 }
 </script>
 
-<style>
-.TimeStampPanel{
-    display: flex;
-}
+<style scoped>
+/* .TimeStamps{
+  width: 100%;
+  background-color:#1DACA8 ;
+  border-radius: 10px;
+} */
 .COL{
     display: block;
     cursor: pointer;
 }
+p{
+  margin: 5px 0px 5px 10px;
+  font-family: 'QuickSand', sans-serif;
+  font-weight: bold;
+  color: black;
+}
+#SmallHeader{
+  border-bottom: 3px solid white;
+  font-size: 1.3rem;
+}
+h2{
+  margin: 2px 0px 10px 2px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size: 1.7rem;
+}
+
 </style>

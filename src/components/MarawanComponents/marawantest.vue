@@ -9,6 +9,8 @@
    <ChessBoardInput id='ddd' ></ChessBoardInput>
    <MovePreviewInput startpos="3k4/2qrb3/8/8/8/8/2QRB3/3K4 w - - 0 1"></MovePreviewInput>
    <router-view></router-view>
+   <StockFish></StockFish>
+   <!-- <button @click="addlive" >add live</button> -->
   </div>
 </template>
 
@@ -16,12 +18,15 @@
 import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
 import MovePreviewInput from "@/components/MarawanComponents/MovePreview/MovePreviewInput"
 import StoryHeader from "@/components/MarawanComponents/StoryScrolling/StoryDisplayheader"
+import StockFish from "@/components/MarawanComponents/StockFish.vue"
 import {EventBus} from "@/main.js"
+// import firebase from "firebase"
 export default {
   components:{
     StoryHeader,
     MovePreviewInput,
-    ChessBoardInput
+    ChessBoardInput,
+    StockFish
   },
   data(){
     return{
@@ -29,6 +34,15 @@ export default {
     }
   },
   methods:{
+    // async addlive(){
+    //   var db = await firebase.firestore()
+    //   await db.collection('Lives').add({
+    //     name : "testlive",
+    //     userid : "4587"
+    //   });
+    //   console.log('added')
+
+    // }
     
   },
   mounted(){
