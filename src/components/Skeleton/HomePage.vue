@@ -9,7 +9,7 @@
 				<button class="Shadow">Post a Puzzle/Snapshot</button>
 				<button class="Shadow">Create a Course</button>
 			</div>
-				<keep-alive><NewsFeed/></keep-alive>
+				<NewsFeed />
 			
 		</div>
 		
@@ -34,18 +34,18 @@ export default {
 		}
 	},
 	mounted(){
-		let self = this;
-		firebase
-			.firestore()
-			.collection("Matches")
-			.where("MatchId", "==", "Match-761d4")
-			.get()
-			.then((querySnapshot) => {
-				querySnapshot.forEach((doc) => {
-					self.Match = doc.data();
-					console.log(self.Match);
-				});
-			});
+		// let self = this;
+		// firebase
+		// 	.firestore()
+		// 	.collection("Matches")
+		// 	.where("MatchId", "==", "Match-761d4")
+		// 	.get()
+		// 	.then((querySnapshot) => {
+		// 		querySnapshot.forEach((doc) => {
+		// 			self.Match = doc.data();
+		// 			console.log(self.Match);
+		// 		});
+		// 	});
 	}
 };
 </script>
