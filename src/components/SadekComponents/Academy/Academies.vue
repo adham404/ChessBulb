@@ -44,18 +44,27 @@ export default {
 			data: "",
 			Academies: [],
 			AcademiesId: [],
+			UserID:""
 		};
 	},
 	//(Done) in "mounted" if user id == false then get  the whole academies object from database and assign it to the "Academies" variable, else get every academy id that contains the user id and then get the Academies object and assign it to the variable (15 minutes)
-	mounted() {
+	async mounted() {
 		EventBus.$emit("Toggle", false);
 		//(Done) get current user
 		// var user = firebase.auth().currentUser;
-		var self = this;
+		let self = this;
+		await firebase.auth().onAuthStateChanged(function(user) {
+  			if (user) {
+				  self.UserID = user.uid;
+    			// User is signed in.
+  			} else {
+    			// No user is signed in.
+  			}
+			});
 		firebase
 			.firestore()
 			.collection("AcademyEnrollments")
-			.where("UserId", "==", "123456789")
+			.where("UserId", "array-contains", this.UserID)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc) => {

@@ -6,36 +6,47 @@
 		<router-link
 		class="Links"
 			:to="{
-				path: `/profile/${UserId}`,
+				path: `/profile/${UserId}`
 			}"
 			><h3 >Pofile</h3></router-link
 		>
 		<router-link
 		class="Links"
 			:to="{
-				name: 'UserCourses',
-				params: { allCourses: false },
+				path: `/profile/${UserId}`
 			}"
-			><h3 >My Courses</h3></router-link
+			><h3 @click="MyCourses">My Courses</h3></router-link
 		>
 		<router-link
 		class="Links"
 			:to="{
-				name: 'UserAcademies',
-				params: { allAcademies: false },
+				path: `/profile/${UserId}`
 			}"
-			><h3>Joined Academies</h3></router-link
+			><h3 @click="Academies">Joined Academies</h3></router-link
 		>
-		<h3 class="Links">Purchased Courses</h3>
-		<h3 class="Links">My Posts</h3>
+		<router-link :to="{
+			path: `/profile/${UserId}`,
+			params: {ComponentSent: true}
+		}">		
+		<h3 class="Links" @click="PurchasedCourses">Purchased Courses</h3>
+		</router-link>
+		<router-link :to="{
+			path: `/profile/${UserId}`,
+			params: {ComponentSent: true}
+		}">
+		<h3 class="Links" @click="Posts">My Posts</h3>
+		</router-link>
 		<!-- <router-link class="Links" ><h3>Purchased Courses</h3></router-link>
 		<router-link class="Links"><h3>My Posts</h3></router-link> -->
-		<router-link class="Links" to="Explore"><h3>Find Players</h3></router-link>
+		<router-link class="Links" :to="{
+			path: `/profile/${UserId}`,
+		}"><h3>Find Players</h3></router-link>
 	</div>
 </template>
 
 <script>
 import firebase from "firebase"
+import {EventBus} from "../../../main"
 export default {
 	name: "ProfileCard",
 	props: ["User"],
@@ -47,6 +58,26 @@ export default {
 			TextColor:{
     color:"red"
     },
+		}
+	},
+	methods:{
+		MyCourses()
+		{
+			EventBus.$emit("MyCourses");
+		},
+		Academies()
+		{
+			EventBus.$emit("Academies");
+		},
+		PurchasedCourses()
+		{
+			EventBus.$emit("PurchasedCourses");
+
+		},
+		Posts()
+		{
+			EventBus.$emit("Posts");
+
 		}
 	},
 	mounted() {

@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* .Container{
 	display: flex;
 	height: 100vh;
