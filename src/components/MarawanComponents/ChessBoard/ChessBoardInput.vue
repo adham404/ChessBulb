@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="" :id="id" style=" width: 50vw;"></div>
+    <div class="" :id="id" style=" "></div>
   </div>
 </template>
 
@@ -47,7 +47,7 @@ export default {
         var lastmove = game.history();
         lastmove = lastmove[lastmove.length - 1];
         EventBus.$emit("newmove", lastmove);
-        console.log(lastmove);
+        // console.log(lastmove);
         EventBus.$emit("newfen", game.fen());
         EventBus.$emit("newfenAndmove", [game.fen(),lastmove]);
       }

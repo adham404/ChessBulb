@@ -1,26 +1,64 @@
 <template>
-  <div>
-   <router-link to="/Purchase/price_1HVqJXC7X3YpNau36qSerzer" >CheckOut</router-link><br/>
-   <router-link to="/Subscribe/price_1HWe12C7X3YpNau3GI4EWGwI" >Subscribe</router-link><br/>
+  <div style="width:100%">
+  
+   <router-link to="/LiveStreamer/hijYRNADIgvDhTgifgft" >LiveStreamer</router-link><br/>
+   <router-link to="/LiveViewer/hijYRNADIgvDhTgifgft" >LiveViewer</router-link><br/>
    <router-link to="/InstructorRegistration" >Instructor Registration</router-link><br/>
-   <router-link to="/profile/1/Courses" >My Courses</router-link><br/>
+   
    <router-link to="/AcademyForm" >Academy Form</router-link><br/>
   
-   <router-view></router-view>
+   <storypuzzel style="width:100%" v-if="movess" :moves='movess' />
   </div>
 </template>
 
 <script>
-
-
+// import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
+// import MovePreviewInput from "@/components/MarawanComponents/MovePreview/MovePreviewInput"
+import storypuzzel from "@/components/MarawanComponents/StoryScrolling/storypuzzel"
+// import StockFish from "@/components/MarawanComponents/StockFish.vue"
+import {EventBus} from "@/main.js"
+import firebase from "firebase"
 export default {
+  components:{
+    storypuzzel
+    // StoryHeader,
+    // MovePreviewInput,
+    // ChessBoardInput,
+    // StockFish
+  },
   data(){
     return{
-      filters: true
+      filters: true,
+      movess : null
     }
   },
   methods:{
+    async addlive(){
+      var db = await firebase.firestore()
+      await db.collection('Lives').add({
+        AcademyId : "f0oTA57O4GxJOpdWV29I",
+        LiveDate : Date.now().toString() ,
+        LiveDescription : "This is the First live in ChessBulb",
+        // LiveId : "4587",
+        LiveTitle : "Learn Chess Now",
+      });
+      console.log('added')
+
+    }
     
+  },
+  async mounted(){
+    var data = await firebase.firestore().collection('ChessStories').doc('u64MSwDqiNTwUF1tuSvm').get()
+    this.movess = data.data()
+         setTimeout(() => {
+      EventBus.$emit("Toggle", true);
+    }, 100);
+    EventBus.$on("Link", (link) => {
+      this.$router.push({ path: link });
+    });
+  },
+  destroyed(){
+    EventBus.$emit("Toggle", false);
   }
   
     
@@ -29,7 +67,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 div {
   color: white;
 }

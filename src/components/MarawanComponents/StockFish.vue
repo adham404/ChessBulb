@@ -1,22 +1,8 @@
-//TODO make html (5min)
-//TODO add the stock fish files to the public folder(2min)
-//TODO import the stockfish engine(2min)
-//TODO insert the fen to the engine(3min)
-//TODO get the best move(3min)
-//TODO pase the info to get evaluation(10min)
-//TODO calculate the evaluation(3min)
-
 <template>
-  <div >
-      Stock Fish Engine<br/>
-      <div> Engine is running  {{isEngineRunning}}</div>
-      <div v-if="loading" > Loading...</div>
-     <div id="stockcontaner">
-        <div v-for="(line,index) in lines" :key="index" >
-              <button @click="emitmove(line.move)" > {{line.move}} --->  {{line.score}}</button>
-        </div>
-      </div>
-      
+  <div class="ChessEngine" >
+      <h2 id="SmallHeader">StockFish</h2>
+      <p v-if="loading" > Loading...</p>
+      <p  v-for="(line,index) in lines" :key="index" @click="emitmove(line.move)" > {{line.move}}  {{line.score}}</p>  
   </div>
 </template>
 
@@ -174,19 +160,28 @@ export default {
 </script>
 
 <style scoped >
-div{
-    color: white ;
+p{
+  margin: 5px 0px 5px 10px;
+  font-family: 'QuickSand', sans-serif;
+  font-weight: bold;
+  color: black;
 }
-#stockcontaner{
-    
-    
-    width: 20vw;
-    height: 15vw;
-    overflow: auto;
+#SmallHeader{
+  border-bottom: 3px solid white;
+  font-size: 1.3rem;
 }
-#stockcontaner button{
-width: 100%;
-font-size: 1.5vw;
-
+h2{
+  margin: 2px 0px 10px 2px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size: 1.7rem;
+}
+.ChessEngine{
+  width: 50%;
+  background-color:#0487af;
+  border-radius: 10px;
+  overflow: auto;
+  /* background-color: blueviolet; */
 }
 </style>

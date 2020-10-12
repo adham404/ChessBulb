@@ -1,13 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
+// import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
 import HomePage from '@/components/Skeleton/HomePage.vue'
 // import CourseForm from '@/components/MarawanComponents/CourseForm.vue';
 import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
+import LiveForm from '@/components/MarawanComponents/LiveForm.vue';
+import LiveStreamer from '@/components/MarawanComponents/liveStreaming/Streamer.vue';
+import LiveViewer from '@/components/MarawanComponents/liveStreaming/Viewer.vue';
 import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
 import AddStory from '@/components/ShemyComponents/AddStory.vue'
 import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
+import AddAnalysis from '@/components/SadekComponents/NewsFeed/AddAnalysis.vue'
 import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
+import StoryPreview from '@/components/MarawanComponents/StoryScrolling/Stortypreview.vue'
 import Courses from '@/components/ShemyComponents/Courses.vue'
 import MyCourses from '@/components/MarawanComponents/MyCourses.vue'
 import CoursePreview from '@/components/ShemyComponents/CoursePreview.vue'
@@ -34,8 +39,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'ProductiveToggle',
-    component: ProductiveToggle
+    name: 'SignUp',
+    component: SignUp
   },
   {
     path: '/Home',
@@ -48,9 +53,29 @@ const routes = [
     component: CreateCourse,
   },
   {
+    path: '/AddAnalysis',
+    name: 'AddAnalysis',
+    component: AddAnalysis,
+  },
+  {
     path: '/PostGame',
     name: 'PostGame',
     component: PostGame,
+  },
+  {
+    path: '/LiveStreamer/:id',
+    name: 'LiveStreamer',
+    component: LiveStreamer,
+  },
+  {
+    path: '/LiveForm',
+    name: 'LiveForm',
+    component: LiveForm,
+  },
+  {
+    path: '/LiveViewer/:id',
+    name: 'LiveViewer',
+    component: LiveViewer,
   },
   {
     path: '/PostStory',
@@ -74,9 +99,18 @@ const routes = [
     component: Analyze
   },
   {
-    path: '/Stories/:id',
+    path: '/Stories/',
     name: 'Stories',
     component: StoryDisplayWindow,
+    props: true,
+    children:[
+      {
+        path : ':id',
+        name : "StoryPreview",
+        component : StoryPreview
+
+      }
+    ]
   },
   {
     path: '/Courses',
@@ -119,6 +153,7 @@ const routes = [
   {
     path: '/profile/:id',
     name: 'Profile',
+    props: true,
     component: UserProfile,
     children: [
       {

@@ -1,23 +1,38 @@
 <template>
-	<div>
-		<!-- //TODO Make div for the (ChessBoard Component) (2 minutes)  -->
-		<!-- //TODO Make div for the (StockFish Component) (2 minutes)  -->
-		<!-- //(Done) Make div for the white player and black player inputs (2 minutes) -->
-		<div>
-			<input type="text" v-model="whitePlayer" />
-			<input type="text" v-model="blackPlayer" />
+	<div class="Productive">
+		<div class="ChessBoard">
+			<ChessBoardInput id =1  />
+
 		</div>
-		<!-- //TODO Make div for the (PGNReview Component) (2 minutes) -->
-		<!-- //FIXME Make div for the (Upload Component) (2 minutes)  -->
-		<!-- //(Done) Make div for the Share Game button (2 minutes) -->
-		<button @click="Share">Share Game</button>
-		<!-- //TODO make hidden POP UP message, with router link directs to HomePage (2 minutes) -->
-		<div v-if="showPop">
+		<div class="GameData">
+			<div class="EnginePlayers">
+				<div class="ChessEngine">
+					<StockFish/>
+				</div>
+				<div class="PlayerInput">
+					<label for="WhitePlayer">White Player</label>
+					<input type="text" v-model="whitePlayer" />	
+					<label for="BlackPlayer">Black Player</label>
+					<input type="text" v-model="blackPlayer" />
+				</div>
+			</div>
+		<div class="PgnReview">
+				<div class="Text">
+		<PgnReviewInput />
+				</div>
+				<div class="Buttons">
+					<button>Upload Pgn</button>
+					<button @click="Share">Share Game</button>
+				</div>
+		<!-- //(Done) make hidden POP UP message, with router link directs to HomePage (2 minutes) -->
+		<!-- <div v-if="showPop">
 			<p>
 				Your post has been posted on chessbulb we hope your students
 				enjoy it
 			</p>
 			<router-link to="/Home">Go back to the Homepage</router-link>
+		</div> -->
+	</div>
 		</div>
 	</div>
 </template>
@@ -27,37 +42,45 @@
 // (Done) importing firebase (1 minute)
 import firebase from "firebase";
 import { EventBus } from "@/main";
-// TODO importing ChessBoard Component (1 minute)
-
-// TODO importing StockFish Component (1 minute)
-
-// TODO importing PGNReview Component (1 minute)
-
+// import Chess from "chess.js";
+import PgnReviewInput from "../../MarawanComponents/PgnReview/PgnReviewInput";
+import ChessBoardInput from "../../MarawanComponents/ChessBoard/ChessBoardInput";
+const flatten = require("flat");
+import StockFish from "../../MarawanComponents/StockFish";
 // TODO importing Upload Component (1 minute)
-
+import Chess from "chess.js";
 export default {
+	name: "PostGame",
+	components: {
+		PgnReviewInput,
+		ChessBoardInput,
+		StockFish
+	},
 	data() {
 		return {
 			whitePlayer: "",
 			blackPlayer: "",
 			// (Done) Make a variable that stores the PGN of the game  (1 minute)
-			PGN:
-				"1.e4 Notes by Raymond Keene *** 1. e4 No surprise; Leko plays little else. I felt a pang of sympathy for those commenting live on this game. After the combinational flurry ending on move 23, it was too easy to reach for the script that was titled",
+			PGN: null,
 			MatchId: null,
 			//(Done) Make a variable that stores the UserID (1 minute)
 			// UserId: firebase.auth().currentUser,
-			UserId: "123456789",
+			UserId: "",
 			noOfBrilliants: 0,
 			noOfAnalysis: 0,
+			UserName:"",
 			//(Done) make a boolean variable for showing the pop up message and assign it to false (1 minute)
 			showPop: false,
 		};
 	},
 	methods: {
 		// (Done) make a fuction when the (Share Game button) is clicked {2. make the boolean variable true and show the pop up message 3. sending the Matches object to firebase} (5 minutes)
-		Share() {
-			// const chess = new Chess()
-			// chess.header('White', this.whitePlayer, 'Black', this.blackPlayer)
+		async Share() {
+			var game = await new Chess();
+			await game.load_pgn(this.PGN, { sloppy: true });
+			game.header('White Player', this.whitePlayer, 'Black Player', this.blackPlayer)
+			this.PGN = game.pgn();
+			console.log(this.PGN);
 			if (this.PGN != "") {
 				firebase
 					.firestore()
@@ -69,13 +92,28 @@ export default {
 						noOfBrilliants: this.noOfBrilliants,
 						PGN: this.PGN,
 						UserId: this.UserId,
+						WhitePlayer: this.whitePlayer,
+						BlackPlayer: this.blackPlayer,
+						UserName:this.UserName
 					});
+				firebase
+					.database()
+					.ref(`Matches/${this.MatchId}`)
+					.set(
+						flatten(
+							{
+								name: "MainLine",
+								PGN: this.PGN,
+							},
+							{ delimiter: "-" }
+						)
+					);
 				this.showPop = true;
+				this.$router.push({path:"/Home"})
 			}
 		},
 		//(Done) make a function generates random MatchID and assign it to the variable in the Matches object (20 minutes)
 		generateUID() {
-			// Public Domain/MIT
 			this.MatchId = "Match-";
 			var d = new Date().getTime(); //Timestamp
 			var d2 =
@@ -99,15 +137,134 @@ export default {
 		EventBus.$emit("Toggle", true);
 		//Calling the generateUID function
 		this.generateUID();
+		EventBus.$on("newPgn", (data) => { 
+				this.PGN = data;
+				console.log(data);
+			});
 		console.log(this.MatchId);
+		let self = this;
+		firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+	console.log(user.uid);
+	self.UserId = user.uid
+	} else {
+		console.log("no log in")
+	}
+  });
+		firebase
+			.firestore()
+			.collection("Users")
+			.where("UserId", "==", this.UserId)
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc)=>{
+				self.UserName = doc.data().FirstName;
+				})
+				
+			});
+			console.log(this.UserName)
 	},
 };
 </script>
 
 <style scoped>
-/* TODO using the css properties from tettra (1minute)
+h1{
+	margin: 0px;
+	font-family: 'Raleway', sans-serif;
+	font-weight: bold;
+	border-bottom: 3px solid black;
+	width: 50%;
+	padding-left: 10px;
+	color: black;
+	font-size: 1.6rem;
+}
+.ChessEngine{
+	width: 60%;
+	/* background-color: lightcoral; */
+	height: 100%;
+}
+.EnginePlayers{
+	display: flex;
+	height: 30%;
+	/* background-color: lawngreen; */
+	border-bottom: 3px solid grey;
+}
+.Productive{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+}
+.ChessBoard{
+  padding-top: 2px;
+  padding-left: 3px; 
+  width: 50.6%;
+  /* background-color: tomato; */
+  background-color:  #00112c;
+}
+.GameData{
+  display: flex;
+  flex-direction: column;
+  width: 49.4%;
+  /* background-color: turquoise; */
+}
+.PlayerInput{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 40%;
+	/* background-color: lightseagreen; */
+	padding-top: 40px;
+	border-left: 2px solid grey;
+}
+input{
+	margin-bottom: 30px;
+	border-radius: 5px;
+	border: 1px solid #cac7c7;
+	font-family: 'Raleway', sans-serif;
+	font-weight: lighter;
+	border: 1px solid #cac7c7;
+	height: 22px;
+	width: 200px;
+}
+label{
+	font-family: 'Raleway', sans-serif;
+	font-weight: lighter;
+	font-size: 1.2rem;
+	margin-bottom: 5px;
+	color: black;
+}
+.PgnReview{
+	color: black;
+	overflow: hidden;
+}
+.Text{
+	margin: 0px;
+	font-family: 'Quicksand', sans-serif;
+	font-weight: lighter;
+	color: black;
+	height: 90%;
+	overflow-y: scroll;
+}
+.Buttons{
+	display: flex;
+	height: 10%;
+	/* background-color: lime; */
+	align-items: center;
+}
+button{
+		height: 35px;
+		width: 150px;
+		border: none;
+		outline: none;
+		border-radius: 1.2rem;
+		font-size: 0.9rem;
+		font-family: 'Raleway', sans-serif;
+		background-color: #022A68;
+		color: white;
+		margin-left: 20px;
+	}
 
-/* TODO Add the html Ids from tettra (2 minute) */
 </style>
 
 //TODO TESTING (10 minutes)

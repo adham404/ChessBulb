@@ -1,6 +1,7 @@
 <template>
     <div>
-        //TODO create div that contain (User.ImgSrc) and the (NotificationMsg) and the button with a string interpolation (NotificationActivity) (5min)
+        <!-- TODO create div that contain (User.ImgSrc) and the (NotificationMsg) and the button with a string interpolation (NotificationActivity) (5min) -->
+        <div>No Notifications for now</div>
     </div>
 </template>
 

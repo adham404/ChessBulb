@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div> 
       <div class="CourseList">
         <router-link v-for="(Course, i) in Courses" v-bind:key="i" :to="{
           path: `/Courses/CoursePreview/${Course.CourseId}`,
@@ -25,19 +25,23 @@ export default {
         }
     },
     async mounted(){
-        var data ;
+        // var data ;
         let self = this
         firebase.auth().onAuthStateChanged(async function(user) {
             if (user) {
                 self.userid = user.uid
-                data = await firebase.firestore().collection('CourseOrders').where('UserId', '==', user.uid).get();
-                data.forEach(async doc =>{
-                    var cc= await firebase.firestore().collection('Courses').doc(doc.data().CourseId).get();
-                    self.Courses.push(cc.data())
+                var db = firebase.firestore();
+                var DBref = db.collection('Courses').where('InstructorId', '==', user.uid)
+                DBref.get().then((query) => {
+                    query.forEach((doc) => {
+                        self.Courses.push(doc.data());
+                    })
                 })
+                // await firebase.firestore().collection('Courses').where('InstructorId', '==', user.uid).get().then((query)=>{
+                // });
             } else {
                 // No user is signed in. 
-                console.log('ssss')
+                console.log('No Created Courses')
             }
         });
          

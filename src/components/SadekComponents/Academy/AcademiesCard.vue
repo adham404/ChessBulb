@@ -13,7 +13,7 @@
 					<router-link
 						:to="{
 							path: `/Academies/${Academy.AcademyId}`,
-							query: { Academy: Academy },
+							query: { Academy: Academy, AcademiesId:AcademiesId, notEnrolled:notEnrolled },
 						}"
 						><button class="Shadow">
 							Check It Out
@@ -43,8 +43,7 @@
 					<router-link
 						v-if="notEnrolled"
 						:to="{
-							name: 'Purchase',
-							params: { AcademyId: Academy.AcademyId },
+							path:`/Purchase/${Academy.PriceId}`
 						}"
 						id="SendRight"
 						><button  class="Shadow">

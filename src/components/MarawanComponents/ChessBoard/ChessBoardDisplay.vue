@@ -2,7 +2,7 @@
 <template>
   <div>
       <!-- //DONE create board div(5min) -->
-      <div class="" :id="id" style=" width: 50vw;"  ></div>
+      <div  :id="id" style=" width:98%" ></div>
       </div>
 </template>
 
@@ -16,17 +16,20 @@ var $ = global.jQuery;
 window.$ = $; 
 export default {
 //DONE add a fen prop
-    props:['fen','id'],
+    props:['fen','id','hideNotation'],
     data(){
         return{
             board : null,
+            
         }
     },
     mounted(){
-        EventBus.$on("displayboardfen",move =>{
+        
+        EventBus.$on("displayboardfen", move =>{
             this.board.position(move)
-
+           
         })
+        
         
         //DONE creat new board(3min)
         //this toke about 2 hours because a problem with pieces images
@@ -34,8 +37,9 @@ export default {
                 return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
             }
             var config = {
+            showNotation: this.hideNotation ? false : true,
             draggable: false,
-            position: 'start',
+            position: this.fen ? this.fen : 'start',
             showErrors : 'alert',
             pieceTheme: piecelink,
            
@@ -44,6 +48,9 @@ export default {
          this.board = Chessboard(this.id, config)
 
     },
+    beforeDestroy () {
+    EventBus.$off('displayboardfen')
+ },
     methods:{
        
     },

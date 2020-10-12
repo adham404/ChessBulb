@@ -6,7 +6,7 @@
         <router-link to="/CreateCourse">
         <button>Create Course</button>
         </router-link>
-        <SearchEngine :ShowFilters="true"></SearchEngine>
+        <SearchEngine SearchIndex="Courses" :ShowFilters="true"></SearchEngine>
         <!-- <input type="text" placeholder="Search Engine">
         <FilterSearch></FilterSearch> -->
       </div>
@@ -18,7 +18,6 @@
           params: {CoursesID: Course.CourseId}
           }"><component class="ListRow" :is="ComponentName" :CourseName="Course.CourseName" :CourseRate="Course.Rating"></component>
         </router-link>
-
       </div>
   </div>
 </template>
@@ -29,13 +28,15 @@ import FilterSearch from "../ShemyComponents/FilterSearch";
 import SearchEngine from "../MarawanComponents/SearchEngine/SearchEngine";
 //DONE Assign Firebase (1min) 
 import firebase from "firebase";
+import { EventBus } from '../../main';
 export default {
     //TODO Assign Data Properties in the vue data object which are ( Courses(A), FilterationInput(A) ) 3min
     data: function()
     {
       return {
         ComponentName: "CourseCard",
-        Courses:[]
+        Courses:[],
+        CourseID:[]
       }
     },
     components:{
@@ -44,25 +45,27 @@ export default {
       SearchEngine
     },
     methods:{
-      async RecieveCoursesID()
+      RecieveCoursesID()
       {
-        let self = this;
+        // let self = this;
         var db = firebase.firestore();
-        var docRef = db.collection("Courses");
-        let response = await docRef.get().then((query)=>{
-          query.forEach((doc) => {
-            self.Courses.push(doc.data());
-          });
-        }).catch((error) =>{
-          console.log("Error Recieving Courses: "+error);
-        })
-        console.log(response);
+        var docRef =  db.collection("Courses");
+        for (let i = 0; i < this.CourseID.length; i++) {          
+            docRef.doc(this.CourseID[i]).get().then((query) => {
+              this.Courses.push(query.data());
+            })
+        }
+        // console.log(response);
       }
     },
   //DONE Declare Mounted Property (1min)
     mounted()
     {
-      this.RecieveCoursesID();
+      EventBus.$on("TheSearchResult", res => {
+          this.Courses = [];
+          this.CourseID = res;
+          this.RecieveCoursesID();
+      })
     }
     //TODO Assign EventBus (1min) 
     //TODO According to the props recieved Indicate Whether it's Courses from Homepage, Profile or Academies

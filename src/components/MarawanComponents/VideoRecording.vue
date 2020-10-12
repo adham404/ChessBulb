@@ -1,16 +1,14 @@
 <template>
   <div>
+    <div><video id="recorder" ref="recorder"  ></video></div>
+    <p>{{status}}</p>
+    <div>
+        <button id="btnstart" v-on:click="startrecord">START RECORD</button>
+        <button id="btnstop"  v-on:click="stoprecord">STOP</button>
+        <button id="btnstop"  v-on:click="puserecording">PUSE</button>
+        <button id="btnstop"  v-on:click="resumerecording">RESUME</button>
+    </div>
     
-    <!-- <video id="myVideo" width="320" height="240" controls>
-      <source id="mp4_src" v-bind:src="url" type="video/mp4">
-Your browser does not support the video tag.
-</video> -->
-    <video id="recorder" ref="recorder"  ></video><br>
-    <div>{{status}}</div>
-    <button id="btnstart" v-on:click="startrecord">START RECORD</button>
-    <button id="btnstop"  v-on:click="stoprecord">STOP</button>
-    <button id="btnstop"  v-on:click="puserecording">PUSE</button>
-    <button id="btnstop"  v-on:click="resumerecording">RESUME</button>
   </div>
 </template>
 
@@ -165,8 +163,18 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+#recorder{
+    width: 100% !important;
+  height: auto !important;
+    
+}
+p{
+  margin: 5px 0px 5px 10px;
+  font-family: 'QuickSand', sans-serif;
+  font-weight: bold;
+  color: black;
+}
 </style>
 
 //DONE make a flow chart

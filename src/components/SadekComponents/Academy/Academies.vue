@@ -1,9 +1,20 @@
 <template>
 	<div>
+		<!-- <router-link to="/Sadek">Sadek Testing Page</router-link> -->
 		<!-- // (DONE) using the (SearchEngine Component) (2 minutes) -->
-		<SearchEngine />
+		<SearchEngine SearchIndex="Academies"/>
 		<!-- //(DONE) loop through the object (5 minutes) -->
-		<div class="Container">
+		<div v-if="this.search" class="Container">
+			<div v-for="Academy in SearchedAcademies" :key="Academy.id">
+				<!-- //(DONE) using the (AcademiesCard Component) pass the object of each academy and the boolean userId (2 minutes) -->
+				<AcademiesCard
+					:Academy="Academy"
+					:allAcademies="allAcademies"
+					:AcademiesId="AcademiesId"
+				/>
+			</div>
+		</div>
+		<div v-else>
 			<div v-for="Academy in Academies" :key="Academy.id">
 				<!-- //(DONE) using the (AcademiesCard Component) pass the object of each academy and the boolean userId (2 minutes) -->
 				<AcademiesCard
@@ -42,7 +53,10 @@ export default {
 		return {
 			data: "",
 			Academies: [],
+			SearchedAcademies: [],
 			AcademiesId: [],
+			search: false,
+			UserId:""
 		};
 	},
 	//(Done) in "mounted" if user id == false then get  the whole academies object from database and assign it to the "Academies" variable, else get every academy id that contains the user id and then get the Academies object and assign it to the variable (15 minutes)
@@ -50,11 +64,19 @@ export default {
 		EventBus.$emit("Toggle", false);
 		//(Done) get current user
 		// var user = firebase.auth().currentUser;
+		firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+	console.log(user.uid);
+	self.UserId = user.uid
+	} else {
+		console.log("no log in")
+	}
+  });
 		var self = this;
 		firebase
 			.firestore()
 			.collection("AcademyEnrollments")
-			.where("UserId", "==", "123456789")
+			.where("UserId", "==", this.UserId)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc) => {
@@ -89,7 +111,28 @@ export default {
 					});
 				});
 		}
-	},
+		EventBus.$on("TheSearchResult",res =>{
+    //res is an array of id 
+	// res = ['re5845','teffg556','fgdw459648' ......]
+	this.search = true
+	console.log(res)
+	firebase
+				.firestore()
+				.collection("Academies")
+				.get()
+				.then((querySnapshot) => {
+					querySnapshot.forEach((doc) => {
+						for (var a = 0; a < res.length; a++) {
+							if (res[a] == doc.data().AcademyId) {
+								self.SearchedAcademies.push(doc.data());
+								console.log(self.SearchedAcademies);
+							}
+						}
+					});
+				});
+
+})
+	}
 };
 </script>
 /*TODO use the css ids from tettra (3 minutes) */

@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
       /* TODO import Styling script from Documentation and Adjust the Component (5min) */
 
 </style>

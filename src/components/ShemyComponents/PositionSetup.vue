@@ -1,14 +1,24 @@
 <template>
-  <div>
-      <!-- DONE add ChessBoard.js To the left with sparepieces property set to true value (5min) -->
+  <!-- <div> -->
+  <div class="Container">
+    <div class="ChessBoard">
       <div id="Board1"></div>
-      <!-- DONE Create div containing Instruction (1min) -->
-      <div>Please Setup the game position</div>
-      <!-- DONE Create Save Button (1min) -->
-      <button @click="Save">Save Position</button>
-      <button @click="QuickPos">QuickPos</button>
-      <!-- TODO Create div that contains the Validation content with v-if a (PoisitionCorrect) data property and holding the Message as string intorplation with a data property called (PositionValidationMsg) (1min) -->
+      <!-- <PositionSetup/> -->
+    </div>
+    <div class="StoryData">
+      <h1>Please Setup the game position</h1>
+      <button @click="Save" class="Shadow">Save Position</button>
+    </div>
   </div>
+
+      <!-- DONE add ChessBoard.js To the left with sparepieces property set to true value (5min) -->
+      <!-- DONE Create div containing Instruction (1min) -->
+      <!-- <div>Please Setup the game position</div> -->
+      <!-- DONE Create Save Button (1min) -->
+      <!-- <button @click="Save">Save Position</button>
+      <button @click="QuickPos">QuickPos</button> -->
+      <!-- TODO Create div that contains the Validation content with v-if a (PoisitionCorrect) data property and holding the Message as string intorplation with a data property called (PositionValidationMsg) (1min) -->
+  <!-- </div> -->
 </template>
 
 <script>
@@ -78,12 +88,52 @@ export default {
 }
 </script>
 
-<style>
-/* TODO import Styling script from Documentation and Adjust the Component (5min) */
- #Board1{
- width: 30%;
- height: 30%;
+<style scoped>
+button{
+		height: 35px;
+		width: 150px;
+		border: none;
+		outline: none;
+		border-radius: 1.2rem;
+		font-size: 0.9rem;
+		font-family: 'Raleway', sans-serif;
+		background-color: #022A68;
+		color: white;
+	}
+.Shadow{
+		-webkit-box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+		-moz-box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+		box-shadow: 0px 0px 21px -10px rgba(0,0,0,1);
+}
+h1{
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  color: black;
+}
+.Container{
+	display: flex;
+	height: 100vh;
+	width: 100%;
+}
+.ChessBoard{
+	/* padding-top: 1px; */
+    padding-left: 20px; 
+	width: 45%;
+	/* background-color: blue; */
+}
+.StoryData{
+	display: flex;
+	flex-direction: column;
+	width: 55%;
+    background-color: white;
+  /* background-color: red; */
+  justify-content: center;
+  align-items: center;
+}
+#Board1{
+ width: 92%;
+ height: 92%;
+
 }
 </style>
-
 // TODO Total Time is 25min 

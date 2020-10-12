@@ -147,6 +147,8 @@ export default {
 		emitlink(data){
 			EventBus.$emit('Link',data)
 			console.log(data)
+			this.$router.push(data)
+			EventBus.$emit('Toggle', false)
 		},
 	}
 };
