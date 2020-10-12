@@ -9,7 +9,7 @@
 <template>
   <div>
       <button @click="postcourse" ref="button">Post Course</button>
-      <h2>{{uplaoading}}</h2>
+      <p>{{uplaoading}}</p>
   </div>
 </template>
 
@@ -72,7 +72,8 @@ export default {
         async postcourse(){
             var db = firebase.firestore()
             let self = this
-            const res = await db.collection('Courses').add(data);
+            const res = await db.collection("Courses").doc()
+            // const res = await db.collection('Courses').add(data);
             var courseid = res.id
             var ref = await firebase.storage().ref().child(`Courses/${courseid}.mp4`);
             data.CourseId = courseid
@@ -93,7 +94,7 @@ export default {
             }, function(error) {
                 console.log(error)
             },async function(){
-                await db.collection('Courses').doc(courseid).set(data);
+                await res.set(data);
                 self.uplaoading = "DONE"
                 console.log('uploading is done')
                     
@@ -108,6 +109,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+p{
+  margin: 5px 0px 5px 10px;
+  font-family: 'QuickSand', sans-serif;
+  font-weight: bold;
+  color: white;
+}
 </style>

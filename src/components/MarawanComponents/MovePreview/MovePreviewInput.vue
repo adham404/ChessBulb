@@ -39,12 +39,12 @@ export default {
         game = await new Chess(self.startpos);
         await EventBus.$on("newmove", async (move) => {
             if (self.currentmove == moves.length - 1) {
-            console.log(await game.move(move));
-            console.log(move);
+            // console.log(await game.move(move));
+            // console.log(move);
             moves = await game.history();
             self.currentmove++;
-            console.log(self.currentmove);
-            console.log(moves.length);
+            // console.log(self.currentmove);
+            // console.log(moves.length);
             chess.move(move);
             } else {
             await chess.move(move);
@@ -52,16 +52,17 @@ export default {
             await game.load_pgn(chess.pgn(), { sloppy: true });
             moves = await game.history();
             self.currentmove++;
-            console.log("currentmove=" + self.currentmove);
-            console.log("moves.length" + moves.length);
+            // console.log("currentmove=" + self.currentmove);
+            // console.log("moves.length" + moves.length);
             }
             this.movesdata = game.history()
-            console.log(game.history())
+            // console.log(game.history())
+            EventBus.$emit('MovesPreviewList', game.history())
         });        
         EventBus.$on('Control', async data =>{
            
             if(data =='next'){
-                console.log(self.currentmove)
+                // console.log(self.currentmove)
                 if(self.currentmove < moves.length-1 ){
                     self.moveto(self.currentmove+1)
                 }
@@ -69,7 +70,7 @@ export default {
                 
                 
             }else if(data=='back'){
-                console.log(self.currentmove)
+                // console.log(self.currentmove)
                 if(self.currentmove > -1){
                     self.moveto(self.currentmove-1)
                 }
@@ -87,10 +88,13 @@ export default {
         })
 
     },
+    beforeDestroy(){
+        EventBus.$off('newmove')
+    },
     methods:{
         async moveto(i){
             let self = this
-            console.log(self.currentmove)
+            // console.log(self.currentmove)
             if(self.currentmove<i){
                 for (let index = self.currentmove; index <= i; index++) {
                 await chess.move(moves[index],{ sloppy: true })
@@ -104,6 +108,7 @@ export default {
                 await EventBus.$emit("boradfen",chess.fen())
                 self.currentmove = i
             }
+            
         },
     }
 

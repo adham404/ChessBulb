@@ -138,6 +138,7 @@ export default {
         },
         UserID:"",
         StoryID:"",
+        UserName:"",
         StoryExplanation:"",
         MoveClicked:false,
         PuzzleFormFlag:false,
@@ -189,6 +190,10 @@ export default {
           // No user is signed in.
       }
       });
+      var DBref3 = db.collection("Users").doc(this.UserID);
+      await DBref3.get().then((query) => {
+          this.UserName = query.data().FirstName + " " + query.data().LastName 
+      })
           var ArrayToSend = [];
           var TimeOfCreation = new Date();
           for (let i = 0; i < this.ChessMoveObject.length; i++) {
@@ -227,6 +232,7 @@ export default {
             StoryExplanation: this.StoryExplanation,
             Type: "Move",
             StartingFen: this.Fen,
+            UserName: this.UserName,
             StoryID: this.StoryID,
             UserID: this.UserID
           })
@@ -270,6 +276,10 @@ export default {
           // No user is signed in.
       }
       });
+      var DBref3 = db.collection("Users").doc(this.UserID);
+      await DBref3.get().then((query) => {
+          this.UserName = query.data().FirstName + " " + query.data().LastName 
+      })
         // var StoryID = Math.floor((Math.random() * 100)) + "S" + "T";
         // var UserID = Math.floor((Math.random() * 100)) + "U" + "D";
         var ArrayToSend = [];
@@ -309,6 +319,7 @@ export default {
           Type: "Puzzle",
           StoryExplanation: this.StoryExplanation,
           StartingFen: this.Fen,
+          UserName: this.UserName,
           StoryID: this.StoryID,
           UserID: this.UserID
         })

@@ -1,7 +1,8 @@
 <template>
   <div class="Container">
     <div class="ChessBoard">
-      <ChessBoardDisplay id="grggr" ></ChessBoardDisplay>
+      <ChessBoardInput  v-if="!ShowSolution" id="grggr" ></ChessBoardInput>
+      <ChessBoardDisplay  v-if="ShowSolution" id="grggr" ></ChessBoardDisplay>
     </div>
     <div class="StoryData">
       <div class="DescriptionHeader">
@@ -17,9 +18,9 @@
           </div>
         </div>
       </div>
-      <!-- <div class="Buttons">
-        <button class="Shadow">Show Solution</button>
-      </div> -->
+      <div class="Buttons">
+        <button @click="ShowSolution = !ShowSolution" class="Shadow">{{ShowSolution ? "Hide Solution" :"Show Solution" }}</button>
+      </div>
       <div class="StoryMoves">
         <div  class="Scroller">
           <svg @click="ee.$emit('moveStory','lift')"
@@ -60,15 +61,20 @@
           </svg>
         </div>
         <div class="StorySheet Shadow">
-          <select name="line" id="" v-model="chossedline" @change="check">
+          <select v-if="ShowSolution" name="line" id="" v-model="chossedline" @change="check">
             <option v-for="(i, index) in alllines" :key="index" :value="index">
-               line: {{ index+1 }}
+              line: {{ index+1 }}
             </option>
           </select>
           <MovePreviewDisplay
+          v-if="ShowSolution"
             :moves="movesdata"
             :startpos="newpos"
           ></MovePreviewDisplay>
+          <MovePreviewInput
+            v-if="!ShowSolution"
+            :startpos="newpos"
+          ></MovePreviewInput>
         </div>
         <div class="Scroller">
           <svg @click="ee.$emit('moveStory','right')"
@@ -109,6 +115,10 @@
           </svg>
         </div>
       </div>
+      <p class='SolutionMassage'>{{SolutionAlertMessage}}</p>
+      <div class="Buttons">
+        <button class="Shadow" @click="CheckSlution" >Submit Solution</button>
+      </div>
     </div>
   </div>
 </template>
@@ -117,44 +127,89 @@
 import {EventBus} from "@/main.js"
 import ChessBoardDisplay from "@/components/MarawanComponents/ChessBoard/ChessBoardDisplay";
 import MovePreviewDisplay from "@/components/MarawanComponents/MovePreview/MovePreviewDisplay";
+import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput";
+import MovePreviewInput from "@/components/MarawanComponents/MovePreview/MovePreviewInput";
 export default {
   data() {
     return {
+        ShowSolution:false,
       movesdata: "",
       newpos: "",
       alllines: null,
       chossedline: 0,
-      ee : EventBus
+      ee : EventBus,
+      SolutionMoves : null,
+      SolutionAlertMessage : ""
     };
   },
   components: {
+    MovePreviewInput,
+    ChessBoardInput,
     MovePreviewDisplay,
-    ChessBoardDisplay,
+    ChessBoardDisplay
   },
   methods: {
+      SolutionAlert(res){
+          if(res){
+              this.SolutionAlertMessage =  "Your Solution Was Right ✔️"
+              setTimeout(() => {
+                  this.SolutionAlertMessage =  ""
+              }, 5000);
+              
+          }else{
+              this.SolutionAlertMessage = "Your Solution Was Wrong ❌ "
+              setTimeout(() => {
+                  this.SolutionAlertMessage =  ""
+              }, 5000);
+          }
+      },
     check() {
       this.movesdata = this.moves.Moves[this.chossedline].Moves;
-      console.log(this.chossedline);
+    //   console.log(this.chossedline);
     },
+    CheckSlution(){
+        var BreakException = {};
+         var myline =  JSON.stringify(this.SolutionMoves)
+         try{
+            this.moves.Moves.forEach(line => {
+                var sline = JSON.stringify(line.Moves)
+                if(myline == sline){
+                    this.SolutionAlert(true)
+                    throw BreakException
+                }else{
+                    this.SolutionAlert(false)
+                }
+                
+            });
+         }catch(e){
+             if (e !== BreakException) throw e;
+         }
+          
+      }
   },
   props: ["moves"],
   mounted() {
-    if (this.moves.Moves) {
-        console.log(this.moves);
+      if (this.moves.Moves) {
+        // console.log(this.moves);
         this.alllines = this.moves.Moves;
         this.movesdata = this.moves.Moves[this.chossedline].Moves;
         this.newpos = this.moves.StartingFen;
-        console.log(this.newpos);
+        // console.log(this.newpos);
+        // console.log(this.moves.PuzzleExplanation);
       }
+      EventBus.$on('MovesPreviewList',data =>{
+          this.SolutionMoves = data 
+      })
   },
+  
   watch: {
     moves: function () {
       if (this.moves.Moves) {
-        console.log(this.moves);
+        // console.log(this.moves);
         this.alllines = this.moves.Moves;
         this.movesdata = this.moves.Moves[this.chossedline].Moves;
         this.newpos = this.moves.StartingFen;
-        console.log(this.newpos);
+        // console.log(this.newpos);
       }
     },
   },
@@ -162,6 +217,19 @@ export default {
 </script>
 
 <style scoped>
+.SolutionMassage{
+    color: black;
+    font-size: 1rem;
+  font-family: "Raleway", sans-serif;
+}
+#MessageHeader {
+  font-size: 1.1rem;
+  margin: 0px;
+}
+#Message {
+  font-size: 0.9rem;
+  margin: 1px;
+}
 .TextBox {
   width: 95%;
   /* height: 40px; */
@@ -172,14 +240,6 @@ export default {
   padding-left: 5px;
   color: black;
   font-family: "Raleway", sans-serif;
-}
-#MessageHeader {
-  font-size: 1.1rem;
-  margin: 0px;
-}
-#Message {
-  font-size: 0.9rem;
-  margin: 1px;
 }
 .ChessBoard {
   /* padding-top: 1px; */
