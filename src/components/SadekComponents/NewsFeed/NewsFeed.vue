@@ -44,6 +44,7 @@ export default {
 
         console.log(followdata.data().Following);
         self.Following = followdata.data().Following;
+        self.Following.push(self.UserId)
 
         await self.Following.forEach(async (user) => {
           // let self = this;
