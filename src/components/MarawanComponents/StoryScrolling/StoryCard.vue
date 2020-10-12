@@ -1,5 +1,5 @@
 <template>
-  <div style="width:8vw">
+  <div>
       
       <ChessBoardDisplay hideNotation="true"   :fen='startpos' :id='chessid' ></ChessBoardDisplay>
   </div>

@@ -5,6 +5,7 @@
           <div  v-for="(story,index) in Stories" :key="index" >
               <router-link :to="{ name: 'Stories' ,params: { data: Stories , current: index  }}" >
                   <StoryCard class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
+                  <p class="StoryName">{{story.UserName ? story.UserName : ''}}</p>
               </router-link>
           
             </div>
@@ -52,6 +53,13 @@ export default {
 </script>
 
 <style scoped>
+.StoryName{
+    color: blanchedalmond;
+    text-decoration: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.8vw;
+    text-align: center;
+}
 #StoriesWindowHeader{
     margin-left: 37%;
     margin-top: 5px;
