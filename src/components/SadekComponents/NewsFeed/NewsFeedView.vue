@@ -33,7 +33,7 @@
 		<div class="NewsFeedHeader">
       <div class = "NewsFeedUser">
         <img src="../../../assets/ProfilePic.jpg" alt="">
-        <h2>{{Match.UserName}}</h2>
+        <h2>{{Match.UserName}}lnpm</h2>
       </div>
       <div class="NewsFeedGamePlayers">
         <img src="../../../assets/ProfilePic.jpg" alt="">

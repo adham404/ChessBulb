@@ -1,6 +1,6 @@
 <template>
 	<div class="Productive">
-		<div class="ChessBoard">
+		<div v-if="Mounted" class="ChessBoard">
 			<ChessBoardInput id =1  />
 
 		</div>
@@ -71,6 +71,7 @@ export default {
 			UserName:"",
 			//(Done) make a boolean variable for showing the pop up message and assign it to false (1 minute)
 			showPop: false,
+			Mounted: false,
 		};
 	},
 	methods: {
@@ -132,8 +133,9 @@ export default {
 			}
 		},
 	},
-	mounted() {
+	async mounted() {
 		//Using Event Bus to Activate the SideBar
+		setTimeout(() => {this.Mounted = true}, 200)
 		EventBus.$emit("Toggle", true);
 		//Calling the generateUID function
 		this.generateUID();
@@ -143,14 +145,15 @@ export default {
 			});
 		console.log(this.MatchId);
 		let self = this;
-		firebase.auth().onAuthStateChanged(function(user) {
-	if (user) {
-	console.log(user.uid);
-	self.UserId = user.uid
-	} else {
-		console.log("no log in")
-	}
-  });
+	await firebase.auth().onAuthStateChanged(async function (user) {
+      if (user) {
+        console.log(user.uid);
+        self.UserId = user.uid;
+        
+      } else {
+        console.log("no log in");
+      }
+    });
 		firebase
 			.firestore()
 			.collection("Users")
@@ -160,7 +163,6 @@ export default {
 				querySnapshot.forEach((doc)=>{
 				self.UserName = doc.data().FirstName;
 				})
-				
 			});
 			console.log(this.UserName)
 	},
