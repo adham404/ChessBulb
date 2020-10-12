@@ -90,7 +90,7 @@ export default {
 			EventBus.$emit("SeeLine", ref);
 		},
 		Add() {
-			this.$router.push( { name: "AddAnalysis", params:{Line:this.Line,MainLine:this.MainLine,Move:this.Move,mainMove:this.mainMove,Moves:this.Moves,MatchId:this.MatchId} } );
+			this.$router.push( { name: "AddAnalysis", params:{Line:this.Line,MainLine:this.MainLine,Move:this.Move,mainMove:this.mainMove,Moves:this.Moves,MatchId:this.MatchId,WhitePlayer:this.WhitePlayer,BlackPlayer:this.BlackPlayer} } );
 		},
 	},
 	//TODO in "mounted" get from the (PGNReview Component) by EventBus.$on the move number, and then loop through the lines in this moves and assign the object to the AnalysisLines variable (10 minutes)
@@ -98,9 +98,9 @@ export default {
 		console.log(this.mainMove)
 		console.log(this.MainLine)
 		console.log(["Analyze"] in this.Line)
-		if (this.Move in this.Line.Analyze) {
-			this.exists = true;
-		}
+		// if (this.mainMove in this.Line.Analyze) {
+		// 	this.exists = true;
+		// }
 		
 			if(this.add == -1){
 				this.noAdd = false
@@ -108,10 +108,16 @@ export default {
 			else{
 				this.noAdd = true
 			}
-				console.log(this.WhitePLayer)
-				console.log(this.BlackPLayer)
 			
-
+	EventBus.$on("checkAdd", (data) =>{
+		console.log(data)
+		if(data == -1){
+				this.noAdd = false
+			}
+			else{
+				this.noAdd = true
+			}
+		});
 	},
 	updated(){
 		EventBus.$on("checkAdd", (data) =>{

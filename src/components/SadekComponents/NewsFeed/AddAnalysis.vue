@@ -51,6 +51,7 @@ export default {
 		return {
 			PGN: null,
 			LineId: null,
+			UserId:"",
 			UserName: null,
 			Line: this.$route.params.Line,
 			MainLine: this.$route.params.MainLine,
@@ -142,6 +143,7 @@ export default {
 			this.generateUID();
 			console.log(this.PGN);
 				// this.Line.Analyze = {test: "test"};
+				if(this.PGN != null){
 				var check = _.isEqual(this.MainLine, this.Line)
 				console.log(check)
 				if(check){
@@ -150,6 +152,7 @@ export default {
 					.database()
 					.ref(`Matches/${this.MatchId}`)
 					.set(flatten(this.Line,{ delimiter: "-" })); 
+					// EventBus.$emit("SeeLine", this.Line);
 				}
 				else{		
 				this.AddLine()		
@@ -168,6 +171,7 @@ export default {
 					.ref(`Matches/${this.MatchId}`)
 					.set(this.MainLine); 
 					console.log(this.MainLine)
+					// EventBus.$emit("SeeLine", this.MainLine);
 					}
 			const increment = firebase.firestore.FieldValue.increment(1);
 			firebase
@@ -175,6 +179,8 @@ export default {
 				.collection("Matches")
 				.doc(this.MatchId)
 				.update("noOfAnalysis", increment);
+				this.$router.push({path: "/Home"});
+				}
 		},
 	},
 	mounted() {
@@ -187,12 +193,20 @@ export default {
 		// 		this.Move = index + this.Move
 		// 		console.log(this.Move)
 		// 	});
-		console.log(this.mainMove)
+				console.log(this.mainMove)
+		firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+	console.log(user.uid);
+	self.UserId = user.uid
+	} else {
+		console.log("no log in")
+	}
+  });
 		var self = this;
 		firebase
 			.firestore()
 			.collection("Users")
-			.where("UserId", "==", "123456789")
+			.where("UserId", "==", this.UserId)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc)=>{

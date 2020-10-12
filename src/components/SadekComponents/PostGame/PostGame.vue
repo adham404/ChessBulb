@@ -2,6 +2,7 @@
 	<div class="Productive">
 		<div class="ChessBoard">
 			<ChessBoardInput id =1  />
+
 		</div>
 		<div class="GameData">
 			<div class="EnginePlayers">
@@ -24,13 +25,13 @@
 					<button @click="Share">Share Game</button>
 				</div>
 		<!-- //(Done) make hidden POP UP message, with router link directs to HomePage (2 minutes) -->
-		<div v-if="showPop">
+		<!-- <div v-if="showPop">
 			<p>
 				Your post has been posted on chessbulb we hope your students
 				enjoy it
 			</p>
 			<router-link to="/Home">Go back to the Homepage</router-link>
-		</div>
+		</div> -->
 	</div>
 		</div>
 	</div>
@@ -64,7 +65,7 @@ export default {
 			MatchId: null,
 			//(Done) Make a variable that stores the UserID (1 minute)
 			// UserId: firebase.auth().currentUser,
-			UserId: "123456789",
+			UserId: "",
 			noOfBrilliants: 0,
 			noOfAnalysis: 0,
 			UserName:"",
@@ -108,6 +109,7 @@ export default {
 						)
 					);
 				this.showPop = true;
+				this.$router.push({path:"/Home"})
 			}
 		},
 		//(Done) make a function generates random MatchID and assign it to the variable in the Matches object (20 minutes)
@@ -141,10 +143,18 @@ export default {
 			});
 		console.log(this.MatchId);
 		let self = this;
+		firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+	console.log(user.uid);
+	self.UserId = user.uid
+	} else {
+		console.log("no log in")
+	}
+  });
 		firebase
 			.firestore()
 			.collection("Users")
-			.where("UserId", "==", "123456789")
+			.where("UserId", "==", this.UserId)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc)=>{

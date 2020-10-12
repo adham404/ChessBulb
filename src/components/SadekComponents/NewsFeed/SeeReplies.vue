@@ -78,7 +78,7 @@ export default {
 			EventBus.$emit("Reply", ref);
 		},
 		Add() {
-			this.$router.push( { name: "AddAnalysis", params:{Line:this.Line,MainLine:this.MainLine,Move:this.Move,Moves:this.Moves,mainMove:this.mainMove,MatchId:this.MatchId} } );
+			this.$router.push( { name: "AddAnalysis", params:{Line:this.Line,MainLine:this.MainLine,Move:this.Move,Moves:this.Moves,mainMove:this.mainMove,MatchId:this.MatchId,WhitePlayer:this.WhitePlayer,BlackPlayer:this.BlackPlayer} } );
 		},
 	},
 	//DONE check if the line have Analyze key or not
@@ -92,6 +92,7 @@ export default {
 		}
 		console.log(this.Move)
 	},
+	
 };
 </script>
 

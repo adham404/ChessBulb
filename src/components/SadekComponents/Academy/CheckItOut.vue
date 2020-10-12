@@ -35,7 +35,7 @@
 		<!-- //(DONE) make Component flag for switching between the (LiveSessions
 		Component), (Course Component) and (About Component) passing data (5
 		minutes) -->
-		<component :is="ComponentName" :Academy="Academy"></component>
+		<component :is="ComponentName" :Academy="Academy" :AcademiesId="AcademiesId" :notEnrolled="notEnrolled" ></component>
 	</div>
 </template>
 
@@ -59,6 +59,8 @@ export default {
 	data() {
 		return {
 			Academy: this.$route.query.Academy,
+			notEnrolled:this.$route.query.notEnrolled,
+			AcademiesId:this.$route.query.AcademiesId,
 			ComponentName: "About",
 		};
 	},

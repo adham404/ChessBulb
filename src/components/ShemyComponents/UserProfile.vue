@@ -15,16 +15,18 @@
                 <button v-if="!VisitorFlag && IsInstructor" @click="MyCourses">My Courses</button>
                 <button v-if="!VisitorFlag" @click="PurchasedCourses">Purchased Courses</button>
                 <button v-if="!VisitorFlag" @click="GoToAcademies">Joined Academies</button>
-                <button @click="GoToPosts">My Posts</button>
+                <button @click="MyPost">My Posts</button>
                 <button v-if="VisitorFlag && !Followed" @click="Follow">Follow</button>
                 <button v-if="VisitorFlag && Followed" @click="UnFollow">UnFollow</button>
                 <button v-if="!VisitorFlag" @click="GoToExplore">Find Players</button>
                 <button v-if="!VisitorFlag" @click="SignOut">Sign Out &#128549;</button>
                 <button v-if="VisitorFlag" @click="Back">Go Back to my Profile</button>
+                <!-- <button @click="CreateOrder">Create Course Orders</button>
+                <button @click="Test">Test</button> -->
             </div>
 
         </div>
-        <component :FollowingIDs="FollowingID" :is="CurrentComponent"></component>
+        <component :FollowingIDs="FollowingID" :allAcademies="false" :is="CurrentComponent"></component>
         <!-- <FindPlayers/> -->
         
     </div>
@@ -37,9 +39,10 @@ import Courses from "../ShemyComponents/Courses";
 import MyCourses from "../MarawanComponents/MyCourses";
 import CreatedCourses from "../ShemyComponents/CreatedCourses";
 import Academies from "../SadekComponents/Academy/Academies";
-import Posts from "../SadekComponents/NewsFeed/NewsFeed";
+import NewsFeed from "../SadekComponents/NewsFeed/NewsFeed";
 import {EventBus} from "../../main";
     export default {
+        name: "Profile",
         data:function()
         {
             return{
@@ -54,11 +57,12 @@ import {EventBus} from "../../main";
                 VisitorFlag:false,
                 UpdatedID:"",
                 FollowingID:[],
+                CourseIDs:["7C5NPltqtKoSxj3DHiMw","Rzm0wk6rOQhERY52V6uM","cRveFm5Iw74E0i7nWIp6"],
                 FollowerID:"",
                 CurrentComponent:"FindPlayers"
             }
         },
-        props:['id','Visitor'],
+        props:['id','Visitor','ComponentSent'],
         methods:{
             async GetUserData(id)
             {
@@ -69,8 +73,40 @@ import {EventBus} from "../../main";
                             await DBref.get().then((query) => {
                                 self.UserData = query.data();
                             })
-                            this.CheckInstructor();                
+                            this.CheckInstructor();
                             // User is signed in.
+            },
+            Test()
+            {
+                console.log(this.ComponentSent);
+            },
+            async CreateOrder()
+            {
+                //TODO Get UserID
+                let self = this;
+                await firebase.auth().onAuthStateChanged(function(user) {
+                  if (user) {
+                      self.UserID = user.uid;
+                // User is signed in.
+                      } else {
+                          console.log("No user now")
+                    // No user is signed in.
+                      }
+                });
+                //TODO Loop Over 3 CourseIDs
+                var db = firebase.firestore();
+                var DBref = db.collection("CourseOrders");
+                for (let i = 0; i < this.CourseIDs.length; i++) {
+                    DBref.doc(this.CourseIDs[i]).set({
+                       CourseId: this.CourseIDs[i],
+                       DateOfOrder: "Right Now",
+                       PaymentAmount: 20,
+                       UserId: this.UserID 
+                    })
+                }
+                //TODO Create 4 CourseOrders for the 4 CourseIDs Default with UserID blank
+                //TODO Update the 4 CourseOrders with the current userID
+            
             },
             PurchasedCourses()
             {
@@ -99,10 +135,10 @@ import {EventBus} from "../../main";
                 this.CurrentComponent = "Academies";
                 EventBus.$emit("MyAcademies");
             },
-            GoToPosts()
+            MyPost()
             {
-                this.CurrentComponent = "Posts";
-                EventBus.$emit("MyPosts");
+                this.CurrentComponent = "NewsFeed";
+                // EventBus.$emit("MyPosts");
             },
             GoToExplore()
             {
@@ -221,12 +257,26 @@ import {EventBus} from "../../main";
         },
         async mounted()
         {
+            console.log("Good morning: "+ this.ComponentSent);
+                // await EventBus.$on("MyCourses",()=>{
+                //     this.CurrentComponent = "CreatedCourses"
+                //     console.log("Hey")
+                // })
+                // await EventBus.$on("Academies",()=>{
+                //     this.CurrentComponent = "Academies"
+                // })
+                // await EventBus.$on("PurchasedCourses",()=>{
+                //     this.CurrentComponent = "MyCourses"
+                // })
+                // await EventBus.$on("Posts",()=>{
+                //     this.CurrentComponent = "NewsFeed"
+                // })
             this.GetFollowingIDs(); //Get Following IDs from the user Doc in database
             EventBus.$emit("SendFollowersID",this.FollowingID);
             await EventBus.$on("VisitProfile",(VisitorData) => {
                 this.UserData = VisitorData;
                 this.VisitorFlag = true;
-                this.CurrentComponent = "Posts";
+                this.CurrentComponent = "NewsFeed";
                 for (let i = 0; i < this.FollowingID.length; i++) {
                     if (this.UserData.UserId == this.FollowingID[i]) {
                         this.Followed = true;
@@ -235,13 +285,15 @@ import {EventBus} from "../../main";
             })
             if (!this.VisitorFlag) {
                 this.UserMount();
+                console.log("The Current Component is: "+ this.CurrentComponent);
             }
+            
         },
         components:{
             FindPlayers,
             Courses,
             Academies,
-            Posts,
+            NewsFeed,
             MyCourses,
             CreatedCourses            
         }

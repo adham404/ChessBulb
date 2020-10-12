@@ -1,5 +1,5 @@
 <template>
-  <div>hi i am MyCourses 
+  <div>
       <div class="CourseList">
         <router-link v-for="(Course, i) in Courses" v-bind:key="i" :to="{
           path: `/Courses/CoursePreview/${Course.CourseId}`,
@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped src="@/assets/CSS/Courses.css">
 
 </style>
 //FIXME there is no flow chart because it is a vertion from anthor component

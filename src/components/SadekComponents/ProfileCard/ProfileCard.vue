@@ -6,15 +6,14 @@
 		<router-link
 		class="Links"
 			:to="{
-				path: `/profile/${UserId}`,
+				path: `/profile/${UserId}`
 			}"
 			><h3 class="Links">Profile</h3></router-link
 		>
 		<router-link
 		class="Links"
 			:to="{
-				name: 'UserAcademies',
-				params: { allAcademies: false },
+				path: `/profile/${UserId}`
 			}"
 			><h3 class="Links">Joined Academies</h3></router-link
 		>
@@ -28,6 +27,7 @@
 
 <script>
 import firebase from "firebase"
+import {EventBus} from "../../../main"
 export default {
 	name: "ProfileCard",
 	props: ["User"],
@@ -39,6 +39,26 @@ export default {
 			TextColor:{
     color:"red"
     },
+		}
+	},
+	methods:{
+		MyCourses()
+		{
+			EventBus.$emit("MyCourses");
+		},
+		Academies()
+		{
+			EventBus.$emit("Academies");
+		},
+		PurchasedCourses()
+		{
+			EventBus.$emit("PurchasedCourses");
+
+		},
+		Posts()
+		{
+			EventBus.$emit("Posts");
+
 		}
 	},
 	mounted() {

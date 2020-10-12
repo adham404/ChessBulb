@@ -9,7 +9,7 @@
 				<router-link to="PostStory"><button class="Shadow">Post a Puzzle/Snapshot</button></router-link>
 				<router-link to="CreateCourse"><button class="Shadow">Create a Course</button></router-link>
 			</div>
-				<keep-alive><NewsFeed :Match="Match"/></keep-alive>
+				<keep-alive><NewsFeed/></keep-alive>
 			
 		</div>
 		

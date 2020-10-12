@@ -86,7 +86,7 @@ export default {
 	//TODO making a variable that stores the Current Move (2 minutes)
 	data() {
 		return {
-			ComponentName: "AnalysisLines",
+			ComponentName: "",
 			Line: {},
 			MainLine: {},
 			MatchId: this.$route.params.id,
@@ -109,9 +109,24 @@ export default {
 		EventBus.$emit("Toggle", true);
 		console.log(this.WhitePlayer = this.$route.query.WhitePlayer)
 		console.log(this.BlackPlayer = this.$route.query.BlackPlayer)
-		// let self = this;
-		this.mainMove = currentMove + this.CurrentMove
-		this.getLine();
+		currentMove = -1;
+				this.mainMove = currentMove + this.CurrentMove
+
+		firebase
+			.database()
+			.ref(`Matches/${this.$route.params.id}`)
+			.on("value", (snapshot) => {
+				this.Line = unflatten(snapshot.val(), { delimiter: "-" });
+				this.MainLine = unflatten(snapshot.val(), { delimiter: "-" });
+				console.log(this.Line);
+				console.log(this.MainLine);
+				this.BreadCrumbs.push(this.MainLine)
+				console.log(this.BreadCrumbs[0].name)
+				this.getLine();
+			});		
+						this.ComponentName= "AnalysisLines"
+	// let self = this;
+		// this.getLine();
 		EventBus.$on("Control", async (data) => {
 			if (data == "next") {
 				// await console.log("currentmove = " + currentmove);
@@ -127,6 +142,8 @@ export default {
 			this.mainMove = currentMove + this.CurrentMove;
 			console.log(this.Line)
 			this.ComponentName = "AnalysisLines"
+							EventBus.$emit("checkAdd", currentMove);
+
 				}
 				if (currentMove < moves.length - 1) {
 					await currentMove++;
@@ -141,10 +158,12 @@ export default {
 					await EventBus.$emit("displayboardfen", chess2.fen());
 					// console.log('moved++')
 					this.ComponentName = "AnalysisLines";
+									EventBus.$emit("checkAdd", currentMove);
+
 					// console.log(chess.ascii())
 					console.log(currentMove)
 				}
-				EventBus.$emit("checkAdd", currentMove);
+				// EventBus.$emit("checkAdd", currentMove);
 			} else if (data == "back") {
 				if (currentMove > -1) {
 					// console.log(currentmove);
@@ -172,8 +191,8 @@ export default {
 			console.log(this.BreadCrumbs)
 			this.id = "12";
 			currentMove = 0;
-			this.getLine();
 			EventBus.$emit("checkAdd", currentMove);
+			this.getLine();
 			this.newLine = true;
 		});
 		EventBus.$on("AddAnalysis", (data) => {
@@ -183,6 +202,16 @@ export default {
 			(this.Line = data), (this.ComponentName = "AddAnalysis");
 		});
 		EventBus.$on("SeeLine", (data) => {
+			if(this.ComponentName == "SeeReplies"){
+				(this.Line = data), (this.ComponentName = "AnalysisLines");
+			this.PGN = this.Line.PGN;
+			console.log(this.Line.PGN)
+			this.id = "1288";
+			currentMove = 0;
+			this.getLine();
+			EventBus.$emit("checkAdd", currentMove);
+		}
+		else{
 			(this.Line = data), (this.ComponentName = "AnalysisLines");
 			this.PGN = this.Line.PGN;
 			console.log(this.Line.PGN)
@@ -193,19 +222,9 @@ export default {
 			this.getLine();
 			EventBus.$emit("checkAdd", currentMove);
 			this.newLine = true;
+		}
+			
 		});	
-		firebase
-			.database()
-			.ref(`Matches/${this.$route.params.id}`)
-			.on("value", (snapshot) => {
-				this.Line = unflatten(snapshot.val(), { delimiter: "-" });
-				this.MainLine = unflatten(snapshot.val(), { delimiter: "-" });
-				console.log(this.Line);
-				console.log(this.MainLine);
-				this.BreadCrumbs.push(this.MainLine)
-				console.log(this.BreadCrumbs[0].name)
-				this.getLine();
-			});	
 			console.log(this.WhitePlayer)
 			console.log(this.BlackPlayer)
 	},
@@ -254,6 +273,7 @@ export default {
 			console.log(chess2.fen());
 			this.fen = chess2.fen();
 			EventBus.$emit("displayboardfen", chess2.fen());
+			EventBus.$emit("checkAdd", currentMove);
 			// this.ComponentName= "AnalysisLines"
 		},
 		breadClicked(index){
