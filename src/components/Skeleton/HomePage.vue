@@ -9,7 +9,7 @@
 				<button class="Shadow">Post a Puzzle/Snapshot</button>
 				<button class="Shadow">Create a Course</button>
 			</div>
-				<keep-alive><NewsFeed :Match="Match"/></keep-alive>
+				<keep-alive><NewsFeed/></keep-alive>
 			
 		</div>
 		
