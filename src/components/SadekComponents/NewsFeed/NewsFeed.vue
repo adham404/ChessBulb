@@ -23,8 +23,9 @@ export default {
             Matches:[]
         }
     },
-    mounted(){
-        firebase.auth().onAuthStateChanged(function(user) {
+    async mounted(){
+		var self = this;
+        await firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 	console.log(user.uid);
 	self.UserId = user.uid
@@ -32,19 +33,18 @@ export default {
 		console.log("no log in")
 	}
   });
-		firebase
+		await firebase
 			.firestore()
 			.collection("Follows")
 			.where("UserId", "==", this.UserId)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc) => {
-					self.Following.push(doc.data().Following);
-					console.log(self.Following);
+					self.Following = doc.data().Following;
+					console.log('This is' + self.Following);
 				});
       });
-      this.Following.forEach((user) =>{
-        var self = this;
+     await this.Following.forEach((user) =>{
 		firebase
 			.firestore()
 			.collection("Matches")

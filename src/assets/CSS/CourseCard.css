@@ -12,6 +12,7 @@
     background-size:cover;
     background-position: center;
     text-decoration: none;
+    margin-right: 20px;
   }
   .CourseData{
     height: 70px;
@@ -41,4 +42,5 @@
   }
   a{
     text-decoration: none;
+    text-decoration-color: black;
   }

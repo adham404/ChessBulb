@@ -32,6 +32,7 @@
 					</g>
 				</svg>
 			</router-link>
+			<p>Beta</p>
 		</div>
 		<div id="links">
 			<router-link to="/Home"><h3>Home</h3></router-link>
@@ -51,6 +52,11 @@ export default {};
 </script>
 
 <style  scoped>
+p{
+	font-family: 'Quicksand', sans-serif;
+	font-weight: lighter;
+	color: white;
+}
 a {
 	text-decoration: none;
 }

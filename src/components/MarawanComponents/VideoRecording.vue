@@ -166,7 +166,7 @@ export default {
 <style scoped>
 #recorder{
     width: 100% !important;
-  height: auto !important;
+  height: 200px !important;
     
 }
 p{

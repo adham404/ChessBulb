@@ -1,6 +1,7 @@
 a{
   text-decoration: none;
-  text-emphasis: none;
+  text-decoration-color: black;
+  color: black;
 }
 .Courses{
     display: flex;
@@ -12,7 +13,7 @@ a{
     margin-left: 5%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
   .ListRow{
     margin-top: 2rem;
