@@ -43,11 +43,11 @@
     </div>
 	<div class="NewsFeedGame">
 	<div class="NewsFeedChessBoard">
-        <ChessBoardDisplay :id = 'id'  :key = 'id' />
+        <ChessBoardDisplay :id = 'Match.MatchId'  :key = 'id' />
       </div>
 	<div class="NewsFeedGamePreview">
         <div class="NewsFeedPgn">
-		<PgnReviewOutput :pgn="Match.PGN" />
+		<PgnReviewOutput :pgn="Match.PGN"  />
         </div>
 		<div class="NewsFeedGameControls">
           <svg @click="emitcontrol('back')" class="GameControls" xmlns="http://www.w3.org/2000/svg" width="11.859" height="20.911" viewBox="0 0 11.859 20.911">

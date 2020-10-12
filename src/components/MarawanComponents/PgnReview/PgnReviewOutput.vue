@@ -6,9 +6,9 @@
       </div>
       <span v-for="(i, index) in pgnoutput" :key="index">
         <span>{{ i.number }}.</span>
-        <span class="pgnmove" @click="moveto(i.move1num)">{{ i.move1 }} </span>
+        <span id="pgnmove" @click="moveto(i.move1num)">{{ i.move1 }} </span>
         <span>{{ i.comment1 }} </span>
-        <span class="pgnmove" @click="moveto(i.move2num)">{{ i.move2 }} </span>
+        <span id="pgnmove" @click="moveto(i.move2num)">{{ i.move2 }} </span>
         <span>{{ i.comment2 }} </span>
       </span>
     </div>
@@ -131,7 +131,7 @@ export default {
 </script>
 
 <style scoped>
-.pgnmove {
+#pgnmove {
   cursor: pointer;
 }
 .NewsFeedPgn{

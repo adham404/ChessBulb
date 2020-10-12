@@ -9,7 +9,12 @@
 				<router-link to="PostStory"><button class="Shadow">Post a Puzzle/Snapshot</button></router-link>
 				<router-link to="CreateCourse"><button class="Shadow">Create a Course</button></router-link>
 			</div>
+<<<<<<< HEAD
 				<NewsFeed/>
+=======
+				<NewsFeed />
+			
+>>>>>>> 556696b4d2bd440a82c5d734f700017346a8a31b
 		</div>
 		
 	</div>
@@ -33,18 +38,18 @@ export default {
 		}
 	},
 	mounted(){
-		let self = this;
-		firebase
-			.firestore()
-			.collection("Matches")
-			.where("MatchId", "==", "Match-761d4")
-			.get()
-			.then((querySnapshot) => {
-				querySnapshot.forEach((doc) => {
-					self.Match = doc.data();
-					console.log(self.Match);
-				});
-			});
+		// let self = this;
+		// firebase
+		// 	.firestore()
+		// 	.collection("Matches")
+		// 	.where("MatchId", "==", "Match-761d4")
+		// 	.get()
+		// 	.then((querySnapshot) => {
+		// 		querySnapshot.forEach((doc) => {
+		// 			self.Match = doc.data();
+		// 			console.log(self.Match);
+		// 		});
+		// 	});
 	}
 };
 </script>
