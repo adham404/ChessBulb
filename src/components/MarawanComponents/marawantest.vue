@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width:100%">
   
    <router-link to="/LiveStreamer/hijYRNADIgvDhTgifgft" >LiveStreamer</router-link><br/>
    <router-link to="/LiveViewer/hijYRNADIgvDhTgifgft" >LiveViewer</router-link><br/>
@@ -7,19 +7,20 @@
    
    <router-link to="/AcademyForm" >Academy Form</router-link><br/>
   
-   <button @click="addlive" >add live</button>
+   <storypuzzel style="width:100%" v-if="movess" :moves='movess' />
   </div>
 </template>
 
 <script>
 // import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
 // import MovePreviewInput from "@/components/MarawanComponents/MovePreview/MovePreviewInput"
-// import StoryHeader from "@/components/MarawanComponents/StoryScrolling/StoryDisplayheader"
+import storypuzzel from "@/components/MarawanComponents/StoryScrolling/storypuzzel"
 // import StockFish from "@/components/MarawanComponents/StockFish.vue"
 import {EventBus} from "@/main.js"
 import firebase from "firebase"
 export default {
   components:{
+    storypuzzel
     // StoryHeader,
     // MovePreviewInput,
     // ChessBoardInput,
@@ -27,7 +28,8 @@ export default {
   },
   data(){
     return{
-      filters: true
+      filters: true,
+      movess : null
     }
   },
   methods:{
@@ -45,7 +47,9 @@ export default {
     }
     
   },
-  mounted(){
+  async mounted(){
+    var data = await firebase.firestore().collection('ChessStories').doc('u64MSwDqiNTwUF1tuSvm').get()
+    this.movess = data.data()
          setTimeout(() => {
       EventBus.$emit("Toggle", true);
     }, 100);

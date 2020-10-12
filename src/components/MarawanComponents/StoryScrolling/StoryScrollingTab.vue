@@ -1,11 +1,15 @@
 <template>
-
-        <StoryPreview style="width:100%" :moves="moves"  ></StoryPreview>
+<div style="width:100%">
+    <StoryPreview style="width:100%" v-if="moves.Type=='Move'" :moves="moves"  ></StoryPreview>
+    <storypuzzel style="width:100%"  v-if="moves.Type=='Puzzle' " :moves="moves"  ></storypuzzel>
+</div>
+        
 </template>
 
 <script>
 // import firebase from "firebase"
 import StoryPreview from "./Stortypreview"
+import storypuzzel from "./storypuzzel"
 import { EventBus } from "@/main.js";
 
 //TODO make a story div(5min)
@@ -19,6 +23,7 @@ import { EventBus } from "@/main.js";
 export default {
     components:{
         StoryPreview,
+        storypuzzel
     },
     data(){
         return{

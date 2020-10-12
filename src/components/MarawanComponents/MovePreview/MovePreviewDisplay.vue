@@ -40,7 +40,15 @@ export default {
             
         }
     },
-    mounted(){
+    async mounted(){
+        if(this.moves && this.startpos){
+            this.movesdata = this.moves
+          moves1 = this.moves
+          console.log(moves1)
+          chess = await new  Chess(this.startpos);
+            await EventBus.$emit("displayboardfen", chess.fen())
+            this.currentmove = -1
+        }
         let self = this
         self.currentmove = -1;
         EventBus.$on('Control', async data =>{
