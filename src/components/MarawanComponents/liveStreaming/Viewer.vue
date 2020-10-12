@@ -165,7 +165,7 @@ export default {
        sendmessage(){
       if(socket && this.message != '' ){
         socket.emit('send-chat-message', {message : this.message, name : username})
-        this.messages.push({message : this.message, name : 'The Instructor'})
+        this.messages.push({message : this.message, name : username})
         this.message = ''
       }
      
