@@ -1,8 +1,8 @@
 <template>
   <div >
-    <div v-for="(i, s) in Matches" :key="s">
-      <NewsFeedView :Match="i" :UserId="UserId" />
-    </div>
+    <!-- <div v-for="(i, s) in Matches" :key="s"> -->
+      <NewsFeedView v-for="(item, index) in Matches" :key="index" :Match="item" :UserId="UserId"  />
+    <!-- </div> -->
   </div>
 </template>
 
@@ -63,8 +63,9 @@ export default {
           
 		});
 		// this.showi = true
-		console.log("all data is here");
+		console.log("all data is here",this.matdata);
 		this.Matches = this.matdata
+		console
 	}
   },
 };
