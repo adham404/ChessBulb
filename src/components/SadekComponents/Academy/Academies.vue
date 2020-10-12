@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<router-link to="/Sadek">Sadek Testing Page</router-link>
+		<!-- <router-link to="/Sadek">Sadek Testing Page</router-link> -->
 		<!-- // (DONE) using the (SearchEngine Component) (2 minutes) -->
 		<SearchEngine SearchIndex="Academies"/>
 		<!-- //(DONE) loop through the object (5 minutes) -->

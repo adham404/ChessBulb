@@ -5,9 +5,9 @@
 			<!-- <h1 id="StoriesWindowHeader">Chess Snapshots</h1> -->
 			<StoryDisplayheader/>
 			<div class="Buttons">
-				<button class="Shadow">Post a Game</button>
-				<button class="Shadow">Post a Puzzle/Snapshot</button>
-				<button class="Shadow">Create a Course</button>
+				<router-link to="/PostGame"><button class="Shadow">Post a Game</button></router-link>
+				<router-link to="PostStory"><button class="Shadow">Post a Puzzle/Snapshot</button></router-link>
+				<router-link to="CreateCourse"><button class="Shadow">Create a Course</button></router-link>
 			</div>
 				<keep-alive><NewsFeed :Match="Match"/></keep-alive>
 			

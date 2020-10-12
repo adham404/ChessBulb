@@ -1,7 +1,7 @@
 <template>
   <div class="Courses">
       <!-- DONE Create Courses Header Div That Includes [CreateCourse] [SearchEngine] [Filter] 5MIN -->
-      <div style="display: flex">
+      <div class = "CoursesNav" >
       <!-- DONE Router link to [CreateCourse] when 'Create a Course' button is clicked 2MIN -->
         <router-link to="/CreateCourse">
         <button>Create Course</button>

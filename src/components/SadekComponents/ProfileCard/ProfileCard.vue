@@ -8,15 +8,7 @@
 			:to="{
 				path: `/profile/${UserId}`,
 			}"
-			><h3 >Pofile</h3></router-link
-		>
-		<router-link
-		class="Links"
-			:to="{
-				name: 'UserCourses',
-				params: { allCourses: false },
-			}"
-			><h3 >My Courses</h3></router-link
+			><h3 class="Links">Profile</h3></router-link
 		>
 		<router-link
 		class="Links"
@@ -24,13 +16,13 @@
 				name: 'UserAcademies',
 				params: { allAcademies: false },
 			}"
-			><h3>Joined Academies</h3></router-link
+			><h3 class="Links">Joined Academies</h3></router-link
 		>
-		<h3 class="Links">Purchased Courses</h3>
-		<h3 class="Links">My Posts</h3>
+		<router-link to="/profile/${UserId}" class="Links"><h3 class="Links">Purchased Courses</h3></router-link>
+		<router-link to="/profile/${UserId}" class="Links"><h3 class="Links">My Posts</h3></router-link>
 		<!-- <router-link class="Links" ><h3>Purchased Courses</h3></router-link>
 		<router-link class="Links"><h3>My Posts</h3></router-link> -->
-		<router-link class="Links" to="Explore"><h3>Find Players</h3></router-link>
+		<router-link class="Links" to="Explore"><h3 class="Links">Find Players</h3></router-link>
 	</div>
 </template>
 
@@ -104,6 +96,9 @@ export default {
 		font-weight: lighter;
 		color: white;
 		text-decoration: none;
+	}
+	.Links:hover{
+		color: #1daca8;
 	}
 	/* .Links:visited{
 		color: inherit;

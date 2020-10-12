@@ -251,9 +251,12 @@ export default {
   h2{
     font-family: 'Raleway', sans-serif;
     border-bottom: 3px solid grey;
+    color: white;
   }
   p{
     margin: 0px;
+    color: white;
+    font-weight: lighter;
   }
   img{
     height: 40px;
@@ -272,6 +275,7 @@ export default {
     margin-bottom: 10px;
     font-family: 'Raleway',sans-serif;
     font-size: 1.5rem;
+
   }
   .rating{
     margin-left: 1rem;
@@ -329,7 +333,7 @@ export default {
     color: white;
     margin-right: 5px;
     cursor: pointer;
-	}
+  }
 
 </style>
 

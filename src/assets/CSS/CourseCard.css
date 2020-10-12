@@ -39,3 +39,6 @@
   .rating svg{
     margin-right: 3px;
   }
+  a{
+    text-decoration: none;
+  }

@@ -57,6 +57,7 @@ export default {
     margin-top: 5px;
     font-family: 'Quicksand', sans-serif;
     font-weight: lighter;
+    color: white;
 }
 .ProfileImage{
 height: 100px;
