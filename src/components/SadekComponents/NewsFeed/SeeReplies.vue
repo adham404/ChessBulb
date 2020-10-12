@@ -1,6 +1,6 @@
 <template>
 	<div class="Replies">
-		<h2 id="Players">Ahmed vs Mostafa</h2>
+		<h2 id="Players">{{WhitePlayer}} vs {{BlackPlayer}}</h2>
 		<div class="SingleAnalysisCard">
 			<div class="LineOwner">
 			<p>{{ Line.name }}</p>
@@ -62,7 +62,7 @@
 import { EventBus } from "@/main";
 export default {
 	//TODO use props to get the data specified for this component (3 minutes)
-	props: ["Line", "MainLine","Move","MatchId"],
+	props: ["Line", "MainLine","Move","MatchId","WhitePlayer","BlackPlayer"],
 	data() {
 		return {
 			keys: [],

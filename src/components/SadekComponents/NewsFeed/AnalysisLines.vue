@@ -1,6 +1,6 @@
 <template>
 	<div class="AnalysisCards">
-		<h2 id="Players">Ahmed vs Mostafa</h2>
+		<h2 id="Players">{{WhitePlayer}} vs {{BlackPlayer}}</h2>
 			<!-- //Done loop through the AnalysisLines (3 minutes) -->
 			<div v-if="'Analyze' in Line">
 
@@ -69,7 +69,7 @@ import { EventBus } from "@/main";
 // import PgnReviewOutput from "../../MarawanComponents/PgnReview/PgnReviewOutput";
 export default {
 	//Done using props getting the match object (3 minutes)
-	props: ["Line", "MainLine", "Move","MatchId","mainMove","add"],
+	props: ["Line", "MainLine", "Move","MatchId","mainMove","add","WhitePlayer","BlackPlayer"],
 	data() {
 		return {
 			isAnalyze: false,
@@ -108,7 +108,8 @@ export default {
 			else{
 				this.noAdd = true
 			}
-				
+				console.log(this.WhitePLayer)
+				console.log(this.BlackPLayer)
 			
 
 	},

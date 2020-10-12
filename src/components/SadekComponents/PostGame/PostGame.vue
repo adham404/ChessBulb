@@ -141,6 +141,7 @@ export default {
 				console.log(data);
 			});
 		console.log(this.MatchId);
+		let self = this;
 		firebase
 			.firestore()
 			.collection("Users")
@@ -152,6 +153,7 @@ export default {
 				})
 				
 			});
+			console.log(this.UserName)
 	},
 };
 </script>
