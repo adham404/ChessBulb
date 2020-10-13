@@ -36,15 +36,15 @@
                 </p>
                 <div class="Purchase">
                     <h4>This course is in some state</h4>
-                    <router-link style="margin-bottom:5px" :to="{
+                    <router-link v-if="!PurchaseFlag" style="margin-bottom:5px" :to="{
                         path:`/Courses/CourseStreaming/${CoursesID}`,
                         params:{CourseID: CoursesID}
                 }">
                 <button @click="ToggleHeader">Stream</button>
                 </router-link>
-                    <router-link :to="{
-                        path:`/Purchase/${CoursesID}`,
-                        params:{CourseID: CoursesID}
+                    <router-link v-if="PurchaseFlag" :to="{
+                        path: `/Purchase/${CoursePurchase}`,
+                        params: {id: CoursePurchase}
                 }">
                 <button @click="ToggleHeader">Enroll</button>
                 </router-link>
@@ -76,7 +76,10 @@ export default {
     {
         return{
             rating: 5,
-            Courses:{}
+            Courses:{},
+            CoursePurchase:"",
+            PurchaseFlag: true,
+            UserID:""
         }
     },
     props:["CoursesID"],
@@ -88,10 +91,40 @@ export default {
     mounted()
     {   
         this.RecieveCoursesData();
+        this.CheckPurchaseStatus()
     },
     methods:{
         ToggleHeader(){
             EventBus.$emit('Toggle', true )
+        },
+        async CheckPurchaseStatus()
+        {
+        let self = this;
+        await firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                self.UserID = user.uid;
+            // User is signed in.
+            } else {
+                console.log("No User Logged In");
+            // No user is signed in.
+            }
+        });
+        var db = firebase.firestore();
+        var DBRef = db.collection("CourseOrders");
+        await DBRef.get().then((query) => {
+            query.forEach((doc) => {
+                if (doc.data().CourseId == this.CoursesID && doc.data().UserId == this.UserID) {
+                    this.PurchaseFlag = false;
+                }
+            })
+        })
+        if (this.PurchaseFlag) {
+            console.log("You Need to Purchase the Course")
+        }
+        else
+        {
+            console.log("You okay go watch the course")
+        }
         },
         async RecieveCoursesData()
         {
@@ -105,6 +138,7 @@ export default {
                 {
                     self.Courses = query.data();
                     self.rating = self.Courses.Rating;
+                    self.CoursePurchase = self.Courses.PriceId;
                 }
                 else
                 {

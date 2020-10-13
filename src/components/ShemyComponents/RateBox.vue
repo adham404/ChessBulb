@@ -1,47 +1,4 @@
 <template>
-  <div>
-    <h2>Reviews and Ratings</h2>
-    <div class="Reviews">
-      <div v-for="Review in Reviews" :key="Review" class="SingleReview">
-        <div class="UserImage">
-          <img src="@/assets/ProfilePic.jpg" alt="">
-        </div>
-        <div class="ReviewData">
-          <div class="NameDateRating">
-            <div class="NameDate">
-              <p style="border-right: 2px solid grey; padding-right: 5px;">
-                {{Review.FirstName}} {{Review.LastName}}
-              </p>
-              <p style="margin-left: 5px;">
-                {{Review.DateOfReview}}
-              </p>
-            </div>
-            <div class="rating">
-              <svg v-if="Review.NumberOfStars >= 1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 15.751 15.113">
-                  <path id="Icon_awesome-star" data-name="Icon awesome-star" d="M8.016.489l-1.8,3.645L2.2,4.721a.881.881,0,0,0-.487,1.5L4.618,9.06,3.93,13.065a.88.88,0,0,0,1.277.928l3.6-1.891,3.6,1.891a.881.881,0,0,0,1.277-.928L12.993,9.06,15.9,6.224a.881.881,0,0,0-.487-1.5l-4.022-.586L9.6.489A.882.882,0,0,0,8.016.489Z" transform="translate(-0.93 0.501)" stroke="#fff" stroke-width="1"/>
-              </svg>
-              <svg v-if="Review.NumberOfStars >= 2" xmlns="http://www.w3.org/2000/svg"  width="100%" height="100%" viewBox="0 0 15.751 15.113">
-                  <path id="Icon_awesome-star" data-name="Icon awesome-star" d="M8.016.489l-1.8,3.645L2.2,4.721a.881.881,0,0,0-.487,1.5L4.618,9.06,3.93,13.065a.88.88,0,0,0,1.277.928l3.6-1.891,3.6,1.891a.881.881,0,0,0,1.277-.928L12.993,9.06,15.9,6.224a.881.881,0,0,0-.487-1.5l-4.022-.586L9.6.489A.882.882,0,0,0,8.016.489Z" transform="translate(-0.93 0.501)" stroke="#fff" stroke-width="1"/>
-              </svg>
-              <svg v-if="Review.NumberOfStars >= 3" xmlns="http://www.w3.org/2000/svg"  width="100%" height="100%" viewBox="0 0 15.751 15.113">
-                  <path id="Icon_awesome-star" data-name="Icon awesome-star" d="M8.016.489l-1.8,3.645L2.2,4.721a.881.881,0,0,0-.487,1.5L4.618,9.06,3.93,13.065a.88.88,0,0,0,1.277.928l3.6-1.891,3.6,1.891a.881.881,0,0,0,1.277-.928L12.993,9.06,15.9,6.224a.881.881,0,0,0-.487-1.5l-4.022-.586L9.6.489A.882.882,0,0,0,8.016.489Z" transform="translate(-0.93 0.501)" stroke="#fff" stroke-width="1"/>
-              </svg>
-              <svg v-if="Review.NumberOfStars >= 4" xmlns="http://www.w3.org/2000/svg"  width="100%" height="100%" viewBox="0 0 15.751 15.113">
-                  <path id="Icon_awesome-star" data-name="Icon awesome-star" d="M8.016.489l-1.8,3.645L2.2,4.721a.881.881,0,0,0-.487,1.5L4.618,9.06,3.93,13.065a.88.88,0,0,0,1.277.928l3.6-1.891,3.6,1.891a.881.881,0,0,0,1.277-.928L12.993,9.06,15.9,6.224a.881.881,0,0,0-.487-1.5l-4.022-.586L9.6.489A.882.882,0,0,0,8.016.489Z" transform="translate(-0.93 0.501)" stroke="#fff" stroke-width="1"/>
-              </svg>
-              <svg v-if="Review.NumberOfStars >= 5" xmlns="http://www.w3.org/2000/svg"  width="100%" height="100%" viewBox="0 0 15.751 15.113">
-                  <path id="Icon_awesome-star" data-name="Icon awesome-star" d="M8.016.489l-1.8,3.645L2.2,4.721a.881.881,0,0,0-.487,1.5L4.618,9.06,3.93,13.065a.88.88,0,0,0,1.277.928l3.6-1.891,3.6,1.891a.881.881,0,0,0,1.277-.928L12.993,9.06,15.9,6.224a.881.881,0,0,0-.487-1.5l-4.022-.586L9.6.489A.882.882,0,0,0,8.016.489Z" transform="translate(-0.93 0.501)" stroke="#fff" stroke-width="1"/>
-              </svg>                    
-            </div>
-          </div>
-          <div class="Review">
-            <p>
-              {{Review.Comment}}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="AddReview">
       <div class="UserImage">
         <img src="@/assets/ProfilePic.jpg" alt="">
@@ -52,25 +9,23 @@
         </div>
         <div class="RatingButton">
           <div class="rating" id="Addrating">
-                        <svg v-for="Star in 5" :key="Star" :style="StarStyle[Star]" @mouseover="StarClicked(Star,false)" @mouseleave="StarRemoved"   @click="StarClicked(Star,true)" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 15.751 15.113">
+                        <svg v-for="Star in 5" :key="Star" :style="StarStyle[Star]" @mouseover="StarClicked(Star)"  @click="StarClicked(Star)" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 15.751 15.113">
                             <path id="Icon_awesome-star" data-name="Icon awesome-star" d="M8.016.489l-1.8,3.645L2.2,4.721a.881.881,0,0,0-.487,1.5L4.618,9.06,3.93,13.065a.88.88,0,0,0,1.277.928l3.6-1.891,3.6,1.891a.881.881,0,0,0,1.277-.928L12.993,9.06,15.9,6.224a.881.881,0,0,0-.487-1.5l-4.022-.586L9.6.489A.882.882,0,0,0,8.016.489Z" transform="translate(-0.93 0.501)"  stroke-width="1"/>
                         </svg>
           </div>
           <button @click="AddReview">Add Review</button>
         </div>
       </div>
-    </div>
-  </div>
+    </div>  
 </template>
 
 <script>
 import firebase from "firebase";
+import { EventBus } from '../../main';
 export default {
-    data: function()
-    {
-      return{
-        ReviewObject:"",
-        Reviews:[],
+data: function()
+{
+    return{
         StarStyle:[
           {
             stroke:"#000",
@@ -120,55 +75,20 @@ export default {
         UserID:"",
         ReviewID:"",
         FirstName:"",
-        LastName:"",
-        StarClick:false,
-        CurrentDate:""
-      }
-    },
-    props:["CourseID"],
-    mounted()
-    {
-      this.RecieveReviews();  
-    },
-    methods:{
-      RecieveReviews()
-    {
-      var db = firebase.firestore()
-      var id = this.CourseID;
-      let self = this;
-      var DbRef = db.collection("Reviews").where("CourseId", "==", id);
-      DbRef
-      .get()
-      .then((query)=>{
-        query.forEach((doc)=>{
-        //DONE When Mount Recieve from the firestore the Review data object and assign it to (Reviews) (10min) 
-          self.Reviews.push(doc.data());
+        LastName:""
 
-        })
-      })
-      .catch((error)=>{
-        console.log("Error Getting Document "+ error);
-      })
-
-    },
-    StarRemoved()
+    }
+},
+props:['CourseID'],
+methods:{
+    StarClicked(Star)
     {
-      if (!this.StarClick) {
-        for (let i = 0; i <= 5; i++) {
-          this.StarStyle[i].fill = "black";        
-        }        
-      }
-      // this.RatingValue = "";
-    },
-    StarClicked(Star,type)
-    {
-      this.StarClick = type
       for (let i = 0; i <= 5; i++) {
         this.StarStyle[i].fill = "black";        
       }
       this.RatingValue = Star;
       for (let i = 0; i <= Star; i++) {
-        this.StarStyle[i].fill = "#1daca8";
+        this.StarStyle[i].fill = "#022A68";
         console.log("Star Clicked at pos: "+ i);
       } 
     },
@@ -191,9 +111,6 @@ export default {
     },
      async AddReview()
      {
-          var DateDummy = new Date();
-          this.CurrentDate = DateDummy.toDateString();
-          console.log("Test for date which is: "+ this.CurrentDate);
           if (this.CheckComment()) {            
             console.log("Course ID is: "+ this.CourseID);
             var Db = firebase.firestore();
@@ -233,7 +150,7 @@ export default {
               AcademyId:"12345678",
               Comment: this.RatingComment,
               CourseId: this.CourseID,
-              DateOfReview: this.CurrentDate,
+              DateOfReview: "15 Sep 2020 at 11:11:43 UTC+2",
               FirstName:this.FirstName,
               LastName:this.LastName,
               NumberOfStars: this.RatingValue,
@@ -241,12 +158,10 @@ export default {
               UserID: this.UserID          
             });
             this.ClearRate();
-            this.Reviews = [];
-            this.RecieveReviews();
-            // this.$forceUpdate();
+            EventBus.$emit("RateDone");
        }
       }
-    }
+}
 }
 </script>
 
@@ -355,6 +270,4 @@ export default {
     margin-right: 5px;
     cursor: pointer;
   }
-
 </style>
-
