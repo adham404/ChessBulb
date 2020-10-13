@@ -14,6 +14,7 @@ export default {
   components: {
     NewsFeedView,
   },
+  props: ["ClickedUserId","Personal", "General"],
   data() {
     return {
 		showi: false , 
@@ -35,7 +36,7 @@ export default {
       }
     });
 	// this.Matches = this.matdata
-	if(self.UserId){
+	if(self.General){
 		var followdata = await firebase
           .firestore()
           .collection("Follows")
@@ -66,9 +67,31 @@ export default {
 		// this.showi = true
 		console.log("all data is here",this.matdata);
 		this.Matches = this.matdata
-		console
-	}
+  }
+  if (self.Personal) {
+    self.Following = []
+    self.Following.push(self.ClickedUserId),
+    await self.Following.forEach(async (user) => {
+          // let self = this;
+          var match = await firebase
+            .firestore()
+            .collection("Matches")
+            .where("UserId", "==", user)
+            .get();
+
+          await match.forEach((doc) => {
+            console.log(doc.data());
+
+            self.matdata.push(doc.data());
+            // self.Matches.push(doc.data());
+            // console.log(self.Matches);
+          });
+          
+		});
+    
+  }
   },
+
 };
 </script>
 
