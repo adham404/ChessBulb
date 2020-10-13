@@ -21,6 +21,7 @@
 import StoryDisplayheader from "@/components/MarawanComponents/StoryScrolling/StoryDisplayheader";
 import ProfileCard from "@/components/SadekComponents/ProfileCard/ProfileCard.vue";
 import NewsFeed from "@/components/SadekComponents/NewsFeed/NewsFeed.vue";
+import {EventBus} from '@/main.js'
 import firebase from "firebase"
 export default {
 	components: {
@@ -34,6 +35,8 @@ export default {
 		}
 	},
 	mounted(){
+		EventBus.$emit("Toggle", false)
+
 		// let self = this;
 		// firebase
 		// 	.firestore()
