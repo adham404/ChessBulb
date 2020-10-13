@@ -126,7 +126,7 @@ export default {
 	methods: {
 		//(Done) make brilliant function, if the boolean variable is false increase the NoOfBrilliants by 1, if the brilliant button is clicked then decrease it by 1 (5 minutes)
 		BrilliantClicked() {
-      if (this.Match.BrilliantUsers.includes(this.UserId) && !this.Match.noOfBrilliants <= 0){
+      if (this.Match.BrilliantUsers.includes(this.UserId) && !this.Match.noOfBrilliants == 0){
         this.Match.noOfBrilliants--;
         this.brilliant = false;
         let self = this

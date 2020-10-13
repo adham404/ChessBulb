@@ -47,9 +47,6 @@ export default {
       async RecieveCoursesID()
       {
         // let self = this;
-        var sum = 0
-        var average = 0
-        var Review = {}
         var db = firebase.firestore();
         var docRef =  db.collection("Courses");
         for (let i = 0; i < this.CourseID.length; i++) {          
@@ -57,18 +54,7 @@ export default {
               this.Courses.push(query.data());
             })
         }
-        this.Courses.forEach( async (Course) => { await firebase.firestore().collection("Reviews").where("CourseId", "==",Course.CourseID ).get().then((query) => {query.forEach((doc) => {
-        Review = doc.data();
-        sum += Review["NumberOfStars"]
-        average = Math.round(sum/query.length)
-        console.log("hello")
-      })
-      }) ,
-      await firebase.firestore().collection("Courses").doc(Course.CourseId).update({Rating: average})
-      console.log("this is ratings")
       
-      })
-        // console.log(response);
       }
     },
   //DONE Declare Mounted Property (1min)

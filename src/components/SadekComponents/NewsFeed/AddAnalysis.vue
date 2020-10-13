@@ -183,7 +183,8 @@ export default {
 				}
 		},
 	},
-	mounted() {
+	async mounted() {
+		var self = this;
 		EventBus.$on("Toggle", true)
 		EventBus.$on("newpgn", (data) => {
 				this.PGN = data;
@@ -194,26 +195,29 @@ export default {
 		// 		console.log(this.Move)
 		// 	});
 				console.log(this.mainMove)
-		firebase.auth().onAuthStateChanged(function(user) {
+	await	firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 	console.log(user.uid);
 	self.UserId = user.uid
+	console.log(self.UserId)
+	
 	} else {
 		console.log("no log in")
 	}
   });
-		var self = this;
-		firebase
-			.firestore()
-			.collection("Users")
-			.where("UserId", "==", this.UserId)
-			.get()
-			.then((querySnapshot) => {
-				querySnapshot.forEach((doc)=>{
-				self.UserName = doc.data().FirstName;
-				})
-				
-			});
+	var name = await firebase
+            .firestore()
+            .collection("Users")
+            .where("UserId", "==", self.UserId)
+            .get();
+
+          await name.forEach((doc) => {
+            console.log(doc.data());
+
+            self.UserName = doc.data().FirstName;
+     
+            console.log(self.UserName);
+          });
 			// var jangoFett = { LineId: 1, Name: "MainLine", PGN: "1. f3 f6 2. e3" };
 			// var bobaFett =  { "LineId": 1, "Name": "MainLine", "PGN": "1. f3 f6 2. e3" }; 
 			console.log(_.isEqual(this.MainLine, this.Line));

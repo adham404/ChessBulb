@@ -95,7 +95,8 @@ export default {
 						UserId: this.UserId,
 						WhitePlayer: this.whitePlayer,
 						BlackPlayer: this.blackPlayer,
-						UserName:this.UserName
+						UserName:this.UserName,
+						BrilliantUsers: [],
 					});
 				firebase
 					.database()
