@@ -79,7 +79,9 @@ export default {
             Courses:{},
             CoursePurchase:"",
             PurchaseFlag: true,
-            UserID:""
+            UserID:"",
+            NumberOfStars:[],
+            OverallRate:0
         }
     },
     props:["CoursesID"],
@@ -91,11 +93,34 @@ export default {
     mounted()
     {   
         this.RecieveCoursesData();
-        this.CheckPurchaseStatus()
+        this.CheckPurchaseStatus();
+        this.GetOverAllRate();
     },
     methods:{
         ToggleHeader(){
             EventBus.$emit('Toggle', true )
+        },
+        async GetOverAllRate()
+        {
+            var db = firebase.firestore();
+            var DBRef = db.collection("Reviews").where("CourseId", "==", this.CoursesID);
+            await DBRef.get().then((query)=> {
+                query.forEach((doc) => {
+                    this.NumberOfStars.push(doc.data().NumberOfStars);
+                })
+            })
+            var Total = 0;
+            this.NumberOfStars.forEach((star)=>{
+                Total = Total + star;
+            })
+            this.OverallRate = Total/this.NumberOfStars.length;
+            this.OverallRate = Math.floor(this.OverallRate);
+            var DBRef2 = db.collection("Courses").doc(this.CoursesID);
+            DBRef2.update({
+                Rating: this.OverallRate 
+            })
+            console.log("Stars array of the course is: "+ this.NumberOfStars);
+            console.log("Average of the Rate of this course: "+ this.OverallRate);
         },
         async CheckPurchaseStatus()
         {
