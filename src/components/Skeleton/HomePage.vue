@@ -9,7 +9,7 @@
 				<router-link to="PostStory"><button class="Shadow">Post a Puzzle/Snapshot</button></router-link>
 				<router-link to="CreateCourse"><button class="Shadow">Create a Course</button></router-link>
 			</div>
-				<NewsFeed />
+				<NewsFeed :Personal = "false" :General = "true" :ClickedUserId = "null" />
 			
 		</div>
 		

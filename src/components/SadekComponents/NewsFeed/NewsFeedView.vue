@@ -126,13 +126,29 @@ export default {
 	methods: {
 		//(Done) make brilliant function, if the boolean variable is false increase the NoOfBrilliants by 1, if the brilliant button is clicked then decrease it by 1 (5 minutes)
 		BrilliantClicked() {
-			if (this.brilliant == false) {
-				this.Match.noOfBrilliants++;
-				this.brilliant = true;
-			} else {
-				this.Match.noOfBrilliants--;
-				this.brilliant = false;
-			}
+			// if (this.brilliant == false) {
+			// 	this.Match.noOfBrilliants++;
+			// 	this.brilliant = true;
+			// } else {
+			// 	this.Match.noOfBrilliants--;
+			// 	this.brilliant = false;
+      // }
+      if (this.Match.BrilliantUsers.includes(this.UserId) && !this.Match.noOfBrilliants <= 0){
+        this.Match.noOfBrilliants--;
+        this.brilliant = false;
+        let self = this
+        this.Match.BrilliantUsers.filter(function(currentValue, index, arr){
+          console.log(self.UserId + "hello from batee5")
+          if (currentValue == self.UserId) {
+            arr.splice(index)
+            console.log("user no longer likes post")
+          }
+        })
+      } else{
+        this.Match.noOfBrilliants++;
+        this.brilliant = true;
+        this.Match.BrilliantUsers.push(this.UserId);
+      }
 		},
 		sharePost(){
 			this.share = true

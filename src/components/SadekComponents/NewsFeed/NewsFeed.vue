@@ -22,6 +22,7 @@ export default {
       Following: [],
       Matches: [],
       matdata: [],
+      BrilliantUsers: [],
     };
   },
   async mounted() {
@@ -36,7 +37,7 @@ export default {
       }
     });
 	// this.Matches = this.matdata
-	if(self.General){
+	if(self.General&&self.UserId){
 		var followdata = await firebase
           .firestore()
           .collection("Follows")
