@@ -2,7 +2,7 @@
 <template>
   <div>
       <!-- //DONE create board div(5min) -->
-      <div  :id="id" style=" width:98%" ></div>
+      <div  :id="id" ></div>
       </div>
 </template>
 
@@ -28,7 +28,16 @@ export default {
         EventBus.$on("displayboardfen", move =>{
             this.board.position(move)
            
-        })
+        });
+        EventBus.$on("displayboardfenbyid", (move,idd) =>{
+            // console.log('resiving data : '+ idd + 'my id is ' + this.id)
+            if(idd == this.id){
+                this.board.position(move)
+            }
+            
+           
+        });
+
         
         
         //DONE creat new board(3min)
@@ -50,6 +59,7 @@ export default {
     },
     beforeDestroy () {
     EventBus.$off('displayboardfen')
+    EventBus.$off('displayboardfenbyid')
  },
     methods:{
        

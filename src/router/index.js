@@ -32,11 +32,18 @@ import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
 import AcademyForm from '@/components/MarawanComponents/AcademyForm.vue'
 import SadekTest from '@/components/SadekComponents/SadekTest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
+import Teach from '@/components/Skeleton/Teach.vue'
+// import { component } from 'vue/types/umd';
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/Teach',
+    name: 'Teach' ,
+    component: Teach
+  },
   {
     path: '/',
     name: 'SignUp',

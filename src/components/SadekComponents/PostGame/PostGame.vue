@@ -1,6 +1,6 @@
 <template>
 	<div class="Productive">
-		<div class="ChessBoard">
+		<div v-if="Mounted" class="ChessBoard">
 			<ChessBoardInput id =1  />
 
 		</div>
@@ -71,6 +71,7 @@ export default {
 			UserName:"",
 			//(Done) make a boolean variable for showing the pop up message and assign it to false (1 minute)
 			showPop: false,
+			Mounted: false,
 		};
 	},
 	methods: {
@@ -94,7 +95,8 @@ export default {
 						UserId: this.UserId,
 						WhitePlayer: this.whitePlayer,
 						BlackPlayer: this.blackPlayer,
-						UserName:this.UserName
+						UserName:this.UserName,
+						BrilliantUsers: [],
 					});
 				firebase
 					.database()
@@ -132,8 +134,9 @@ export default {
 			}
 		},
 	},
-	mounted() {
+	async mounted() {
 		//Using Event Bus to Activate the SideBar
+		setTimeout(() => {this.Mounted = true}, 200)
 		EventBus.$emit("Toggle", true);
 		//Calling the generateUID function
 		this.generateUID();
@@ -143,14 +146,15 @@ export default {
 			});
 		console.log(this.MatchId);
 		let self = this;
-		firebase.auth().onAuthStateChanged(function(user) {
-	if (user) {
-	console.log(user.uid);
-	self.UserId = user.uid
-	} else {
-		console.log("no log in")
-	}
-  });
+	await firebase.auth().onAuthStateChanged(async function (user) {
+      if (user) {
+        console.log(user.uid);
+        self.UserId = user.uid;
+        
+      } else {
+        console.log("no log in");
+      }
+    });
 		firebase
 			.firestore()
 			.collection("Users")
@@ -160,7 +164,6 @@ export default {
 				querySnapshot.forEach((doc)=>{
 				self.UserName = doc.data().FirstName;
 				})
-				
 			});
 			console.log(this.UserName)
 	},
@@ -213,6 +216,7 @@ h1{
 	flex-direction: column;
 	align-items: center;
 	width: 40%;
+
 	/* background-color: lightseagreen; */
 	padding-top: 40px;
 	border-left: 2px solid grey;
@@ -237,6 +241,7 @@ label{
 .PgnReview{
 	color: black;
 	overflow: hidden;
+	height: 70%;
 }
 .Text{
 	margin: 0px;

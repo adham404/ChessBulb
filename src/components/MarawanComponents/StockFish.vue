@@ -178,7 +178,7 @@ h2{
   font-size: 1.7rem;
 }
 .ChessEngine{
-  width: 50%;
+  width: 100%;
   background-color:#0487af;
   border-radius: 10px;
   overflow: auto;

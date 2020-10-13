@@ -85,6 +85,7 @@ label {
   font-family: "Quicksand", sans-serif;
   font-weight: lighter;
   font-size: 1.25rem;
+  color: white;
 }
 #SearchEngine {
   display: flex;

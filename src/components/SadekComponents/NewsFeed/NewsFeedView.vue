@@ -43,11 +43,11 @@
     </div>
 	<div class="NewsFeedGame">
 	<div class="NewsFeedChessBoard">
-        <ChessBoardDisplay :id = 'id'  :key = 'id' />
+        <ChessBoardDisplay :id ='Match.MatchId'  :key ='Match.MatchId' />
       </div>
 	<div class="NewsFeedGamePreview">
         <div class="NewsFeedPgn">
-		<PgnReviewOutput :pgn="Match.PGN" />
+		<PgnReviewOutput :pgn="Match.PGN" :id="Match.MatchId" :key ='Match.MatchId' />
         </div>
 		<div class="NewsFeedGameControls">
           <svg @click="emitcontrol('back')" class="GameControls" xmlns="http://www.w3.org/2000/svg" width="11.859" height="20.911" viewBox="0 0 11.859 20.911">
@@ -126,13 +126,23 @@ export default {
 	methods: {
 		//(Done) make brilliant function, if the boolean variable is false increase the NoOfBrilliants by 1, if the brilliant button is clicked then decrease it by 1 (5 minutes)
 		BrilliantClicked() {
-			if (this.brilliant == false) {
-				this.Match.noOfBrilliants++;
-				this.brilliant = true;
-			} else {
-				this.Match.noOfBrilliants--;
-				this.brilliant = false;
-			}
+      if (this.Match.BrilliantUsers.includes(this.UserId) && !this.Match.noOfBrilliants == 0){
+        this.Match.noOfBrilliants--;
+        this.brilliant = false;
+        let self = this
+        this.Match.BrilliantUsers.filter(function(currentValue, index, arr){
+          console.log(self.UserId + "hello from batee5")
+          if (currentValue == self.UserId) {
+            arr.splice(index)
+            console.log("user no longer likes post")
+          }
+        })
+      } else{
+        this.Match.noOfBrilliants++;
+        this.brilliant = true;
+        this.Match.BrilliantUsers.push(this.UserId);
+        console.log(this.UserId)
+      }
 		},
 		sharePost(){
 			this.share = true
@@ -180,7 +190,7 @@ export default {
 					});
 	},
 	emitcontrol(data){
-			EventBus.$emit('Control',data)
+			EventBus.$emit('Controlbyid',data,this.Match.MatchId)
 			console.log(data)
 		},
 	},
@@ -195,7 +205,8 @@ export default {
 			.collection("Matches")
 			.doc(this.Match.MatchId)
 			.update({
-				noOfBrilliants: this.Match.noOfBrilliants,
+        noOfBrilliants: this.Match.noOfBrilliants,
+        BrilliantUsers: this.Match.BrilliantUsers,
 			});
 	},
 };

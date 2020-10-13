@@ -130,7 +130,7 @@ export default {
             BlackMoves:[],
             LastFen:"",
             ChessEngine:"",  //Every Line has ChessGame instance
-            MoveClicked:false
+            MoveClicked:false,
           }
         ],
         Demo:{

@@ -5,6 +5,7 @@
     margin-left: 5%;
     margin-top: 4rem;
     height: 300px;
+    color: black;
 }
 #LegoLeft{
     display: flex;
@@ -37,6 +38,7 @@
 #UpperPiece h2{
     font-family: 'Raleway', sans-serif;
     margin: 5px;
+    color: black;
 }
 #RightBlock svg{
     width: 400px;
@@ -62,6 +64,7 @@ button{
 #LowerPiece h4{
     font-family: 'Raleway', sans-serif;
     margin: 7px;
+    color: black;
 }
 #SendRight{
     margin-left: auto;

@@ -3,9 +3,9 @@
       <h1 id="StoriesWindowHeader">Chess Snapshots</h1>
       <div class="StoriesWindow" >
           <div  v-for="(story,index) in Stories" :key="index" >
-              <router-link :to="{ name: 'Stories' ,params: { data: Stories , current: index  }}" >
-                  <StoryCard class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
+              <router-link  :to="{ name: 'Stories' ,params: { data: Stories , current: index  }}" >
                   <p class="StoryName">{{story.UserName ? story.UserName : ''}}</p>
+                  <StoryCard class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
               </router-link>
           
             </div>
@@ -28,10 +28,12 @@ export default {
     },
     async mounted(){
         let self = this
-        self.Stories = [];
+        self.Stories = []; 
+        
         await firebase.auth().onAuthStateChanged(async function(user) {
             if (user) {
                 console.log('user:'+ user.uid)
+               
                 var followingdata = await firebase.firestore().collection('Follows').doc(user.uid).get()
                 var followingUsers = await followingdata.data().Following
                 console.log(followingUsers)
@@ -41,11 +43,14 @@ export default {
                         self.Stories.push(doc.data())
                     })
                 })
+                
+               
             } else {
                 console.log('log in')
                
             }
         });
+        
         console.log(self.Stories)
     }
 
@@ -53,11 +58,14 @@ export default {
 </script>
 
 <style scoped>
+a{
+    text-decoration: none;
+}
 .StoryName{
-    color: blanchedalmond;
+    color: white;
     text-decoration: none;
     font-family: 'Quicksand', sans-serif;
-    font-size: 0.8vw;
+    font-size: 0.9rem;
     text-align: center;
 }
 #StoriesWindowHeader{
@@ -65,17 +73,20 @@ export default {
     margin-top: 5px;
     font-family: 'Quicksand', sans-serif;
     font-weight: lighter;
+    color: white;
 }
 .ProfileImage{
-height: 100px;
-width: 100px;
+height: 120px;
+width: 120px;
 border-radius: 5px;
-margin-left: 10px;
+margin-left: 15px;
 }
 .StoriesWindow{
 display: flex;
 flex-direction: row;
 justify-content: flex-start;
+overflow-x: hidden;
+width: 100%;
 }
 
 </style>

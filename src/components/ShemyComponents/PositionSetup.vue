@@ -1,8 +1,8 @@
 <template>
   <!-- <div> -->
   <div class="Container">
-    <div class="ChessBoard">
-      <div id="Board1"></div>
+    <div v-if="Mounted" class="ChessBoard">
+      <div id="Board1" ></div>
       <!-- <PositionSetup/> -->
     </div>
     <div class="StoryData">
@@ -35,7 +35,9 @@ export default {
       return{
         ChessBoard:"",  //a ChessBoard.js instance object
         ChessGame:"", //a Chess.js instance object
-        Fen:"" //The Fen object of the ChessBoard
+        Fen:"", //The Fen object of the ChessBoard
+        Mounted: "",
+        id: "Board1"
       }
     },
     methods:{
@@ -70,6 +72,10 @@ export default {
     },
     mounted(){
     //Taken from [ChessBoardDisplay] component
+    var Board = {}
+    
+		setTimeout(() => {this.Mounted = true; setTimeout(() => {Board = Chessboard('Board1', config); this.Chessboard = Board;}, 900) ;}, 800)
+    EventBus.$emit("Toggle", true)
     function piecelink(piece){
           return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
       }
@@ -82,8 +88,8 @@ export default {
 
       }
     //DONE Recieve Chess Object with the Setup Position From ChessBoard.js (2min)
-    var Board = Chessboard('Board1', config); //Create a ChessBoard.js instance
-    this.Chessboard = Board;
+     //Create a ChessBoard.js instance
+    
     }
 }
 </script>

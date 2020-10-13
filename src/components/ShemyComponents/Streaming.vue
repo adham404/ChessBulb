@@ -26,6 +26,8 @@
           <p>Nf3 +3</p>
         </div>
       </div>
+      <button v-if="!RateAppeared" @click="RateCourse">Rate this Course</button>
+      <RateBox :CourseID="CourseID" v-if="RateAppeared" />
     </div>
 
   </div>
@@ -36,24 +38,35 @@
   import ChessBoardDisplay from '@/components/MarawanComponents/ChessBoard/ChessBoardDisplay'
   import VideoPlayer from '@/components/ShemyComponents/VideoPlayer'
   import TimeStampDisplay from "../ShemyComponents/TimeStampDisplay";
+  import RateBox from "../ShemyComponents/RateBox";
   import {EventBus} from '@/main.js'
   export default {
     data(){
       return{
         id: '1',
         VID: '7C5NPltqtKoSxj3DHiMw',
-        boardfen: 'rnbqkb1r/ppppppnp/6p1/8/8/4P3/PPPPQPPP/RNB1KBNR b KQkq - 0 1'
-
+        boardfen: 'rnbqkb1r/ppppppnp/6p1/8/8/4P3/PPPPQPPP/RNB1KBNR b KQkq - 0 1',
+        RateAppeared: false
       }
     },
     props:["CourseID"],    
     components:{
       ChessBoardDisplay,
       VideoPlayer,
-      TimeStampDisplay
+      TimeStampDisplay,
+      RateBox
+    },
+    methods:{
+      RateCourse()
+      {
+        this.RateAppeared = true;
+      },
     },
     mounted(){
       EventBus.$emit('Toggle', true)
+      EventBus.$on("RateDone", ()=> {
+        this.RateAppeared = false;
+      })
     }
 
   }

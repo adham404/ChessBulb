@@ -1,7 +1,7 @@
 <template>
   <div class="Courses">
       <!-- DONE Create Courses Header Div That Includes [CreateCourse] [SearchEngine] [Filter] 5MIN -->
-      <div style="display: flex">
+      <div class = "CoursesNav" >
       <!-- DONE Router link to [CreateCourse] when 'Create a Course' button is clicked 2MIN -->
         <router-link to="/CreateCourse">
         <button>Create Course</button>
@@ -15,8 +15,8 @@
       <!-- DONE Router link to [CoursePreview] to each [CourseCard] and pass CourseID using Router props 4MIN -->
         <router-link v-for="Course in Courses" v-bind:key="Course" :to="{
           path: `/Courses/CoursePreview/${Course.CourseId}`,
-          params: {CoursesID: Course.CourseId}
-          }"><component class="ListRow" :is="ComponentName" :CourseName="Course.CourseName" :CourseRate="Course.Rating"></component>
+          
+          }"><component class="ListRow" :is="ComponentName" :CourseName="Course.CourseName" :CourseRate="Course.Rating" :CourseId = "Course.CourseId"></component>
         </router-link>
       </div>
   </div>
@@ -36,7 +36,6 @@ export default {
       return {
         ComponentName: "CourseCard",
         Courses:[],
-        CourseID:[]
       }
     },
     components:{
@@ -45,27 +44,35 @@ export default {
       SearchEngine
     },
     methods:{
-      RecieveCoursesID()
+      async RecieveCoursesID()
       {
         // let self = this;
         var db = firebase.firestore();
         var docRef =  db.collection("Courses");
         for (let i = 0; i < this.CourseID.length; i++) {          
-            docRef.doc(this.CourseID[i]).get().then((query) => {
+            await docRef.doc(this.CourseID[i]).get().then((query) => {
               this.Courses.push(query.data());
             })
         }
-        // console.log(response);
+      
       }
     },
   //DONE Declare Mounted Property (1min)
-    mounted()
+    async mounted()
     {
       EventBus.$on("TheSearchResult", res => {
           this.Courses = [];
           this.CourseID = res;
           this.RecieveCoursesID();
       })
+     
+      
+
+        
+        
+
+      
+      
     }
     //TODO Assign EventBus (1min) 
     //TODO According to the props recieved Indicate Whether it's Courses from Homepage, Profile or Academies
@@ -73,6 +80,7 @@ export default {
     //TODO Recieve Difficulty level using EventBus signal from [Filter] and assign it to (FilterationInput[1]) (2min)     
     //FIXME Create Firebase cloud function {FindCourseIconID} that  takes Two parameters .. the first parameter is the (CourseType) the second parameter is (FilterationInput[]) and recieve the filtered courses IDs and assign it to (CoursesID) 30min      
 }
+
 </script>
 
 <style scoped src="@/assets/CSS/Courses.css">

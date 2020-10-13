@@ -33,7 +33,7 @@ export default {
         DisplayCounter:-1
 }
     },
-    props:['ID'],
+    props:['ID','data'],
     methods:{
         async GetTimeStamp() //Get the Timestamp from the course's doc using the ID of the Course
         {
@@ -83,7 +83,12 @@ export default {
     },
     mounted()
     {
-        this.GetTimeStamp();
+        if(this.data){
+            this.timestampOrginal = this.data
+        }else{
+            this.GetTimeStamp();
+        }
+        
         EventBus.$on("SendTime", (time) => {  //Recieve the Current time playing of the video game
                 //Check For synchronization between the timestamp recieved and the current time of the videoplayer
                 for (let Counter = 0; Counter < this.timestampOrginal.length; Counter++) {

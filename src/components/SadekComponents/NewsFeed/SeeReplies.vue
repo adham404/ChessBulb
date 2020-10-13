@@ -1,5 +1,5 @@
 <template>
-	<div class="Replies">
+	<div >
 		<h2 id="Players">{{WhitePlayer}} vs {{BlackPlayer}}</h2>
 		<div class="SingleAnalysisCard">
 			<div class="LineOwner">
@@ -26,15 +26,17 @@
 					</div>
 					<div class="AnalysisReplies">
 						<h2 id="Players">{{Line.name}}'s Line</h2>
-			<div class="SingleAnalysisCard" v-for="i in keys" :key="i">
-				<div v-for="j in Line.Analyze[i].length" :key="j">
+			<div v-if="'Analyze' in Line">
+
+			<div v-if="mainMove in Line.Analyze">
+			<div class="SingleAnalysisCard" v-for="L in Line.Analyze[mainMove].length" :key="L">
 					<!-- //TODO Paragraph tag for the line user name (1 minute) -->
 					<div class="LineOwner">
-					<p>{{ Line.Analyze[i][j - 1].name }}</p>
+					<p>{{ Line.Analyze[mainMove][L - 1].name }}</p>
 					</div>
 					<div class="AnalysisBox Shadow">
 								<div class="AnalysisPgn">
-					<p>{{ Line.Analyze[i][j - 1].PGN }}</p>
+					<p>{{ Line.Analyze[mainMove][L - 1].PGN }}</p>
 					</div>
 					<div class="PgnControls">
 					<svg @click="SeeLine(Line)" xmlns="http://www.w3.org/2000/svg" width="24.539" height="22.641" viewBox="0 0 24.539 22.641">
@@ -43,14 +45,31 @@
 							<svg @click="SeeLine(Line)" xmlns="http://www.w3.org/2000/svg" width="24.571" height="21.5" viewBox="0 0 24.571 21.5">
 								<path id="Icon_awesome-reply" data-name="Icon awesome-reply" d="M.4,9.825,8.845,2.531a1.153,1.153,0,0,1,1.9.872V7.244c7.709.088,13.821,1.633,13.821,8.939a9.811,9.811,0,0,1-4,7.4.855.855,0,0,1-1.347-.894c2.176-6.959-1.032-8.807-8.475-8.914v4.219a1.153,1.153,0,0,1-1.9.872L.4,11.568a1.152,1.152,0,0,1,0-1.743Z" transform="translate(0 -2.25)"/>
 							</svg>
-			</div>
 				</div>
 			</div>
 			
 		</div>
 				</div>
+				<div v-else-if="!noAdd" class="NoAnalysis">
+					<h1>There is no analysis for the Starting position please navigate through game to see them</h1>
+
+			</div>
+				<div v-else>
+				<div class="NoAnalysis">
+				<h1>There is no analysis for the following moves</h1>
+			</div>
+			</div>
 	</div>
-	<div class="ControlButtons">
+	<div v-else-if="!noAdd" class="NoAnalysis">
+					<h1>There is no analysis for the Starting position please navigate through game to see them</h1>
+
+			</div>
+	<div v-else class="NoAnalysis">
+				<h1>There is no analysis for the following moves</h1>
+			</div>
+	</div>
+	</div>
+	<div v-if="noAdd" class="ControlButtons">
 		<button @click="Add">Add Analysis</button>
 		</div>
 	</div>
@@ -62,11 +81,12 @@
 import { EventBus } from "@/main";
 export default {
 	//TODO use props to get the data specified for this component (3 minutes)
-	props: ["Line", "MainLine","Move","MatchId","WhitePlayer","BlackPlayer"],
+	props: ["Line", "MainLine","Move","MatchId","mainMove","WhitePlayer","add","BlackPlayer"],
 	data() {
 		return {
 			keys: [],
 			key: false,
+			noAdd:false
 		};
 	},
 	//TODO see line Function, EventBus.$emit to (Analyze Component) with data to switch to (AnalysisLines Component)
@@ -91,7 +111,37 @@ export default {
 			this.key = false;
 		}
 		console.log(this.Move)
+		console.log(this.add)
+		if(this.add == -1){
+				this.noAdd = false
+			}
+			else{
+				this.noAdd = true
+			}
+			
+	EventBus.$on("checkAdd", (data) =>{
+		console.log(data)
+		if(data == -1){
+				this.noAdd = false
+				console.log(this.noAdd)
+			}
+			else{
+				this.noAdd = true
+				console.log(this.noAdd)
+			}
+		});
 	},
+	updated(){
+		EventBus.$on("checkAdd", (data) =>{
+		if(data == -1){
+				this.noAdd = false
+			}
+			else{
+				this.noAdd = true
+			}
+		});
+		
+	}
 	
 };
 </script>

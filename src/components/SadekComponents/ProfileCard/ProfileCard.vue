@@ -1,46 +1,39 @@
 <template>
 	<div>
 		<img class="ProfileImage" src="../../../assets/ProfilePic.jpg" alt="">
-		<h1 class="PlayerName">{{UserName}}</h1>
-		<h4 :style="TextColor">Email: {{email}}</h4>
+		<h1 :style="TextColor" class="PlayerName">{{UserName}}</h1>
+		<!-- <h4 :style="TextColor">Email: {{email}}</h4> -->
 		<router-link
 		class="Links"
 			:to="{
-				path: `/profile/${UserId}`
+				path: `/profile/${UserId}`,
+				query: {Type: 'FindPlayers'}
 			}"
-			><h3 >Pofile</h3></router-link
+			><h3 class="Links">Profile</h3></router-link
 		>
 		<router-link
 		class="Links"
 			:to="{
-				path: `/profile/${UserId}`
+				path: `/profile/${UserId}`,
+				query: {Type: 'Academies'}
 			}"
-			><h3 @click="MyCourses">My Courses</h3></router-link
-		>
-		<router-link
-		class="Links"
-			:to="{
-				path: `/profile/${UserId}`
-			}"
-			><h3 @click="Academies">Joined Academies</h3></router-link
+			><h3 @click="Academies" class="Links">Joined Academies</h3></router-link
 		>
 		<router-link :to="{
 			path: `/profile/${UserId}`,
-			params: {ComponentSent: true}
-		}">		
-		<h3 class="Links" @click="PurchasedCourses">Purchased Courses</h3>
-		</router-link>
+			query: {Type: 'MyCourses'}
+			}" class="Links"><h3 @click="PurchasedCourses" class="Links">Purchased Courses</h3></router-link>
 		<router-link :to="{
 			path: `/profile/${UserId}`,
-			params: {ComponentSent: true}
-		}">
-		<h3 class="Links" @click="Posts">My Posts</h3>
-		</router-link>
+			query: {Type: 'NewsFeed'}			
+			}" class="Links"><h3 class="Links">My Posts</h3></router-link>
 		<!-- <router-link class="Links" ><h3>Purchased Courses</h3></router-link>
 		<router-link class="Links"><h3>My Posts</h3></router-link> -->
-		<router-link class="Links" :to="{
-			path: `/profile/${UserId}`,
-		}"><h3>Find Players</h3></router-link>
+		<router-link class="Links" 	:to="{
+				path: `/profile/${UserId}`,
+				query: {Type: 'FindPlayers'}
+			}"
+><h3 class="Links">Find Players</h3></router-link>
 	</div>
 </template>
 
@@ -56,7 +49,7 @@ export default {
 			UserId:"",
 			UserName:"",
 			TextColor:{
-    color:"red"
+    color:"white"
     },
 		}
 	},
@@ -80,22 +73,22 @@ export default {
 
 		}
 	},
-	mounted() {
+	async mounted() {
 		let self = this;
-	firebase.auth().onAuthStateChanged(function(user) {
+	await firebase.auth().onAuthStateChanged(function(user) {
 	if (user) {
 	console.log("Current User Logged in is: ")
 	console.log(user.email);
 	console.log(user.uid);
 	// self.UserID = user.uid;
 	self.email = user.email;
-	self.TextColor.color = "green";
+	// self.TextColor.color = "green";
 	self.UserId = user.uid
 		// User is signed in.
 	} else {
 		console.log("Bateee5")
 		// self.UserID = "";
-		self.email = "No Email Here"
+		self.UserName = "No User Here"
 		self.TextColor.color = "red";
 		// No user is signed in.
 	}
@@ -103,11 +96,11 @@ export default {
 	firebase
 			.firestore()
 			.collection("Users")
-			.where("UserId", "==", `${this.UserId}`)
+			.where("UserId", "==", this.UserId)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc)=>{
-				self.UserName = doc.data().FirstName;
+				self.UserName = doc.data().FirstName + " " + doc.data().LastName;
 				})
 				
 			});	
@@ -124,6 +117,7 @@ export default {
 	.PlayerName{
 		font-family: 'Raleway', sans-serif;
 		font-size: 1.3rem;
+		color: white;
 		font-weight: bold;
 		margin-bottom: 5px;
 	}
@@ -135,6 +129,9 @@ export default {
 		font-weight: lighter;
 		color: white;
 		text-decoration: none;
+	}
+	.Links:hover{
+		color: #1daca8;
 	}
 	/* .Links:visited{
 		color: inherit;

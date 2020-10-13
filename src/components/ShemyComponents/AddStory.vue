@@ -40,11 +40,11 @@ export default {
 </script>
 
 <style scoped>
-/* .Container{
+.Container{
 	display: flex;
 	height: 100vh;
 	width: 100%;
-} */
+}
 /* TODO import Styling script from Documentation and Adjust the Component (5min) */
 </style>
 

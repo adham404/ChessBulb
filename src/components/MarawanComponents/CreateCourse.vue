@@ -1,28 +1,29 @@
 <template>
-  <div >
+  <div class="Productive">
     <CourseForm v-if="form" />
-    <div class="Productive"   v-if="!form" >
+    <!-- <div    v-if="!form" > -->
 
-      <div class="ChessBoard">
+      <div v-if="Mounted&&!form" class="ChessBoard">
         <ChessBoardInput id="1" />
-        </div>
-      <div class="CourseStream">
+      </div>
+      <div v-if="!form" class="CourseStream">
         <div class="VideoPlayer">
           <VideoRecording />
         </div>
-        <div class="CourseData">
+        <div v-if="!form" class="CourseData">
           <TimeStampsRecording class="TimeStamps"  />
           <StockFish/>
           
         </div>
         <UploadPgn />
-          <PostCourse />  
+        <PostCourse />  
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
+/*eslint-disable*/
 import { EventBus } from "@/main.js";
 import StockFish from "@/components/MarawanComponents/StockFish.vue"
 import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput.vue";
@@ -35,6 +36,7 @@ export default {
   data(){
     return{
       form:true,
+      Mounted: false,
     }
   },
   components: {
@@ -46,7 +48,9 @@ export default {
     PostCourse,
     StockFish
   },
+  
   mounted() {
+    setTimeout(() => {this.Mounted = true}, 200)
     this.form = true
     var formdata ;
     setTimeout(() => {
@@ -120,7 +124,7 @@ h2{
 }
 .CourseData{
   display: flex;
-  height: 45%;
+  height: 40%;
   width: 100%;
   /* background-color: yellowgreen; */
 }

@@ -5,11 +5,11 @@
 			<!-- <h1 id="StoriesWindowHeader">Chess Snapshots</h1> -->
 			<StoryDisplayheader/>
 			<div class="Buttons">
-				<button class="Shadow">Post a Game</button>
-				<button class="Shadow">Post a Puzzle/Snapshot</button>
-				<button class="Shadow">Create a Course</button>
+				<router-link to="/PostGame"><button class="Shadow">Post a Game</button></router-link>
+				<router-link to="PostStory"><button class="Shadow">Post a Puzzle/Snapshot</button></router-link>
+				<router-link to="CreateCourse"><button class="Shadow">Create a Course</button></router-link>
 			</div>
-				<keep-alive><NewsFeed/></keep-alive>
+				<NewsFeed :Personal = "false" :General = "true" :ClickedUserId = "null" />
 			
 		</div>
 		
@@ -21,6 +21,7 @@
 import StoryDisplayheader from "@/components/MarawanComponents/StoryScrolling/StoryDisplayheader";
 import ProfileCard from "@/components/SadekComponents/ProfileCard/ProfileCard.vue";
 import NewsFeed from "@/components/SadekComponents/NewsFeed/NewsFeed.vue";
+import {EventBus} from '@/main.js'
 import firebase from "firebase"
 export default {
 	components: {
@@ -34,18 +35,20 @@ export default {
 		}
 	},
 	mounted(){
-		let self = this;
-		firebase
-			.firestore()
-			.collection("Matches")
-			.where("MatchId", "==", "Match-761d4")
-			.get()
-			.then((querySnapshot) => {
-				querySnapshot.forEach((doc) => {
-					self.Match = doc.data();
-					console.log(self.Match);
-				});
-			});
+		EventBus.$emit("Toggle", false)
+
+		// let self = this;
+		// firebase
+		// 	.firestore()
+		// 	.collection("Matches")
+		// 	.where("MatchId", "==", "Match-761d4")
+		// 	.get()
+		// 	.then((querySnapshot) => {
+		// 		querySnapshot.forEach((doc) => {
+		// 			self.Match = doc.data();
+		// 			console.log(self.Match);
+		// 		});
+		// 	});
 	}
 };
 </script>

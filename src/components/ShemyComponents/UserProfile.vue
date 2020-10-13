@@ -7,7 +7,11 @@
             <div class="Bio">
                 <div class="TextBox Shadow">
                     <h3>{{UserData.FirstName}} {{UserData.LastName}}</h3>
-                    <p>{{UserData.UserBio}}</p>
+                    <p v-if="!ShowBioEdit" @click="EditBio">{{UserData.UserBio}}</p>
+                    <div v-if="ShowBioEdit">
+                        <textarea v-model="BioData" style="width:300px; height:50px; resize:none;  font-family:'Raleway', sans-serif;"  maxlength="140" name="" id="" cols="30" rows="10"></textarea>
+                        <button @click="SaveBio">Save Bio</button>
+                    </div>
                 </div>
 
             </div>
@@ -21,12 +25,10 @@
                 <button v-if="!VisitorFlag" @click="GoToExplore">Find Players</button>
                 <button v-if="!VisitorFlag" @click="SignOut">Sign Out &#128549;</button>
                 <button v-if="VisitorFlag" @click="Back">Go Back to my Profile</button>
-                <!-- <button @click="CreateOrder">Create Course Orders</button>
-                <button @click="Test">Test</button> -->
             </div>
 
         </div>
-        <component :FollowingIDs="FollowingID" :allAcademies="false" :is="CurrentComponent"></component>
+        <component :FollowingIDs="FollowingID" :ClickedUserId="UserID" :Personal="true" :General="false" :allAcademies="false" :is="CurrentComponent"></component>
         <!-- <FindPlayers/> -->
         
     </div>
@@ -51,6 +53,8 @@ import {EventBus} from "../../main";
                 UserID:"",
                 UserData:"",
                 UserName:"",
+                BioData: "",
+                ShowBioEdit:false,
                 Followed: false,
                 FollowedUserID:"",
                 FollowerUserID:"",
@@ -62,7 +66,7 @@ import {EventBus} from "../../main";
                 CurrentComponent:"FindPlayers"
             }
         },
-        props:['id','Visitor','ComponentSent'],
+        props:['id','Visitor','ComponentSent', 'Type'],
         methods:{
             async GetUserData(id)
             {
@@ -72,13 +76,30 @@ import {EventBus} from "../../main";
                             var DBref = db.collection("Users").doc(id);
                             await DBref.get().then((query) => {
                                 self.UserData = query.data();
+                                self.BioData = query.data().UserBio;
                             })
                             this.CheckInstructor();
                             // User is signed in.
             },
+            EditBio()
+            {
+                this.ShowBioEdit = true;
+            },
+            SaveBio()
+            {
+                var db = firebase.firestore();
+                var DBRef = db.collection("Users").doc(this.UserID);
+                DBRef.update({
+                    UserBio: this.BioData
+                })
+                alert("Bio Edit Successfully");
+                this.ShowBioEdit = false;
+                this.GetUserData(this.UserID);
+
+            },
             Test()
             {
-                console.log(this.ComponentSent);
+                console.log(this.$route.query.Type);
             },
             async CreateOrder()
             {
@@ -110,7 +131,7 @@ import {EventBus} from "../../main";
             },
             PurchasedCourses()
             {
-                EventBus.$emit("PurchasedCourses");
+                // EventBus.$emit("PurchasedCourses");
                 this.CurrentComponent = "MyCourses";
             },
             ForceUpdate()
@@ -128,12 +149,12 @@ import {EventBus} from "../../main";
             MyCourses()
             {
                 this.CurrentComponent = "CreatedCourses";
-                EventBus.$emit("MyCourses");
+                // EventBus.$emit("MyCourses");
             },
             GoToAcademies()
             {
                 this.CurrentComponent = "Academies";
-                EventBus.$emit("MyAcademies");
+                // EventBus.$emit("MyAcademies");
             },
             MyPost()
             {
@@ -257,26 +278,21 @@ import {EventBus} from "../../main";
         },
         async mounted()
         {
-            console.log("Good morning: "+ this.ComponentSent);
-                // await EventBus.$on("MyCourses",()=>{
-                //     this.CurrentComponent = "CreatedCourses"
-                //     console.log("Hey")
-                // })
-                // await EventBus.$on("Academies",()=>{
-                //     this.CurrentComponent = "Academies"
-                // })
-                // await EventBus.$on("PurchasedCourses",()=>{
-                //     this.CurrentComponent = "MyCourses"
-                // })
-                // await EventBus.$on("Posts",()=>{
-                //     this.CurrentComponent = "NewsFeed"
-                // })
+            this.CurrentComponent = this.$route.query.Type;
+            let query = Object.assign({}, this.$route.query);
+            delete query.Type;
+            this.$router.replace({ query });
+            // this.$router.replace(this.$route.query.Type, null);
+            if (this.CurrentComponent == "") {
+                this.CurrentComponent == "FindPlayers";
+            }
             this.GetFollowingIDs(); //Get Following IDs from the user Doc in database
             EventBus.$emit("SendFollowersID",this.FollowingID);
             await EventBus.$on("VisitProfile",(VisitorData) => {
                 this.UserData = VisitorData;
                 this.VisitorFlag = true;
                 this.CurrentComponent = "NewsFeed";
+                this.UserID = this.UserData.UserId;
                 for (let i = 0; i < this.FollowingID.length; i++) {
                     if (this.UserData.UserId == this.FollowingID[i]) {
                         this.Followed = true;

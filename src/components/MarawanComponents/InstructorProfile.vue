@@ -96,6 +96,8 @@ export default {
         InstructorEmail: this.instructor.email,
         InstructorPhone: this.instructor.phone,
       });
+      this.$router.push("/Home")
+      alert("Enta tmam")
     },
   },
 };
@@ -106,7 +108,7 @@ export default {
   border: red 2px solid;
 }
 .ok {
-  border: white;
+  border: 1px solid black;
 }
 .Shadow {
   -webkit-box-shadow: 0px 0px 21px -10px rgba(0, 0, 0, 1);
@@ -136,6 +138,7 @@ h1 {
   font-weight: lighter;
   margin: 10px 0px 5px 0px;
   font-size: 3rem;
+  color: white;
 }
 #SubHeader {
   margin: 1px 0px 5px 0px;
@@ -149,7 +152,7 @@ input {
   margin: 1px 0px 20px 0px;
   font-family: "Raleway", sans-serif;
   font-weight: lighter;
-  border: 1px solid #cac7c7;
+  border: 3px solid black;
   border-radius: 6px;
   height: 22px;
 }
@@ -168,6 +171,7 @@ button {
   background-color: #022a68;
   color: white;
   margin: auto;
+  margin-top: -10px;
 }
 button:hover {
   -webkit-box-shadow: 0px 0px 21px -10px rgb(3, 80, 143);

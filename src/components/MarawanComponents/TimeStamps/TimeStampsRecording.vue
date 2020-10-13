@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="TimeStamps">
+      <h2 id="SmallHeader">TimeStamps</h2>
       <div v-for="(i,index) in timestamps" :key="index" >
-          <div>{{formattime(i.time)}} : {{i.event}}</div>
+          <p>{{formattime(i.time)}} : {{i.event}}</p>
       </div>
   </div>
 </template>
@@ -99,6 +100,30 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+p{
+  margin: 5px 0px 5px 10px;
+  font-family: 'QuickSand', sans-serif;
+  font-weight: bold;
+  color: black;
+}
+#SmallHeader{
+  border-bottom: 3px solid white;
+  font-size: 1.3rem;
+}
+h2{
+  margin: 2px 0px 10px 2px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size: 1.7rem;
+}
+.TimeStamps{
+  width: 100%;
+  background-color:#0487af;
+  border-radius: 10px;
+  overflow: auto;
+  /* background-color: blueviolet; */
+}
 
 </style>

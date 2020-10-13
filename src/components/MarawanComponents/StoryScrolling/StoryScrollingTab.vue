@@ -2,6 +2,7 @@
 <div style="width:100%">
     <StoryPreview style="width:100%" v-if="moves.Type=='Move'" :moves="moves"  ></StoryPreview>
     <storypuzzel style="width:100%"  v-if="moves.Type=='Puzzle' " :moves="moves"  ></storypuzzel>
+    <AddStorypreview style="width:100%"  v-if="moves.Type=='Add' "   ></AddStorypreview>
 </div>
         
 </template>
@@ -10,6 +11,7 @@
 // import firebase from "firebase"
 import StoryPreview from "./Stortypreview"
 import storypuzzel from "./storypuzzel"
+import AddStorypreview from "./AddStorypreview"
 import { EventBus } from "@/main.js";
 
 //TODO make a story div(5min)
@@ -23,7 +25,8 @@ import { EventBus } from "@/main.js";
 export default {
     components:{
         StoryPreview,
-        storypuzzel
+        storypuzzel,
+        AddStorypreview
     },
     data(){
         return{
@@ -52,6 +55,7 @@ export default {
         console.log(this.$route.params.data)
         // console.log(this.$route.params.current)
         var data = this.$route.params.data
+        data.push({Type : 'Add'})
         var current = this.$route.params.current
         this.currentstory = current
         this.moves = data[current]
