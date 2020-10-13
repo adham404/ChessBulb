@@ -71,7 +71,7 @@ export default {
   }
   if (self.Personal) {
     self.Following = []
-    self.Following.push(self.ClickedUserId),
+    self.Following.push(self.ClickedUserId)
     await self.Following.forEach(async (user) => {
           // let self = this;
           var match = await firebase
@@ -83,8 +83,8 @@ export default {
           await match.forEach((doc) => {
             console.log(doc.data());
 
-            self.matdata.push(doc.data());
-            // self.Matches.push(doc.data());
+            // self.matdata.push(doc.data());
+            self.Matches.push(doc.data());
             // console.log(self.Matches);
           });
           

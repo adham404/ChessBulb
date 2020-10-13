@@ -21,7 +21,7 @@
 		>
 		<router-link :to="{
 			path: `/profile/${UserId}`,
-			query: {Type: 'PurchasedCourses'}
+			query: {Type: 'MyCourses'}
 			}" class="Links"><h3 @click="PurchasedCourses" class="Links">Purchased Courses</h3></router-link>
 		<router-link :to="{
 			path: `/profile/${UserId}`,

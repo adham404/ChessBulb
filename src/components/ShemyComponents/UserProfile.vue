@@ -28,7 +28,7 @@
             </div>
 
         </div>
-        <component :FollowingIDs="FollowingID" :allAcademies="false" :is="CurrentComponent"></component>
+        <component :FollowingIDs="FollowingID" :ClickedUserId="UserID" :Personal="true" :General="false" :allAcademies="false" :is="CurrentComponent"></component>
         <!-- <FindPlayers/> -->
         
     </div>
@@ -63,7 +63,7 @@ import {EventBus} from "../../main";
                 FollowingID:[],
                 CourseIDs:["7C5NPltqtKoSxj3DHiMw","Rzm0wk6rOQhERY52V6uM","cRveFm5Iw74E0i7nWIp6"],
                 FollowerID:"",
-                CurrentComponent:""
+                CurrentComponent:"FindPlayers"
             }
         },
         props:['id','Visitor','ComponentSent', 'Type'],
@@ -94,6 +94,7 @@ import {EventBus} from "../../main";
                 })
                 alert("Bio Edit Successfully");
                 this.ShowBioEdit = false;
+                this.GetUserData(this.UserID);
 
             },
             Test()
@@ -278,6 +279,10 @@ import {EventBus} from "../../main";
         async mounted()
         {
             this.CurrentComponent = this.$route.query.Type;
+            let query = Object.assign({}, this.$route.query);
+            delete query.Type;
+            this.$router.replace({ query });
+            // this.$router.replace(this.$route.query.Type, null);
             if (this.CurrentComponent == "") {
                 this.CurrentComponent == "FindPlayers";
             }
@@ -287,6 +292,7 @@ import {EventBus} from "../../main";
                 this.UserData = VisitorData;
                 this.VisitorFlag = true;
                 this.CurrentComponent = "NewsFeed";
+                this.UserID = this.UserData.UserId;
                 for (let i = 0; i < this.FollowingID.length; i++) {
                     if (this.UserData.UserId == this.FollowingID[i]) {
                         this.Followed = true;
