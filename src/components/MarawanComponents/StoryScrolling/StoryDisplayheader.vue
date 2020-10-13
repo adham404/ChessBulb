@@ -3,7 +3,7 @@
       <h1 id="StoriesWindowHeader">Chess Snapshots</h1>
       <div class="StoriesWindow" >
           <div  v-for="(story,index) in Stories" :key="index" >
-              <router-link :to="{ name: 'Stories' ,params: { data: Stories , current: index  }}" >
+              <router-link  :to="{ name: 'Stories' ,params: { data: Stories , current: index  }}" >
                   <StoryCard class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
                   <p class="StoryName">{{story.UserName ? story.UserName : ''}}</p>
               </router-link>
@@ -28,10 +28,12 @@ export default {
     },
     async mounted(){
         let self = this
-        self.Stories = [];
+        self.Stories = []; 
+        
         await firebase.auth().onAuthStateChanged(async function(user) {
             if (user) {
                 console.log('user:'+ user.uid)
+               
                 var followingdata = await firebase.firestore().collection('Follows').doc(user.uid).get()
                 var followingUsers = await followingdata.data().Following
                 console.log(followingUsers)
@@ -41,11 +43,14 @@ export default {
                         self.Stories.push(doc.data())
                     })
                 })
+                
+               
             } else {
                 console.log('log in')
                
             }
         });
+        
         console.log(self.Stories)
     }
 
