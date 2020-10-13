@@ -30,7 +30,7 @@
 <script>
 export default {
     //TODO Assign Data Properties in the vue data object which are (CourseData(O)) (1min)
-    data: function()
+    data()
     {
       return{
 
@@ -38,8 +38,12 @@ export default {
     },
     props:[
       "CourseRate",
-      "CourseName"
-    ]
+      "CourseName",
+      "CourseId"
+    ],
+    mounted(){
+      
+    }
     //TODO Assign EventBus (1min) 
     //TODO Assign Firebase (1min) 
     //TODO Declare Mounted Property (1min)
