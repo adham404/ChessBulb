@@ -4,8 +4,8 @@
       <div class="StoriesWindow" >
           <div  v-for="(story,index) in Stories" :key="index" >
               <router-link  :to="{ name: 'Stories' ,params: { data: Stories , current: index  }}" >
-                  <StoryCard class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
                   <p class="StoryName">{{story.UserName ? story.UserName : ''}}</p>
+                  <StoryCard class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
               </router-link>
           
             </div>
@@ -58,11 +58,14 @@ export default {
 </script>
 
 <style scoped>
+a{
+    text-decoration: none;
+}
 .StoryName{
-    color: blanchedalmond;
+    color: white;
     text-decoration: none;
     font-family: 'Quicksand', sans-serif;
-    font-size: 0.8vw;
+    font-size: 0.9rem;
     text-align: center;
 }
 #StoriesWindowHeader{
@@ -73,15 +76,17 @@ export default {
     color: white;
 }
 .ProfileImage{
-height: 100px;
-width: 100px;
+height: 120px;
+width: 120px;
 border-radius: 5px;
-margin-left: 10px;
+margin-left: 15px;
 }
 .StoriesWindow{
 display: flex;
 flex-direction: row;
 justify-content: flex-start;
+overflow-x: hidden;
+width: 100%;
 }
 
 </style>

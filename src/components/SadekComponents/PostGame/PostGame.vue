@@ -215,6 +215,7 @@ h1{
 	flex-direction: column;
 	align-items: center;
 	width: 40%;
+
 	/* background-color: lightseagreen; */
 	padding-top: 40px;
 	border-left: 2px solid grey;
@@ -239,6 +240,7 @@ label{
 .PgnReview{
 	color: black;
 	overflow: hidden;
+	height: 70%;
 }
 .Text{
 	margin: 0px;

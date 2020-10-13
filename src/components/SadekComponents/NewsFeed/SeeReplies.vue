@@ -1,5 +1,5 @@
 <template>
-	<div class="Replies">
+	<div >
 		<h2 id="Players">{{WhitePlayer}} vs {{BlackPlayer}}</h2>
 		<div class="SingleAnalysisCard">
 			<div class="LineOwner">

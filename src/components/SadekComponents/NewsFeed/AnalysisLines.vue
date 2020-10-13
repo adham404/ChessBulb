@@ -1,5 +1,5 @@
 <template>
-	<div class="AnalysisCards">
+	<div >
 		<h2 id="Players">{{WhitePlayer}} vs {{BlackPlayer}}</h2>
 			<!-- //Done loop through the AnalysisLines (3 minutes) -->
 			<div v-if="'Analyze' in Line">
@@ -27,8 +27,8 @@
 							<svg @click="SeeLine(Line.Analyze[mainMove][L - 1])" xmlns="http://www.w3.org/2000/svg" width="24.571" height="21.5" viewBox="0 0 24.571 21.5">
 								<path id="Icon_awesome-reply" data-name="Icon awesome-reply" d="M.4,9.825,8.845,2.531a1.153,1.153,0,0,1,1.9.872V7.244c7.709.088,13.821,1.633,13.821,8.939a9.811,9.811,0,0,1-4,7.4.855.855,0,0,1-1.347-.894c2.176-6.959-1.032-8.807-8.475-8.914v4.219a1.153,1.153,0,0,1-1.9.872L.4,11.568a1.152,1.152,0,0,1,0-1.743Z" transform="translate(0 -2.25)"/>
 							</svg>
-			</div>
-		</div>
+					</div>
+					</div>
 		<!-- <div v-else>
 			<p>There's no Analysis yet</p>
 			<p>{{Line}}</p>
@@ -37,30 +37,25 @@
 					</div>
 					</div>
 					<div v-else-if="!noAdd" class="NoAnalysis">
-				<h2 id="Players">Ahmed vs Mostafa</h2>
-					<h1>There is no analysis for the Starting position please navigate through game to see them</h1>
-
-			</div>
-			<div v-else>
-				<div class="NoAnalysis">
-				<h2 id="Players">Ahmed vs Mostafa</h2>
-				<h1>There is no analysis for the following moves</h1>
-			</div>
-			</div>
+						<h1>There is no analysis for the Starting position please navigate through game to see them</h1>
+					</div>
+					<div v-else>
+						<div class="NoAnalysis">
+						<h1>There is no analysis for the following moves</h1>
+					</div>
+					</div>
 			</div>
 			<div v-else-if="!noAdd" class="NoAnalysis">
-				<h2 id="Players">Ahmed vs Mostafa</h2>
-					<h1>There is no analysis for the Starting position please navigate through game to see them</h1>
+				<h1>There is no analysis for the Starting position please navigate through game to see them</h1>
 
 			</div>
-					<div v-else class="NoAnalysis">
-				<h2 id="Players">Ahmed vs Mostafa</h2>
+			<div v-else class="NoAnalysis">
 				<h1>There is no analysis for the following moves</h1>
 			</div>
-		<div v-if="noAdd" class="ControlButtons">
-		<button @click="Add">Add Analysis</button>
-		</div>
-					</div>
+			<div v-if="noAdd" class="ControlButtons">
+				<button @click="Add">Add Analysis</button>
+			</div>
+	</div>
 </template>
 
 <script>
@@ -224,6 +219,12 @@ h1{
 p{
 	margin: 2px 0px 0px 0px;
 	font-family: 'Raleway', sans-serif;
+}
+.NoAnalysis{
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	text-align: center;
 }
 /*TODO using the css ids from tettra (2 minutes)*/
 </style>

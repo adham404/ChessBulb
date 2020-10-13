@@ -1,7 +1,7 @@
 <template>
 	<div class="Container">
 		<!-- //(Done) using the (ChessBoard component) passing data (2 minutes) -->
-		<div class="ChessBoard">
+		<div class="ChessBoard" v-if="Mounted">
 		<ChessBoardDisplay :fen="fen" :id='id' />
 		</div>
 		<div class="Analyze">
@@ -13,11 +13,12 @@
 					</svg>
 					<p  @click="breadClicked(n-1)">{{BreadCrumbs[n-1].name}}</p>
 				</div>
-			</div>
+		</div>
 		<!-- //TODO using the (BreadCrumbs Component) passing data (2 minutes)  -->
 		<!-- //TODO paragraph tag for the players' names using pgn file (2 minutes)  -->
 		<!-- //Done Component flag for switching the middle view (passing data)(2 minutes) -->
-		<component
+		<div class="AnalysisCards">
+			<component
 			:is="ComponentName"
 			:Line="Line"
 			:Move="CurrentMove"
@@ -28,7 +29,10 @@
 			:add="add"
 			:WhitePlayer="WhitePlayer"
 			:BlackPlayer="BlackPlayer"
-		></component>
+			>
+			</component>
+		</div>
+		
 		<!-- //TODO using the (SideBar Component) (2 minutes) -->
 		<!-- //TODO using the (DownloadPgn Component) (2 minutes)  -->
 		<!-- <p>{{ Line.PGN }}</p>
@@ -98,7 +102,8 @@ export default {
 			add:currentMove,
 			id:"123",
 			WhitePlayer:this.$route.query.WhitePlayer,
-			BlackPlayer:this.$route.query.BlackPlayer
+			BlackPlayer:this.$route.query.BlackPlayer,
+			Mounted: false,
 		};
 	},
 	//TODO in "mounted" using EventBus.$on see replies is clicked and assign the recieving  data to the object and switch the boolean variable to true, if true change the ComponentName to "SeeReplies" (5 minutes)
@@ -106,6 +111,7 @@ export default {
 	//TODO in "mounted" using EventBus.$on Add Analysis Line clicked and assign the recieving data switch the boolean variable to true, if true change the ComponentName to "AddAnalysis" (5 minutes)
 	async mounted() {
 		// chess = new chess();
+		setTimeout(() => {this.Mounted = true}, 200)
 		EventBus.$emit("Toggle", true);
 		console.log(this.WhitePlayer = this.$route.query.WhitePlayer)
 		console.log(this.BlackPlayer = this.$route.query.BlackPlayer)
@@ -345,7 +351,16 @@ p{
 #Lines svg{
 	width: 20px;
 }
-
+.AnalysisCards{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 85%;
+	/* background-color: pink; */
+	overflow-y: scroll;
+	padding-bottom: 20px;
+}
 </style>
 
 //TODO Testing time (30 minutes)
