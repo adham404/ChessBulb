@@ -1,22 +1,22 @@
 <template>
   <div class="Productive">
-    <!-- <CourseForm v-if="form" /> -->
+    <CourseForm v-if="form" />
     <!-- <div    v-if="!form" > -->
 
-      <div v-if="Mounted" class="ChessBoard">
+      <div v-if="Mounted&&!form" class="ChessBoard">
         <ChessBoardInput id="1" />
       </div>
-      <div class="CourseStream">
+      <div v-if="!form" class="CourseStream">
         <div class="VideoPlayer">
           <VideoRecording />
         </div>
-        <div class="CourseData">
+        <div v-if="!form" class="CourseData">
           <TimeStampsRecording class="TimeStamps"  />
           <StockFish/>
           
         </div>
-        <!-- <UploadPgn /> -->
-        <!-- <PostCourse />   -->
+        <UploadPgn />
+        <PostCourse />  
       </div>
     <!-- </div> -->
   </div>
@@ -124,7 +124,7 @@ h2{
 }
 .CourseData{
   display: flex;
-  height: 45%;
+  height: 40%;
   width: 100%;
   /* background-color: yellowgreen; */
 }
