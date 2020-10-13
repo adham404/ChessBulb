@@ -37,24 +37,20 @@
 					</div>
 					</div>
 					<div v-else-if="!noAdd" class="NoAnalysis">
-				<h2 id="Players">Ahmed vs Mostafa</h2>
 					<h1>There is no analysis for the Starting position please navigate through game to see them</h1>
 
 			</div>
 			<div v-else>
 				<div class="NoAnalysis">
-				<h2 id="Players">Ahmed vs Mostafa</h2>
 				<h1>There is no analysis for the following moves</h1>
 			</div>
 			</div>
 			</div>
 			<div v-else-if="!noAdd" class="NoAnalysis">
-				<h2 id="Players">Ahmed vs Mostafa</h2>
 					<h1>There is no analysis for the Starting position please navigate through game to see them</h1>
 
 			</div>
 					<div v-else class="NoAnalysis">
-				<h2 id="Players">Ahmed vs Mostafa</h2>
 				<h1>There is no analysis for the following moves</h1>
 			</div>
 		<div v-if="noAdd" class="ControlButtons">

@@ -126,13 +126,6 @@ export default {
 	methods: {
 		//(Done) make brilliant function, if the boolean variable is false increase the NoOfBrilliants by 1, if the brilliant button is clicked then decrease it by 1 (5 minutes)
 		BrilliantClicked() {
-			// if (this.brilliant == false) {
-			// 	this.Match.noOfBrilliants++;
-			// 	this.brilliant = true;
-			// } else {
-			// 	this.Match.noOfBrilliants--;
-			// 	this.brilliant = false;
-      // }
       if (this.Match.BrilliantUsers.includes(this.UserId) && !this.Match.noOfBrilliants <= 0){
         this.Match.noOfBrilliants--;
         this.brilliant = false;
@@ -148,6 +141,7 @@ export default {
         this.Match.noOfBrilliants++;
         this.brilliant = true;
         this.Match.BrilliantUsers.push(this.UserId);
+        console.log(this.UserId)
       }
 		},
 		sharePost(){
@@ -211,7 +205,8 @@ export default {
 			.collection("Matches")
 			.doc(this.Match.MatchId)
 			.update({
-				noOfBrilliants: this.Match.noOfBrilliants,
+        noOfBrilliants: this.Match.noOfBrilliants,
+        BrilliantUsers: this.Match.BrilliantUsers,
 			});
 	},
 };

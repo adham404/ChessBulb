@@ -1,6 +1,5 @@
 <template>
 	<div class="Container">
-		<!-- //(Done) using the (ChessBoard component) passing data (2 minutes) -->
 		<div class="ChessBoard">
 		<ChessBoardDisplay :fen="fen" :id='id' />
 		</div>
@@ -14,9 +13,6 @@
 					<p  @click="breadClicked(n-1)">{{BreadCrumbs[n-1].name}}</p>
 				</div>
 			</div>
-		<!-- //TODO using the (BreadCrumbs Component) passing data (2 minutes)  -->
-		<!-- //TODO paragraph tag for the players' names using pgn file (2 minutes)  -->
-		<!-- //Done Component flag for switching the middle view (passing data)(2 minutes) -->
 		<component
 			:is="ComponentName"
 			:Line="Line"
@@ -107,6 +103,8 @@ export default {
 	async mounted() {
 		// chess = new chess();
 		EventBus.$emit("Toggle", true);
+		this.generateUID();
+		console.log(this.id)
 		console.log(this.WhitePlayer = this.$route.query.WhitePlayer)
 		console.log(this.BlackPlayer = this.$route.query.BlackPlayer)
 		currentMove = -1;
@@ -129,54 +127,34 @@ export default {
 		// this.getLine();
 		EventBus.$on("Control", async (data) => {
 			if (data == "next") {
-				// await console.log("currentmove = " + currentmove);
-				// console.log("moves.length = " + moves.length);
-				if(this.ComponentName == "SeeReplies"){
-					game2 = await new Chess();
-			await game2.load_pgn(this.Line.PGN, { sloppy: true });
-			moves = await game2.history();
-			console.log(moves);
-			chess2 = await new Chess();
-			await chess2.move(moves[currentMove]);
-			this.CurrentMove = moves[currentMove]
-			this.mainMove = currentMove + this.CurrentMove;
-			console.log(this.Line)
-			this.ComponentName = "AnalysisLines"
-							EventBus.$emit("checkAdd", currentMove);
 
-				}
 				if (currentMove < moves.length - 1) {
 					await currentMove++;
 					await chess2.move(moves[currentMove], {
 						sloppy: true,
 					});
-					// console.log(moves[currentmove]);
-					//DONE find out which is best to send fen or the move"B2B5"
 					this.fen = chess2.fen();
 					this.CurrentMove = moves[currentMove]
 					this.mainMove = currentMove + this.CurrentMove;
 					await EventBus.$emit("displayboardfen", chess2.fen());
-					// console.log('moved++')
-					this.ComponentName = "AnalysisLines";
-									EventBus.$emit("checkAdd", currentMove);
+					if(this.ComponentName != "SeeReplies"){
+						this.ComponentName = "AnalysisLines";
+						EventBus.$emit("checkAdd", currentMove);
 
-					// console.log(chess.ascii())
+					}
+					EventBus.$emit("checkAdd", currentMove);
 					console.log(currentMove)
 				}
-				// EventBus.$emit("checkAdd", currentMove);
 			} else if (data == "back") {
 				if (currentMove > -1) {
-					// console.log(currentmove);
 					await currentMove--;
-
 					await chess2.undo();
-					// this.fen = chess.fen();
 					this.CurrentMove = moves[currentMove]
 					this.mainMove = currentMove + this.CurrentMove;
 			EventBus.$emit("displayboardfen", chess2.fen());
 			console.log(currentMove)
-					// console.log(chess.ascii())
 				}
+
 				EventBus.$emit("checkAdd", currentMove);
 			} else if (data == "first") {
 				EventBus.$emit("checkAdd", currentMove);
@@ -189,7 +167,8 @@ export default {
 			(this.Line = data), (this.ComponentName = "SeeReplies");
 			this.BreadCrumbs.push(data)
 			console.log(this.BreadCrumbs)
-			this.id = "12";
+			this.generateUID();
+			console.log(this.id)
 			currentMove = 0;
 			EventBus.$emit("checkAdd", currentMove);
 			this.getLine();
@@ -206,7 +185,8 @@ export default {
 				(this.Line = data), (this.ComponentName = "AnalysisLines");
 			this.PGN = this.Line.PGN;
 			console.log(this.Line.PGN)
-			this.id = "1288";
+			this.generateUID();
+			console.log(this.id)
 			currentMove = 0;
 			this.getLine();
 			EventBus.$emit("checkAdd", currentMove);
@@ -217,7 +197,8 @@ export default {
 			console.log(this.Line.PGN)
 			this.BreadCrumbs.push(data)
 			console.log(this.BreadCrumbs)
-			this.id = "1288";
+			this.generateUID();
+			console.log(this.id)
 			currentMove = 0;
 			this.getLine();
 			EventBus.$emit("checkAdd", currentMove);
@@ -286,11 +267,30 @@ export default {
 			else{
 				currentMove = 0;
 			}
-			this.id = "1244";
+			this.generateUID();
+			console.log(this.id)
 			this.ComponentName="AnalysisLines"
 			this.getLine()
 			EventBus.$emit("checkAdd", currentMove);
 			
+		},
+		generateUID() {
+			this.id = "id-";
+			var d = new Date().getTime(); //Timestamp
+			var d2 =
+				(performance && performance.now && performance.now() * 1000) ||
+				0; //Time in microseconds since page-load or 0 if unsupported
+			for (var i = 0; i < 5; i++) {
+				var r = Math.random() * 16; //random number between 0 and 16
+				if (d > 0) {
+					//Use timestamp until depleted
+					r = (d + r) % 16 | 0;
+				} else {
+					//Use microseconds since page-load if supported
+					r = (d2 + r) % 16 | 0;
+				}
+				this.id = this.id + r.toString(16);
+			}
 		}
 	},
 };
