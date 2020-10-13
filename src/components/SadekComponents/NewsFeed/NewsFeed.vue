@@ -1,8 +1,8 @@
 <template>
   <div >
-    <div v-for="(i, s) in Matches" :key="s">
-      <NewsFeedView :Match="i" :UserId="UserId" />
-    </div>
+    <!-- <div v-for="(i, s) in Matches" :key="s"> -->
+      <NewsFeedView v-for="(item, index) in Matches" :key="index" :Match="item" :UserId="UserId"  />
+    <!-- </div> -->
   </div>
 </template>
 
@@ -14,6 +14,7 @@ export default {
   components: {
     NewsFeedView,
   },
+  props: ["ClickedUserId","Personal", "General"],
   data() {
     return {
 		showi: false , 
@@ -35,7 +36,7 @@ export default {
       }
     });
 	// this.Matches = this.matdata
-	if(self.UserId){
+	if(self.General){
 		var followdata = await firebase
           .firestore()
           .collection("Follows")
@@ -44,6 +45,7 @@ export default {
 
         console.log(followdata.data().Following);
         self.Following = followdata.data().Following;
+        self.Following.push(self.UserId)
 
         await self.Following.forEach(async (user) => {
           // let self = this;
@@ -63,10 +65,33 @@ export default {
           
 		});
 		// this.showi = true
-		console.log("all data is here");
+		console.log("all data is here",this.matdata);
 		this.Matches = this.matdata
-	}
+  }
+  if (self.Personal) {
+    self.Following = []
+    self.Following.push(self.ClickedUserId),
+    await self.Following.forEach(async (user) => {
+          // let self = this;
+          var match = await firebase
+            .firestore()
+            .collection("Matches")
+            .where("UserId", "==", user)
+            .get();
+
+          await match.forEach((doc) => {
+            console.log(doc.data());
+
+            self.matdata.push(doc.data());
+            // self.Matches.push(doc.data());
+            // console.log(self.Matches);
+          });
+          
+		});
+    
+  }
   },
+
 };
 </script>
 
