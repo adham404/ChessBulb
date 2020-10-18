@@ -4,6 +4,11 @@ import router from './router'
 import firebase from 'firebase'
 import VueClipboard from 'vue-clipboard2'
 VueClipboard.config.autoSetContainer = true // add this line
+import {SquareSpinner} from 'vue-spinners'
+import VueChatScroll from 'vue-chat-scroll'
+
+Vue.use(VueChatScroll)
+Vue.component('square', SquareSpinner)
 Vue.use(VueClipboard)
 
 export const EventBus  = new Vue();

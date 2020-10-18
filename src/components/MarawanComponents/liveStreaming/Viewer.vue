@@ -1,7 +1,7 @@
 <template>
   <div class="Productive">
-    <div class="ChessBoard">
-      <ChessBoardDisplay id = 'id' />
+    <div v-if="Mounted" class="ChessBoard">
+      <ChessBoardDisplay id = 'id'  />
     </div>
 
     <div class="CourseStream">
@@ -12,18 +12,18 @@
       <!-- <button v-if="!live" @click="connect">Reconnect</button> -->
       <div class="CourseData">
         
-        <div class="TimeStamps">
+        <div class="Chat">
           <h2 id="SmallHeader">Chat</h2>
-          <p v-for="(i,index) in messages" :key="index" >{{i.name}} : {{i.message}}</p>
+          <div class="Messages"  v-chat-scroll="{always: false, smooth: true}">
+            <p v-for="(i,index) in messages" :key="index" >{{i.name}} : {{i.message}}</p>
+          </div>          
           <div class="sendmessage">
-            <input type="text" v-model="message" >
+            <input type="text" v-model="message" v-on:keyup.enter = "sendmessage">
           <button @click="sendmessage" >Send</button>
-          </div>
-          
+          </div>          
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -51,10 +51,12 @@ export default {
       room : null,
       message: null,
       messages:[],
-      live : false
+      live : false,
+      Mounted: false
     }
   },
    async mounted(){
+     setTimeout(() => {this.Mounted = true}, 1000)
           iceServer = {}
        let self = this
         await firebase.auth().onAuthStateChanged(async function(user) {
@@ -177,17 +179,27 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.Messages{
+  height: 82%;
+  /* background-color: green; */
+  overflow-y: scroll;
+  overflow-wrap: break-word;
+}
 .sendmessage{
-  position: absolute; 
-  bottom: 0px;
+  height: 10%;
+  /* background-color: red; */
 }
 .sendmessage input{
    font-family: "Raleway", sans-serif;
   font-weight: lighter;
   border: 1px solid #cac7c7;
-  border-radius: 6px;
+  border-radius: 12px;
+  padding-left: 5px;
   height: 22px;
   font-size: 1vw;
+  outline: none;
+  width: 400px;
+  overflow-wrap: break-word;
 }
 p{
   margin: 5px 0px 5px 10px;
@@ -195,6 +207,17 @@ p{
   font-weight: bold;
   color: black;
 }
+button{
+		height: 30px;
+		width: 150px;
+		border: none;
+		outline: none;
+		border-radius: 1.2rem;
+		font-size: 0.9rem;
+		font-family: 'Raleway', sans-serif;
+		background-color: #022A68;
+		color: white;
+	}
 #SmallHeader{
   border-bottom: 3px solid white;
   font-size: 1.3rem;
@@ -211,18 +234,19 @@ h2{
   width: 100%;
   height: 100vh;
   background-color: white;
+  overflow-x: hidden;
 }
 .ChessBoard{ 
   padding-top: 2px;
   padding-left: 3px; 
-  width: 50.6%;
+  width: 49%;
   /* background-color: tomato; */
   background-color:  #00112c;
 }
 .CourseStream{
   display: flex;
   flex-direction: column;
-  width: 49.4%;
+  width: 51%;
   /* background-color: turquoise; */
 }
 .VideoPlayer{
@@ -236,8 +260,9 @@ h2{
   width: 100%;
   /* background-color: yellowgreen; */
 }
-.TimeStamps{
-  position: relative; 
+.Chat{
+  display: flex;
+  flex-direction: column;
   width: 100%;
   background-color:#1DACA8 ;
   border-radius: 10px;

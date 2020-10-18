@@ -1,7 +1,7 @@
 <template>
   <div class="Container">
-    <div class="ChessBoard">
-      <ChessBoardDisplay id="grggr" ></ChessBoardDisplay>
+    <div class="ChessBoard" v-if="Mounted">
+      <ChessBoardDisplay id="grggr"  ></ChessBoardDisplay>
     </div>
     <div class="StoryData">
       <div class="DescriptionHeader">
@@ -124,7 +124,8 @@ export default {
       newpos: "",
       alllines: null,
       chossedline: 0,
-      ee : EventBus
+      ee : EventBus,
+      Mounted: false,
     };
   },
   components: {
@@ -139,6 +140,7 @@ export default {
   },
   props: ["moves"],
   mounted() {
+    setTimeout(() => {this.Mounted = true}, 200)
     if (this.moves.Moves) {
         console.log(this.moves);
         this.alllines = this.moves.Moves;
@@ -184,13 +186,13 @@ export default {
 .ChessBoard {
   /* padding-top: 1px; */
   padding-left: 3px;
-  width: 50.6%;
+  width: 49%;
   /* background-color: blue; */
 }
 .StoryData {
   display: flex;
   flex-direction: column;
-  width: 49.4%;
+  width: 51%;
   background-color: white;
   /* background-color: red; */
 }

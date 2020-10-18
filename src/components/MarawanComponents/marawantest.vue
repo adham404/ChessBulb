@@ -1,8 +1,8 @@
 <template>
   <div style="width:100%">
   
-   <router-link to="/LiveStreamer/hijYRNADIgvDhTgifgft" >LiveStreamer</router-link><br/>
-   <router-link to="/LiveViewer/hijYRNADIgvDhTgifgft" >LiveViewer</router-link><br/>
+   <router-link to="/LiveStreamer/kMWEHAaf7z1BY6AlpeUC" >LiveStreamer</router-link><br/>
+   <router-link to="/LiveViewer/kMWEHAaf7z1BY6AlpeUC" >LiveViewer</router-link><br/>
    <router-link to="/InstructorRegistration" >Instructor Registration</router-link><br/>
    
    <router-link to="/AcademyForm" >Academy Form</router-link><br/>

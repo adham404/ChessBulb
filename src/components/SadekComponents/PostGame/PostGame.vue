@@ -21,7 +21,8 @@
 		<PgnReviewInput />
 				</div>
 				<div class="Buttons">
-					<button>Upload Pgn</button>
+					<!-- <button>Upload Pgn</button> -->
+					<UploadPgn/>
 					<button @click="Share">Share Game</button>
 				</div>
 		<!-- //(Done) make hidden POP UP message, with router link directs to HomePage (2 minutes) -->
@@ -49,12 +50,14 @@ const flatten = require("flat");
 import StockFish from "../../MarawanComponents/StockFish";
 // TODO importing Upload Component (1 minute)
 import Chess from "chess.js";
+import UploadPgn from "@/components/MarawanComponents/UploadPgn.vue"
 export default {
 	name: "PostGame",
 	components: {
 		PgnReviewInput,
 		ChessBoardInput,
-		StockFish
+		StockFish,
+		UploadPgn
 	},
 	data() {
 		return {

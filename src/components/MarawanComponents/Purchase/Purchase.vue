@@ -1,6 +1,7 @@
 <template>
   <div>
-      <h1>Lodding...</h1>
+      <square/>
+      <h1>Loading your Cart...</h1>
       <router-view></router-view>
   </div>
 </template>
@@ -35,8 +36,7 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>
 //TODO get the object that is will be purchased(5min)
 //TODO add a cloud funcation for giveing every user a stripe id(10min)

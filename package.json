@@ -20,13 +20,14 @@
     "jquery": "^3.5.1",
     "lodash": "^4.17.20",
     "moment": "^2.27.0",
+    "object-path": "^0.11.5",
     "peerjs": "^1.3.1",
     "socket.io-client": "^2.3.1",
-    "object-path": "^0.11.5",
     "vue": "^2.6.11",
     "vue-chat-scroll": "^1.4.0",
     "vue-clipboard2": "^0.3.1",
     "vue-router": "^3.2.0",
+    "vue-spinners": "^1.0.2",
     "vue-video-player": "^5.0.2"
   },
   "devDependencies": {

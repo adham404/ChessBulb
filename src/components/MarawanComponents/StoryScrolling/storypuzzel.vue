@@ -1,6 +1,6 @@
 <template>
   <div class="Container">
-    <div class="ChessBoard">
+    <div class="ChessBoard" v-if="Mounted">
       <ChessBoardInput  v-if="!ShowSolution" id="grggr" ></ChessBoardInput>
       <ChessBoardDisplay  v-if="ShowSolution" id="grggr" ></ChessBoardDisplay>
     </div>
@@ -139,7 +139,8 @@ export default {
       chossedline: 0,
       ee : EventBus,
       SolutionMoves : null,
-      SolutionAlertMessage : ""
+      SolutionAlertMessage : "",
+      Mounted: false,
     };
   },
   components: {
@@ -189,6 +190,7 @@ export default {
   },
   props: ["moves"],
   mounted() {
+      setTimeout(() => {this.Mounted = false}, 400)
       if (this.moves.Moves) {
         // console.log(this.moves);
         this.alllines = this.moves.Moves;
@@ -243,14 +245,14 @@ export default {
 }
 .ChessBoard {
   /* padding-top: 1px; */
-  padding-left: 3px;
-  width: 50.6%;
+  /* padding-left: 3px; */
+  width: 40%;
   /* background-color: blue; */
 }
 .StoryData {
   display: flex;
   flex-direction: column;
-  width: 49.4%;
+  width: 60%;
   background-color: white;
   /* background-color: red; */
 }

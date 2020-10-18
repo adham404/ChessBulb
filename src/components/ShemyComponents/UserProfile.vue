@@ -28,7 +28,17 @@
             </div>
 
         </div>
-        <component :FollowingIDs="FollowingID" :ClickedUserId="UserID" :Personal="true" :General="false" :allAcademies="false" :is="CurrentComponent"></component>
+        <div>
+
+        </div>
+        <div v-if="CurrentComponent == 'NewsFeed'" class="ContainerPosts">
+            <component :FollowingIDs="FollowingID" :ClickedUserId="UserID" :Personal="true" :General="false" :allAcademies="false" :is="CurrentComponent"></component>
+
+        </div>
+        <div v-if="!(CurrentComponent == 'NewsFeed')">
+            <component :FollowingIDs="FollowingID" :ClickedUserId="UserID" :Personal="true" :General="false" :allAcademies="false" :is="CurrentComponent"></component>
+
+        </div>
         <!-- <FindPlayers/> -->
         
     </div>
@@ -317,6 +327,10 @@ import {EventBus} from "../../main";
 </script>
 
 <style scoped>
+    .ContainerPosts{
+        width: 990px;
+        margin: auto;
+    }
     h3{
         margin: 0px;
         margin-bottom: 2px;
