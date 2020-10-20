@@ -1,6 +1,7 @@
 <template>
   <div >
     <!-- <div v-for="(i, s) in Matches" :key="s"> -->
+      <h3 v-html="NewsFeedStatus"></h3>
       <NewsFeedView v-for="(item, index) in Matches" :key="index" :Match="item" :UserId="UserId"  />
     <!-- </div> -->
   </div>
@@ -23,6 +24,7 @@ export default {
       Matches: [],
       matdata: [],
       BrilliantUsers: [],
+      NewsFeedStatus:'<p>No Chess Games in here yet. &#128531</p>'
     };
   },
   async mounted() {
@@ -60,14 +62,17 @@ export default {
             console.log(doc.data());
 
             self.matdata.push(doc.data());
+            self.NewsFeedStatus = '';
             // self.Matches.push(doc.data());
             // console.log(self.Matches);
           });
           
 		});
 		// this.showi = true
-		console.log("all data is here",this.matdata);
-		this.Matches = this.matdata
+    console.log("all data is here",this.matdata);
+    // var num = this.matdata.length;
+    // console.log("Number of matches in homepage is: "+ num);
+    this.Matches = this.matdata
   }
   if (self.Personal) {
     self.Following = []
@@ -82,7 +87,7 @@ export default {
 
           await match.forEach((doc) => {
             console.log(doc.data());
-
+            self.NewsFeedStatus = '';
             // self.matdata.push(doc.data());
             self.Matches.push(doc.data());
             // console.log(self.Matches);
@@ -96,4 +101,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+h3{
+    margin-left: 37%;
+    margin-top: 100px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: lighter;
+    color: white;
+}
+</style>

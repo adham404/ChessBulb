@@ -22,6 +22,7 @@
             <input v-model="UserPassword" type="password" name="" id="Password">
             <!-- DONE Create 'Login' button and assign the button to the function {Login} (2min) -->
             <button @click="Login">Login</button>
+            <p>{{ErrorMessage}}</p>
             </div>
         </div>
     </div>
@@ -38,26 +39,47 @@ export default {
         return{
             UserEmail:"",
             UserPassword:"",
+            ErrorMessage:"",
+            UserID:"",
             LoginCorrect:false
         }
     },
 //DONE define Login Function (1min)
     methods:{
-        Login()
+        async Login()
         {
         this.LoginCorrect = this.Validate();
         if(this.LoginCorrect)
         {            
             //DONE use firebase Auth to login using the two data properties (UserEmail) and (UserPassword) (25min)
                 const auth = firebase.auth();
+                let self = this;
                 auth.signInWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
                     console.log(error.message);
                 })
-                auth.onAuthStateChanged((user)=>{
+                await auth.onAuthStateChanged((user)=>{
+                  if (user) {
+                    self.ErrorMessage = "";
                     this.$router.push('/Home')
                     console.log("Welcome in " + user.uid);
-                    EventBus.$emit("LoggedIn", true)
+                    EventBus.$emit("LoggedIn", true)                    
+                    // self.ErrorMessage = "";
+                    self.UserID = user.uid;
+                  }
+                  else{
+                    // alert("");
+                    setTimeout(function(){
+                      console.log("Working on it");
+                      self.ErrorMessage = "Wrong email entered or password";
+                    },2000);
+                    console.log("Enter");
+                  }
                 })
+                // if (self.UserID  == "") {
+                // }
+                // else
+                // {
+                // }
 
         }    
         },

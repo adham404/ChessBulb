@@ -6,9 +6,9 @@
               <router-link  :to="{ name: 'Stories' ,params: { data: Stories , current: index  }}" >
                   <p class="StoryName">{{story.UserName ? story.UserName : ''}}</p>
                   <StoryCard class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
-              </router-link>
-          
+              </router-link>          
             </div>
+          <h3 v-html="StoryStatus"></h3>
       </div>
       
   </div>
@@ -23,7 +23,9 @@ export default {
     },
     data(){
         return{
-          Stories : []  
+          Stories : [],
+          StoryExist: "",
+          StoryStatus:'<p>No Chess Snapshots in here yet. &#128531</p>'
         }
     },
     async mounted(){
@@ -39,18 +41,16 @@ export default {
                 console.log(followingUsers)
                 await followingUsers.forEach(async fuser =>{
                     var userstories =  await firebase.firestore().collection("ChessStories").where("UserID","==",fuser).get()
-                    userstories.forEach(doc =>{
+                    await userstories.forEach(doc =>{
                         self.Stories.push(doc.data())
+                        self.StoryStatus='';
                     })
-                })
-                
-               
+            })
             } else {
                 console.log('log in')
                
             }
         });
-        
         console.log(self.Stories)
     }
 
@@ -69,6 +69,13 @@ a{
     text-align: center;
 }
 #StoriesWindowHeader{
+    margin-left: 37%;
+    margin-top: 5px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: lighter;
+    color: white;
+}
+h3{
     margin-left: 37%;
     margin-top: 5px;
     font-family: 'Quicksand', sans-serif;
