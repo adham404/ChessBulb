@@ -43,7 +43,7 @@
 					<router-link
 						v-if="notEnrolled"
 						:to="{
-							path:`/Purchase/${Academy.PriceId}`
+							path:`/Subscribe/${Academy.PriceId}`
 						}"
 						id="SendRight"
 						><button  class="Shadow">

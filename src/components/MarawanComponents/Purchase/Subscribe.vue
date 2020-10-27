@@ -1,6 +1,7 @@
 <template>
   <div>
-      <h1>Lodding...</h1>
+      <square/>
+      <h1>Loading your Cart, this will only take a minute...</h1>
       <router-view></router-view>
   </div>
 </template>
@@ -28,6 +29,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+h1{
+    font-family: 'Raleway', sans-serif;
+    margin: auto;
+    color: white;
+    margin-left: 27%;
+}
 </style>

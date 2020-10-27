@@ -14,10 +14,10 @@ export default {
     async mounted(){
         let self = this
         const stripe = await stripePromise;
-        const createsetion = await firebase.functions().httpsCallable('stripe_sessions_functions-createcheckout');
+        const createsession = await firebase.functions().httpsCallable('stripe_sessions_functions-createcheckout');
         firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            createsetion({id:self.$route.params.id}).then(res =>{
+            createsession({id:self.$route.params.id}).then(res =>{
                 console.log(res.data)
                 stripe.redirectToCheckout({ sessionId: res.data });
             }).catch(e=>{

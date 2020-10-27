@@ -33,12 +33,18 @@ import AcademyForm from '@/components/MarawanComponents/AcademyForm.vue'
 import SadekTest from '@/components/SadekComponents/SadekTest.vue'
 import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
 import Teach from '@/components/Skeleton/Teach.vue'
+import Paypal from '@/components/Skeleton/Paypal.vue'
 // import { component } from 'vue/types/umd';
 
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/Paypal',
+    name: 'Paypal',
+    component: Paypal
+  },
   {
     path: '/Teach',
     name: 'Teach' ,
