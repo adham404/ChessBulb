@@ -5,6 +5,7 @@ import HomePage from '@/components/Skeleton/HomePage.vue'
 // import CourseForm from '@/components/MarawanComponents/CourseForm.vue';
 import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
 import LiveForm from '@/components/MarawanComponents/LiveForm.vue';
+import paymob from '@/components/MarawanComponents/paymob.vue';
 import LiveStreamer from '@/components/MarawanComponents/liveStreaming/Streamer.vue';
 import LiveViewer from '@/components/MarawanComponents/liveStreaming/Viewer.vue';
 import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
@@ -43,6 +44,11 @@ const routes = [
     path: '/Teach',
     name: 'Teach' ,
     component: Teach
+  },
+  {
+    path: '/paymob',
+    name: 'paymob' ,
+    component: paymob
   },
   {
     path: '/',
