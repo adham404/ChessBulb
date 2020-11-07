@@ -7,7 +7,7 @@
                     <div id="RightBlock">
                 <div id="UpperPiece">
     <h2>{{Live.LiveTitle}}</h2>
-    <p>{{date}}</p>
+    <p>{{date.toLocaleDateString()}}     {{date.toLocaleTimeString()}}</p>
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" width="594" height="1" viewBox="0 0 594 1">
                      <line id="Line_14" data-name="Line 14" x2="594" transform="translate(0 0.5)" fill="none" stroke="#707070" stroke-width="1"/>
@@ -46,11 +46,12 @@ export default {
   props:["Live","notEnrolled","id","Academy"],
   data() {
     return {
-      date:new Date(this.Live.LiveDate.seconds),
+      date:new Date(this.Live.LiveDate),
       Not:null
     }
   },
   mounted() {
+    this.data = this.data.toLocaleDateString()
     if(this.notEnrolled == true){
       this.Not = 2;
     }
