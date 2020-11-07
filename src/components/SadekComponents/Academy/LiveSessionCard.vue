@@ -46,8 +46,8 @@ export default {
   props:["Live","notEnrolled","id","Academy"],
   data() {
     return {
-      date:new Date(this.Live.LiveDate.seconds),
-      Not:null
+      date: new Date(this.Live.LiveDate.seconds),
+      Not: null
     }
   },
   mounted() {
