@@ -46,7 +46,7 @@ export default {
         if(this.LiveTitle != "" && this.LiveDescription != "" && this.LiveDate != "" ){
             var db = await firebase.firestore()
             await db.collection('Lives').add({
-                AcademyId : "idk",
+                AcademyId : "T6flevrWqTe7YvPh8voe",
                 LiveDate : new Date(this.LiveDate).toISOString() ,
                 LiveDescription : this.LiveDescription,
                 // LiveId : "4587",
