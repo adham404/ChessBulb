@@ -21,10 +21,10 @@
       <!-- <router-link :to="{path:`/LiveViewer/${id}`}"><h2>join</h2></router-link> -->
       <!-- <button>join</button> -->
     <!-- </div> -->    <!-- <p>{{notEnrolled}}</p> -->
-    <p>{{notEnrolled}}</p>
+    <!-- <p>{{notEnrolled}}</p> -->
     <div id="SendRight">
-      <router-link v-if="notEnrolled == true"  class="Shadow"   :to="{path:`/Purchase/${Academy.PriceId}`}"><button v-if="notEnrolled == true" id="SendRight">Enroll</button></router-link>
-      <router-link v-if="notEnrolled == false"  class="Shadow" :to="{path:`/LiveViewer/${id}`}"><button v-if="notEnrolled == false" id="SendRight">join</button></router-link>
+      <!-- <router-link v-if="notEnrolled == true"  class="Shadow"   :to="{path:`/Purchase/${Academy.PriceId}`}"><button v-if="notEnrolled == true" id="SendRight">Enroll</button></router-link> -->
+      <router-link  class="Shadow" :to="{path:`/LiveViewer/${id}`}"><button  id="SendRight">join</button></router-link>
 
     </div>
     <!-- <div v-if="NotEnrolled" id="SendRight">
