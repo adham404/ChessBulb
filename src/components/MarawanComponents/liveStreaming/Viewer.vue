@@ -147,11 +147,22 @@ export default {
         await call.answer()
         this.live = true
         console.log('answer')
-        await call.on('stream', userVideoStream => {
-        var vv = document.getElementById('fffd')
+        await call.on('stream', async userVideoStream => {
+        var vv = await document.getElementById('fffd')
         vv.srcObject = userVideoStream
-      vv.addEventListener('loadedmetadata',()=>{
-        vv.play()
+      await vv.addEventListener('loadedmetadata',()=>{
+        var promise = vv.play()
+        if (promise !== undefined) {
+  promise.then( () => {
+    // Autoplay started!
+    console.log('playinng')
+  }).catch(() => {
+    console.log('notplaying ')
+    vv.setAttribute("controls","controls")
+    // Autoplay was prevented.
+    // Show a "Play" button so that user can start playback.
+  });
+}
       })
     })
     },e =>{console.log(e)});
