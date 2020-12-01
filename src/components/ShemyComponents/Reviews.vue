@@ -243,13 +243,11 @@ export default {
     all: unset;
     color: black;
     font-size: 1rem;
-    font-family: 'Raleway',sans-serif;
     padding-left: 5px;
     padding-top: 5px;
     overflow-wrap: break-word;
   }
   h2{
-    font-family: 'Raleway', sans-serif;
     border-bottom: 3px solid grey;
   }
   p{
@@ -270,7 +268,6 @@ export default {
     flex-direction: row;
     margin-top: 10px;
     margin-bottom: 10px;
-    font-family: 'Raleway',sans-serif;
     font-size: 1.5rem;
   }
   .rating{
@@ -292,7 +289,6 @@ export default {
   }
   .Review{
     padding-left: 15px;
-    font-family: 'Raleway', sans-serif;
   }
   .AddReview{
     width: 100%;
@@ -324,7 +320,6 @@ export default {
 		outline: none;
 		border-radius: 1.2rem;
 		font-size: 0.9rem;
-		font-family: 'Raleway', sans-serif;
 		background-color: #022A68;
     color: white;
     margin-right: 5px;
