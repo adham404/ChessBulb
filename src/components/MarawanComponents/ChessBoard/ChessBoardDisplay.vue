@@ -55,7 +55,7 @@ export default {
             
         }
          this.board = Chessboard(this.id, config)
-         this.board.resize()
+        //  window.addEventListener("resize", function() {this.board.resize()});
     },
     beforeDestroy () {
     EventBus.$off('displayboardfen')

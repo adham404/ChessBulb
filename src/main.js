@@ -6,7 +6,7 @@ import VueClipboard from 'vue-clipboard2'
 VueClipboard.config.autoSetContainer = true // add this line
 import {SquareSpinner} from 'vue-spinners'
 import VueChatScroll from 'vue-chat-scroll'
-
+import store from "./store"
 Vue.use(VueChatScroll)
 Vue.component('square', SquareSpinner)
 Vue.use(VueClipboard)
@@ -32,5 +32,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

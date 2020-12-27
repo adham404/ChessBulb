@@ -2,11 +2,12 @@
   <div>
       <h1 id="StoriesWindowHeader">Chess Snapshots</h1>
       <div class="StoriesWindow" >
-          <div  v-for="(story,index) in Stories" :key="index" >
-              <router-link  :to="{ name: 'Stories' ,params: { data: Stories , current: index  }}" >
+          <div  v-for="(story,index) in getStories" :key="index" v-on:click="SetStoriesIndexTo(index)" >
+              <router-link  v-if="story.Type !='add'"   :to="{ name: 'Stories' }" >
                   <p class="StoryName">{{story.UserName ? story.UserName : ''}}</p>
-                  <StoryCard class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
-              </router-link>          
+                  <StoryCard   class="ProfileImage"  :startpos="story.StartingFen" :chessid='story.StoryID' ></StoryCard>
+              </router-link> 
+              <AddStotyCard v-if="story.Type =='add'" ></AddStotyCard>         
             </div>
           <h3 v-html="StoryStatus"></h3>
       </div>
@@ -16,41 +17,54 @@
 
 <script>
 import StoryCard from "./StoryCard"
-import firebase from "firebase"
+import AddStotyCard from "./AddStotyCard"
+// import firebase from "firebase"
+import { mapActions,mapGetters } from "vuex"
 export default {
     components:{
-        StoryCard
+        StoryCard,
+        AddStotyCard
+    },
+    computed:{
+        ...mapGetters(['getStories'])
     },
     data(){
         return{
           Stories : [],
           StoryExist: "",
-          StoryStatus:'<p>No Chess Snapshots in here yet. &#128531</p>'
+        //   StoryStatus:'<p>No Chess Snapshots in here yet. &#128531</p>'
         }
+    },
+    methods:{
+        ...mapActions(["fetchStories","SetStoriesIndexTo"])
     },
     async mounted(){
         let self = this
         self.Stories = []; 
-        
-        await firebase.auth().onAuthStateChanged(async function(user) {
-            if (user) {
-                console.log('user:'+ user.uid)
+        if(!this.getStories){
+           await this.fetchStories()
+        }
+        self.Stories = await this.getStories
+        console.log(this.getStories)
+        // await firebase.auth().onAuthStateChanged(async function(user) {
+        //     if (user) {
+        //         console.log('user:'+ user.uid)
                
-                var followingdata = await firebase.firestore().collection('Follows').doc(user.uid).get()
-                var followingUsers = await followingdata.data().Following
-                console.log(followingUsers)
-                await followingUsers.forEach(async fuser =>{
-                    var userstories =  await firebase.firestore().collection("ChessStories").where("UserID","==",fuser).get()
-                    await userstories.forEach(doc =>{
-                        self.Stories.push(doc.data())
-                        self.StoryStatus='';
-                    })
-            })
-            } else {
-                console.log('log in')
+        //         var followingdata = await firebase.firestore().collection('Follows').doc(user.uid).get()
+        //         var followingUsers = await followingdata.data().Following
+        //         console.log(followingUsers)
+        //         await followingUsers.forEach(async fuser =>{
+        //             var userstories =  await firebase.firestore().collection("ChessStories").where("UserID","==",fuser).get()
+        //             await userstories.forEach(doc =>{
+        //                 self.Stories.push(doc.data())
+        //                 self.StoryStatus='';
+        //             })
+        //     })
+        //     } else {
+        //         console.log('log in')
                
-            }
-        });
+        //     }
+        // });
         console.log(self.Stories)
     }
 

@@ -117,6 +117,7 @@ export default {
     };
     //DONE display move(10min)
     board = new Chessboard(this.id, config);
+    // window.addEventListener("resize", function() {board.resize()});
   },
   methods: {
     printmove() {

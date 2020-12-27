@@ -1,7 +1,7 @@
 <template>
   <div class="Container">
     <div class="ChessBoard" v-if="Mounted">
-      <ChessBoardDisplay id="grggr"  ></ChessBoardDisplay>
+      <ChessBoardDisplay id="grgguggu99g89g87r"  ></ChessBoardDisplay>
     </div>
     <div class="StoryData">
       <div class="DescriptionHeader">
@@ -125,7 +125,7 @@ export default {
       alllines: null,
       chossedline: 0,
       ee : EventBus,
-      Mounted: false,
+      Mounted: true,
     };
   },
   components: {
@@ -140,7 +140,7 @@ export default {
   },
   props: ["moves"],
   mounted() {
-    setTimeout(() => {this.Mounted = true}, 200)
+    
     if (this.moves.Moves) {
         console.log(this.moves);
         this.alllines = this.moves.Moves;

@@ -1,14 +1,15 @@
 <template>
-<div style="width:100%">
-    <StoryPreview style="width:100%" v-if="moves.Type=='Move'" :moves="moves"  ></StoryPreview>
-    <storypuzzel style="width:100%"  v-if="moves.Type=='Puzzle' " :moves="moves"  ></storypuzzel>
-    <AddStorypreview style="width:100%"  v-if="moves.Type=='Add' "   ></AddStorypreview>
+<div v-if="getStories" style="width:100%">
+    <StoryPreview style="width:100%" v-if="getCurrentStory.Type=='Move'" :moves="getCurrentStory"  ></StoryPreview>
+    <storypuzzel style="width:100%"  v-if="getCurrentStory.Type=='Puzzle' " :moves="getCurrentStory"  ></storypuzzel>
+    <AddStorypreview style="width:100%"  v-if="getCurrentStory.Type=='add' "   ></AddStorypreview>
 </div>
         
 </template>
 
 <script>
 // import firebase from "firebase"
+import { mapActions,mapGetters } from "vuex"
 import StoryPreview from "./Stortypreview"
 import storypuzzel from "./storypuzzel"
 import AddStorypreview from "./AddStorypreview"
@@ -28,65 +29,47 @@ export default {
         storypuzzel,
         AddStorypreview
     },
+    computed:{
+        ...mapGetters(['getStories',"getStoriesbyindex","getCurrentStory"]),
+    },
+    async created(){
+        
+    },
     data(){
         return{
-            boardfen : null,
-            boardfen2 : null,
-            moves : 'feff',
-            startpos : '',
-            Stories: [],
-            currentstory : null,
+
         }
     },
-     mounted(){
-         EventBus.$on('moveStory',data =>{
+    async mounted(){
+        //if the data is not here get it from firebase 
+        if(!this.getStories){
+           await this.fetchStories()
+        }
+
+        //moving between the stories 
+        EventBus.$on('moveStory',data =>{
              if(data == 'lift'){
-                 this.move2();
+                 this.MoveToPrevioustStory();
              }else if(data == 'right'){
-                 this.move1()
+                 this.MoveToNextStory();
              }
-         })
-         setTimeout(() => {
-      EventBus.$emit("Toggle", true);
-    }, 100);
-    EventBus.$on("Link", (link) => {
-      this.$router.push({ path: link });
-    });
-        console.log(this.$route.params.data)
-        // console.log(this.$route.params.current)
-        var data = this.$route.params.data
-        data.push({Type : 'Add'})
-        var current = this.$route.params.current
-        this.currentstory = current
-        this.moves = data[current]
-    //    console.log(this.moves)
+         });
+        //showing side bar
+        setTimeout(() => {EventBus.$emit("Toggle", true);}, 100);
+        //links in the side bar
+        EventBus.$on("Link", (link) => {
+            this.$router.push({ path: link });
+        });
     },
     beforeDestroy () {
     EventBus.$off('Link')
+    EventBus.$off('moveStory')
  },
     destroyed() {
     EventBus.$emit("Toggle", false);
   },
     methods:{
-         move1(){
-        
-        var data = this.$route.params.data
-        if(this.currentstory <  data.length-1 ){
-            this.currentstory += 1
-            this.moves = data[this.currentstory]
-        }
-        
-        },
-        move2(){
-            if(this.currentstory > 0){
-                   var data = this.$route.params.data
-        
-        this.currentstory -= 1
-        this.moves = data[this.currentstory]
-            }
-        
-        },
-        
+        ...mapActions(["fetchStories","MoveToNextStory","MoveToPrevioustStory"]),  
     }
 
 }
