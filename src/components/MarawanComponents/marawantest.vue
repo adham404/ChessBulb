@@ -1,12 +1,12 @@
 <template>
   <div style="width:100%">
   
-   <router-link to="/LiveStreamer/kMWEHAaf7z1BY6AlpeUC" >LiveStreamer</router-link><br/>
+   <!-- <router-link to="/LiveStreamer/kMWEHAaf7z1BY6AlpeUC" >LiveStreamer</router-link><br/>
    <router-link to="/LiveViewer/kMWEHAaf7z1BY6AlpeUC" >LiveViewer</router-link><br/>
    <router-link to="/InstructorRegistration" >Instructor Registration</router-link><br/>
    
-   <router-link to="/AcademyForm" >Academy Form</router-link><br/>
-  
+   <router-link to="/AcademyForm" >Academy Form</router-link><br/> -->
+  <StockFish/>
    <storypuzzel style="width:100%" v-if="movess" :moves='movess' />
   </div>
 </template>
@@ -14,17 +14,19 @@
 <script>
 // import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
 // import MovePreviewInput from "@/components/MarawanComponents/MovePreview/MovePreviewInput"
-import storypuzzel from "@/components/MarawanComponents/StoryScrolling/storypuzzel"
-// import StockFish from "@/components/MarawanComponents/StockFish.vue"
+// import storypuzzel from "@/components/MarawanComponents/StoryScrolling/storypuzzel"
+import StockFish from "@/components/MarawanComponents/StockFish.vue"
 import {EventBus} from "@/main.js"
 import firebase from "firebase"
+// import StockFish from './StockFish.vue';
 export default {
   components:{
-    storypuzzel
+    // storypuzzel,
     // StoryHeader,
     // MovePreviewInput,
     // ChessBoardInput,
-    // StockFish
+    StockFish,
+    
   },
   data(){
     return{

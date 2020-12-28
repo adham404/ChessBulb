@@ -15,6 +15,7 @@
         <div class="TimeStamps">
           <h2 id="SmallHeader">Chat</h2>
           <p v-for="(i,index) in messages" :key="index" >{{i.name}} : {{i.message}}</p>
+          <p v-for="i in UsersArray" :key="i.id" >{{i.name}} </p>
           <div class="sendmessage">
             <input type="text" v-model="message" >
           <button @click="sendmessage" >Send</button>
@@ -53,7 +54,10 @@ export default {
       room : null,
       message: null,
       messages:[],
-      fen : null
+      fen : null,
+      UsersArray:[],
+      MovesArray:["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"],
+      CurrentMove:0,
     }
   },
    mounted(){
@@ -106,13 +110,57 @@ export default {
         // console.log('a7a a7a a7a')
       }
     EventBus.$off('Link')
+    EventBus.$off('newfen')
+    EventBus.$off('Control')
  },
   methods:{
+    async PlayMoveFromFEN(FEN){
+      if(this.CurrentMove==this.MovesArray.length-1){
+        await this.sendchessmove(FEN)
+        await this.MovesArray.push(FEN)
+        await this.CurrentMove++
+      }else{
+      await  this.DeletTheOldLine()
+      await  this.sendchessmove(FEN)
+      await  this.MovesArray.push(FEN)
+      await  this.CurrentMove++
+      }
+      // EventBus.$emit("boradfen",FEN)
+    },
+    DeletTheOldLine(){
+      for(var i=this.MovesArray.length-1;i>this.CurrentMove ; i--){
+        this.MovesArray.pop()
+      }
+    
+    },
+    async UndoTheFen(){
+      if(this.CurrentMove > 0){
+        await this.CurrentMove--;
+        await  this.sendchessmove(this.MovesArray[this.CurrentMove])
+        EventBus.$emit("boradfen",this.MovesArray[this.CurrentMove])
+      }
+     
+    },
+    async RedoTheFen(){
+       if(this.CurrentMove < this.MovesArray.length-1){
+        await this.CurrentMove++;
+        await  this.sendchessmove(this.MovesArray[this.CurrentMove])
+        EventBus.$emit("boradfen",this.MovesArray[this.CurrentMove])
+      }
+    },
       checkandconnect(){
           if(userid && livedata.data().iceServers){
               this.connect();
-              EventBus.$on('newfen',fen =>{
-                  this.sendchessmove(fen)
+              EventBus.$on('newfenAndmove',fen =>{
+                  
+                  this.PlayMoveFromFEN(fen[0])
+              });
+              EventBus.$on("Control",async(data)=>{
+                if (data == "next") {
+                  await this.RedoTheFen()
+                } else if (data == "back") {
+                  await this.UndoTheFen()
+                }
               })
           }else{
               alert('Error: There are no data ')
@@ -159,8 +207,10 @@ export default {
                     track.stop();
                     });
             }
-      socket.on('userconnected', userId => {
+      socket.on('userconnected',async userId => {
         console.log(userId)
+        var userName = await this.GetUserNameFromId(userId)
+        this.UsersArray.push({id: userId, name: userName});
       const call = mypeer.call(userId, stream)
       mypeer.on('error',e=>{
         console.log(e)
@@ -180,6 +230,15 @@ export default {
             console.log(data)
 
       })
+    socket.on('userdisconnected', data => {
+      // this.messages.push(data)
+            console.log("left the stream",data)
+            var idindex = this.UsersArray.findIndex(x=> x.id == data)
+            if (idindex > -1) {
+              this.UsersArray.splice(idindex, 1);
+              }
+
+      })
     },
     sendmessage(){
       if(socket && this.message != '' ){
@@ -196,6 +255,16 @@ export default {
       }
      
     },
+    async GetUserNameFromId(ID){
+      var nna
+    await  firebase.firestore().collection('Users').doc(ID).get().then(doc=>{
+         nna =  doc.data().FirstName.toString() + " " +  doc.data().LastName.toString()
+        console.log(nna)
+      
+      })
+      return nna.toString()
+      
+    }
   }
   
 }

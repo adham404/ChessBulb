@@ -13,6 +13,7 @@
             <div class="TextBox Shadow">
               <h3 id="MessageHeader">{{moves.UserName ? moves.UserName : ''}}</h3>
               <p id="Message">{{ moves.StoryExplanation }}</p>
+             
             </div>
           </div>
         </div>
