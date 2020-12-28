@@ -42,8 +42,9 @@ export default {
     },
     async mounted(){
         //if the data is not here get it from firebase 
-        if(!this.getStories){
+        if(this.getStories.lenght == 0){
            await this.fetchStories()
+           console.log("fetch Story from stories window")
         }
 
         //moving between the stories 

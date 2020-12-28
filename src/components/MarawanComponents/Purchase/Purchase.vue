@@ -21,6 +21,7 @@ export default {
                 console.log(res.data)
                 stripe.redirectToCheckout({ sessionId: res.data });
             }).catch(e=>{
+                console.log("error")
                 console.log(e.code)
                 console.log(e.massage)
                 console.log(e.details)

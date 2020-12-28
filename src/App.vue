@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <div class="Desktop">
-        <div v-if="!productive&&LoggedIn" id="social">
+        <div v-if="!productive&&LoggedIn == 'logedin' " id="social">
         <Header/>
         <router-view/>
       </div>
-      <div v-if="productive&&LoggedIn" id="productive">
+      <div v-if="productive&&LoggedIn=='logedin'" id="productive">
         <router-view/>
         <SideBar/>
       </div>
-      <div v-if="!LoggedIn">
-        <router-view/>
+      <div v-if="LoggedIn == 'notlogedin'">
+        <SignUp/>
       </div>
     </div>
     <div class="Mobile">
@@ -34,13 +34,14 @@
 <script>
 import SideBar from '@/components/Skeleton/SideBar.vue'
 import Header from '@/components/Skeleton/Header.vue'
+import SignUp from "@/components/ShemyComponents/SignUp.vue"
 import firebase from "firebase";
 import { EventBus } from "@/main";
 export default {
   data(){
     return{
       productive: false,
-      LoggedIn: false,
+      LoggedIn: 'wait',
     }
   },
   methods:
@@ -51,16 +52,19 @@ export default {
   firebase.auth().onAuthStateChanged(function(user) { 
       if (user) {
       // User is signed in.
-      self.LoggedIn = true;
+      self.LoggedIn = "logedin";
     } else {
     // No user is signed in.
+     self.LoggedIn =  "notlogedin"
+     console.log("login ")
     }
 });
     }
   },
   components: {
     SideBar,
-    Header
+    Header,
+    SignUp
   },
    mounted() {
     this.CheckUserAuth()
@@ -70,6 +74,10 @@ export default {
     EventBus.$on("LoggedIn", data => {
       this.LoggedIn = data
     });
+},
+beforeDestroy(){
+  EventBus.$off("Toggle")
+  EventBus.$off("LoggedIn")
 }
 }
 </script>

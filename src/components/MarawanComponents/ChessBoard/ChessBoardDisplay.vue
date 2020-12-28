@@ -22,15 +22,15 @@ export default {
         }
     },
     mounted(){
-        
+        let self = this
         EventBus.$on("displayboardfen", move =>{
-            this.board.position(move)
+            self.board.position(move)
            
         });
         EventBus.$on("displayboardfenbyid", (move,idd) =>{
             // console.log('resiving data : '+ idd + 'my id is ' + this.id)
-            if(idd == this.id){
-                this.board.position(move)
+            if(idd == self.id){
+                self.board.position(move)
             }
             
            
@@ -49,7 +49,7 @@ export default {
            
             
         }
-         this.board = Chessboard(this.id, config)
+         self.board = Chessboard(self.id, config)
         
     },
     beforeDestroy () {
@@ -62,7 +62,19 @@ export default {
     //DONE wath the fen prop for change and update the board
     watch:{
         fen:function(){
-            this.board.position(this.fen)
+            var config = {
+            showNotation: this.hideNotation ? false : true,
+            draggable: false,
+            position: this.fen ? this.fen : 'start',
+            showErrors : 'alert',
+            
+           
+            
+        }
+            var board2 = Chessboard(self.id, config)
+         
+                board2.position(this.fen)
+           
         }
     }
 

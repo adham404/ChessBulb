@@ -1,27 +1,23 @@
 <template>
   <div style="width:100%">
   
-   <!-- <router-link to="/LiveStreamer/kMWEHAaf7z1BY6AlpeUC" >LiveStreamer</router-link><br/>
-   <router-link to="/LiveViewer/kMWEHAaf7z1BY6AlpeUC" >LiveViewer</router-link><br/>
-   <router-link to="/InstructorRegistration" >Instructor Registration</router-link><br/>
-   
-   <router-link to="/AcademyForm" >Academy Form</router-link><br/> -->
   <StockFish/>
-   <storypuzzel style="width:100%" v-if="movess" :moves='movess' />
+  <StoryDisplayheader/>
+  
   </div>
 </template>
 
 <script>
 // import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
 // import MovePreviewInput from "@/components/MarawanComponents/MovePreview/MovePreviewInput"
-// import storypuzzel from "@/components/MarawanComponents/StoryScrolling/storypuzzel"
-import StockFish from "@/components/MarawanComponents/StockFish.vue"
-import {EventBus} from "@/main.js"
+import StoryDisplayheader from "@/components/MarawanComponents/StoryScrolling/StoryDisplayheader"
+// import StockFish from "@/components/MarawanComponents/StockFish.vue"
+// import {EventBus} from "@/main.js"
 import firebase from "firebase"
-// import StockFish from './StockFish.vue';
+import StockFish from './StockFish.vue';
 export default {
   components:{
-    // storypuzzel,
+    StoryDisplayheader,
     // StoryHeader,
     // MovePreviewInput,
     // ChessBoardInput,
@@ -50,17 +46,17 @@ export default {
     
   },
   async mounted(){
-    var data = await firebase.firestore().collection('ChessStories').doc('u64MSwDqiNTwUF1tuSvm').get()
-    this.movess = data.data()
-         setTimeout(() => {
-      EventBus.$emit("Toggle", true);
-    }, 100);
-    EventBus.$on("Link", (link) => {
-      this.$router.push({ path: link });
-    });
+    // var data = await firebase.firestore().collection('ChessStories').doc('u64MSwDqiNTwUF1tuSvm').get()
+    // this.movess = data.data()
+    //      setTimeout(() => {
+    //   EventBus.$emit("Toggle", true);
+    // }, 100);
+    // EventBus.$on("Link", (link) => {
+    //   this.$router.push({ path: link });
+    // });
   },
   destroyed(){
-    EventBus.$emit("Toggle", false);
+    // EventBus.$emit("Toggle", false);
   }
   
     

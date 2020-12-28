@@ -2,19 +2,24 @@ import firebase from "firebase";
 
 
 const state = {
-    Stories : null,
+    Stories : [],
     currentindex:0,
     cureentStory:null,
 }
 const getters = {
     getStories:(state)=>(state.Stories),
+    getFirst7Stories:(state)=>(state.Stories ? state.Stories.slice(0, 7) : []),
     getStoriesbyindex:(state)=>(index)=>(state.Stories[index]),
     getCurrentStory:(state)=>(state.Stories[state.currentindex]),
 }
 const mutations = {
+    ResetStories:(state)=>(state.Stories=[]),
     SetStories: (state,newstories) => {
          newstories.unshift({Type:'add'})
         state.Stories = newstories} ,
+    AddStory: (state,newstory) =>{
+        state.Stories.push(newstory)
+    },
     incrementStoryIndex:(state)=>(state.currentindex++),
     descrementStoryIndex:(state)=>(state.currentindex--),
     SetStoriesIndexToNumber:(state,indexnumber)=>(state.currentindex = indexnumber)
@@ -34,12 +39,11 @@ const actions = {
             commit("descrementStoryIndex")
         }
     },
-    async fetchStories({commit}){
-        
-        await firebase.auth().onAuthStateChanged(async function(user) {
-            if (user) {
-                // console.log('user:'+ user.uid)
-               
+    async fetchStories({commit,}){
+        await commit("ResetStories")
+        await commit("AddStory",{Type:'add'})
+        console.log("fetchStories")
+        var user = await firebase.auth().currentUser
                 var followingdata = await firebase.firestore().collection('Follows').doc(user.uid).get()
                 var followingUsers = await followingdata.data().Following
                 var fetchedstories = [];
@@ -47,21 +51,19 @@ const actions = {
                     var userstories =  await firebase.firestore().collection("ChessStories").where("UserID","==",fuser).get()
                     await userstories.forEach(async doc =>{
                        await fetchedstories.unshift(doc.data())
+                       await commit("AddStory",doc.data())
                         
                     })
             })
-            await console.log(fetchedstories)
             
-            await commit('SetStories', fetchedstories);
+            // await console.log(fetchedstories)
             
-            } else {
-                console.log('log in')
-               
-            }
-        });
+            // await commit('SetStories', fetchedstories);
+            
+         
         
         
-    }
+    },
 }
 
 export default {
