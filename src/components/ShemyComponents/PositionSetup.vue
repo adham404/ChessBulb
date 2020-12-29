@@ -24,7 +24,8 @@
 <script>
   //DONE assign EventBus method (1min)
   import {EventBus} from "../../main"
-  import Chessboard from "chessboardjs";
+ 
+  import Chessboard from "chessboardjs-vue";
   // import { ChessGame } from "../../main"
   import * as Chess from "chess.js";
 
@@ -76,15 +77,13 @@ export default {
     
 		setTimeout(() => {this.Mounted = true; setTimeout(() => {Board = Chessboard('Board1', config); this.Chessboard = Board;}, 900) ;}, 800)
     EventBus.$emit("Toggle", true)
-    function piecelink(piece){
-          return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
-      }
+   
       var config = {
         draggable: true,
         dropOffBoard: 'trash',
         showErrors : 'alert',
         sparePieces: true,
-        pieceTheme: piecelink,
+        
 
       }
     //DONE Recieve Chess Object with the Setup Position From ChessBoard.js (2min)

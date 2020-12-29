@@ -6,13 +6,11 @@
 
 <script>
 //DONE import ChessBoardDisplay (5min)
-import Chessboard from "chessboardjs";
+
+import Chessboard from "chessboardjs-vue";
 import * as Chess from "chess.js";
 
-// jquery
-global.jQuery = require("jquery");
-var $ = global.jQuery;
-window.$ = $;
+
 var board = null;
 import { EventBus } from "@/main.js";
 export default {
@@ -22,6 +20,10 @@ export default {
       board: null,
       startpos: null,
     };
+  },
+  beforeDestroy(){
+    EventBus.$off("boradfen")
+    EventBus.$off("boardmove")
   },
 
   mounted() {
@@ -63,9 +65,7 @@ export default {
 
     //DONE creat new board(3min)
 
-    function piecelink(piece) {
-      return require("@/assets/img/chesspieces/wikipedia/" + piece + ".png");
-    }
+    
     //DONE get if the match ended and if disable the input(5min)
     function onDragStart(source, piece /*, position, orientation*/) {
       if (game.game_over()) {
@@ -113,10 +113,11 @@ export default {
       onDrop: onDrop,
       onSnapEnd: onSnapEnd,
       showErrors: "alert",
-      pieceTheme: piecelink,
+      
     };
     //DONE display move(10min)
     board = new Chessboard(this.id, config);
+    // window.addEventListener("resize", function() {board.resize()});
   },
   methods: {
     printmove() {

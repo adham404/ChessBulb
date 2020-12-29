@@ -109,7 +109,8 @@
 <script>
   //DONE Assign EventBus (1min) 
   // import {EventBus} from "../../main"
-  import Chessboard from "chessboardjs";
+  // import Chessboard from "chessboardjs";
+  import Chessboard from "chessboardjs-vue";
   import firebase from "firebase";
   // import { ChessMoveObject[this.LineCounter].ChessEngine } from "../../main"
   import * as Chess from "chess.js";
@@ -152,9 +153,9 @@ export default {
       //DONE Declare Mounted Property (1min)
     mounted(){
       //Function to load the Chess pieces icons
-      function piecelink(piece){
-        return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
-      }
+      // function piecelink(piece){
+      //   return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
+      // }
       this.Fen = this.FenObject;  //Converting the chessboard fen format to the chess.js fen format 
       //ChessBoard Config
       var config = {  
@@ -163,7 +164,7 @@ export default {
         position: this.FenObject,
         onDrop: this.onDrop,
         onDragStart: this.onDragStart,
-        pieceTheme: piecelink
+        // pieceTheme: piecelink
       }
       //Create a ChessBoard object with the passed config
       this.ChessBoard = Chessboard('board1', config);
