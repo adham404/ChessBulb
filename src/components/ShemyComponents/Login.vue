@@ -10,7 +10,7 @@
         <div class="Container">
             <div class="SignUpHeader">
                 <h1>Login</h1>
-                <div id="SubHeader">Already have an account?<router-link to="/Login"><span>Login</span></router-link></div>
+                <div id="SubHeader">Don't have an account?<router-link to="/SignUp"><span>SignUp</span></router-link></div>
             </div>
             
 
