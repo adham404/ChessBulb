@@ -10,7 +10,8 @@
         <SideBar/>
       </div>
       <div v-if="LoggedIn == 'notlogedin'">
-        <SignUp/>
+        <SignUp v-if="$route.path != '/Login'" />
+        <Login v-if="$route.path == '/Login'"/>
       </div>
     </div>
     <div class="Mobile">
@@ -35,6 +36,7 @@
 import SideBar from '@/components/Skeleton/SideBar.vue'
 import Header from '@/components/Skeleton/Header.vue'
 import SignUp from "@/components/ShemyComponents/SignUp.vue"
+import Login from "@/components/ShemyComponents/Login.vue"
 import firebase from "firebase";
 import { EventBus } from "@/main";
 export default {
@@ -42,6 +44,7 @@ export default {
     return{
       productive: false,
       LoggedIn: 'wait',
+      
     }
   },
   methods:
@@ -64,16 +67,23 @@ export default {
   components: {
     SideBar,
     Header,
-    SignUp
+    SignUp,
+    Login
+  },
+  watch:{
+    $route:function(val){
+      console.log(val.fullPath)
+    }
   },
    mounted() {
+     
     this.CheckUserAuth()
     EventBus.$on("Toggle", data => {
       this.productive = data
     });
-    EventBus.$on("LoggedIn", data => {
-      this.LoggedIn = data
-    });
+    // EventBus.$on("LoggedIn", data => {
+    //   this.LoggedIn = data
+    // });
 },
 beforeDestroy(){
   EventBus.$off("Toggle")
