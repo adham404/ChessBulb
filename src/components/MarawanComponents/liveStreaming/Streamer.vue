@@ -22,7 +22,8 @@
           </div>
           
         </div>
-        <StockFish/>
+        <button @click="remountStockFish">Remont StockFish</button>
+        <StockFish v-if="showStockfish" ></StockFish>
       </div>
     </div>
 
@@ -49,6 +50,7 @@ export default {
   },
   data(){
     return{
+      showStockfish:true,
         live : false,
       uid : null ,
       room : null,
@@ -114,6 +116,10 @@ export default {
     EventBus.$off('Control')
  },
   methods:{
+    remountStockFish(){
+      this.showStockfish = false;
+      setTimeout(()=>{this.showStockfish=true},100)
+    },
     async PlayMoveFromFEN(FEN){
       if(this.CurrentMove==this.MovesArray.length-1){
         await this.sendchessmove(FEN)
