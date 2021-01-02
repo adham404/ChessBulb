@@ -224,7 +224,7 @@ export default {
       })
       console.log( 'calling', call)
       })
-      myvideo.srcObject = stream
+      myvideo.srcObject = stream  // stream --> camera    Myvideo ==> <video id="video" ></video>
       
       myvideo.addEventListener('loadedmetadata',()=>{
         myvideo.play()
