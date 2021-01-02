@@ -155,7 +155,7 @@ const routes = [
   },
   {
     path: '/Login',
-    name: Login,
+    name: 'Login',
     component: Login,
   },
   {
@@ -205,7 +205,7 @@ const routes = [
     component: Subscribe,
     
   },
-  
+
   {
     path:'/Success/:id',
     name:'Success',

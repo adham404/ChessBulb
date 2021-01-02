@@ -5,6 +5,7 @@
       <!-- DONE Router link to [CreateCourse] when 'Create a Course' button is clicked 2MIN -->
         <router-link to="/CreateCourse">
         <button>Create Course</button>
+        <button @click="TestC">Test Cloud Function</button>
         </router-link>
         <SearchEngine SearchIndex="Courses" :ShowFilters="true"></SearchEngine>
         <!-- <input type="text" placeholder="Search Engine">
@@ -54,7 +55,15 @@ export default {
               this.Courses.push(query.data());
             })
         }
-      
+      },
+      TestC()
+      {
+        const Test = firebase.functions().httpsCallable('CreateDocs');
+        Test({ id: '1234'}).then(result => {
+          console.log('data is: ', result.data);
+        }).catch(error => {
+          console.log('Error is ',error);
+        }) 
       }
     },
   //DONE Declare Mounted Property (1min)
