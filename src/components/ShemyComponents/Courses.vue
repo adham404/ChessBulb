@@ -5,8 +5,8 @@
       <!-- DONE Router link to [CreateCourse] when 'Create a Course' button is clicked 2MIN -->
         <router-link to="/CreateCourse">
         <button>Create Course</button>
-        <button @click="TestC">Test Cloud Function</button>
         </router-link>
+        <button @click="TestC">Test Cloud Function</button>
         <SearchEngine SearchIndex="Courses" :ShowFilters="true"></SearchEngine>
         <!-- <input type="text" placeholder="Search Engine">
         <FilterSearch></FilterSearch> -->
@@ -58,8 +58,14 @@ export default {
       },
       TestC()
       {
-        const Test = firebase.functions().httpsCallable('CreateDocs');
-        Test({ id: '1234'}).then(result => {
+        var data = {
+          Email:"TestCloud@gmail.com",
+          FirstName:"Test",
+          LastName:"Cloud",
+          id:"1234333",
+        }
+        const Test = firebase.functions().httpsCallable('CreateDocs-CreateDocs');
+        Test(data).then(result => {
           console.log('data is: ', result.data);
         }).catch(error => {
           console.log('Error is ',error);
@@ -73,15 +79,7 @@ export default {
           this.Courses = [];
           this.CourseID = res;
           this.RecieveCoursesID();
-      })
-     
-      
-
-        
-        
-
-      
-      
+      })      
     }
     //TODO Assign EventBus (1min) 
     //TODO According to the props recieved Indicate Whether it's Courses from Homepage, Profile or Academies

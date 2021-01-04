@@ -28,6 +28,7 @@
         <input v-model="ConfirmPassword" type="password" name="" id="Cpassword">
         <!-- DONE Create 'SignUp' button assigned to the function {SignUp} (2min) -->
         <button @click="SignUp">Sign Up</button>
+        <button @click="gSignUp">Sign in with Google</button>
       <!-- <button @click="SignOut">Sign Out</button>       -->
       </div>
     </div>
@@ -48,7 +49,7 @@ export default {
         UserPassword:"",
         ConfirmPassword:"",
         UserValidate:false,
-        UserID:""
+        UserID:"",
       }
     },
     mounted()
@@ -59,13 +60,13 @@ export default {
       //DONE Define SignUp function (1min)
       async SignUp()
       {
-        this.UserValidate = this.ValidateInput();
-      //DONE use firebase auth to sign up user account using the following data properties (FirstName, LastName, UserEmail, UserPassword) (20MIN)
-        if(this.UserValidate)
+        // this.UserValidate = this.ValidateInput();
+        //DONE use firebase auth to sign up user account using the following data properties (FirstName, LastName, UserEmail, UserPassword) (20MIN)
+        if(this.ValidateInput())
         {
           alert("Sign Up Succesfull");
           const auth = firebase.auth();
-             await auth.createUserWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
+            await auth.createUserWithEmailAndPassword(this.UserEmail,this.UserPassword).catch((error) =>{
             alert(error.message);
             })
             let self = this;
@@ -80,32 +81,61 @@ export default {
             // console.log("The Best ID is "+ this.UserID);
             })
             if (this.UserID != "") {
-              var DB = firebase.firestore();
-              var DBref = DB.collection("Users");
-              DBref.doc(this.UserID).set({
-                  AcademyInstructor: "false",
-                  Email: this.UserEmail,
-                  FirstName: this.FirstName,
-                  Instructor: false,
-                  LastName: this.LastName,
-                  Password: this.UserPassword,
-                  UserBio: "null",
-                  UserId: this.UserID,
-                  UserPhoto: "null"
-              })
-                this.CreateFollowDoc();               
-                this.$router.push('/Home')
-                EventBus.$emit("LoggedIn",true);
-            }
-
-            //TODO create a user field in the user database
-            if(this.UserID != "")
-            {
-              console("Hey Hey");
-            }
+              this.CreateUserDoc();
+              }
         }
       },
-        //DONE First Check if the (UserPassword) is the same as the (ConfirmPassword) if correct proceed if not check show validation Message (2min)
+      async CreateUserDoc()
+      {
+        var data = {
+        Email: this.UserEmail,
+        FirstName: this.FirstName,
+        LastName: this.LastName,
+        }
+        const Test = firebase.functions().httpsCallable('CreateDocs-CreateDocs');
+        await Test(data).then(result => {
+          console.log('data is: ', result.data);
+        }).catch(error => {
+          console.log('Error is ',error);
+        }) 
+        this.$router.push('/Home')
+        EventBus.$emit("LoggedIn",true);
+      },
+      async gSignUp()
+      {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/contacts.readonly')
+        provider.setCustomParameters({
+        'login_hint': 'user@example.com'
+        });
+
+        await firebase.auth()
+          .signInWithPopup(provider)
+          .then((result) => {
+            var credential = result.credential;
+            console.log("User Credential is: ", credential);
+            var token = credential.accessToken
+            console.log("User access token is: ", token);
+            var user = result.user
+            this.FirstName = user.displayName
+            this.LastName = ""
+            this.Email = user.email
+            console.log("User Data is: ", user);            
+          }).catch((error) => {
+                // Handle Errors here.
+                console.log("Error Code is: ", error.code)
+                console.log("Error Message is: ", error.message)
+                // The email of the user's account used.
+                console.log("Error email is: ", error.email)
+                // The firebase.auth.AuthCredential type that was used.
+                console.log("Error Credential msg is: ", error.credential)       
+                // ...
+          })
+          this.CreateUserDoc()
+
+        
+      },
+      //DONE First Check if the (UserPassword) is the same as the (ConfirmPassword) if correct proceed if not check show validation Message (2min)
       ValidateInput()
       {
         if(this.FirstName == "" || this.LastName == "" || this.UserEmail == "" || this.UserPassword == "" || this.ConfirmPassword == "")
@@ -125,17 +155,7 @@ export default {
           }
         }
       },
-      async CreateFollowDoc()
-      {
-        var db = firebase.firestore();
-        var DBref = await db.collection("Follows").doc(this.UserID);
-        DBref.set({
-          Followers:[],
-          Following:[],
-          UserID: this.UserID
-        })
-      },
-      CheckUser()
+      CheckUser() //Check User Authentication when directed to signup
       {
 			let self = this;
 			firebase.auth().onAuthStateChanged(function(user) {
@@ -145,7 +165,7 @@ export default {
 				// User is signed in.
 			} else {
 				console.log("New User")
-		// No user is signed in.
+        // No user is signed in.
 			}
 			});		
       }
