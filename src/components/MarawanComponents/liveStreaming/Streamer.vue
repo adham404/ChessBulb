@@ -13,14 +13,18 @@
       <div class="CourseData">
         
         <div class="TimeStamps">
+          <div class="Chat">
           <h2 id="SmallHeader">Chat</h2>
+          <div class="Messages"  v-chat-scroll="{always: false, smooth: true}">
+            <p v-for="(i,index) in messages" :key="index" >{{i.name}} : {{i.message}}</p>
+          </div>          
           <p v-for="(i,index) in messages" :key="index" >{{i.name}} : {{i.message}}</p>
           <p v-for="i in UsersArray" :key="i.id" >{{i.name}} </p>
           <div class="sendmessage">
-            <input type="text" v-model="message" >
+            <input type="text" v-model="message" v-on:keyup.enter = "sendmessage">
           <button @click="sendmessage" >Send</button>
+          </div>          
           </div>
-          
         </div>
         <button @click="remountStockFish">Remont StockFish</button>
         <StockFish v-if="showStockfish" ></StockFish>
@@ -223,7 +227,7 @@ export default {
       })
       console.log( 'calling', call)
       })
-      myvideo.srcObject = stream
+      myvideo.srcObject = stream  // stream --> camera    Myvideo ==> <video id="video" ></video>
       
       myvideo.addEventListener('loadedmetadata',()=>{
         myvideo.play()
@@ -350,8 +354,59 @@ h2{
   width: 50%;
   background-color:#1DACA8 ;
   border-radius: 10px;
+  /* background-color: aqua; */
+}
+.Messages{
+  height: 50%;
+  /* background-color: green; */
+  overflow-y: scroll;
+  overflow-wrap: break-word;
+}
+.sendmessage{
+  height: 20%;
+  /* background-color: red; */
+}
+.sendmessage input{
+   font-family: "Raleway", sans-serif;
+  font-weight: lighter;
+  border: 1px solid #cac7c7;
+  border-radius: 12px;
+  padding-left: 5px;
+  height: 22px;
+  font-size: 1vw;
+  outline: none;
+  width: 250px;
+  overflow-wrap: break-word;
+}
+#SmallHeader{
+  border-bottom: 3px solid white;
+  font-size: 1.3rem;
+}
+.Chat{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color:#1DACA8 ;
+  border-radius: 10px;
   overflow: auto;
   /* background-color: aqua; */
 }
+.Engine{
+  width: 50%;
+  height: 100%;
+}
+button{
+		height: 30px;
+		width: 150px;
+		border: none;
+		outline: none;
+		border-radius: 1.2rem;
+		font-size: 0.9rem;
+		font-family: 'Raleway', sans-serif;
+		background-color: #022A68;
+		color: white;
+    margin-top: 5px;
+	}
 
 </style>

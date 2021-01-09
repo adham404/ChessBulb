@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<img class="ProfileImage" src="../../../assets/ProfilePic.jpg" alt="">
+		<img class="ProfileImage" :src="getImgUrl()" alt="">
 		<h1 :style="TextColor" class="PlayerName">{{UserName}}</h1>
 		<!-- <h4 :style="TextColor">Email: {{email}}</h4> -->
 		<router-link
@@ -47,13 +47,19 @@ export default {
 		return {
 			email:"",
 			UserId:"",
+			ImgSrc:"",
+			UserData:"",
 			UserName:"",
 			TextColor:{
-    color:"white"
+		    color:"white"
     },
-		}
+	}
 	},
 	methods:{
+		getImgUrl()
+		{
+			return this.ImgSrc || require('../../../assets/ProfilePic.jpg') 
+		},
 		MyCourses()
 		{
 			EventBus.$emit("MyCourses");
@@ -71,12 +77,13 @@ export default {
 		{
 			EventBus.$emit("Posts");
 
-		}
+		},
 	},
 	async mounted() {
 		let self = this;
 	await firebase.auth().onAuthStateChanged(function(user) {
-	if (user) {
+		if (user) {
+	self.ImgSrc = user.photoURL
 	console.log("Current User Logged in is: ")
 	console.log(user.email);
 	console.log(user.uid);
@@ -93,13 +100,14 @@ export default {
 		// No user is signed in.
 	}
 	});	
-	firebase
+	await firebase
 			.firestore()
 			.collection("Users")
 			.where("UserId", "==", this.UserId)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc)=>{
+				self.UserData = doc.data()
 				self.UserName = doc.data().FirstName + " " + doc.data().LastName;
 				})
 				

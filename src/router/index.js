@@ -205,7 +205,7 @@ const routes = [
     component: ()=> import('@/components/MarawanComponents/Purchase/Subscribe.vue') //Subscribe,
     
   },
-  
+
   {
     path:'/Success/:id',
     name:'Success',
