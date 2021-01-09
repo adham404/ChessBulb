@@ -61,6 +61,7 @@ export default {
       live : false,
       Mounted: false,
       ShowChatBoard:false,
+      ShowOrhideEngine: true,
     }
   },
    async mounted(){
@@ -185,6 +186,9 @@ export default {
      socket.on('chess-move', data => {
       EventBus.$emit('displayboardfen',data)
       console.log(data)
+      })
+     socket.on('HideOrShowTheEngine', data => {
+      this.ShowOrhideEngine = data ; 
       })
     },
        sendmessage(){

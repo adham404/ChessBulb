@@ -14,7 +14,7 @@ import * as Chess from "chess.js";
 var board = null;
 import { EventBus } from "@/main.js";
 export default {
-  props: ["move", "start", "id"],
+  props: ["move", "start", "id","multi"],
   data() {
     return {
       board: null,
@@ -100,9 +100,15 @@ export default {
       board.position(game.fen());
       var lastmove = game.history();
       lastmove = lastmove[lastmove.length - 1];
+      if(this.multi){
+        EventBus.$emit("newmoveInMulti", lastmove,this.id);
+        EventBus.$emit("newfen", game.fen(),this.id);
+      }else{
       EventBus.$emit("newmove", lastmove);
       EventBus.$emit("newfen", game.fen());
       EventBus.$emit("newfenAndmove", [game.fen(),lastmove]);
+      }
+      
     }
 
     //DONE valitade move(20min)

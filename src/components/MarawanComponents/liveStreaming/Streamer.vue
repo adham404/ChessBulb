@@ -261,6 +261,13 @@ export default {
       }
      
     },
+    sendEngineShowOrHide(data){
+      if(socket){
+        socket.emit('HideOrShowTheChessEngine', data)
+        
+      }
+     
+    },
     async GetUserNameFromId(ID){
       var nna
     await  firebase.firestore().collection('Users').doc(ID).get().then(doc=>{
