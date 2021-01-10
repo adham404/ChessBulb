@@ -41,7 +41,7 @@
 						{{ Academy.About }}
 					</h4>
 					<router-link
-						v-if="notEnrolled"
+						v-if="Enroll"
 						:to="{
 							path:`/Purchase/${Academy.PriceId}`
 						}"
@@ -50,6 +50,9 @@
 							Enroll
 						</button></router-link
 					>
+					<button class="Shadow" @click="Dashboard" v-if="Owner">
+						Dashboard 
+					</button>
 				</div>
 			</div>
 		</div>
@@ -67,21 +70,13 @@
 export default {
 	name: "AcademiesCard",
 	//(Done) use props for getting the passed data (3 minutes)
-	props: ["Academy", "allAcademies", "AcademiesId"],
-	data() {
-		return {
-			notEnrolled: false,
-		};
-	},
-	mounted() {
-		if (this.allAcademies) {
-			for (let index = 0; index < this.AcademiesId.length; index++) {
-				if (this.AcademiesId[index] != this.Academy.AcademyId) {
-					this.notEnrolled = true;
-				}
-			}
+	props: ["Academy","Enroll","Owner"],
+	methods:{
+		Dashboard()
+		{
+						
 		}
-	},
+	}
 };
 </script>
 
