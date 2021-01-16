@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ChessBulb</string>
+    <string name="title_activity_main">ChessBulb</string>
+    <string name="package_name">org.chessbulb.app</string>
+    <string name="custom_url_scheme">org.chessbulb.app</string>
+</resources>
