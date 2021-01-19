@@ -41,6 +41,7 @@ var userid ;
 var livedata;
 var stopcam;
 var iceServer = {} ;
+var currentStamp = -1 ;
 export default {
   components:{
       ChessBoardInput,
@@ -53,7 +54,9 @@ export default {
       room : null,
       message: null,
       messages:[],
-      fen : null
+      fen : null,
+      moves : [],
+      userslist:[],
     }
   },
    mounted(){
@@ -111,9 +114,35 @@ export default {
       checkandconnect(){
           if(userid && livedata.data().iceServers){
               this.connect();
-              EventBus.$on('newfen',fen =>{
-                  this.sendchessmove(fen)
+              EventBus.$on('newfen', async fen =>{
+                if(currentStamp < this.timestamps.length -1){
+                  currentStamp = await  this.timestamps.length
+                  console.log('pog')
+              }else{
+                 await currentStamp++
+              }
+                  this.sendchessmove(fen);
+                  this.moves.push(fen);
               })
+                  EventBus.$on("Control", async (data) => {
+      
+      if (data == "next") {
+          await currentStamp++
+          var e = await this.moves[currentStamp]
+          
+          await EventBus.$emit("boradfen", e)
+          this.sendchessmove(e);
+          console.log(this.timestamps)
+      }else if(data == "back"){
+          await currentStamp--
+          e = await this.moves[currentStamp]
+          await EventBus.$emit("boradfen", e)
+          
+          this.sendchessmove(e);
+          
+          console.log(this.timestamps)
+      }
+    });
           }else{
               alert('Error: There are no data ')
           }
@@ -161,6 +190,7 @@ export default {
             }
       socket.on('userconnected', userId => {
         console.log(userId)
+        self.userslist.push(userId);
       const call = mypeer.call(userId, stream)
       mypeer.on('error',e=>{
         console.log(e)
