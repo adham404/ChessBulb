@@ -14,9 +14,13 @@ export default function(text){
     const engine = new Chess();
     var res = engine.load_pgn(text,{ sloppy: true})
     if(res){
+        widget.IsPgn = true
         // console.log('pgn is detected!!')
-        return RemoveHeaders(text)
+        widget.Text = RemoveHeaders(text)
     }else{
-        return text
+        widget.IsPgn = false
+        widget.Text = text
     }
+    return widget
+    
 } 

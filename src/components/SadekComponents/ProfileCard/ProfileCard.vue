@@ -51,7 +51,7 @@ export default {
 			UserData:"",
 			UserName:"",
 			TextColor:{
-				color:"white"
+			color:"white"
     },
 	}
 	},
