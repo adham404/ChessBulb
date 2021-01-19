@@ -137,6 +137,9 @@ export default {
 			}
 		},
 	},
+	beforeDestroy(){
+		EventBus.$off("newPgn")
+	},
 	async mounted() {
 		//Using Event Bus to Activate the SideBar
 		setTimeout(() => {this.Mounted = true}, 200)

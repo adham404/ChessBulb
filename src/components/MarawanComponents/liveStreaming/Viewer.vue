@@ -17,9 +17,15 @@
           <div class="Messages"  v-chat-scroll="{always: false, smooth: true}">
             <p v-for="(i,index) in messages" :key="index" >{{i.name}} : {{i.message}}</p>
           </div>          
-          <div class="sendmessage">
-            <input type="text" v-model="message" v-on:keyup.enter = "sendmessage">
+          <div class="sendmessage" >
+            
+            
+              <!-- <ChessBoardInput v-if="ShowChatBoard" id="fhefhefh" style="position:absolute;width: 200px; bottom: 0;right:0"  /> -->
+              <input type="text" v-model="message" v-on:keyup.enter = "sendmessage">
+            
+            
           <button @click="sendmessage" >Send</button>
+          <button @click="ShowChatBoard = !ShowChatBoard" >Show Board</button>
           </div>          
         </div>
       </div>
@@ -29,7 +35,7 @@
 
 <script>
 import ChessBoardDisplay from '@/components/MarawanComponents/ChessBoard/ChessBoardDisplay'
-
+// import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
 import {EventBus} from "@/main.js"
 import firebase from "firebase"
 var userid ; 
@@ -42,7 +48,8 @@ var livedata ;
 var username ;
 export default {
   components:{
-    ChessBoardDisplay
+    ChessBoardDisplay,
+    // ChessBoardInput,
   },
   
   data(){
@@ -52,7 +59,9 @@ export default {
       message: null,
       messages:[],
       live : false,
-      Mounted: false
+      Mounted: false,
+      ShowChatBoard:false,
+      ShowOrhideEngine: true,
     }
   },
    async mounted(){
@@ -62,6 +71,7 @@ export default {
         await firebase.auth().onAuthStateChanged(async function(user) {
            if (user) {
                userid = user.uid
+               self.uids = user.uid
                var currentlive =  self.$route.params.id
                 livedata = await firebase.firestore().collection('Lives').doc(currentlive).get()
                 var userdata = await firebase.firestore().collection('Users').doc(userid).get()
@@ -103,13 +113,15 @@ export default {
    
     
   },
-  beforeDestroy () {
+  async beforeDestroy () {
     if(mypeer){
             mypeer.destroy();
           //  console.log('ddd')
         }
       if(socket){
-        socket.close()
+        
+        await socket.emit('left-room', this.uids)
+        await socket.close()
         // console.log('a7a a7a a7a')
       }
     EventBus.$off('Link')
@@ -118,13 +130,14 @@ export default {
     async connect(){
       this.messages = []
         if(mypeer){
-            mypeer.destroy();
+           await mypeer.destroy();
         }
         if(socket){
-        socket.close()
+         
+      await  socket.close()
         
       }
-        var url = "livechessbulbdd.herokuapp.com"
+      var url = "livechessbulbdd.herokuapp.com"
         // var url = "localhost"
      mypeer = await new Peer( userid,{
             host : url , 
@@ -172,7 +185,10 @@ export default {
       })
      socket.on('chess-move', data => {
       EventBus.$emit('displayboardfen',data)
-      // console.log(data)
+      console.log(data)
+      })
+     socket.on('HideOrShowTheEngine', data => {
+      this.ShowOrhideEngine = data ; 
       })
     },
        sendmessage(){
@@ -198,9 +214,19 @@ export default {
 }
 .sendmessage{
   height: 10%;
+  /* width: 90%;
+  display: flex;
+  justify-content: space-between; */
+  
   /* background-color: red; */
 }
+#inputchat{
+  position: relative;
+  height: 22px;
+  width: 400px;
+}
 .sendmessage input{
+  
    font-family: "Raleway", sans-serif;
   font-weight: lighter;
   border: 1px solid #cac7c7;
@@ -220,7 +246,7 @@ p{
 }
 button{
 		height: 30px;
-		width: 150px;
+		width: 75px;
 		border: none;
 		outline: none;
 		border-radius: 1.2rem;

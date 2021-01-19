@@ -24,6 +24,7 @@
                 <button v-if="VisitorFlag && Followed" @click="UnFollow">UnFollow</button>
                 <button v-if="!VisitorFlag" @click="GoToExplore">Find Players</button>
                 <button v-if="!VisitorFlag" @click="SignOut">Sign Out &#128549;</button>
+                <button v-if="!VisitorFlag" @click="UpdatePass">Update Password</button>
                 <button v-if="VisitorFlag" @click="Back">Go Back to my Profile</button>
             </div>
 
@@ -37,7 +38,6 @@
         </div>
         <div v-if="!(CurrentComponent == 'NewsFeed')">
             <component :FollowingIDs="FollowingID" :ClickedUserId="UserID" :Personal="true" :General="false" :allAcademies="false" :is="CurrentComponent"></component>
-
         </div>
         <!-- <FindPlayers/> -->
         
@@ -46,6 +46,7 @@
 
 <script>
 import firebase from "firebase"
+import UpdatePass from "../ShemyComponents/UpdatePass"
 import FindPlayers from "../MarawanComponents/FindPlayers";
 import Courses from "../ShemyComponents/Courses";
 import MyCourses from "../MarawanComponents/MyCourses";
@@ -94,6 +95,10 @@ import {EventBus} from "../../main";
             EditBio()
             {
                 this.ShowBioEdit = true;
+            },
+            UpdatePass()
+            {
+                this.CurrentComponent = "UpdatePass"
             },
             SaveBio()
             {
@@ -321,6 +326,7 @@ import {EventBus} from "../../main";
             Academies,
             NewsFeed,
             MyCourses,
+            UpdatePass,
             CreatedCourses            
         }
     }

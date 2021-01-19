@@ -29,6 +29,11 @@ export default {
       pgnoutput:[],
     };
   },
+  beforeDestroy(){
+    EventBus.$off('newmove');
+    EventBus.$off('Control');
+
+  },
   async mounted() {
     chess = await new Chess();
     game = await new Chess();

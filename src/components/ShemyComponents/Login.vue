@@ -10,7 +10,7 @@
         <div class="Container">
             <div class="SignUpHeader">
                 <h1>Login</h1>
-                <div id="SubHeader">Already have an account?<router-link to="/Login"><span>Login</span></router-link></div>
+                <div id="SubHeader">Don't have an account?<router-link to="/SignUp"><span>SignUp</span></router-link></div>
             </div>
             
 
@@ -20,6 +20,8 @@
             <input v-model="UserEmail" type="email" name="" id="Email">
             <label for="Password">Password</label>
             <input v-model="UserPassword" type="password" name="" id="Password">
+            <!-- <a style="color: black" @click="ResetPass" href="">forgot password ?</a> -->
+            <p @click="ResetPass">forgot password ?</p>
             <!-- DONE Create 'Login' button and assign the button to the function {Login} (2min) -->
             <button @click="Login">Login</button>
             <p>{{ErrorMessage}}</p>
@@ -82,6 +84,21 @@ export default {
                 // }
 
         }    
+        },
+        async ResetPass()
+        {
+          if(this.UserEmail)
+          {
+            await firebase.auth().sendPasswordResetEmail(this.UserEmail).then(() => {
+              alert("Password reset email was sent to your email "+ this.UserEmail);
+            }).catch(err => {
+              console.log(err);
+            })
+          }
+          else
+          {
+            alert("Please fill in your email to send you a reset pass email")
+          }
         },
         Validate(){
             if(this.UserEmail == "" || this.UserPassword == "")

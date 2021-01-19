@@ -1,39 +1,39 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import ProductiveToggle from '@/components/Skeleton/ProductiveToggle.vue'
-import HomePage from '@/components/Skeleton/HomePage.vue'
+// import HomePage from '@/components/Skeleton/HomePage.vue'
 // import CourseForm from '@/components/MarawanComponents/CourseForm.vue';
-import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
-import LiveForm from '@/components/MarawanComponents/LiveForm.vue';
-import paymob from '@/components/MarawanComponents/paymob.vue';
-import LiveStreamer from '@/components/MarawanComponents/liveStreaming/Streamer.vue';
-import LiveViewer from '@/components/MarawanComponents/liveStreaming/Viewer.vue';
-import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
-import AddStory from '@/components/ShemyComponents/AddStory.vue'
-import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
-import AddAnalysis from '@/components/SadekComponents/NewsFeed/AddAnalysis.vue'
-import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
-import StoryPreview from '@/components/MarawanComponents/StoryScrolling/Stortypreview.vue'
-import Courses from '@/components/ShemyComponents/Courses.vue'
-import MyCourses from '@/components/MarawanComponents/MyCourses.vue'
-import CoursePreview from '@/components/ShemyComponents/CoursePreview.vue'
-import Streaming from '@/components/ShemyComponents/Streaming.vue'
-import Academies from '@/components/SadekComponents/Academy/Academies.vue'
-import CheckItOut from '@/components/SadekComponents/Academy/CheckItOut.vue'
-import Login from '@/components/ShemyComponents/Login.vue'
-import SignUp from '@/components/ShemyComponents/SignUp.vue'
-import UserProfile from '@/components/ShemyComponents/UserProfile.vue'
-import Notifications from '@/components/ShemyComponents/Notifications.vue'
-import InstructorProfile from '@/components/MarawanComponents/InstructorProfile.vue'
-import Purchase from '@/components/MarawanComponents/Purchase/Purchase.vue'
-import Subscribe from '@/components/MarawanComponents/Purchase/Subscribe.vue'
-import PurchaseSuccess from '@/components/MarawanComponents/Purchase/PurchaseSuccess.vue'
-import PurchaseCancel from '@/components/MarawanComponents/Purchase/PurchaseCancel.vue'
-import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
-import AcademyForm from '@/components/MarawanComponents/AcademyForm.vue'
-import SadekTest from '@/components/SadekComponents/SadekTest.vue'
-import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
-import Teach from '@/components/Skeleton/Teach.vue'
+// import CreateCourse from '@/components/MarawanComponents/CreateCourse.vue';
+// import LiveForm from '@/components/MarawanComponents/LiveForm.vue';
+// import paymob from '@/components/MarawanComponents/paymob.vue';
+// import LiveStreamer from '@/components/MarawanComponents/liveStreaming/Streamer.vue';
+// import LiveViewer from '@/components/MarawanComponents/liveStreaming/Viewer.vue';
+// import PostGame from '@/components/SadekComponents/PostGame/PostGame.vue'
+// import AddStory from '@/components/ShemyComponents/AddStory.vue'
+// import Analyze from '@/components/SadekComponents/NewsFeed/Analyze.vue'
+// import AddAnalysis from '@/components/SadekComponents/NewsFeed/AddAnalysis.vue'
+// import StoryDisplayWindow from '@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'
+// import StoryPreview from '@/components/MarawanComponents/StoryScrolling/Stortypreview.vue'
+// import Courses from '@/components/ShemyComponents/Courses.vue'
+// import MyCourses from '@/components/MarawanComponents/MyCourses.vue'
+// import CoursePreview from '@/components/ShemyComponents/CoursePreview.vue'
+// import Streaming from '@/components/ShemyComponents/Streaming.vue'
+// import Academies from '@/components/SadekComponents/Academy/Academies.vue'
+// import CheckItOut from '@/components/SadekComponents/Academy/CheckItOut.vue'
+// import Login from '@/components/ShemyComponents/Login.vue'
+// import SignUp from '@/components/ShemyComponents/SignUp.vue'
+// import UserProfile from '@/components/ShemyComponents/UserProfile.vue'
+// import Notifications from '@/components/ShemyComponents/Notifications.vue'
+// import InstructorProfile from '@/components/MarawanComponents/InstructorProfile.vue'
+// import Purchase from '@/components/MarawanComponents/Purchase/Purchase.vue'
+// import Subscribe from '@/components/MarawanComponents/Purchase/Subscribe.vue'
+// import PurchaseSuccess from '@/components/MarawanComponents/Purchase/PurchaseSuccess.vue'
+// import PurchaseCancel from '@/components/MarawanComponents/Purchase/PurchaseCancel.vue'
+// import MarwanTest from '@/components/MarawanComponents/marawantest.vue'
+// import AcademyForm from '@/components/MarawanComponents/AcademyForm.vue'
+// import SadekTest from '@/components/SadekComponents/SadekTest.vue'
+// import FindPlayers from '@/components/MarawanComponents/FindPlayers.vue'
+// import Teach from '@/components/Skeleton/Teach.vue'
 // import { component } from 'vue/types/umd';
 
 
@@ -43,84 +43,84 @@ const routes = [
   {
     path: '/Teach',
     name: 'Teach' ,
-    component: Teach
+    component: ()=> import('@/components/Skeleton/Teach.vue') //Teach
   },
   {
     path: '/paymob',
     name: 'paymob' ,
-    component: paymob
+    component: ()=> import('@/components/MarawanComponents/paymob.vue') //paymob
   },
   {
     path: '/',
     name: 'SignUp',
-    component: SignUp
+    component: ()=> import('@/components/ShemyComponents/SignUp.vue') //SignUp
   },
   {
     path: '/Home',
     name: 'Home',
-    component: HomePage,
+    component: ()=>  import ('@/components/Skeleton/HomePage.vue'),
   },
   {
     path: '/CreateCourse',
     name: 'CreateCourse',
-    component: CreateCourse,
+    component: ()=> ()=>import('@/components/MarawanComponents/CreateCourse.vue'),
   },
   {
     path: '/AddAnalysis',
     name: 'AddAnalysis',
-    component: AddAnalysis,
+    component: ()=> import('@/components/SadekComponents/NewsFeed/AddAnalysis.vue') //AddAnalysis,
   },
   {
     path: '/PostGame',
     name: 'PostGame',
-    component: PostGame,
+    component: ()=> import('@/components/SadekComponents/PostGame/PostGame.vue') //PostGame,
   },
   {
     path: '/LiveStreamer/:id',
     name: 'LiveStreamer',
-    component: LiveStreamer,
+    component: ()=> import('@/components/MarawanComponents/liveStreaming/Streamer.vue') //LiveStreamer,
   },
   {
     path: '/LiveForm',
     name: 'LiveForm',
-    component: LiveForm,
+    component: ()=> import('@/components/MarawanComponents/LiveForm.vue') //LiveForm,
   },
   {
     path: '/LiveViewer/:id',
     name: 'LiveViewer',
-    component: LiveViewer,
+    component: ()=> import('@/components/MarawanComponents/liveStreaming/Viewer.vue') //LiveViewer,
   },
   {
     path: '/PostStory',
     name: 'PostStory',
-    component: AddStory
+    component: ()=> import('@/components/ShemyComponents/AddStory.vue') //AddStory
   },
   {
     path: '/AcademyForm',
     name: 'AcademyForm',
-    component: AcademyForm
+    component: ()=> import('@/components/MarawanComponents/AcademyForm.vue') //AcademyForm
   },
   {
     path: '/Marwan',
     name: 'Marwan',
-    component: MarwanTest,
+    component: ()=> import('@/components/MarawanComponents/marawantest.vue') //MarwanTest,
     
   },
   {
     path: '/Posts/:id',
     name: 'Post',
-    component: Analyze
+    component: ()=> import('@/components/SadekComponents/NewsFeed/Analyze.vue') //Analyze
   },
   {
     path: '/Stories/',
     name: 'Stories',
-    component: StoryDisplayWindow,
+    component: ()=> import('@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'), //StoryDisplayWindow,
     props: true,
     children:[
       {
         path : ':id',
         name : "StoryPreview",
-        component : StoryPreview
+        component : ()=> import('@/components/MarawanComponents/StoryScrolling/Stortypreview.vue')
 
       }
     ]
@@ -128,104 +128,104 @@ const routes = [
   {
     path: '/Courses',
     name: 'Courses',
-    component: Courses
+    component: ()=> import('@/components/ShemyComponents/Courses.vue') //Courses
   },
   {
     path: '/Courses/CoursePreview/:CoursesID',
     name: 'CoursePreview',
-    component: CoursePreview,
+    component: ()=> import( '@/components/ShemyComponents/CoursePreview.vue'), //CoursePreview,
     props: true
   },
   {
     path: '/Courses/CourseStreaming/:CourseID',
     name: 'CourseStreaming',
     props: true,
-    component: Streaming
+    component: ()=> import('@/components/ShemyComponents/Streaming.vue') //Streaming
   },
   {
     path: '/Academies',
     name: 'Academies',
-    component: Academies,
+    component: ()=> import('@/components/SadekComponents/Academy/Academies.vue'), //Academies,
     props: true
   },
   {
     path: '/Academies/:id',
     name: 'AcademyPage',
-    component: CheckItOut,
+    component: ()=> import('@/components/SadekComponents/Academy/CheckItOut.vue') //CheckItOut,
   },
   {
     path: '/Login',
-    name: Login,
-    component: Login,
+    name: "Login",
+    component: ()=> import('@/components/ShemyComponents/Login.vue') //Login,
   },
   {
     path: '/SignUp',
     name: 'SignUp',
-    component: SignUp
+    component: ()=> import('@/components/ShemyComponents/SignUp.vue') //SignUp
   },
   {
     path: '/profile/:id',
     name: 'Profile',
     props: true,
-    component: UserProfile,
+    component: ()=> import('@/components/ShemyComponents/UserProfile.vue'), //UserProfile,
     children: [
       {
         path: 'Courses',
         name: 'UserCourses',
-        component: MyCourses
+        component: ()=> import('@/components/MarawanComponents/MyCourses.vue') //MyCourses
       },
       {
         path: 'Academies',
         name: 'UserAcademies',
-        component: Academies
+        component: ()=> import('@/components/SadekComponents/Academy/Academies.vue') //Academies
       },
       {
         path: 'Notifications',
         name: 'UserNotifications',
-        component: Notifications
+        component: ()=> import('@/components/ShemyComponents/Notifications.vue') //Notifications
       }
     ]
   },
   {
     path: '/InstructorRegistration',
     name: 'InstructorRegistration',
-    component: InstructorProfile
+    component: ()=> import('@/components/MarawanComponents/InstructorProfile.vue') //InstructorProfile
   },
   {
     path: '/Purchase/:id',
     name: 'Purchase',
     props: true,
-    component: Purchase,
+    component: ()=> import('@/components/MarawanComponents/Purchase/Purchase.vue') //Purchase,
     
   },
   {
     path: '/Subscribe/:id',
     name: 'Subscribe',
     props: true,
-    component: Subscribe,
+    component: ()=> import('@/components/MarawanComponents/Purchase/Subscribe.vue') //Subscribe,
     
   },
-  
+
   {
     path:'/Success/:id',
     name:'Success',
-    component : PurchaseSuccess
+    component : ()=> import('@/components/MarawanComponents/Purchase/PurchaseSuccess.vue')
   },
   {
     path:'/Cancel/:id',
     name:'Cancel',
-    component : PurchaseCancel
+    component : ()=>import('@/components/MarawanComponents/Purchase/PurchaseCancel.vue')
   },
 
   {
     path: '/FindPlayers',
     name: 'Explore',
-    component: FindPlayers
+    component: ()=> import('@/components/MarawanComponents/FindPlayers.vue') //FindPlayers
   },
   {
     path: '/Sadek',
     name: 'Sadek',
-    component: SadekTest
+    component: ()=> import('@/components/SadekComponents/SadekTest.vue') //SadekTest
   }
 ]
 

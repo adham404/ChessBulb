@@ -1,5 +1,4 @@
-var Fish =new Worker('./stockfish.asm.js');
-
+ var Fish = new Worker( '/stockfish.js'||"/stockfish.asm.js");
 var send = function send(uci){
     Fish.postMessage(uci);
 }

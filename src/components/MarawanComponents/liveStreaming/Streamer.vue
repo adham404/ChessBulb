@@ -13,15 +13,21 @@
       <div class="CourseData">
         
         <div class="TimeStamps">
+          <div class="Chat">
           <h2 id="SmallHeader">Chat</h2>
+          <div class="Messages"  v-chat-scroll="{always: false, smooth: true}">
+            <p v-for="(i,index) in messages" :key="index" >{{i.name}} : {{i.message}}</p>
+          </div>          
           <p v-for="(i,index) in messages" :key="index" >{{i.name}} : {{i.message}}</p>
+          <p v-for="i in UsersArray" :key="i.id" >{{i.name}} </p>
           <div class="sendmessage">
-            <input type="text" v-model="message" >
+            <input type="text" v-model="message" v-on:keyup.enter = "sendmessage">
           <button @click="sendmessage" >Send</button>
+          </div>          
           </div>
-          
         </div>
-        <StockFish/>
+        <button @click="remountStockFish">Remont StockFish</button>
+        <StockFish v-if="showStockfish" ></StockFish>
       </div>
     </div>
 
@@ -49,14 +55,16 @@ export default {
   },
   data(){
     return{
+      showStockfish:true,
         live : false,
       uid : null ,
       room : null,
       message: null,
       messages:[],
       fen : null,
-      moves : [],
-      userslist:[],
+      UsersArray:[],
+      MovesArray:["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"],
+      CurrentMove:0,
     }
   },
    mounted(){
@@ -109,20 +117,61 @@ export default {
         // console.log('a7a a7a a7a')
       }
     EventBus.$off('Link')
+    EventBus.$off('newfen')
+    EventBus.$off('Control')
  },
   methods:{
+    remountStockFish(){
+      this.showStockfish = false;
+      setTimeout(()=>{this.showStockfish=true},100)
+    },
+    async PlayMoveFromFEN(FEN){
+      if(this.CurrentMove==this.MovesArray.length-1){
+        await this.sendchessmove(FEN)
+        await this.MovesArray.push(FEN)
+        await this.CurrentMove++
+      }else{
+      await  this.DeletTheOldLine()
+      await  this.sendchessmove(FEN)
+      await  this.MovesArray.push(FEN)
+      await  this.CurrentMove++
+      }
+      // EventBus.$emit("boradfen",FEN)
+    },
+    DeletTheOldLine(){
+      for(var i=this.MovesArray.length-1;i>this.CurrentMove ; i--){
+        this.MovesArray.pop()
+      }
+    
+    },
+    async UndoTheFen(){
+      if(this.CurrentMove > 0){
+        await this.CurrentMove--;
+        await  this.sendchessmove(this.MovesArray[this.CurrentMove])
+        EventBus.$emit("boradfen",this.MovesArray[this.CurrentMove])
+      }
+     
+    },
+    async RedoTheFen(){
+       if(this.CurrentMove < this.MovesArray.length-1){
+        await this.CurrentMove++;
+        await  this.sendchessmove(this.MovesArray[this.CurrentMove])
+        EventBus.$emit("boradfen",this.MovesArray[this.CurrentMove])
+      }
+    },
       checkandconnect(){
           if(userid && livedata.data().iceServers){
               this.connect();
-              EventBus.$on('newfen', async fen =>{
-                if(currentStamp < this.timestamps.length -1){
-                  currentStamp = await  this.timestamps.length
-                  console.log('pog')
-              }else{
-                 await currentStamp++
-              }
-                  this.sendchessmove(fen);
-                  this.moves.push(fen);
+              EventBus.$on('newfenAndmove',fen =>{
+                  
+                  this.PlayMoveFromFEN(fen[0])
+              });
+              EventBus.$on("Control",async(data)=>{
+                if (data == "next") {
+                  await this.RedoTheFen()
+                } else if (data == "back") {
+                  await this.UndoTheFen()
+                }
               })
                   EventBus.$on("Control", async (data) => {
       
@@ -188,16 +237,17 @@ export default {
                     track.stop();
                     });
             }
-      socket.on('userconnected', userId => {
+      socket.on('userconnected',async userId => {
         console.log(userId)
-        self.userslist.push(userId);
+        var userName = await this.GetUserNameFromId(userId)
+        this.UsersArray.push({id: userId, name: userName});
       const call = mypeer.call(userId, stream)
       mypeer.on('error',e=>{
         console.log(e)
       })
       console.log( 'calling', call)
       })
-      myvideo.srcObject = stream
+      myvideo.srcObject = stream  // stream --> camera    Myvideo ==> <video id="video" ></video>
       
       myvideo.addEventListener('loadedmetadata',()=>{
         myvideo.play()
@@ -208,6 +258,15 @@ export default {
     socket.on('chat-message', data => {
       this.messages.push(data)
             console.log(data)
+
+      })
+    socket.on('userdisconnected', data => {
+      // this.messages.push(data)
+            console.log("left the stream",data)
+            var idindex = this.UsersArray.findIndex(x=> x.id == data)
+            if (idindex > -1) {
+              this.UsersArray.splice(idindex, 1);
+              }
 
       })
     },
@@ -226,6 +285,23 @@ export default {
       }
      
     },
+    sendEngineShowOrHide(data){
+      if(socket){
+        socket.emit('HideOrShowTheChessEngine', data)
+        
+      }
+     
+    },
+    async GetUserNameFromId(ID){
+      var nna
+    await  firebase.firestore().collection('Users').doc(ID).get().then(doc=>{
+         nna =  doc.data().FirstName.toString() + " " +  doc.data().LastName.toString()
+        console.log(nna)
+      
+      })
+      return nna.toString()
+      
+    }
   }
   
 }
@@ -298,8 +374,59 @@ h2{
   width: 50%;
   background-color:#1DACA8 ;
   border-radius: 10px;
+  /* background-color: aqua; */
+}
+.Messages{
+  height: 50%;
+  /* background-color: green; */
+  overflow-y: scroll;
+  overflow-wrap: break-word;
+}
+.sendmessage{
+  height: 20%;
+  /* background-color: red; */
+}
+.sendmessage input{
+   font-family: "Raleway", sans-serif;
+  font-weight: lighter;
+  border: 1px solid #cac7c7;
+  border-radius: 12px;
+  padding-left: 5px;
+  height: 22px;
+  font-size: 1vw;
+  outline: none;
+  width: 250px;
+  overflow-wrap: break-word;
+}
+#SmallHeader{
+  border-bottom: 3px solid white;
+  font-size: 1.3rem;
+}
+.Chat{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color:#1DACA8 ;
+  border-radius: 10px;
   overflow: auto;
   /* background-color: aqua; */
 }
+.Engine{
+  width: 50%;
+  height: 100%;
+}
+button{
+		height: 30px;
+		width: 150px;
+		border: none;
+		outline: none;
+		border-radius: 1.2rem;
+		font-size: 0.9rem;
+		font-family: 'Raleway', sans-serif;
+		background-color: #022A68;
+		color: white;
+    margin-top: 5px;
+	}
 
 </style>

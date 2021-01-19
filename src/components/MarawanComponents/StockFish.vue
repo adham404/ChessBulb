@@ -2,14 +2,14 @@
   <div class="ChessEngine" >
       <h2 id="SmallHeader">StockFish</h2>
       <p v-if="loading" > Loading...</p>
-      <p  v-for="(line,index) in lines" :key="index" @click="emitmove(line.move)" > {{line.move}}  {{line.score}}</p>  
+      <p  v-for="(line,index) in lines" :key="index" @click="emitmove(line.move)" > {{GetCorrectMoveFormat(fen,line.move)}}  {{line.score}}</p>  
   </div>
 </template>
 
 <script>
 import {send , massage} from '@/ChessEngine/fish.js'
 import {EventBus} from '@/main.js'
-// import Chess from "chess.js"
+import Chess from "chess.js"
 var engineStatus = {};
 // var isEngineRunning 
 // var engine
@@ -17,7 +17,7 @@ var newfen
 export default {
     data(){
         return{
-            fen : null,
+            fen : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
             debugging : true,
             lines : [],
             isEngineRunning : false,
@@ -36,12 +36,15 @@ export default {
                 this.loading = false
 
                 newfen = null 
-                console.log('2-2 engine stoped new fen is searched')
+                console.log('the engine stoped now run new fen')
 
                 }
                 
             }
         }
+    },
+    beforeDestroy(){
+        EventBus.$off('newfen')
     },
     mounted(){
         
@@ -49,16 +52,16 @@ export default {
         send("go depth 20");
         
         EventBus.$on('newfen',  fen1 => {
-            // console.log('move happend from event bus')
+            console.log('move happend from event bus in the stockfish')
             this.lines=[]
-            
+            this.fen = fen1
             if(!this.isEngineRunning){
-                console.log('1-1 new fen engine stop')
+                console.log('the engine was not running sent the fen ',fen1)
                  send(`position fen ${fen1}`);
                  send("go depth 20");
             }else{
                 send('stop')
-                console.log('2-1 new fen engine running loading is true ')
+                console.log('the engine was running show loading and send stop and wait to stop')
                 this.loading = true
                 self.showmoves = false
                 newfen = fen1
@@ -129,7 +132,9 @@ export default {
                         // console.log(m[1]+m[2]+' '+engineStatus.score )
                         var po = { move: m[1]+'-'+m[2] , score : engineStatus.score}
                         if(self.showmoves){
-                            self.lines.unshift(po)
+                            // self.lines.unshift(po)
+                            self.AddNewLine(po)
+                            // console.log(po.move)
                         }
                         
                         
@@ -145,12 +150,26 @@ export default {
         send("uci")
     },
     methods:{
-        
-        move1(){
-            this.lines=[]
-            send(`position fen ${this.fen}`);
-            send("go depth 22");
+        async AddNewLine(NewLine){
+            if(this.lines.length > 0 && NewLine.move == this.lines[0].move){
+                await this.lines.shift();
+                
+            }
+            var idindex = await this.lines.findIndex(x => x.move == NewLine.move);
+            if (idindex > -1) {
+            await  this.lines.splice(idindex, 1);
+              }
+            await this.lines.unshift(NewLine);
         },
+        
+        GetCorrectMoveFormat(thefen,move){
+            if(thefen && move){
+                const chess = new Chess(thefen)
+                chess.move(move,{ sloppy: true })
+                return chess.history()[0]
+            }
+            
+            },
         emitmove(move){
             EventBus.$emit('boardmove',move)
         }
@@ -179,6 +198,7 @@ h2{
 }
 .ChessEngine{
   width: 100%;
+  height: 100%;
   background-color:#0487af;
   border-radius: 10px;
   overflow: auto;

@@ -8,12 +8,10 @@
 
 <script>
 //DONE import chessboard and jqary in index.html (5min)
-import  Chessboard from "chessboardjs";
-// jquery
-global.jQuery = require('jquery');
+import Chessboard from "chessboardjs-vue";
+
 import {EventBus} from "@/main.js"
-var $ = global.jQuery;
-window.$ = $; 
+
 export default {
 //DONE add a fen prop
     props:['fen','id','hideNotation'],
@@ -24,15 +22,15 @@ export default {
         }
     },
     mounted(){
-        
+        let self = this
         EventBus.$on("displayboardfen", move =>{
-            this.board.position(move)
+            self.board.position(move)
            
         });
         EventBus.$on("displayboardfenbyid", (move,idd) =>{
             // console.log('resiving data : '+ idd + 'my id is ' + this.id)
-            if(idd == this.id){
-                this.board.position(move)
+            if(idd == self.id){
+                self.board.position(move)
             }
             
            
@@ -41,21 +39,18 @@ export default {
         
         
         //DONE creat new board(3min)
-        //this toke about 2 hours because a problem with pieces images
-        function piecelink(piece){
-                return require('@/assets/img/chesspieces/wikipedia/' + piece + '.png') 
-            }
+        
             var config = {
             showNotation: this.hideNotation ? false : true,
             draggable: false,
             position: this.fen ? this.fen : 'start',
             showErrors : 'alert',
-            pieceTheme: piecelink,
+            
            
             
         }
-         this.board = Chessboard(this.id, config)
-         this.board.resize()
+         self.board = Chessboard(self.id, config)
+        
     },
     beforeDestroy () {
     EventBus.$off('displayboardfen')
@@ -67,7 +62,19 @@ export default {
     //DONE wath the fen prop for change and update the board
     watch:{
         fen:function(){
-            this.board.position(this.fen)
+            var config = {
+            showNotation: this.hideNotation ? false : true,
+            draggable: false,
+            position: this.fen ? this.fen : 'start',
+            showErrors : 'alert',
+            
+           
+            
+        }
+            var board2 = Chessboard(self.id, config)
+         
+                board2.position(this.fen)
+           
         }
     }
 

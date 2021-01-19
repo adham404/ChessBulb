@@ -1,8 +1,8 @@
 <template>
   <div class="Container">
     <div class="ChessBoard" v-if="Mounted">
-      <ChessBoardInput  v-if="!ShowSolution" id="grggr" ></ChessBoardInput>
-      <ChessBoardDisplay  v-if="ShowSolution" id="grggr" ></ChessBoardDisplay>
+      <ChessBoardInput  v-if="!ShowSolution" id="grgnvnoideindivgr" ></ChessBoardInput>
+      <ChessBoardDisplay  v-if="ShowSolution" id="grgfwsvcnciponscgrs" ></ChessBoardDisplay>
     </div>
     <div class="StoryData">
       <div class="DescriptionHeader">
@@ -140,7 +140,7 @@ export default {
       ee : EventBus,
       SolutionMoves : null,
       SolutionAlertMessage : "",
-      Mounted: false,
+      Mounted: true,
     };
   },
   components: {
@@ -190,7 +190,7 @@ export default {
   },
   props: ["moves"],
   mounted() {
-      setTimeout(() => {this.Mounted = false}, 400)
+      // setTimeout(() => {this.Mounted = true}, 200)
       if (this.moves.Moves) {
         // console.log(this.moves);
         this.alllines = this.moves.Moves;
