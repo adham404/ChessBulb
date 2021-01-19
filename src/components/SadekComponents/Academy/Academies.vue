@@ -3,8 +3,8 @@
 	<div>
 		<SearchEngine SearchIndex="Academies"/>
 		<!-- <button @click="CreateBlankAcademy(0)">Create a ToEnroll Academy doc</button>
-		<button @click="CreateBlankAcademy(1)">Create an Enrolled Academy doc</button>
-		<button @click="CreateBlankAcademy(-1)">Create an owned Academy doc</button> -->
+		<button @click="CreateBlankAcademy(1)">Create an Enrolled Academy doc</button> -->
+		<button @click="CreateBlankAcademy(-1)">Create an owned Academy doc</button>
 		<p v-if="getMyAcademies.length" style="color:white">------------My Academies-----------</p> 
 		<div v-for="Academy in getMyAcademies" :key="Academy.id">
 				<AcademiesCard

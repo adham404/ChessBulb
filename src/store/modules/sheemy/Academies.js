@@ -13,8 +13,23 @@ import firebase from "firebase"
         ToEnrollAcademies:[],
         //MyAcademies
         MyAcademies:[],
+        //Flag for the Current Academy Ownership
+        Owner:false,
         //User ID
-        UserID:null
+        UserID:null,
+        //Data of the wanted currently Academy
+        CurrentAcademy:"",
+        //Stats of My Academy
+        MyAcademyStat:{
+            AcademyData:{},
+            Enrollments:[],
+            TotalMonthlyIncome:0,
+            NumberOfSubscription:"",
+            Subscribers:[],
+            fetched:false,
+            NumberOfLiveSessions:0,
+            NumberOfCourses:0
+        }
     }
     const mutations = {
         increment(state)
@@ -26,6 +41,33 @@ import firebase from "firebase"
         {
             state.UserID = n
         },
+        OwnerShipCheck(state,dispatch)
+        {
+            state.Owner = false
+            if(state.AllAcademies.length == 0)
+            {
+                dispatch('FetchAllAcademies')
+            }
+            state.MyAcademies.forEach((child) => {
+                if(state.CurrentAcademy.AcademyId == child.AcademyId)
+                {
+                    state.Owner = true
+                }
+            })
+        },
+        ExecuteRestStats(state)
+        {
+            //Number Of Subscribers
+            state.MyAcademyStat.NumberOfSubscription = state.MyAcademyStat.Enrollments.length;
+            //Monthly Income
+            state.MyAcademyStat.Enrollments.forEach((Enroll) =>{
+                console.log(Enroll.MonthlyPayment)
+                state.MyAcademyStat.TotalMonthlyIncome += Enroll.Payment;
+            })
+            //Number Of Courses
+            state.MyAcademyStat.NumberOfCourses = 20;
+            state.MyAcademyStat.NumberOfLiveSessions = 20;
+        },
         FilterAcademies(state,n)
         {
             state.EnrolledAcademies = [];
@@ -35,7 +77,6 @@ import firebase from "firebase"
             state.AllAcademies = n;
             // var t = n.length;
             // var m; 
-            console.log("The One that is making all the trouble: "+ state.UserID);
             var EnrollFlag = false;
             state.AllAcademies.forEach((doc) => {
                 doc.Enrollments.forEach((docEnroll) => {
@@ -95,7 +136,10 @@ import firebase from "firebase"
         },
         getEnrolledAcademies: (state) => state.EnrolledAcademies,
         getToEnrollAcademies: (state) => state.ToEnrollAcademies,
-        getMyAcademies: (state) => state.MyAcademies
+        getMyAcademies: (state) => state.MyAcademies,
+        getMyAcademyStat: (state) => state.MyAcademyStat,
+        getMyAcademy: (state) => state.CurrentAcademy,
+        getOwner: (state) => state.Owner
     }
     const actions = {
         async FetchCurrentUserID({commit,state})
@@ -127,8 +171,6 @@ import firebase from "firebase"
                         // state.AllAcademies.push(doc.data());    
                     });
                 })
-                console.log("Academies Data are: "+ Academies)
-                console.log("Sample of Academies data : "+ Academies[0].AcademyId);
                 commit('FilterAcademies',Academies);
             }
             else
@@ -138,8 +180,109 @@ import firebase from "firebase"
             }
 
         },
+        async FetchAcademyStats({state,dispatch,commit},id)
+        {
+            if(!state.MyAcademyStat.fetched)
+            {
+                //Get Academy Data
+                if(state.AllAcademies.length == 0)
+                {
+                    //InCase the Page was refreshed or smth we need to get the data of MyAcademies again
+                    await dispatch('FetchAllAcademies');
+                }
+                //Get the instructor's Academy Data 
+                state.MyAcademies.forEach((doc) =>{
+                    if(doc.AcademyId == id)
+                    {
+                        state.MyAcademyStat.AcademyData = doc;
+                    }
+                })
+                //Get Enrollments data create another dispatch for the thing
+                //Enrollment Object where each object contain UserID, DateOfEnrollment, Monthly Payment
+                await dispatch('FetchEnrollments',id);
+                //Fetch Subscribers Data using Enrollment array of objects
+                await dispatch('FetchSubscriberData');
+                //Calculate 3the rest of stats such as Total Monthly Income, Number of subscribers, NumberOfCourses and NumberOfSessions 
+                await commit('ExecuteRestStats');
+                //Set Academy stats flag to true
+                state.MyAcademyStat.fetched = true
+            }
+            else
+            {
+                //Go Fish
+            }
+        },
+        async FetchSpecificAcademy({state,dispatch},id)
+        {
+            if(state.AllAcademies.length == 0)
+            {
+                await dispatch("FetchAllAcademies");
+            }
+            await state.AllAcademies.forEach((query) => {
+                if(query.AcademyId == id)
+                {
+                    state.CurrentAcademy = query;
+                }
+            })
+        },
+        async FetchSubscriberData({state})
+        {
+            var db = firebase.firestore()
+            var UserDoc = db.collection("Users");
+            state.MyAcademyStat.Enrollments.forEach(enroll => {
+                UserDoc.doc(enroll.UserId).get().then((doc) => {
+                    state.MyAcademyStat.Subscribers.push(doc.data());
+                })
+            })
+        },
+        async FetchEnrollments({state},id)
+        {
+            var EnrollOb = {
+            }; //Enroll Object which will contain UserID, DateOfEnrollment, Monthly Payment
+            var db = firebase.firestore()
+            var Enroll = db.collection("AcademyEnrollments")
+            await Enroll.get().then((query) => {
+                query.forEach((doc) => {
+                    if(doc.data().AcademyId == id)
+                    {
+                        console.log(EnrollOb);
+                        EnrollOb.UserId = doc.data().UserId;
+                        EnrollOb.Date = doc.data().DateOfEnroll;
+                        EnrollOb.Payment = doc.data().MonthlyPayment;
+                        state.MyAcademyStat.Enrollments.push(EnrollOb);
+                        EnrollOb = {};
+                    }
+                })
+            })
+
+        },
+        //Create Dummy Enroll Docs to See the Results of the fetch action
+        async CreateDummyEnroll({state},id)
+        {
+            //lick me asssssss
+            console.log(state.counter)
+            var UserArray = ["6Xtgsamc0POMDGFe2lukjCtgbm32","7eWJWeH7mfd05f8juTL5zRCgfVw2","Li6cnI8Ds7VeFDDPuEK4s1vqd1m1","UwfJMR95YJMHWf3d88AcFd4JZHg1","hQKQ4sYZZThVHSdRFIlTq3RmUJa2","qTRp3IxElzMCz4Ub9H0JKXcU6Sx1"]
+            console.log("We Recieve: ", id);            
+            var EnrollData = {}
+            var db = firebase.firestore()
+            var EnrollDoc = db.collection("AcademyEnrollments");
+            console.log("Point A");
+            var Enroll = await EnrollDoc.add(EnrollData);
+            console.log("Point B");
+            EnrollData = {
+                AcademyId:id,
+                DateOfEnroll: new Date().toDateString(),
+                MonthlyPayment: Math.floor(Math.random() * 90),
+                UserId: UserArray[Math.floor(Math.random() * UserArray.length)],
+                active:true,
+                lastpyment: Enroll.id,
+                subscriptionId: Enroll.id
+            }
+            await EnrollDoc.doc(Enroll.id).set(EnrollData);
+        },
         // test({state})
         // {
+            //(1)
         //     state.counter++
         //     console.log(state.counter); 
         // },

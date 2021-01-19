@@ -1,0 +1,83 @@
+import firebase from "firebase";
+/* 
+    DATA HERE
+    -First Name
+    -Last Name
+    -Full Name
+    -User ID
+    -Bio
+    -Email
+    -IS Instractor ?
+
+*/
+/*
+    Todo :- 
+    DONE fetch user data from db
+    DONE map data to states 
+    create getters
+        DONE get UID
+        DONE get first name 
+        DONE get last name
+        DONE get full name
+        DONE get Email
+        DONE Bio 
+    for future :-
+    DO Acations for changing name,bio and Email 
+*/
+const state = {
+    IsUserInfoFetched : false,
+    FULLDATA:null,
+    Uid : null,
+    FirstName : "",
+    LastName : "",
+    FullName : "",
+    Email : null,
+    Bio : "",
+    IsInstructor : false,
+}
+
+const getters = {
+    GETUserFULLDATA:(state)=>{state.FULLDATA},
+    GETUserID:(state)=>{state.Uid},
+    GETUserFirstName:(state)=>{state.FirstName},
+    GETUserLastName:(state)=>{state.LastName},
+    GETUserFullName:(state)=>{state.FullName},
+    GETUserEmail:(state)=>{state.Email},
+    GETUserBio:(state)=>{state.Bio},
+    GETUserIsInstructor:(state)=>{state.IsInstructor},
+    
+}
+
+const mutations = {
+    MapUserDataToState:(state,UserData)=>{
+        state.Uid = UserData.UserId
+        state.FirstName = UserData.FirstName
+        state.LastName = UserData.LastName
+        state.FullName = UserData.FirstName +" "+UserData.LastName
+        state.Email = UserData.Email
+        state.Bio = UserData.UserBio
+        state.IsInstructor = UserData.Instructor
+    },
+    SETUSERINFOFULLDATA:(state,DATA)=>{state.FULLDATA = DATA},
+    UserInfoIsFetched:(state)=> {state.IsUserInfoFetched = true}
+}
+
+const actions = {
+    async fetchUserInfo({commit,state}){
+        var user = await firebase.auth().currentUser
+        if(user && !state.IsUserInfoFetched){
+            var DBUserDoc = await firebase.firestore().collection('Users').doc(user.uid).get()
+            commit("MapUserDataToState",DBUserDoc.data())
+            commit("SETUSERINFOFULLDATA",DBUserDoc.data())
+            commit("UserInfoIsFetched")
+        }
+    }
+}
+
+
+export default {
+    state,
+    getters,
+    actions,
+    mutations,
+}

@@ -1,27 +1,29 @@
 <template>
   <div style="width:100%">
   
-  <StockFish/>
-  <StoryDisplayheader/>
-  
+  <SmallChess/>
+  <SmallChessPreview/>  
   </div>
 </template>
 
 <script>
+import SmallChess from "@/components/MarawanComponents/ChessCommentandLive/Live/SmallChessType.vue"
+import SmallChessPreview from "@/components/MarawanComponents/ChessCommentandLive/Live/SmallChessPreview.vue"
 // import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
 // import MovePreviewInput from "@/components/MarawanComponents/MovePreview/MovePreviewInput"
-import StoryDisplayheader from "@/components/MarawanComponents/StoryScrolling/StoryDisplayheader"
+// import StoryDisplayheader from "@/components/MarawanComponents/StoryScrolling/StoryDisplayheader"
 // import StockFish from "@/components/MarawanComponents/StockFish.vue"
 // import {EventBus} from "@/main.js"
 import firebase from "firebase"
-import StockFish from './StockFish.vue';
+// import StockFish from './StockFish.vue';
 export default {
   components:{
-    StoryDisplayheader,
+    SmallChess,
+    SmallChessPreview
     // StoryHeader,
     // MovePreviewInput,
     // ChessBoardInput,
-    StockFish,
+    // StockFish,
     
   },
   data(){

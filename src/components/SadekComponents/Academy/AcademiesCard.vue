@@ -10,15 +10,9 @@
 					<!-- //(Done) Make header tag for the Academy Name (2 minutes) -->
 					<h2>{{ Academy.AcademyName }}</h2>
 					<!-- //(Done) make Check it out button @click run the CheckItOut function (2 minutes) -->
-					<router-link
-						:to="{
-							path: `/Academies/${Academy.AcademyId}`,
-							query: { Academy: Academy, AcademiesId:AcademiesId, notEnrolled:notEnrolled },
-						}"
-						><button class="Shadow">
+					<button @click="CheckItOut" class="Shadow">
 							Check It Out
-						</button></router-link
-					>
+					</button>
 				</div>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -40,16 +34,9 @@
 					<h4>
 						{{ Academy.About }}
 					</h4>
-					<router-link
-						v-if="Enroll"
-						:to="{
-							path:`/Purchase/${Academy.PriceId}`
-						}"
-						id="SendRight"
-						><button  class="Shadow">
+					<button v-if="Enroll" @click="Purchase"  class="Shadow">
 							Enroll
-						</button></router-link
-					>
+						</button>
 					<button class="Shadow" @click="Dashboard" v-if="Owner">
 						Dashboard 
 					</button>
@@ -74,7 +61,18 @@ export default {
 	methods:{
 		Dashboard()
 		{
-						
+			var id = this.Academy.AcademyId
+			console.log("Data in here: "+this.Academy);
+			this.$router.push({path:`/Dashboard/${id}`, query:{id: id}});				
+		},
+		CheckItOut()
+		{
+		var id = this.Academy.AcademyId
+		this.$router.push({path:`/Academies/${id}`, query:{id: id}});				
+		},
+		Purchase()
+		{
+			this.$router.push({path:`/Purchase/${this.Academy.PriceId}`, query:{id: this.Academy.PriceId}});				
 		}
 	}
 };
