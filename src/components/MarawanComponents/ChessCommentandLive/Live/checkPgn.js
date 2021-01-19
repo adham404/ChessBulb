@@ -11,7 +11,6 @@ function RemoveHeaders(pgn){
 }
 
 export default function(text){
-    var widget = {}
     const engine = new Chess();
     var res = engine.load_pgn(text,{ sloppy: true})
     if(res){

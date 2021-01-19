@@ -51,7 +51,11 @@ export default {
 			UserData:"",
 			UserName:"",
 			TextColor:{
+<<<<<<< HEAD
 			color:"white"
+=======
+		    color:"white"
+>>>>>>> a7df7a706e00f2f522907670588794d738b94ab4
     },
 	}
 	},

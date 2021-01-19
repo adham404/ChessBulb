@@ -10,7 +10,6 @@
 <script>
 import ChessBoard from "chessboardjs-vue";
 import displayChess from "./displaychess"
-import CheckPgn from "./checkPgn"
 export default {
     data(){
         return{
@@ -23,9 +22,6 @@ export default {
 [FEN "rnbqkbnr/p1ppp1p1/8/1p5p/P2Pp1P1/8/1PP2P1P/RNBQKBNR w KQkq - 0 1"]
 
 1. d5 e3 2. axb5 Kf7`
-        var bb = CheckPgn(pgn)
-        console.log(bb.Text)
-        console.log(bb.IsPgn)
         this.engine = displayChess(pgn)
         this.theboard = ChessBoard('board1ddwdwdzaxsw',"start");
         this.theboard.position(this.engine.getFEN())
