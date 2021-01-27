@@ -1,13 +1,27 @@
 <template>
     <div>
         <div class="Container">
-            <div class="UserImageAndSignOut">
-                <img src="@/assets/ProfilePic.jpg" alt="">
+            <div @click="() => this.Clicked = !this.Clicked" class="UserImageAndSignOut">
+                <img :src="GetImgUrl()" alt="">
+                <!-- <div>{{GETUserID}}</div> -->
+                <div v-show="Clicked && !Fetched">
+                    <button @click="() => {
+                            this.$refs.input1.click();
+                        }">Update</button>
+                    <input @change="BrowsePhoto" type="file" enctype="multipart/form-data" style="display: none" accept="image/*" ref="input1">
+                    <button @click="Remove">Remove</button>
+                </div>
+                <div v-show="Fetched">
+                    <button @click="UploadPhoto">Save</button>
+                        <button @click="Discard">
+                            Discard
+                        </button>
+                </div>
             </div>
             <div class="Bio">
                 <div class="TextBox Shadow">
-                    <h3>{{UserData.FirstName}} {{UserData.LastName}}</h3>
-                    <p v-if="!ShowBioEdit" @click="EditBio">{{UserData.UserBio}}</p>
+                    <h3>{{CurrentUserData.FirstName}} {{CurrentUserData.LastName}}</h3>
+                    <p v-if="!ShowBioEdit" @click="EditBio">{{CurrentUserData.UserBio}}</p>
                     <div v-if="ShowBioEdit">
                         <textarea v-model="BioData" style="width:300px; height:50px; resize:none;  font-family:'Raleway', sans-serif;"  maxlength="140" name="" id="" cols="30" rows="10"></textarea>
                         <button @click="SaveBio">Save Bio</button>
@@ -20,8 +34,8 @@
                 <button v-if="!VisitorFlag" @click="PurchasedCourses">Purchased Courses</button>
                 <button v-if="!VisitorFlag" @click="GoToAcademies">Joined Academies</button>
                 <button @click="MyPost">My Posts</button>
-                <button v-if="VisitorFlag && !Followed" @click="Follow">Follow</button>
-                <button v-if="VisitorFlag && Followed" @click="UnFollow">UnFollow</button>
+                <button v-if="VisitorFlag && !FollowingState" @click="Follow">Follow</button>
+                <button v-if="VisitorFlag && FollowingState" @click="UnFollow">UnFollow</button>
                 <button v-if="!VisitorFlag" @click="GoToExplore">Find Players</button>
                 <button v-if="!VisitorFlag" @click="SignOut">Sign Out &#128549;</button>
                 <button v-if="!VisitorFlag" @click="UpdatePass">Update Password</button>
@@ -54,31 +68,44 @@ import CreatedCourses from "../ShemyComponents/CreatedCourses";
 import Academies from "../SadekComponents/Academy/Academies";
 import NewsFeed from "../SadekComponents/NewsFeed/NewsFeed";
 import {EventBus} from "../../main";
+import {mapGetters, mapActions} from "vuex"
+
     export default {
         name: "Profile",
         data:function()
         {
             return{
-                UserLogged:true,
+                // UserLogged:true,
                 IsInstructor:false,
-                UserID:"",
-                UserData:"",
-                UserName:"",
+                // UserID:"",
+                CurrentUserData:"",
+                // UserData:"",
+                // UserName:"",
+                Clicked:false, //Boolean Indicator when profile pic is clicked
+                Fetched:false, //Boolean Indicator when profile pic is fetched
+                Upload:false, //Boolean Indicator whether to upload pic or not
+                Url:"", //Img Url property
+                PicData:"", //Profile Pic Data
+                FollowingState: false, //Boolean Indicator If You are following the user
                 BioData: "",
                 ShowBioEdit:false,
-                Followed: false,
-                FollowedUserID:"",
-                FollowerUserID:"",
+                // Followed: false,
+                // FollowedUserID:"",
+                // FollowerUserID:"",
                 VisitorFlag:false,
-                UpdatedID:"",
-                FollowingID:[],
+                // UpdatedID:"",
+                // FollowingID:[],
                 CourseIDs:["7C5NPltqtKoSxj3DHiMw","Rzm0wk6rOQhERY52V6uM","cRveFm5Iw74E0i7nWIp6"],
-                FollowerID:"",
+                // FollowerID:"",
                 CurrentComponent:"FindPlayers"
             }
         },
         props:['id','Visitor','ComponentSent', 'Type'],
+        computed:{
+            ...mapGetters(['GetProfilePicUrl', 'GETUserID','GETUserFULLDATA','GetVisitorProfilePic','GetVisitorData','GetUserFollowingList','GetThisUserFollowingState'])
+        },
         methods:{
+            ...mapActions(['fetchProfilePic','fetchUserInfo','fetchVisitorProfilePic','UploadProfilePic','RemoveProfilePic','fetchUserFollowingData','CheckFollowing','UnFollowThisProfile','FollowThisProfile']),
             async GetUserData(id)
             {
                         console.log("The user id is: "+ id);
@@ -91,6 +118,53 @@ import {EventBus} from "../../main";
                             })
                             this.CheckInstructor();
                             // User is signed in.
+            },
+            BrowsePhoto(e)
+            {
+                //Fetch File object and preview it before uploading
+                this.PicData = e.target.files;
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    this.Url = e.target.result;
+                }
+                console.log("Pic data is: ",this.PicData[0]);
+                reader.readAsDataURL(this.PicData[0]);
+                console.log("the Url is: "+ this.Url);
+                this.GetImgUrl();
+                this.Fetched = true;
+            },
+            async UploadPhoto()
+            {
+                //Upload Photo to firebase cloud storage
+                var PhotoData = { //Object to hold the photo info
+                    Url:"",
+                    FileObject:""
+                }
+                PhotoData.Url = "UserProfilePics/" + this.id + "/" + this.PicData[0].name + ".jpg";
+                PhotoData.FileObject = this.PicData[0]
+                await this.UploadProfilePic(PhotoData);
+                //TODO Progress Loading Bar 
+                //DONE Trigger Action to get the uploaded profile pic
+                await this.fetchProfilePic();
+                this.Url =  await this.GetProfilePicUrl;
+                this.GetImgUrl();
+                this.Fetched = false;                
+            },
+            Discard()
+            {
+                this.Url = "";
+                this.Fetched = false;
+                this.GetImgUrl();
+            },
+            async Remove()
+            {
+                await this.RemoveProfilePic()
+                this.Url = this.GetProfilePicUrl;
+                this.GetImgUrl();
+            },
+            GetImgUrl()
+            {
+                return this.Url || require('@/assets/ProfilePic.jpg');
             },
             EditBio()
             {
@@ -111,10 +185,6 @@ import {EventBus} from "../../main";
                 this.ShowBioEdit = false;
                 this.GetUserData(this.UserID);
 
-            },
-            Test()
-            {
-                console.log(this.$route.query.Type);
             },
             async CreateOrder()
             {
@@ -149,17 +219,18 @@ import {EventBus} from "../../main";
                 // EventBus.$emit("PurchasedCourses");
                 this.CurrentComponent = "MyCourses";
             },
-            ForceUpdate()
-            {
-                this.$forceUpdate();
-            },
             Back()
             {
-            this.UserMount();
+            //New Code--------------
+            //Fetch the Original User Data when am back at me profile
+            this.CurrentUserData = this.GETUserFULLDATA;
+            this.Url = this.GetProfilePicUrl;
+            this.GetImgUrl();
+            //----------------------
+            // this.UserMount();
             this.VisitorFlag = false;
             this.CurrentComponent = "FindPlayers"
-            this.$router.push({path: `/profile/${this.UserID}`, params: {id: this.UserID}})
-            console.log("User ID is: "+ this.UserID);
+            this.$router.push({path: `/profile/${this.GETUserID}`, params: {id: this.GETUserID}})
             },
             MyCourses()
             {
@@ -181,58 +252,20 @@ import {EventBus} from "../../main";
                 this.CurrentComponent = "FindPlayers";
                 // EventBus.$emit("MyPosts");
             },
-            async Follow()
+            Follow()
             {
-        this.FollowedUserID = this.UserData.UserId;
-        let self = this;
-        await firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                self.FollowerUserID = user.uid; 
-                                // User is signed in.
-            } else {
-                console.log("No User Signed in")
-                    // No user is signed in.
-                }
-        
-            })
-        var db = firebase.firestore();
-        var DBref = db.collection("Follows").doc(this.FollowedUserID); //Update Follower in Followed User
-        DBref.update({
-          Followers: firebase.firestore.FieldValue.arrayUnion(this.FollowerUserID)  
-        })
-        var DBref2 = db.collection("Follows").doc(this.FollowerUserID); //Update Following in Follower User
-        DBref2.update({
-          Following: firebase.firestore.FieldValue.arrayUnion(this.FollowedUserID)  
-        })
-        this.Followed = true;
-        alert("You Followed Him");  
+                this.FollowThisProfile(this.CurrentUserData.UserId);
+                this.GetUserFollowingList.forEach((id) => {
+                    if(this.CurrentUserData.UserId == id)
+                    {
+                        this.FollowingState = true
+                    }
+                })
             },
-            async UnFollow()
+            UnFollow()
             {
-       this.FollowedUserID = this.UserData.UserId;
-        let self = this;
-        await firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                self.FollowerUserID = user.uid; 
-                                // User is signed in.
-            } else {
-                console.log("No User Signed in")
-                    // No user is signed in.
-                }
-        
-            })
-        var db = firebase.firestore();
-        var DBref = db.collection("Follows").doc(this.FollowedUserID); //Update Follower in Followed User
-        DBref.update({
-          Followers: firebase.firestore.FieldValue.arrayRemove(this.FollowerUserID)  
-        })
-        var DBref2 = db.collection("Follows").doc(this.FollowerUserID); //Update Following in Follower User
-        DBref2.update({
-          Following: firebase.firestore.FieldValue.arrayRemove(this.FollowedUserID)  
-        })
-        this.Followed = false;
-        alert("You UnFollowed Him");          
-
+                this.UnFollowThisProfile(this.CurrentUserData.UserId);
+                this.FollowingState = false
             },
             SignOut()
             {
@@ -242,57 +275,34 @@ import {EventBus} from "../../main";
                 EventBus.$emit("LoggedIn", false);
                 this.$router.push('/SignUp')                
             },
-            CheckInstructor()
-            {
-                console.log("am here");
-                console.log("The Instructor Flag is: "+ this.UserData.Instructor);
-                if (this.UserData.Instructor == true) {
-                    this.IsInstructor = true;
-                }
-                else
-                {
-                    this.IsInstructor = false;
-                }
-            },
-            async UserMount()
-            {
-                let self = this;
-                await firebase.auth().onAuthStateChanged(async function(user) {
-                    if (user) {
-                        self.UserID = user.uid;
-                        self.GetUserData(self.UserID);
-                        // self.CheckInstructor();
-                                // User is signed in.
-                    } else {
-                    console.log("No User Signed in")
-                    // No user is signed in.
-                        }
-                        })                                    
-            },
-            async GetFollowingIDs()
-            {
-                let self =this;
-                await firebase.auth().onAuthStateChanged(async function(user) {
-                    if (user) {
-                        self.UserID = user.uid;
-                                // User is signed in.
-                    } else {
-                    console.log("No User Signed in")
-                    // No user is signed in.
-                        }                
-            })
-                    var db = firebase.firestore();
-                    var DBref = db.collection("Follows").doc(this.UserID)
-                    await DBref.get().then((query)=>{
-                        this.FollowingID = query.data().Following;
-                    })
-                    // EventBus.$emit("SendFollowingIDs",this.FollowingID);
-
-            }
-
         },
         async mounted()
         {
+            //Fetch Orignal User Data
+            await this.fetchUserInfo();
+            this.CurrentUserData = this.GETUserFULLDATA;
+            await this.fetchProfilePic();
+            this.Url = this.GetProfilePicUrl;
+            //Fetch User Following Data
+            await this.fetchUserFollowingData();
+            console.log("Url Recieved from Get: "+ this.Url);
+            this.GetImgUrl();
+            
+            //IF you are visiting Someone Profile Fetch his data 
+            await EventBus.$on("ProfileVisited",async () => {
+                this.CurrentUserData = this.GetVisitorData; //Assign Vsisted User Data to The Current User Data
+                await this.fetchVisitorProfilePic();
+                this.Url = this.GetVisitorProfilePic;
+                console.log("Url Recieved from Get: "+ this.Url);
+                this.GetImgUrl();
+                
+                this.VisitorFlag = true;
+                this.CurrentComponent = "NewsFeed";
+                this.CheckFollowing(this.GetUserFollowingList); //Check Whether am i following this guy or not
+                this.Followed = this.GetThisUserFollowingState  //Boolean state to indicate whether am following this guy or not                                      
+            })
+            //Fetch Current User Data
+            // console.log("ID recieved from state: ",await this.GETUserID)
             this.CurrentComponent = this.$route.query.Type;
             let query = Object.assign({}, this.$route.query);
             delete query.Type;
@@ -300,25 +310,7 @@ import {EventBus} from "../../main";
             // this.$router.replace(this.$route.query.Type, null);
             if (this.CurrentComponent == "") {
                 this.CurrentComponent == "FindPlayers";
-            }
-            this.GetFollowingIDs(); //Get Following IDs from the user Doc in database
-            EventBus.$emit("SendFollowersID",this.FollowingID);
-            await EventBus.$on("VisitProfile",(VisitorData) => {
-                this.UserData = VisitorData;
-                this.VisitorFlag = true;
-                this.CurrentComponent = "NewsFeed";
-                this.UserID = this.UserData.UserId;
-                for (let i = 0; i < this.FollowingID.length; i++) {
-                    if (this.UserData.UserId == this.FollowingID[i]) {
-                        this.Followed = true;
-                    }
-                }                               
-            })
-            if (!this.VisitorFlag) {
-                this.UserMount();
-                console.log("The Current Component is: "+ this.CurrentComponent);
-            }
-            
+            }            
         },
         components:{
             FindPlayers,

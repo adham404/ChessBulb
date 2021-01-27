@@ -6,7 +6,6 @@
         <router-link to="/CreateCourse">
         <button>Create Course</button>
         </router-link>
-        <button @click="TestC">Test Cloud Function</button>
         <SearchEngine SearchIndex="Courses" :ShowFilters="true"></SearchEngine>
         <!-- <input type="text" placeholder="Search Engine">
         <FilterSearch></FilterSearch> -->
@@ -56,21 +55,6 @@ export default {
             })
         }
       },
-      TestC()
-      {
-        var data = {
-          Email:"TestCloud@gmail.com",
-          FirstName:"Test",
-          LastName:"Cloud",
-          id:"1234333",
-        }
-        const Test = firebase.functions().httpsCallable('CreateDocs-CreateDocs');
-        Test(data).then(result => {
-          console.log('data is: ', result.data);
-        }).catch(error => {
-          console.log('Error is ',error);
-        }) 
-      }
     },
   //DONE Declare Mounted Property (1min)
     async mounted()

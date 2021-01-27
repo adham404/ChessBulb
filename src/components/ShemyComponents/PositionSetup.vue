@@ -83,8 +83,6 @@ export default {
         dropOffBoard: 'trash',
         showErrors : 'alert',
         sparePieces: true,
-        
-
       }
     //DONE Recieve Chess Object with the Setup Position From ChessBoard.js (2min)
      //Create a ChessBoard.js instance

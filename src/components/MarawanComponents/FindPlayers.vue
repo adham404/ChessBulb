@@ -1,7 +1,7 @@
 <template>
     <div>
         <SearchEngine SearchIndex="Users" />
-        <FollowerCard  v-for="(Data,x) in FollowersData" :key="x" :FollowerID="FollowingIDs" :FollowerData="Data" />
+        <FollowerCard  v-for="(Data,x) in FollowersData" :key="x" :FollowerID="GetUserFollowingList" :FollowerData="Data" />
         <!-- <div   >
         </div> -->
     </div>
@@ -11,7 +11,9 @@
     import SearchEngine from '@/components/MarawanComponents/SearchEngine/SearchEngine'
     import FollowerCard from "../MarawanComponents/FollowerCard"
     import firebase from "firebase";
-    import {EventBus} from "../../main";    
+    import {EventBus} from "../../main";
+    import {mapActions, mapGetters} from "vuex";
+
     export default {
         components: {
             SearchEngine,
@@ -23,15 +25,19 @@
           return {
             FollowersData:[],
             FollowersID: [],
+            SearchedPlayers: [], //Array Containing Searched Players IDs
             UserID:"",
             FollowingID:[],
             FollowedIDs:[]
           }
         },
+        computed:{      
+            ...mapGetters(['GetSearchedPlayers','GetUserFollowingList','GetSearchedIDs']),
+          },
         methods:{
+            ...mapActions(['fetchSearchedPlayersData','fetchUserFollowingData']),
             async GetFollowersData()
             {
-                
                 let self = this
                 await firebase.auth().onAuthStateChanged(async function(user) {
                 if (user) {
@@ -53,9 +59,7 @@
                     console.log("No User Signed in")
             // No user is signed in.
                 }
-            })
-                
-            },
+            })           },
             async GetUserAuth()
             {
                 let self =this;
@@ -68,31 +72,27 @@
                     // No user is signed in.
                         }                
             })
+        },
+        Recieve()
+        {
+            //TODO 
+                console.log("Array Recieved From algolia/state signal: "+ this.GetSearchedIDs);
+                this.fetchSearchedPlayersData(this.GetSearchedIDs) //Fetch Searched Players data from the ID recieved from the algolia signal
+                this.fetchUserFollowingData();
         }
         },
-        mounted()
+        async mounted()
         {
-            EventBus.$on("TheSearchResult", async res => {
+            await EventBus.$on("TheSearchResult", async res => {
+
                     console.log("The value recieved: "+ res);
                     this.FollowersID = res;
-                    // await this.GetUserAuth();
-                    // var db = firebase.firestore();
-                    // var DBref = db.collection("Follows").doc(this.UserID)
-                    // DBref.get().then((query)=>{
-                    //     this.FollowingID = query.data().Following;
-                    // })
-                    // console.log("The Following IDs: "+ this.FollowingID);
-                    // for (let i = 0; i < this.FollowersID.length; i++) {
-                    //     for (let j = 0; j < this.FollowingID.length; j++) {
-                    //         if (this.FollowersID[i] == this.FollowingID[j]) {
-                    //             this.FollowedIDs.push(this.FollowersID[i]);
-                    //         }
-                    //     }
-                    // }
                     console.log("The Followed Fellas are: "+ this.FollowedIDs);
                     this.FollowersData = [];
                     this.GetFollowersData();
-                })
+                    // self.SearchedPlayers = res;
+                    //TODO inticipated Problem with re fetching here
+                });
         }
     }
 </script>

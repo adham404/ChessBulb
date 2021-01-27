@@ -112,6 +112,16 @@ const routes = [
     component: ()=> import('@/components/SadekComponents/NewsFeed/Analyze.vue') //Analyze
   },
   {
+    path: '/BoardPointer',
+    name: 'BoardPointer',
+    component: () => import('../components/ShemyComponents/BoardPointer.vue')
+  },
+  {
+    path: '/BoardPointerRecieve',
+    name: 'BoardPointerRecieve',
+    component: () => import('../components/ShemyComponents/BoardPointerRecieve.vue')
+  },
+  {
     path: '/Stories/',
     name: 'Stories',
     component: ()=> import('@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'), //StoryDisplayWindow,

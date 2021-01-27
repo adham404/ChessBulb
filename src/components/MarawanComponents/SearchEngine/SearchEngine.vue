@@ -32,6 +32,8 @@
 //firebase functions:config:set algolia.app=6QLSJPKZLF algolia.key=73c12cce64ff2c58497bac33bc843859
 import algoliasearch from "algoliasearch/lite";
 import { EventBus } from "@/main.js";
+import {mapMutations} from "vuex";
+
 var index;
 export default {
   props: ["ShowFilters", "SearchIndex"],
@@ -55,6 +57,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['SetSearchedIDs']),
     async search() {
       var options = "";
       this.checkedFilters.forEach((i, index) => {
@@ -70,7 +73,9 @@ export default {
         res.push(doc.objectID);
       });
       await console.log(res);
+      await this.SetSearchedIDs(res);
       EventBus.$emit("TheSearchResult", res);
+      EventBus.$emit("ResultOfSearch");
     },
   },
 };
