@@ -1,0 +1,124 @@
+Grab match data from database and parse it
+Insert data into post component and v-for it
+in post component:
+	Add avatar and name then comment
+	Add chessboard
+	Add controls for the chess board
+	Add pgn for the chess board with person vs person
+	Add brilliant ana analyze data
+	Add interaction buttons
+	Add commenting UI with chessboard
+	Add other functionalities in User story checklist
+	Add and setup pgnreview component
+	Add functions for chessboard controls
+	Add function for brilliant
+	Add UI for share
+	Add functions for buttons in Share UI
+	Link pgn text in post with pgnreview and data
+
+	
+Fix layout of post and add controls done
+reduce paragraph done
+put chessboard in div and add margin at top done
+Add row of buttons below chessboard done
+Fix font in pgn done
+add v divider done
+add data of post
+add v divider done
+add brilliant share comment button done
+
+
+add bottom sheet
+add sheet data property
+add event emitter in comment button with boolean value
+receive event in Newsfeed and change sheet data property based on it
+add button in sheet to back out
+Add main avatars with comment
+Add replies under main avatars with name mentions for the person
+you are replying to
+Add bottom sheet in bottom sheet
+Add pgn commenting system in this bottom sheet
+Add comment input in this bottom sheet
+
+
+first fix main scroll
+second fix reply scroll
+third create a see replies button
+
+
+Create profile page header
+Create profile page and link profile page header to it
+add follow button
+Add Academies, 
+courses, 
+posts, 
+following
+
+Create AcademyCard
+Create PlayerCard
+
+
+Remove Header completely
+Add new component below Logo
+Add story description header
+Add chessboard
+Add pgn space below chessboard
+for story:
+Add different line bubbles
+
+for puzzle:
+Add solution check button
+Add result message
+
+Add eventbus in story description header
+Add bottom sheet in storyscreen
+Add list of people who viewed the story in bottom sheet
+
+
+
+Add snapshot:
+
+Add V-tabs to choose if puzzle or snapshot
+Add comment text-area 
+Add chessboard position setup
+Add save position- empty board - start position buttons
+Add Line bubbles and the ability to delete them
+Add Movement navigating buttons
+In case of puzzle they are called solutions
+A pop up will appear to the user if he tries to post without a comment (delayed)
+A pop up will appear to the user if he plays over a move ( delayed )
+A pop up will appear to the user if he changes tabs between puzzle and snapshot
+Different components should be displayed in each tab
+
+
+
+
+Add post:
+
+Add textarea for comment section
+Add text-fields for white and black player input
+Add chessboard for playing moves on it
+Add upload pgn button- share button
+Add pgn bubble below it only one
+
+
+
+
+Live viewer screen:
+Add header of streamer information
+Add video component
+Add chess engine component
+Add chessboard- leave- refresh-troubleshoot buttons
+Add chat component
+
+
+Course streaming screen:
+
+Add video component
+Add chess engine component
+Add chessboard - close - rate buttons
+Add timestamp bubble
+
+
+
+

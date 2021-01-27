@@ -1,15 +1,26 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+// import Home from "../views/Home.vue";
 import NotFound from '../views/NotFound.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home
+    path: '/',
+    name: 'Development',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/components/MobileComponents/Development.vue')
+    } 
+  },
+  {
+    path: '/SignUp',
+    name: 'SignUp',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/SignUp.vue'), //SignUp
+      Mobile: ()=> import('@/components/MobileComponents/SignUp.vue')
+    } 
   },
   {
     path: "/Development",
@@ -21,9 +32,21 @@ const routes = [
      
   },
   {
+    path: "/Login",
+    name: "Login",
+    components: {
+      Desktop: () => import(/* webpackChunkName: "about" */ "../components/DesktopComponents/Login.vue"),
+      Mobile: () => import(/* webpackChunkName: "about" */ "../components/MobileComponents/Login.vue")
+    }
+     
+  },
+  {
     path: '*',
     name: 'Not Found',
-    component: NotFound
+    components:{
+      Desktop: NotFound,
+      Mobile: NotFound
+    }
   }
 ];
 
