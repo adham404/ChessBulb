@@ -53,7 +53,7 @@ export default {
 			UserName:"",
 			Url:"",
 			TextColor:{
-            color:"white"
+			color:"white"
     },
 	}
 	},

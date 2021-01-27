@@ -47,6 +47,7 @@ var userid ;
 var livedata;
 var stopcam;
 var iceServer = {} ;
+var currentStamp = -1 ;
 export default {
   components:{
       ChessBoardInput,
@@ -172,6 +173,25 @@ export default {
                   await this.UndoTheFen()
                 }
               })
+                  EventBus.$on("Control", async (data) => {
+      
+      if (data == "next") {
+          await currentStamp++
+          var e = await this.moves[currentStamp]
+          
+          await EventBus.$emit("boradfen", e)
+          this.sendchessmove(e);
+          console.log(this.timestamps)
+      }else if(data == "back"){
+          await currentStamp--
+          e = await this.moves[currentStamp]
+          await EventBus.$emit("boradfen", e)
+          
+          this.sendchessmove(e);
+          
+          console.log(this.timestamps)
+      }
+    });
           }else{
               alert('Error: There are no data ')
           }
