@@ -1,0 +1,25 @@
+Vuex Analysis Data Strcture :-
+The Post ids template = Match-XXXX
+
+State : TheAnalysisComments
+├── Match-0001
+│   ├── 1
+│   │   └── Comments
+│   │       ├── 9rrkwGsXeyqptkQ2rK3h<comment doc id>
+│   │       │   ├── doc_data (the firebase doc data)
+│   │       │   │   ├── Time
+│   │       │   │   ├── comment
+│   │       │   │   ├── user_id
+│   │       │   │   └── user_name
+│   │       │   └── the_Firebase_path (so we can take it and reply to a comment)
+│   │       └── HGZqhxs19rmdEhw2Dejy
+│   │           ├── doc_data (same as above)
+│   │           ├── the_Firebase_path
+│   │           └── Comments
+│   │               ├── icVFTJ3EDceH60nATK73 (the doc here has the same data as above)
+│   │               └── tMNLbinf8fOD0HNXcUtH
+│   ├── 2
+│   └── .....
+├── Match-0002
+├── Match-0003
+└── .....

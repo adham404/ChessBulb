@@ -1,9 +1,22 @@
-import firestore from "firebase/firebase-firestore"
-import Auth from "firebase/firebase-auth"
-user_id =  Auth.currentUser().uid
-export default function(Current_Line) {
+import firebase from "firebase"
+
+export default function(Current_Line,Text) {
     var widget = {}
-    widget.user = function(){
-        console.log(user_id)
-    }
+    
+    var user_id =  firebase.auth().currentUser.uid
+    // var user_name =  firebase.auth().currentUser.displayName
+        widget.add = function(){
+            Current_Line.collection("Comments").doc().set({
+                user_id : user_id,
+                user_name : 'رجب',
+                comment : Text,
+                Time : firebase.firestore.Timestamp.now()
+            }).then(()=>{
+                console.log("comment Posted!!")
+            }).catch(()=>{
+                console.log("error")
+            })
+        }
+    
+    return widget
 }

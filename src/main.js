@@ -27,7 +27,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-
+//firebase.functions().useEmulator("localhost", 5001);
 Vue.config.productionTip = false
 
 new Vue({

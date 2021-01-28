@@ -1,25 +1,28 @@
 <template>
   <div style="width:100%">
-  
-  <SmallChess/>
-  <SmallChessPreview/>  
+  <h1>Marwan Page</h1>
+  <!-- <SmallChess/>
+  <SmallChessPreview/>   -->
+  <Testing/>
   </div>
 </template>
 
 <script>
-import SmallChess from "@/components/MarawanComponents/ChessCommentandLive/Live/SmallChessType.vue"
-import SmallChessPreview from "@/components/MarawanComponents/ChessCommentandLive/Live/SmallChessPreview.vue"
+// import SmallChess from "@/components/MarawanComponents/ChessCommentandLive/Live/SmallChessType.vue"
+// import SmallChessPreview from "@/components/MarawanComponents/ChessCommentandLive/Live/SmallChessPreview.vue"
 // import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
 // import MovePreviewInput from "@/components/MarawanComponents/MovePreview/MovePreviewInput"
 // import StoryDisplayheader from "@/components/MarawanComponents/StoryScrolling/StoryDisplayheader"
 // import StockFish from "@/components/MarawanComponents/StockFish.vue"
 // import {EventBus} from "@/main.js"
-import firebase from "firebase"
+// import firebase from "firebase"
 // import StockFish from './StockFish.vue';
+import Testing from "@/components/MarawanComponents/Analysis/Testing.vue"
 export default {
   components:{
-    SmallChess,
-    SmallChessPreview
+    Testing,
+    // SmallChess,
+    // SmallChessPreview
     // StoryHeader,
     // MovePreviewInput,
     // ChessBoardInput,
@@ -33,18 +36,9 @@ export default {
     }
   },
   methods:{
-    async addlive(){
-      var db = await firebase.firestore()
-      await db.collection('Lives').add({
-        AcademyId : "f0oTA57O4GxJOpdWV29I",
-        LiveDate : Date.now().toString() ,
-        LiveDescription : "This is the First live in ChessBulb",
-        // LiveId : "4587",
-        LiveTitle : "Learn Chess Now",
-      });
-      console.log('added')
+    
 
-    }
+    
     
   },
   async mounted(){
