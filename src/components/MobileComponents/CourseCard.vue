@@ -30,7 +30,7 @@
           >
 
           </v-rating>
-          <v-btn xs class="text-capitalize primary" height="25">Open</v-btn>
+          <v-btn xs class="text-capitalize primary" height="25" @click="() => {$router.push('/CoursePage')}">Open</v-btn>
         </v-col>
       </v-row>
     </v-sheet>

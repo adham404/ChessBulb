@@ -27,7 +27,7 @@
                 </v-col>
                 <v-divider vertical inset class="mb-1" cols = "4"></v-divider>
                 <v-col cols="4">
-                    <v-btn class="text-capitalize text-subtitle-2" text>
+                    <v-btn class="text-capitalize text-subtitle-2" text @click= "() => {$router.push('/AddSnapshot')}">
                         <v-icon left color="primary">fa-chess-rook</v-icon>
                         <span>Snapshot</span>
                     </v-btn>
