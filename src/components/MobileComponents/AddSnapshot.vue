@@ -46,7 +46,7 @@
             </v-row>
             
         </v-sheet>
-        <!-- <v-sheet>
+        <v-sheet>
         <PositionSetup/>
         <v-row justify="space-around" class="my-1">
             <v-btn>
@@ -66,8 +66,8 @@
                 <span style = "color: white">Lorem ipsum dolor sit amet consectetur adipisicing elit. In doloribus impedit voluptas eveniet quos rem, esse modi laboriosam tenetur sunt. Tenetur fugit itaque minus amet aliquid recusandae expedita numquam quas!</span>
                 </v-sheet>
             </div>
-        </v-sheet> -->
-        <v-sheet class="mt-8 py-3">
+        </v-sheet>
+        <v-sheet class="mt-8 py-3" v-if="false">
             <v-row class = "mt-1 mb-1" justify="center">
                 <v-col>
                     <ChessBoardDisplay id ="2"/>
@@ -110,11 +110,11 @@
 </template>
 
 <script>
-// import PositionSetup from "@/components/MobileComponents/PositionSetup"
+import PositionSetup from "@/components/MobileComponents/PositionSetup"
 import ChessBoardDisplay from "@/components/MobileComponents/ChessBoardDisplay"
     export default {
         components: {
-            // PositionSetup
+            PositionSetup,
             ChessBoardDisplay
         },
         data: () => ({

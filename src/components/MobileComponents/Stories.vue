@@ -11,7 +11,7 @@
                 </v-sheet>
                 <div class="Story">
                     <v-sheet class="primary mt-2 ml-2" height="200" width="200"  rounded = "lg" elevation="4" v-for="(story,index) in getFirst7Stories" :key="index" v-on:click="SetStoriesIndexTo(index)">
-                    <router-link  v-if="story.Type !='add'"   :to="{ name: 'Stories' }" >
+                    <router-link  v-if="story.Type !='add'"   :to="{ name: 'Snapshots' }" >
                         <StoryCard   class="ProfileImage mt-1"  :startpos="index" :chessid='story.StoryID'></StoryCard>
                         <v-row justify="center" align="center" class="pt-2">
                             <v-avatar size="30" class = "mb-0">

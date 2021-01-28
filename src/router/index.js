@@ -23,8 +23,16 @@ const routes = [
     } 
   },
   {
+    path: '/AddSnapshot',
+    name: 'AddSnapshot',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/PostSnapshot.vue')
+    } 
+  },
+  {
     path: '/Snapshots',
-    name: 'Snapshot',
+    name: 'Snapshots',
     components: {
       Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
       Mobile: ()=> import('@/views/MobileViews/Snapshot.vue')
@@ -47,6 +55,14 @@ const routes = [
     } 
   },
   {
+    path: '/Academies/AcademyPage',
+    name: 'AcademyPage',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/AcademyPage.vue')
+    } 
+  },
+  {
     path: '/Learn',
     name: 'Learn',
     components: {
@@ -60,6 +76,14 @@ const routes = [
     components: {
       Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
       Mobile: ()=> import('@/views/MobileViews/CourseStreaming.vue')
+    } 
+  },
+  {
+    path: '/CoursePage',
+    name: 'CoursePage',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/Course.vue')
     } 
   },
   {

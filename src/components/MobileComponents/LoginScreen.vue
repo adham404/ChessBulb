@@ -104,7 +104,7 @@ export default {
                 await auth.onAuthStateChanged((user)=>{
                   if (user) {
                     self.ErrorMessage = "";
-                    this.$router.push('/Home')
+                    this.$router.push('/')
                     console.log("Welcome in " + user.uid);
                     EventBus.$emit("LoggedIn", true)                    
                     // self.ErrorMessage = "";

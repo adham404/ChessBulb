@@ -14,7 +14,7 @@
           <span class="text-caption">by Mostafa Hamido (instructor at Smouha Chess Academy)</span>
           <br>
           <span class="text-subtitle-1">starts on 27th of may at 12:30pm</span>
-          <v-btn xs class="text-lowercase primary" height="25">join room</v-btn>
+          <v-btn xs class="text-lowercase primary" height="25" @click="() => {$router.push('/LiveViewer')}">join room</v-btn>
         </v-col>
       </v-row>
     </v-sheet>

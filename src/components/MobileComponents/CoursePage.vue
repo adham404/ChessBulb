@@ -10,6 +10,7 @@
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ratione eum cupiditate velit similique. Dignissimos obcaecati voluptates sequi! Sed excepturi modi pariatur laboriosam laborum maiores inventore quasi sint. Vel, officiis.
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi error dicta nostrum? Labore eligendi maiores, hic ullam asperiores natus ad ratione accusamus ut commodi, distinctio eveniet minima libero neque iusto!
             </span>
+            <v-btn xs class="text-capitalize primary" height="25" @click="() => {$router.push('/CourseStreaming')}">Open</v-btn>
         </v-sheet>
         <span class="text-h6" style="color: white">Reviews and Ratings</span>
         <v-divider size= "5" color = "white">
