@@ -1,7 +1,7 @@
 <template>
     <div>
     <v-sheet>
-      <v-row class="my-1 px-1" height="200">
+      <v-row class="mb-1 px-1" height="200">
         <v-img
           lazy-src="@/assets/ChessAcademy.jpg"
           max-height="150"

@@ -8,10 +8,58 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Development',
+    name: 'Home',
     components: {
       Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
-      Mobile: ()=> import('@/components/MobileComponents/Development.vue')
+      Mobile: ()=> import('@/views/MobileViews/Home.vue')
+    } 
+  },
+  {
+    path: '/Profile',
+    name: 'Profile',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/Profile.vue')
+    } 
+  },
+  {
+    path: '/Snapshots',
+    name: 'Snapshot',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/Snapshot.vue')
+    } 
+  },
+  {
+    path: '/LiveViewer',
+    name: 'LiveViewer',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/LiveViewer.vue')
+    } 
+  },
+  {
+    path: '/Academies',
+    name: 'Academies',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/Academies.vue')
+    } 
+  },
+  {
+    path: '/Learn',
+    name: 'Learn',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/Learn.vue')
+    } 
+  },
+  {
+    path: '/CourseStreaming',
+    name: 'CourseStreaming',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/CourseStreaming.vue')
     } 
   },
   {
@@ -19,7 +67,15 @@ const routes = [
     name: 'SignUp',
     components: {
       Desktop: ()=> import('@/components/DesktopComponents/SignUp.vue'), //SignUp
-      Mobile: ()=> import('@/components/MobileComponents/SignUp.vue')
+      Mobile: ()=> import('@/views/MobileViews/SignUp.vue')
+    } 
+  },
+  {
+    path: '/Instructors',
+    name: 'Instructors',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/SignUp.vue'), //SignUp
+      Mobile: ()=> import('@/views/MobileViews/InstructorPage.vue')
     } 
   },
   {
@@ -36,7 +92,7 @@ const routes = [
     name: "Login",
     components: {
       Desktop: () => import(/* webpackChunkName: "about" */ "../components/DesktopComponents/Login.vue"),
-      Mobile: () => import(/* webpackChunkName: "about" */ "../components/MobileComponents/Login.vue")
+      Mobile: () => import(/* webpackChunkName: "about" */ "@/views/MobileViews/Login.vue")
     }
      
   },

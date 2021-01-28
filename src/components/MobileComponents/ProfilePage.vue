@@ -34,7 +34,7 @@ export default {
         'Posts',
         'Courses',
       ],
-      component: "AcademyPageAboutText"
+      component: "AcademyCard"
     }
       
     },

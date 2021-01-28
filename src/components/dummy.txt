@@ -115,9 +115,77 @@ Add chat component
 Course streaming screen:
 
 Add video component
+	Create new video component with new config
+	Package it then import it
 Add chess engine component
+	Create sheet with title
+	Add spans in a way in which it is done
 Add chessboard - close - rate buttons
 Add timestamp bubble
+
+
+
+
+Video component configuration:
+
+Make it fill
+Change skin
+
+
+
+
+Navigation system:
+
+Get route in app.vue and based on it change skeleton
+Add different screens in views
+Create routes for these views
+
+Authentication system:
+
+Create a function in app.vue to direct user to signUp page if he is not logged in
+Add validators in signup page
+Add privacy policy and terms and conditions to signup page
+Add Email verification to signup page
+Add lichess authentication system
+
+Edge cases, logic and states:
+
+Review each screen and make sure user flow is properly handled
+Connect logic in each screen
+Add all the states in the data properties
+
+Header should be shown only if we are on HomePage
+
+
+Add back arrow besides chessbubl svg
+
+
+
+
+
+Create Learn views
+Add v tabs in Learn views (done)
+Add dynamic component in this view (done)
+make v-tabs control this dynamic component (done)
+Create Academies list 
+Create Instructor list (done)
+Change route in Home to Academies list
+Add AcademyPage to another route
+
+
+Create Instructor Card (done)
+Create Academy Card (done)
+
+
+Create AcademyList component
+Create Academies view
+Create AcademyList component
+Add AcademyList component to Academies view
+Change home route to Academies
+
+
+
+
 
 
 

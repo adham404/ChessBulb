@@ -8,7 +8,9 @@
     <!-- <CourseList/> -->
     <!-- <CoursePage/> -->
     <!-- <AddSnapshot/> -->
-    <AddPost/>
+    <!-- <AddPost/> -->
+    <!-- <CourseStreaming/> -->
+    <!-- <LiveViewer/> -->
   </div>
 </template>
 
@@ -22,7 +24,9 @@ import firebase from "firebase"
 // import NewsFeed from "@/components/MobileComponents/Newsfeed.vue"
 // import StoryScreen from "@/components/MobileComponents/StoryScreen.vue"
 // import AddSnapshot from "@/components/MobileComponents/AddSnapshot"
-import AddPost from "@/components/MobileComponents/AddPost"
+// import AddPost from "@/components/MobileComponents/AddPost"
+// import CourseStreaming from "@/components/MobileComponents/CourseStreaming"
+// import LiveViewer from "@/components/MobileComponents/LiveViewer"
 export default {
   components: {
       // ProfilePage
@@ -33,7 +37,9 @@ export default {
       // CoursePage
       // StoryScreen
       // AddSnapshot
-      AddPost
+      // AddPost
+      // CourseStreaming
+      // LiveViewer
   },
   data(){
     return{
