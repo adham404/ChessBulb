@@ -5,7 +5,7 @@
 		<!-- (LiveSessionCard Component) pass the data of each live session, the -->
 		<!-- userId and AcademyID (2 minutes) -->
 		<div v-for="(i,index) in Lives" :key="index">
-			<LiveSessionCard :Academy="Academy" :Live="i" :id="Ids[index]" :notEnrolled="notEnrolled"/>
+			<LiveSessionCard :Academy="Academy" :Live="i" :id="Ids[index]" :notEnrolled="false"/>
 		</div>
 	</div>
 </template>
@@ -33,12 +33,11 @@ export default {
 	//TODO make an array for liveSessions
 	//TODO in "mounted" get the live session of the academy using its ID and save them in the array
 	mounted() {
-		console.log(this.$route.query.Academy.AcademyId)
 		let self = this;
 		firebase
 			.firestore()
 			.collection("Lives")
-			.where("AcademyId", "==",this.Academy.AcademyId)
+			.where("AcademyId", "==",self.Academy.AcademyId)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc) => {
@@ -48,6 +47,7 @@ export default {
 					console.log(self.Ids);
 				});
 			});
+			console.log(self.Lives);
 	},
 };
 </script>

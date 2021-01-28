@@ -4,7 +4,7 @@
 			<div class="LeftHeaderAcademy">
 				<img src="../../../assets/AcademyPic.jpg" alt="" />
 				<!-- //(Done) make a paragraph for displaying the academy name (2 minutes) -->
-				<h1>{{ Academy.AcademyName }}</h1>
+				<h1>{{ getMyAcademy().AcademyName }}</h1>
 			</div>
 			<div class="RightHeaderAcademy">
 				<!-- //(Done) make Course button @click Course function (2 minutes) -->
@@ -13,6 +13,7 @@
 				<button class="Shadow" @click="live">Live Sessions</button>
 				<!-- //(Done) make About button @click about functoin (2 minutes) -->
 				<button class="Shadow" @click="about">About</button>
+				<button v-if="getOwner()" @click="Dashboard">Dashboard</button>
 			</div>
 		</div>
 		<svg
@@ -35,13 +36,14 @@
 		<!-- //(DONE) make Component flag for switching between the (LiveSessions
 		Component), (Course Component) and (About Component) passing data (5
 		minutes) -->
-		<component :is="ComponentName" :Academy="Academy" :AcademiesId="AcademiesId" :notEnrolled="notEnrolled" ></component>
+		<component :is="ComponentName" :Academy="getMyAcademy()"></component>
 	</div>
 </template>
 
 <script>
 //(Done) importing the (LiveSessions Component) (2 minutes)
 import LiveSessions from "./LiveSessions";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 //(Done) importing the (Course Component)(2 minutes)
 import Courses from "../../ShemyComponents/Courses";
 //(Done) importing the (About Component) (2 minutes)
@@ -58,17 +60,22 @@ export default {
 	//(Done) use query to get the academy data (2 minutes)
 	data() {
 		return {
-			Academy: this.$route.query.Academy,
-			notEnrolled:this.$route.query.notEnrolled,
-			AcademiesId:this.$route.query.AcademiesId,
+			id: this.$route.query.id,
 			ComponentName: "About",
 		};
 	},
 
 	methods: {
+		...mapActions(['FetchSpecificAcademy']),
+		...mapMutations(['OwnerShipCheck']),
+		...mapGetters(['getMyAcademy','getOwner']),
 		//(Done) About function: change the ComponentName to About (5 minutes)
 		about() {
 			EventBus.$emit("about");
+		},
+		Dashboard()
+		{
+			this.$router.push({path:`/Dashboard/${this.id}`, query:{id: this.id}});				
 		},
 		//(Done) Live function: change the ComponentName to LiveSeesions (5 minutes)
 		live() {
@@ -79,7 +86,12 @@ export default {
 			EventBus.$emit("courses");
 		},
 	},
-	mounted() {
+	async mounted() {
+		//Fetch the Academy Data
+		await this.FetchSpecificAcademy(this.id);
+		//See if the current Owner Owns the Academy
+		this.OwnerShipCheck();
+		//Rest of shit
 		EventBus.$on("about", () => {
 			this.ComponentName = "About";
 		});

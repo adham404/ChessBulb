@@ -112,6 +112,16 @@ const routes = [
     component: ()=> import('@/components/SadekComponents/NewsFeed/Analyze.vue') //Analyze
   },
   {
+    path: '/BoardPointer',
+    name: 'BoardPointer',
+    component: () => import('../components/ShemyComponents/BoardPointer.vue')
+  },
+  {
+    path: '/BoardPointerRecieve',
+    name: 'BoardPointerRecieve',
+    component: () => import('../components/ShemyComponents/BoardPointerRecieve.vue')
+  },
+  {
     path: '/Stories/',
     name: 'Stories',
     component: ()=> import('@/components/MarawanComponents/StoryScrolling/StoryScrollingTab.vue'), //StoryDisplayWindow,
@@ -124,6 +134,11 @@ const routes = [
 
       }
     ]
+  },
+  {
+    path: '/Dashboard/:id',
+    name: 'Dashboard',
+    component: ()=> import('@/components/ShemyComponents/Dashboard.vue')
   },
   {
     path: '/Courses',
@@ -151,6 +166,7 @@ const routes = [
   {
     path: '/Academies/:id',
     name: 'AcademyPage',
+    props: true,
     component: ()=> import('@/components/SadekComponents/Academy/CheckItOut.vue') //CheckItOut,
   },
   {

@@ -6,7 +6,7 @@
 	}">
     </router-link> -->
     <div @click="VisitProfile" class="UserImageAndSignOut">
-       <img src="@/assets/ProfilePic.jpg" alt="">
+       <img :src="GetImg()" alt="">
     </div>
     <div @click="VisitProfile" class="UserBio">
         <div class="TextBox">
@@ -15,8 +15,8 @@
         </div>
     </div>
         <div class="Buttons">
-            <button v-if="!Followed" @click="Follow" class="Shadow">Follow</button>
-            <button v-if="Followed" @click="UnFollow" class="Shadow">UnFollow</button>
+            <button v-if="!FollowingState" @click="Follow" class="Shadow">Follow</button>
+            <button v-if="FollowingState" @click="UnFollow" class="Shadow">UnFollow</button>
         </div>      
   </div>
 </template>
@@ -24,6 +24,8 @@
 <script>
 import { EventBus } from "../../main";
 import firebase from "firebase";
+import {mapMutations, mapGetters, mapActions} from "vuex";
+
 export default {
 props:['FollowerData','FollowerID'],
 data:function()
@@ -31,88 +33,138 @@ data:function()
     return{
         FollowerUserID:"",
         FollowedUserID:"",
+        FollowingState:false,
+        Url:"",
         Followed:false,
         FollowingIDS:[]
     }
 },
+computed:{
+    ...mapGetters(['GetUserFollowingList']),
+},
 methods:{
+    ...mapMutations(['SetVisitorData','SetVisitingStatus']),
+    ...mapActions(['FollowThisProfile','UnFollowThisProfile']),
     VisitProfile()
     {
+        this.SetVisitorData(this.FollowerData); // Assign Follower Data through Vuex state managment
+        this.SetVisitingStatus(true) //Visiting status
+        EventBus.$emit("ProfileVisited");
+        // EventBus.$emit("VisitProfile", this.FollowerData);
         this.$router.push({path: `/profile/${this.FollowerData.UserId}`, params: {id: this.FollowerData.UserId}})
+        //----------New Part--------------------------------//
         // var UserID = this.FollowerData.UserId
-        EventBus.$emit("VisitProfile", this.FollowerData);
+        //--------------------------------------------------//
         // this.$forceUpdate();
         // this.$router.push('/Home')
     },
-    async Follow()
+    Follow()
     {
-        this.FollowedUserID = this.FollowerData.UserId;
-        let self = this;
-        await firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                self.FollowerUserID = user.uid; 
-                                // User is signed in.
-            } else {
-                console.log("No User Signed in")
-                    // No user is signed in.
-                }
-        
-            })
-        var db = firebase.firestore();
-        var DBref = db.collection("Follows").doc(this.FollowedUserID); //Update Follower in Followed User
-        DBref.update({
-          Followers: firebase.firestore.FieldValue.arrayUnion(this.FollowerUserID)  
-        })
-        var DBref2 = db.collection("Follows").doc(this.FollowerUserID); //Update Following in Follower User
-        DBref2.update({
-          Following: firebase.firestore.FieldValue.arrayUnion(this.FollowedUserID)  
-        })
-        this.Followed = true;
-        alert("You Followed Him");  
-    },
-    async UnFollow()
-    {
-       this.FollowedUserID = this.FollowerData.UserId;
-        let self = this;
-        await firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                self.FollowerUserID = user.uid; 
-                                // User is signed in.
-            } else {
-                console.log("No User Signed in")
-                    // No user is signed in.
-                }
-        
-            })
-        var db = firebase.firestore();
-        var DBref = db.collection("Follows").doc(this.FollowedUserID); //Update Follower in Followed User
-        DBref.update({
-          Followers: firebase.firestore.FieldValue.arrayRemove(this.FollowerUserID)  
-        })
-        var DBref2 = db.collection("Follows").doc(this.FollowerUserID); //Update Following in Follower User
-        DBref2.update({
-          Following: firebase.firestore.FieldValue.arrayRemove(this.FollowedUserID)  
-        })
-        this.Followed = false;
-        alert("You UnFollowed Him");          
-    },
-    async CheckFollowing()
-    {
-        for (let i = 0; i < this.FollowerID.length; i++) {
-            if (this.FollowerData.UserId == this.FollowerID[i]) {
-                this.Followed = true;                
+        this.FollowThisProfile(this.FollowerData.UserId);
+        this.GetUserFollowingList.forEach((id) => {
+            if(this.FollowerData.UserId == id)
+            {
+                this.FollowingState = true;
             }
-        }
+        })
+    },
+    UnFollow()
+    {
+        this.UnFollowThisProfile(this.FollowerData.UserId);
+        this.FollowingState = false;
+    },
+    // async Follow()
+    // {
+    //     this.FollowedUserID = this.FollowerData.UserId;
+    //     let self = this;
+    //     await firebase.auth().onAuthStateChanged(function(user) {
+    //         if (user) {
+    //             self.FollowerUserID = user.uid; 
+    //                             // User is signed in.
+    //         } else {
+    //             console.log("No User Signed in")
+    //                 // No user is signed in.
+    //             }
+        
+    //         })
+    //     var db = firebase.firestore();
+    //     var DBref = db.collection("Follows").doc(this.FollowedUserID); //Update Follower in Followed User
+    //     DBref.update({
+    //       Followers: firebase.firestore.FieldValue.arrayUnion(this.FollowerUserID)  
+    //     })
+    //     var DBref2 = db.collection("Follows").doc(this.FollowerUserID); //Update Following in Follower User
+    //     DBref2.update({
+    //       Following: firebase.firestore.FieldValue.arrayUnion(this.FollowedUserID)  
+    //     })
+    //     this.Followed = true;
+    //     alert("You Followed Him");  
+    // },
+    // async UnFollow()
+    // {
+    //    this.FollowedUserID = this.FollowerData.UserId;
+    //     let self = this;
+    //     await firebase.auth().onAuthStateChanged(function(user) {
+    //         if (user) {
+    //             self.FollowerUserID = user.uid; 
+    //                             // User is signed in.
+    //         } else {
+    //             console.log("No User Signed in")
+    //                 // No user is signed in.
+    //             }
+        
+    //         })
+    //     var db = firebase.firestore();
+    //     var DBref = db.collection("Follows").doc(this.FollowedUserID); //Update Follower in Followed User
+    //     DBref.update({
+    //       Followers: firebase.firestore.FieldValue.arrayRemove(this.FollowerUserID)  
+    //     })
+    //     var DBref2 = db.collection("Follows").doc(this.FollowerUserID); //Update Following in Follower User
+    //     DBref2.update({
+    //       Following: firebase.firestore.FieldValue.arrayRemove(this.FollowedUserID)  
+    //     })
+    //     this.Followed = false;
+    //     alert("You UnFollowed Him");          
+    // },
+    // async CheckFollowing()
+    // {
+    //     for (let i = 0; i < this.FollowerID.length; i++) {
+    //         if (this.FollowerData.UserId == this.FollowerID[i]) {
+    //             this.Followed = true;                
+    //         }
+    //     }
+    // },
+    GetImg(){
+        return this.Url || require("@/assets/ProfilePic.jpg");
     }
 },
-mounted()
+async mounted()
 {
-    console.log("Hey There testing the props data which are: "+ this.FollowerID);
+    //Get User Photo for each follower from storage
+    if(this.FollowerData.UserPhoto != "null" && this.FollowerData.UserPhoto != "")
+    {
+        var StorageRef = firebase.storage().ref();
+        var PicRef = StorageRef.child(this.FollowerData.UserPhoto);
+        //fetch Downloadable url from Cloud Storage
+        await PicRef.getDownloadURL().then((url) => {
+            this.Url = url 
+        })
+        this.GetImg();
+    }
+    //Quick Check For Following
+    this.GetUserFollowingList.forEach((id) => {
+        if(this.FollowerData.UserId == id)
+        {
+                this.FollowingState = true;
+        }
+    })
+    //Check if we are following this card
+    // this.CheckForFollowingStateOfThisProfileCard(this.FollowerData.UserId);
+    // console.log("Hey There testing the props data which are: "+ this.FollowerID);
 //     EventBus.$on("SendFollowersID", (Data)=> {
 //         console.log("I recieved a signal....")
 //     })
 //    console.log("I am a mounted Card.")
-   this.CheckFollowing(); 
+//    this.CheckFollowing(); 
 }
 }
 </script>
