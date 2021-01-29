@@ -10,7 +10,7 @@ const routes = [
     path: '/',
     name: 'Home',
     components: {
-      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Desktop: ()=> import('@/components/DesktopComponents/Dashboard.vue'), //SignUp
       Mobile: ()=> import('@/views/MobileViews/Home.vue')
     } 
   },
