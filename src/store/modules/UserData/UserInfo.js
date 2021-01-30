@@ -37,15 +37,14 @@ const state = {
 }
 
 const getters = {
-    GETUserFULLDATA:(state)=>{state.FULLDATA},
-    GETUserID:(state)=>{state.Uid},
-    GETUserFirstName:(state)=>{state.FirstName},
-    GETUserLastName:(state)=>{state.LastName},
-    GETUserFullName:(state)=>{state.FullName},
-    GETUserEmail:(state)=>{state.Email},
-    GETUserBio:(state)=>{state.Bio},
-    GETUserIsInstructor:(state)=>{state.IsInstructor},
-    
+    GETUserFULLDATA:(state)=>(state.FULLDATA),
+    GETUserID:(state)=>(state.Uid),
+    GETUserFirstName:(state)=>(state.FirstName),
+    GETUserLastName:(state)=>(state.LastName),
+    GETUserFullName:(state)=>(state.FullName),
+    GETUserEmail:(state)=>(state.Email),
+    GETUserBio:(state)=>(state.Bio),
+    GETUserIsInstructor:(state)=>(state.IsInstructor)
 }
 
 const mutations = {
@@ -65,7 +64,9 @@ const mutations = {
 const actions = {
     async fetchUserInfo({commit,state}){
         var user = await firebase.auth().currentUser
+        console.log("Hey up here: "+ user.uid);
         if(user && !state.IsUserInfoFetched){
+            console.log("Hey down here: "+ user.uid);
             var DBUserDoc = await firebase.firestore().collection('Users').doc(user.uid).get()
             commit("MapUserDataToState",DBUserDoc.data())
             commit("SETUSERINFOFULLDATA",DBUserDoc.data())
