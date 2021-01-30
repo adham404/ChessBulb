@@ -79,7 +79,8 @@ const routes = [
     } 
   },
   {
-    path: '/CourseStreaming',
+    path: '/CourseStreaming/:CourseID',
+    props: true,
     name: 'CourseStreaming',
     components: {
       Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
@@ -87,8 +88,9 @@ const routes = [
     } 
   },
   {
-    path: '/CoursePage',
+    path: '/CoursePage/:CourseID',
     name: 'CoursePage',
+    props: true,
     components: {
       Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
       Mobile: ()=> import('@/views/MobileViews/Course.vue')

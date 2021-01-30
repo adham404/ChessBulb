@@ -5,11 +5,6 @@
 
       <!-- </keep-alive> -->
       <h1>hello</h1>
-        <v-dialog
-      v-model="dialog"
-      width="500"
-      activator= "#share"
-    >
       <!-- <template v-slot:activator="{ on, attrs }">
         <v-btn
           color="red lighten-2"
@@ -20,6 +15,11 @@
           Click Me
         </v-btn>
       </template> -->
+        <v-dialog
+      v-model="dialog"
+      width="500"
+      activator= "#share"
+    >
 
       <v-card class="py-3" rounded="lg">
 

@@ -1,5 +1,5 @@
 <template>
-  <div class = "Container">
+      <div class = "Container">
       <!-- FIXME add div containing VideoPlayer that is playing (CourseVideo) (20min) -->
       <video
       id="myVideo"
@@ -8,7 +8,7 @@
       @play="TimeUpdate"
       style = "height: 100%; width: 100%"
       >
-      <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+      <source :src="video" type="video/mp4" />
       </video>
 
   </div>
@@ -16,7 +16,7 @@
 
 <script>
 import {EventBus} from "../../main";
-// import firebase from "firebase"
+import firebase from "firebase"
 import videojs from "video.js"
 import 'video.js/dist/video-js.css'
 // import TimeStampDisplay from "../ShemyComponents/TimeStampDisplay";
@@ -39,7 +39,7 @@ export default {
                         volumePanel: true
                     },
                 },
-                video:"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                video:"",
                 CurrentTime:0,
                 VideoSrc:"",
                 VideoRef:"",
@@ -56,17 +56,17 @@ export default {
         async GetVideoLink()
         {
         // console.log("assurance: "+ ID);
-        // var StorageRef = firebase.storage();
-        // this.VideoRef = StorageRef.ref(`Courses/${this.VID}.mp4`);
-        // let self = this;
-        // let response = await self.VideoRef.getDownloadURL().then(function(url) {
-        // self.video = url;
-        // }).catch(function(error) {
-        //     console.log("error downloading: "+ error);
-        // // Handle any errors
-        // });
+        var StorageRef = firebase.storage();
+        this.VideoRef = StorageRef.ref(`Courses/${this.VID}.mp4`);
+        let self = this;
+        let response = await self.VideoRef.getDownloadURL().then(function(url) {
+        self.video = url;
+        }).catch(function(error) {
+            console.log("error downloading: "+ error);
+        // Handle any errors
+        });
         self.player = videojs('#myVideo', self.options);
-        // console.log(response);
+        console.log(response);
         },
         TimeUpdate()
         {
