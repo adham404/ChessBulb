@@ -2,7 +2,7 @@
   <v-app>
     <div style="height: 70px; background-color: white" v-if="ShowTitle">
       <v-row class="px-3 my-1">
-      <v-icon left color="primary" class="ml-1" v-if="true" @click="$router.go(-1)">
+      <v-icon left color="primary" class="ml-1 Mobile" v-if="true" @click="$router.go(-1)">
         fa-arrow-left
       </v-icon>
       <svg  id="Group_56" data-name="Group 56" xmlns="http://www.w3.org/2000/svg" width="180" height="50.001" viewBox="0 0 151 40.001" class="ml-1">
@@ -13,7 +13,7 @@
     </div>
     
     
-    <Header v-if = "ShowHeader"/>
+    <Header v-if = "ShowHeader" class="Mobile"/>
     <v-main  class="primary Desktop">
       <router-view name="Desktop"/>
     </v-main>

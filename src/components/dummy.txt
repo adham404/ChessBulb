@@ -190,3 +190,62 @@ Change home route to Academies
 
 
 
+
+
+
+Modify Profile to work for both friends and personal
+Add snapshot route
+Adding Add snapshot route
+Posting Game route
+Clearing share after done
+Share closing
+Open all snapshots route
+Instructor Page route in Instructors List
+Course Page route in Courses List
+Course Streaming in course page route
+Live viewing route in AcademyPage
+Course Page route in AcademyPage
+AcademyPage route in Academies List
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
