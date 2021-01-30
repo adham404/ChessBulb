@@ -3,7 +3,7 @@ import firebase from "firebase";
 
 const state = {
     Stories : [],
-    currentindex:0,
+    currentindex:1,
     cureentStory:null,
 }
 const getters = {
@@ -15,7 +15,7 @@ const getters = {
 const mutations = {
     ResetStories:(state)=>(state.Stories=[]),
     SetStories: (state,newstories) => {
-         newstories.unshift({Type:'add'})
+         //newstories.unshift({Type:'add'})
         state.Stories = newstories} ,
     AddStory: (state,newstory) =>{
         state.Stories.push(newstory)
@@ -41,7 +41,7 @@ const actions = {
     },
     async fetchStories({commit,}){
         await commit("ResetStories")
-        await commit("AddStory",{Type:'add'})
+        //await commit("AddStory",{Type:'add'})
         console.log("fetchStories")
         var user = await firebase.auth().currentUser
                 var followingdata = await firebase.firestore().collection('Follows').doc(user.uid).get()

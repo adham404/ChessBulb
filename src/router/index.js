@@ -23,6 +23,14 @@ const routes = [
     } 
   },
   {
+    path: '/AddPost',
+    name: 'AddPost',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import(/* webpackChunkName: "about" */ "../components/MobileComponents/AddPost.vue")
+    } 
+  },
+  {
     path: '/AddSnapshot',
     name: 'AddSnapshot',
     components: {

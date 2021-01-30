@@ -195,7 +195,7 @@ export default {
     height: 85%;
     /* background-color: pink; */
     width: 100%;
-    overflow-y: scroll ;
+    /* overflow-y: scroll ; */
     font-family: 'open-sans',sans-serif;
     color: black;
   }

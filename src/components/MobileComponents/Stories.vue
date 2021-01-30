@@ -33,8 +33,8 @@ import StoryCard from "@/components/MobileComponents/StoryCard"
 import firebase from "firebase"
 import { mapActions,mapGetters } from "vuex"
 export default {
-    data: () => ({
-    }),
+    // data: () => ({
+    // }),
     components: {
         StoryCard
         },

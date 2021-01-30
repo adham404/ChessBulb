@@ -8,19 +8,21 @@
           </v-avatar>
         </v-col>
         <v-col cols="9">
-          <span class="text-h6">Mostafa Hamido</span>
+          <span class="text-h6">{{TheStoryData.UserName}}</span>
           <br>
-          <span class="text-caption">White to play and win 😉 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita sapiente quo adipisci vero facere voluptatibus quod veritatis necessitatibus doloribus! Aliquam eligendi vero voluptas ipsum dolorem atque recusandae ipsa veniam laborum?</span>
+          <span class="text-caption">{{TheStoryData.StoryExplanation}}</span>
           <br>
           <!-- <v-btn xs class="text-capitalize primary"  height="25">follow</v-btn> -->
         </v-col>
       </v-row>
     </v-sheet>
-        <v-row class="my-3 " justify="space-around">
+        <v-row class="my-3 " justify="space-between">
             <v-btn
             fab
             color="white"
             cols = "2"
+            class="mx-10"
+            @click="EventBusA.$emit('moveStory','lift')"
             >
             <v-icon>
                 fa-caret-left
@@ -43,14 +45,16 @@
                     </v-textarea>
                 
             </v-sheet> -->
-                <v-btn width="200" xs color="white" @click="OpenSeen">
+                <!-- <v-btn width="200" xs color="white" @click="OpenSeen">
                 seen by 80 players
-            </v-btn>
+            </v-btn> -->
             
             <v-btn
             fab
             color = "white"
             cols = "2"
+            class="mx-10"
+            @click="EventBusA.$emit('moveStory','right')"
             >
                 <v-icon>
                     fa-caret-right
@@ -66,12 +70,18 @@
 <script>
 import {EventBus} from "@/main.js"
     export default {
+        data(){
+        return{
+            EventBusA : EventBus,
+        }
+    },
         methods: {
             OpenSeen(){
                 EventBus.$emit("OpenSeen", true)
 
             }
-        }
+        },
+        props:["TheStoryData"]
         
     }
 </script>
