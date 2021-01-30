@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import StoryScreen from "@/components/MobileComponents/StoryScreen"
+import StoryScreen from "@/components/MobileComponents/Stories/StoryScreen"
     export default {
         name: "Snapshot",
         components: {

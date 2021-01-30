@@ -23,6 +23,14 @@ const routes = [
     } 
   },
   {
+    path: '/AddPost',
+    name: 'AddPost',
+    components: {
+      Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
+      Mobile: ()=> import(/* webpackChunkName: "about" */ "../components/MobileComponents/AddPost.vue")
+    } 
+  },
+  {
     path: '/AddSnapshot',
     name: 'AddSnapshot',
     components: {
@@ -71,7 +79,8 @@ const routes = [
     } 
   },
   {
-    path: '/CourseStreaming',
+    path: '/CourseStreaming/:CourseID',
+    props: true,
     name: 'CourseStreaming',
     components: {
       Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
@@ -79,8 +88,9 @@ const routes = [
     } 
   },
   {
-    path: '/CoursePage',
+    path: '/CoursePage/:CourseID',
     name: 'CoursePage',
+    props: true,
     components: {
       Desktop: ()=> import('@/components/DesktopComponents/Development.vue'), //SignUp
       Mobile: ()=> import('@/views/MobileViews/Course.vue')

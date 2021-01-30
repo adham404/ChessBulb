@@ -10,7 +10,7 @@
                     </v-avatar>
                 </v-col>
                 <v-col cols="8" class="mt-2">
-                    <v-btn rounded text class="text-capitalize font-weight-normal text-subtitle-2" outlined>
+                    <v-btn rounded text class="text-capitalize font-weight-normal text-subtitle-2" outlined @click= "()=>$router.push('/AddPost')">
                         Post your latest chess encounter!
                     </v-btn>
                 </v-col>
@@ -18,7 +18,7 @@
             <v-divider></v-divider>
             <v-row class = "mt-1" justify="space-around">
                 <v-col cols="4">
-                    <v-btn class="text-capitalize text-subtitle-2" text>
+                    <v-btn class="text-capitalize text-subtitle-2" text @click= "()=>$router.push('/AddPost')">
                         <v-icon left color="primary">
                             fa-chess-board
                         </v-icon>

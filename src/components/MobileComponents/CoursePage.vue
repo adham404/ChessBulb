@@ -1,23 +1,21 @@
 <template>
     <div>
-        <CourseCard/>
+        <CourseCard :order="order" :preview="false"/>
+        <!-- <button @click="test">hey test</button> -->
         <v-sheet class="px-2 mb-3">
             <span class="text-h6">Course description</span>
             <br>
             <span class="text-subtitle-2 font-weight-normal">
-                The course will talk about the scillian najdorf opening and how to use it in battles of the galaxy
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis, id? Ducimus veritatis aliquid quasi eos aut nobis sapiente nostrum nulla perferendis animi exercitationem illo, perspiciatis blanditiis dolorem architecto itaque nihil.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ratione eum cupiditate velit similique. Dignissimos obcaecati voluptates sequi! Sed excepturi modi pariatur laboriosam laborum maiores inventore quasi sint. Vel, officiis.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi error dicta nostrum? Labore eligendi maiores, hic ullam asperiores natus ad ratione accusamus ut commodi, distinctio eveniet minima libero neque iusto!
+                    {{GetListOfCourses[order].privileges}}
             </span>
-            <v-btn xs class="text-capitalize primary" height="25" @click="() => {$router.push('/CourseStreaming')}">Open</v-btn>
+            <v-btn xs class="text-capitalize primary" height="25" @click="() => {$router.push({path: `/CourseStreaming/${GetListOfCourses[order].CourseId}`, query:{CourseID: GetListOfCourses[order].CourseId}})}">Open</v-btn>
         </v-sheet>
         <span class="text-h6" style="color: white">Reviews and Ratings</span>
         <v-divider size= "5" color = "white">
 
         </v-divider>
-        <v-sheet class="mb-8 mt-5">
-            <v-row>
+        <v-sheet v-for="(Review,x) in GetReviewsOfThisParticularCourse" :key="x" class="mb-8 mt-5">
+            <v-row >
                 <v-col cols = "2">
                 <v-avatar class="ml-2">
                     <img src="@/assets/ProfilePic2.jpg" alt="" style="object-fit: cover">
@@ -30,9 +28,7 @@
                     placeholder = "Add a comment"
                     flat
                     readonly
-                    value = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, quos amet velit quis fuga veniam ipsam nesciunt error ut incidunt illo! Reprehenderit, sapiente sequi optio eos deleniti culpa voluptatum earum.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus eos non voluptates! Consequuntur expedita consequatur, iure asperiores veniam ex maxime amet! Unde, ducimus rem. Aperiam aliquam asperiores tenetur similique pariatur.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis, enim praesentium aliquam nemo, eaque explicabo illum, doloremque ab cupiditate incidunt quidem dignissimos ratione. Animi molestias corporis cupiditate. Blanditiis, eum beatae."
+                    :value="Review.Comment"
                     >
                     
                     </v-textarea>
@@ -40,7 +36,7 @@
                         hover
                         length="5"
                         size="20"
-                        value="3"
+                        :value="Review.NumberOfStars"
                         readonly="true"
                     >
 
@@ -62,6 +58,7 @@
                     name="input-7-4"
                     placeholder = "Add a comment"
                     flat
+                    v-model="Review"
                     >
                     </v-textarea>
                     <v-rating
@@ -69,12 +66,14 @@
                         length="5"
                         size="20"
                         value="3"
+                        v-model="Rate"
                     >
 
                     </v-rating>
                     <v-btn
                     rounded
                     color="primary"
+                    @click="submit"
                     class = "text-capitalize mx-auto"
                     >submit</v-btn>
             </v-col>
@@ -112,9 +111,58 @@
 
 <script>
 import CourseCard from "@/components/MobileComponents/CourseCard"
+import {mapMutations,mapGetters,mapActions} from "vuex"
+
     export default {
         components: {
             CourseCard
+        },
+        data()
+        {
+            return{
+                order:0,
+                Review:"",
+                Rate:0
+            }
+        },
+        methods:{
+            ...mapActions(['FetchAllReviewsForThisCourse','SubmitReviewForThisCourse','fetchUserInfo']),
+            ...mapMutations(['SetTheOrderOfThisCourseAccordingToItsID']),
+            test()
+            {
+                this.fetchUserInfo()
+            },
+            async submit()  //Submit Your Review
+            {
+                if(this.Review == "" && this.Rate == 0)
+                {
+                    alert("Fill Your Rate Correctly before you submit");
+                }
+                else
+                {
+                    var ReviewData = {
+                        Review: this.Review,
+                        Rate: this.Rate,
+                        CourseId: this.$route.query.CourseID
+                    }
+                    console.log("Review Data: "+ ReviewData.Review);
+                    await this.SubmitReviewForThisCourse(ReviewData);
+                    //TODO Professional Popup that your rate have benn successfully Posted
+                    //TODO Clear Rate and Refetch all the Reviews all again
+                }
+            }
+        },
+        computed:{
+            ...mapGetters(['GetTheOrderOfThisCourseInTheList','GetListOfCourses','GetReviewsOfThisParticularCourse'])
+        },
+        mounted()
+        {
+            //Fetch the Course Data
+            console.log("Course ID: "+ this.$route.query.CourseID);
+            this.SetTheOrderOfThisCourseAccordingToItsID(this.$route.query.CourseID);
+            this.order = this.GetTheOrderOfThisCourseInTheList;
+            //Fetch The Course Reviews
+            this.FetchAllReviewsForThisCourse(this.$route.query.CourseID);
         }
     }
 </script>
