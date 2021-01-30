@@ -13,12 +13,15 @@ import AcademyPageAboutText from "@/components/MobileComponents/AcademyPageAbout
 import AcademyPageHeader from "@/components/MobileComponents/AcademyPageHeader.vue"
 import LiveCard from "@/components/MobileComponents/LiveCard"
 import CourseCard from "@/components/MobileComponents/CourseCard.vue"
+import LiveList from "@/components/MobileComponents/LiveList.vue"
 import {EventBus} from "@/main.js"
+
 export default {
   components: {
       AcademyPageHeader,
       NewsFeed,
       LiveCard,
+      LiveList,
       CourseCard,
       AcademyPageAboutText,
   },
@@ -48,7 +51,7 @@ export default {
     } else if (link == "Courses") {
         this.ChangeComponent("CourseCard")
     } else {
-        this.ChangeComponent("LiveCard")
+        this.ChangeComponent("LiveList")
     }
     }
     )

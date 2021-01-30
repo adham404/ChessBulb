@@ -16,11 +16,11 @@
           </v-avatar>
         </v-col>
         <v-col cols="9">
-          <span class="text-h6">Smouha Chess Academy</span>
+          <span class="text-h6">{{AcademyData.AcademyName}}</span>
           <br>
           <span class="text-caption">established a very long time ago</span>
           <br>
-          <v-btn xs class="text-capitalize primary"  height="25" @click="() => {$router.push('/Academies/AcademyPage')}">Open</v-btn>
+          <v-btn xs class="text-capitalize primary"  height="25" @click="AcademyVisit">Open</v-btn>
         </v-col>
       </v-row>
     </v-sheet>
@@ -28,9 +28,22 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex"
     export default {
         data: () => ({
     }),
+    props:['AcademyData'],
+    methods:{
+      ...mapActions(['FetchAcademyProfileData']),
+      AcademyVisit()
+      {
+        this.FetchAcademyProfileData(this.AcademyData.AcademyId)
+        this.$router.push('/Academies/AcademyPage');
+      }
+    },
+    async mounted()
+    {
+    }
 
         
     }
