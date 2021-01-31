@@ -24,7 +24,7 @@
     "chessboardjs-vue": "^1.0.5",
     "core-js": "^3.6.5",
     "firebase": "^8.2.3",
-    "isepic-chess": "^5.3.3",
+    "isepic-chess": "^5.3.5",
     "register-service-worker": "^1.7.1",
     "roboto-fontface": "*",
     "video.js": "^7.10.2",
