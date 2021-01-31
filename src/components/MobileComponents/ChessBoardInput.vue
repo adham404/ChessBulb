@@ -110,10 +110,51 @@ export default {
       }
       
     }
+    var StartMove = null
+    var touchSquare= async function(square , valid){
+      console.log("touched", square, "and it is " , valid)
+      if( valid){
+        if(game.turn()== game.get(square).color){
+          board.removeHightlight()
+        board.highlight(square)
+        StartMove = square
+        }
+        
+      }
+      else if(StartMove){
+        if (game.game_over()) {
+        alert("game is over ");
+      } else {
+        var moo =  await game.move(StartMove + "-"+square, { sloppy: true });
+        if(moo){
+          await board.move(StartMove + "-"+square);
+          await board.position(game.fen());
+          var lastmove = game.history();
+          lastmove = lastmove[lastmove.length - 1];
+          EventBus.$emit("newmove", lastmove);
+          StartMove = null
+          // console.log(lastmove);
+          board.removeHightlight()
+          EventBus.$emit("newfen", game.fen());
+          EventBus.$emit("newfenAndmove", [game.fen(),lastmove]);
+
+        }else{
+          StartMove = null
+          board.removeHightlight()
+        }
+        
+      }
+        // board.move(StartMove + "-"+square)
+        // StartMove = null
+        // board.removeHightlight()
+      }
+      
+    }
 
     //DONE valitade move(20min)
     var config = {
       draggable: true,
+      touchSquare : touchSquare,
       position: this.startpos,
       onDragStart: onDragStart,
       onDrop: onDrop,
