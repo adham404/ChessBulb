@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="height: 450px; width: 100%">
+        <div style="height: 250px; width: 100%">
             <VideoPlayer :VID = '$route.query.CourseID' />
         </div>
         <v-row>
