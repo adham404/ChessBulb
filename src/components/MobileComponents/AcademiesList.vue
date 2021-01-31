@@ -14,15 +14,27 @@
           </v-icon>
         </v-row>
         
-        <AcademyCard v-for="n in 10" :key = "n"/>
+        <AcademyCard v-for="(AcademyData,x) in GetAllAcademies" :AcademyData="AcademyData" :key = "x"/>
     </div>
 </template>
 
 <script>
+import {mapActions,mapGetters} from "vuex"
 import AcademyCard from "@/components/MobileComponents/AcademyCard"
     export default {
         components: {
             AcademyCard
+        },
+        methods:{
+            ...mapActions(['FetchAllAcademies'])
+        },
+        async mounted()
+        {
+            //Fetch All Academies
+            await this.FetchAllAcademies();
+        },
+        computed:{
+            ...mapGetters(['GetAllAcademies'])
         }
         
     }

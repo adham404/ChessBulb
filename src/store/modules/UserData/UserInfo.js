@@ -29,6 +29,8 @@ const state = {
     FULLDATA:null,
     Uid : null,
     FirstName : "",
+    ProfilePicUrl:"",
+    ProfilePicPath:"",
     LastName : "",
     FullName : "",
     Email : null,
@@ -44,7 +46,9 @@ const getters = {
     GETUserFullName:(state)=>(state.FullName),
     GETUserEmail:(state)=>(state.Email),
     GETUserBio:(state)=>(state.Bio),
-    GETUserIsInstructor:(state)=>(state.IsInstructor)
+    GETUserIsInstructor:(state)=>(state.IsInstructor),
+    GetProfilePicUrl:(state) => (state.ProfilePicUrl)
+
 }
 
 const mutations = {
@@ -55,8 +59,10 @@ const mutations = {
         state.FullName = UserData.FirstName +" "+UserData.LastName
         state.Email = UserData.Email
         state.Bio = UserData.UserBio
+        state.ProfilePicPath = UserData.UserPhoto
         state.IsInstructor = UserData.Instructor
     },
+    SetUserProfilePic:(state,url) => (state.ProfilePicUrl = url),
     SETUSERINFOFULLDATA:(state,DATA)=>{state.FULLDATA = DATA},
     UserInfoIsFetched:(state)=> {state.IsUserInfoFetched = true}
 }
@@ -72,9 +78,18 @@ const actions = {
             commit("SETUSERINFOFULLDATA",DBUserDoc.data())
             commit("UserInfoIsFetched")
         }
-    }
-}
+    },
+    async fetchProfilePic({state,commit}){
+ 
+        var StorageRef = firebase.storage().ref();
+        var PicRef = StorageRef.child(state.ProfilePicPath);
+        //fetch Downloadable url from Cloud Storage
+        await PicRef.getDownloadURL().then((url) => {
+            commit("SetUserProfilePic",url); 
+        })
 
+}
+}
 
 export default {
     state,

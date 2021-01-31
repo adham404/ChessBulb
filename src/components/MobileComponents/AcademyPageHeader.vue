@@ -16,7 +16,7 @@
           </v-avatar>
         </v-col>
         <v-col cols="9">
-          <span class="text-h6">Smouha Chess Academy</span>
+          <span class="text-h6">{{GetAcademyDataProfile.AcademyName}}</span>
           <br>
           <span class="text-caption">established a very long time ago</span>
           <br>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
 import {EventBus} from "@/main.js"
     export default {
         data: () => ({
@@ -67,6 +68,9 @@ import {EventBus} from "@/main.js"
       emitevent(link){
         EventBus.$emit("ChangeComponent",link)
       }
+    },
+    computed:{
+      ...mapGetters(['GetAcademyDataProfile'])
     }
         
     }

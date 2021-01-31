@@ -9,11 +9,11 @@
           <span class="text-caption ml-2">Mostafa</span>
         </v-col>
         <v-col cols="9">
-          <span class="text-h6">The sicilian najdorf</span>
+          <span class="text-h6">{{LiveData.LiveTitle}}</span>
           <br>
           <span class="text-caption">by Mostafa Hamido (instructor at Smouha Chess Academy)</span>
           <br>
-          <span class="text-subtitle-1">starts on 27th of may at 12:30pm</span>
+          <span class="text-subtitle-1">starts on {{LiveData.LiveDate}}</span>
           <v-btn xs class="text-lowercase primary" height="25" @click="() => {$router.push('/LiveViewer')}">join room</v-btn>
         </v-col>
       </v-row>
@@ -23,6 +23,7 @@
 
 <script>
     export default {
+      props:["LiveData"]
         
     }
 </script>

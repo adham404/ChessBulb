@@ -16,11 +16,18 @@ import CourseCard from "@/components/MobileComponents/CourseCard.vue"
 import {EventBus} from "@/main.js"
 import AcademyCard from "@/components/MobileComponents/AcademyCard"
 import PlayerCard from "@/components/MobileComponents/PlayerCard"
+import UsersList from "@/components/MobileComponents/UsersList.vue"
+import CourseList from "@/components/MobileComponents/CourseList.vue"
+import AcademiesList from "@/components/MobileComponents/AcademiesList.vue"
+
 export default {
   components: {
       ProfilePageHeader,
+      AcademiesList,
       NewsFeed,
+      CourseList,
       LiveCard,
+      UsersList,
       CourseCard,
       AcademyPageAboutText,
       AcademyCard,
@@ -46,13 +53,17 @@ export default {
   mounted(){
     EventBus.$on("ChangeComponent", (link) => {
       if(link == "Academies"){
-        this.ChangeComponent("AcademyCard")
+        this.ChangeComponent("AcademiesList")
     } else if (link == "Posts") {
         this.ChangeComponent("NewsFeed")
     } else if (link == "Courses") {
-        this.ChangeComponent("CourseCard")
-    } else {
-        this.ChangeComponent("PlayerCard")
+        this.ChangeComponent("CourseList")
+    } else if(link == "Explore") {
+        this.ChangeComponent("UsersList")
+    }
+    else
+    {
+        this.ChangeComponent("AcademyCard");
     }
     }
     )
