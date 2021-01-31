@@ -1,7 +1,7 @@
 <template>
   <div>
         <v-row justify="space-around" class="px-2 mt-1">
-            <v-sheet  rounded="lg" width="45%" class="px-2" height="200px" >
+            <v-sheet  rounded="lg" width="45%" class="px-2" height="150px" >
                 <span class="text-subtitle-2 text-decoration-underline">TimeStamps</span>
                 <br>
                 <div style="overflow-y: scroll; display:flex; justify-content:space-between; height: 80%">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </v-sheet>
-            <v-sheet  rounded="lg" width="45%" height="200px" class="px-2">
+            <v-sheet  rounded="lg" width="45%" height="150px" class="px-2">
                 <span class="text-subtitle-2 text-decoration-underline">Stockfish</span>
                 <br>
                 <div style="overflow-y: scroll; height: 80%">
