@@ -4,11 +4,12 @@
           solo
           name="input-7-4"
           label="Solo textarea"
+          v-model="AcademyBio"
           :disabled = "!Editing"
           flat
         ></v-textarea>
         <v-row justify="end" class="px-8">
-            <v-btn rounded color="primary" v-if="Editing" @click="Editing = !Editing">
+            <v-btn rounded color="primary" v-if="Editing" @click="Edit">
                 Save
             </v-btn>
             <v-btn rounded color="primary" v-if="!Editing" @click="Editing = !Editing">
@@ -22,13 +23,29 @@
 </template>
 
 <script>
+import {mapActions,mapGetters} from "vuex"
     export default {
         data () {
             return{
-                Editing: true
+                Editing: false,
+                AcademyBio:""
+            }
+        },
+        mounted()
+        {
+            this.AcademyBio = this.GetAcademyData.About
+        },
+        computed:{
+            ...mapGetters(['GetAcademyData'])
+        },
+        methods:{
+            ...mapActions(['EditMyAcademyBio']),
+            Edit()
+            {
+                this.EditMyAcademyBio(this.AcademyBio);
+                this.Editing = !this.Editing
             }
         }
-        
     }
 </script>
 

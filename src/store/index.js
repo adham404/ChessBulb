@@ -18,12 +18,14 @@ import UserInfo from "./modules/UserData/UserInfo"
 import Courses from "./modules/Sheemy/Courses"
 import UserFollowers from "./modules/UserData/UserFollowers"
 import Academies from "./modules/Sheemy/Academies"
+import Dashboard from "./modules/Sheemy/Dashboard"
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules:{
         Stories,
+        Dashboard,
         Academies,
         ChessSnapshot,
         UserInfo,
