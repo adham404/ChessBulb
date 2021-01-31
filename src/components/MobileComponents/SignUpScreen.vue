@@ -130,7 +130,7 @@ export default {
     },
     mounted()
     {
-      this.CheckUser();
+      //this.CheckUser();
     },
     methods:{
       //DONE Define SignUp function (1min)

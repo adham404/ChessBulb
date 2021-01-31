@@ -13,6 +13,7 @@
 import Vuex from "vuex"
 import Vue from "vue"
 import Stories from "./modules/Marwan/Stories"
+import NewsFeed from "./modules/Marwan/NewsFeed"
 import ChessSnapshot from "./modules/Sheemy/ChessSanpshot"
 import UserInfo from "./modules/UserData/UserInfo"
 import Courses from "./modules/Sheemy/Courses"
@@ -30,6 +31,7 @@ export default new Vuex.Store({
         ChessSnapshot,
         UserInfo,
         UserFollowers,
-        Courses
+        Courses,
+        NewsFeed
     }
 })

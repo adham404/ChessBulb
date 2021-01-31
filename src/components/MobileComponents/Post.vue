@@ -4,17 +4,16 @@
             <v-row>
                 <v-col cols="2">
                     <v-avatar size="50" class = "mb-1 ml-1">
-                        <img src="img\icons\pexels-pixabay-220453.jpg" alt="" style="object-fit: cover">
+                        <img :src="Match.UserPhotoUrl ? Match.UserPhotoUrl :'@/assets/ProfilePic2.jpg'" alt="" style="object-fit: cover">
                     </v-avatar>
                 </v-col>
                 <v-col cols="7">
-                    <span class="text-h6">John Smith</span>
+                    <span class="text-h6">{{Match.UserName}}</span>
                 </v-col>
             </v-row>
             <v-row class="mb-1">
                 <span class="mx-5" style="width:90%;">
-                This is a great game from our beloved grandmaster Bassem Amin against Hikaru Nakamura
-                ksldfjl;kasdfja;klsdfja;dlkfja;sdlfkjad;slkfjasdl;fkjasl;fdkjasd;kfljasdl;fkjasdl;fkjasdlalksd;jfl
+                {{Match.PostText}}
                 </span>
             </v-row>
             <v-row class = "mt-1 mb-1" justify="center">

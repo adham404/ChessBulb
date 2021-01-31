@@ -6,7 +6,7 @@
             <v-row justify="center" align-self ="center" >
                 <v-col cols="2" align-self="center" class="py-3">
                     <v-avatar size="50" class = "mb-1">
-                    <img src="img\icons\pexels-pixabay-220453.jpg" alt="" style="object-fit: cover">
+                    <img :src="GetProfilePicUrl ? GetProfilePicUrl : '/img/icons/pexels-pixabay-220453.jpg' " style="object-fit: cover">
                     </v-avatar>
                 </v-col>
                 <v-col cols="8" class="mt-2">
@@ -39,8 +39,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
     export default {
-        
+        computed:{
+            ...mapGetters(["GetProfilePicUrl"])
+        }
     }
 </script>
 

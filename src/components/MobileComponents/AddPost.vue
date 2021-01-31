@@ -119,7 +119,7 @@ import Chess from "chess.js"
 						BlackPlayer: this.blackPlayer,
 						UserName:this.GETUserFullName,
                         BrilliantUsers: [],
-                        Time : firebase.firestore.Timestamp.fromDate( new Date()),
+                        PostDate : firebase.firestore.Timestamp.fromDate( new Date()),
                         PostText : this.PostComment
                     })
                     this.$router.push('/')

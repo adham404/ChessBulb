@@ -1,7 +1,7 @@
 <template>
     <div>
       <!-- <keep-alive> -->
-        <Post v-for="(item, index) in Matches" :key="index" :Match="item" :UserId="UserId" />             
+        <Post v-for="(item, index) in GetPosts" :key="index" :Match="item" :UserId="UserId" />             
 
       <!-- </keep-alive> -->
       <h1>hello</h1>
@@ -195,6 +195,7 @@
 
 <script>
 import firebase from "firebase"
+import { mapActions,mapGetters } from "vuex"
 import Post from "@/components/MobileComponents/Post.vue"
 import {EventBus} from "@/main.js"
     export default {
@@ -213,52 +214,63 @@ import {EventBus} from "@/main.js"
   components: {
       Post
   },
+  computed:{
+    ...mapGetters(['GetPosts'])
+  },
+  methods:{
+    ...mapActions(['fetchPostsFromDP'])
+  },
   async created() {
       let self = this;
+      await firebase.auth().onAuthStateChanged(async function(user){
+        if(user){
+          self.fetchPostsFromDP()
+        }
+      })
 //____________________________________________________Check if user is logged in
-      await firebase.auth().onAuthStateChanged(async function (user) {
-          if (user) {
-              console.log(user.uid);
-              self.UserId = user.uid;
+      // await firebase.auth().onAuthStateChanged(async function (user) {
+      //     if (user) {
+      //         console.log(user.uid);
+      //         self.UserId = user.uid;
 
-          } else {
-              console.log("no log in");
-          }
-      });
+      //     } else {
+      //         console.log("no log in");
+      //     }
+      // });
 // ______________________________________________________Get people user is following and UserID_________________________________________________________________________________
-      if(self.UserId){
-          var followdata = await firebase
-          .firestore()
-          .collection("Follows")
-          .doc(self.UserId)
-          .get();
+      // if(self.UserId){
+      //     var followdata = await firebase
+      //     .firestore()
+      //     .collection("Follows")
+      //     .doc(self.UserId)
+      //     .get();
 
-          console.log(followdata.data().Following);
-          self.Following = followdata.data().Following;
-          self.Following.push(self.UserId);
+      //     console.log(followdata.data().Following);
+      //     self.Following = followdata.data().Following;
+      //     self.Following.push(self.UserId);
 
-          await self.Following.forEach(async (user) => {
-              // let self = this;
-              var match = await firebase
-              .firestore()
-              .collection("Matches")
-              .where("UserId", "==", user)
-              .get();
+      //     await self.Following.forEach(async (user) => {
+      //         // let self = this;
+      //         var match = await firebase
+      //         .firestore()
+      //         .collection("Matches")
+      //         .where("UserId", "==", user)
+      //         .get();
 
-              await match.forEach((doc) => {
-                  console.log(doc.data());
-                  self.matdata.push(doc.data());
-                  self.NewsFeedStatus = ''; 
-                  // self.Matches.push(doc.data());
-                  // console.log(self.Matches);
-              });
-          });
+      //         await match.forEach((doc) => {
+      //             console.log(doc.data());
+      //             self.matdata.push(doc.data());
+      //             self.NewsFeedStatus = ''; 
+      //             // self.Matches.push(doc.data());
+      //             // console.log(self.Matches);
+      //         });
+      //     });
 // _______________________________________________________________________
-          console.log("all data is here",this.matdata);
+          // console.log("all data is here",this.matdata);
           // var num = this.matdata.length;
           // console.log("Number of matches in homepage is: "+ num);
-          this.Matches = this.matdata
-      }
+          // this.Matches = this.matdata
+     // }
 
 
 
