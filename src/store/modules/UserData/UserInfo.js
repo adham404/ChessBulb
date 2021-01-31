@@ -26,6 +26,7 @@ import firebase from "firebase";
 */
 const state = {
     IsUserInfoFetched : false,
+    IsUserpicFetched : false,
     FULLDATA:null,
     Uid : null,
     FirstName : "",
@@ -74,19 +75,26 @@ const actions = {
         if(user && !state.IsUserInfoFetched){
             console.log("Hey down here: "+ user.uid);
             var DBUserDoc = await firebase.firestore().collection('Users').doc(user.uid).get()
-            commit("MapUserDataToState",DBUserDoc.data())
-            commit("SETUSERINFOFULLDATA",DBUserDoc.data())
+           await commit("MapUserDataToState",DBUserDoc.data())
+            await commit("SETUSERINFOFULLDATA",DBUserDoc.data())
+            //await dispatch('fetchProfilePic')
             commit("UserInfoIsFetched")
         }
     },
     async fetchProfilePic({state,commit}){
- 
-        var StorageRef = firebase.storage().ref();
-        var PicRef = StorageRef.child(state.ProfilePicPath);
-        //fetch Downloadable url from Cloud Storage
-        await PicRef.getDownloadURL().then((url) => {
-            commit("SetUserProfilePic",url); 
-        })
+        if(state.IsUserInfoFetched && !state.IsUserpicFetched){
+            var StorageRef = firebase.storage().ref();
+            if(state.ProfilePicPath){
+                var PicRef = StorageRef.child(state.ProfilePicPath);
+                //fetch Downloadable url from Cloud Storage
+                await PicRef.getDownloadURL().then((url) => {
+                    commit("SetUserProfilePic",url); 
+                })
+            }
+
+            state.IsUserpicFetched = true
+        }
+        
 
 }
 }

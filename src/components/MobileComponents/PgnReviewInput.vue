@@ -4,7 +4,7 @@
 //TODO make the last movehighlight(5min)
 <template>
 <div class="NewsFeedPgn">
-          <span v-for="(i,index) in pgnoutput  " :key="index" >
+          <span  v-for="(i,index) in pgnoutput  " :key="index" >
               <span>{{i.number}}.</span>
               <span class="pgnmove" @click="moveto(i.move1num)" >{{i.move1}} </span>
               <span class="pgnmove" @click="moveto(i.move2num)">{{i.move2}} </span>
@@ -150,7 +150,7 @@ export default {
     margin: 0px;
     font-family: 'Raleway',sans-serif;
     font-weight: 600;
-    color: black;
+    color: white;
     font-size: 0.9rem;
   }
 </style>
