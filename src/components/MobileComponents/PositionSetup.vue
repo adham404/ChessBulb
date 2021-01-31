@@ -127,7 +127,7 @@ export default {
     Save: function()
       {
       this.Fen = this.Chessboard.fen() + ' w - - 0 1';  // Convert ChessBoard.js Fen format to Chess.js Fen format
-      this.ChessGame = new Chess();  //Create Chess.js instance
+      //Create Chess.js instance
       //FIXME Validate Fen Object using Chess.js because of the format of the fen object genereated by Chessboard.js
       // var ValidateFenObject = this.ChessGame.load(this.Fen); //Create a variable that holds the message of chess.js fen validation
       //New Validate-----------
@@ -164,35 +164,119 @@ export default {
       // alert("Hey");
       this.Chessboard.clear(false);
     },
+    async touchSquare(square, valid)
+    {
+      var StartMove = null
+            console.log("touched", square, "and it is " , valid)
+      if( valid){
+        if(this.ChessGame.turn()== this.ChessGame.get(square).color){
+          this.Chessboard.removeHightlight()
+        this.Chessboard.highlight(square)
+        StartMove = square
+        }
+
+      }
+      else if(StartMove){
+        if (this.ChessGame.game_over()) {
+        alert("game is over ");
+      } else {
+        var moo =  await this.ChessGame.move(StartMove + "-"+square, { sloppy: true });
+        if(moo){
+          await this.Chessboard.move(StartMove + "-"+square);
+          await this.Chessboard.position(this.ChessGame.fen());
+          // var lastmove = this.ChessGame.history();
+          // lastmove = lastmove[lastmove.length - 1];
+          // EventBus.$emit("newmove", lastmove);
+          StartMove = null
+          // console.log(lastmove);
+          this.Chessboard.removeHightlight()
+          // EventBus.$emit("newfen", this.ChessGame.fen());
+          // EventBus.$emit("newfenAndmove", [this.ChessGame.fen(),lastmove]);
+
+        }else{
+          StartMove = null
+          this.Chessboard.removeHightlight()
+        }
+
+      }
+        // board.move(StartMove + "-"+square)
+        // StartMove = null
+        // board.removeHightlight()
+      }
+    },
     Start()
     {
-    this.Chessboard.start();
+      this.Chessboard.start();
     },
     QuickPos()
      {
-      this.Fen = "3k4/2qrb3/8/8/8/8/2QRB3/3K4 w - - 0 1";
+       this.Fen = "3k4/2qrb3/8/8/8/8/2QRB3/3K4 w - - 0 1";
       // EventBus.$emit("PositionIsSet");
       // EventBus.$emit("SendPosition",this.Fen);
      }
     },
     mounted(){
-    //Taken from [ChessBoardDisplay] component
-    var Board = {}
-    
-		setTimeout(() => {this.Mounted = true; setTimeout(() => {Board = Chessboard('Board1', config); this.Chessboard = Board;}, 900) ;}, 800)
-    // EventBus.$emit("Toggle", true)
-   
+      //Taken from [ChessBoardDisplay] component
+    // var Board = {}
+    this.ChessGame = new Chess();
       var config = {
-        draggable: true,
-        dropOffBoard: 'trash',
-        showErrors : 'alert',
-        sparePieces: true,
-        
+              draggable: true,
+              dropOffBoard: 'trash',
+              touchSquare : touchSquare,
+              showErrors : 'alert',
+              sparePieces: true,
+            }
+    this.ChessBoard = Chessboard('Board1', config);
+
+  var StartMove = null
+  var touchSquare = async function(square,valid)
+  {
+    console.log("touched", square, "and it is " , valid)
+      if( valid){
+        if(this.ChessGame.turn()== this.ChessGame.get(square).color){
+          this.Chessboard.removeHightlight()
+        this.Chessboard.highlight(square)
+        StartMove = square
+        }
 
       }
+      else if(StartMove){
+        if (this.ChessGame.game_over()) {
+          alert("game is over ");
+      } else {
+        var moo =  await this.ChessGame.move(StartMove + "-"+square, { sloppy: true });
+        if(moo){
+          await this.Chessboard.move(StartMove + "-"+square);
+          await this.Chessboard.position(this.ChessGame.fen());
+          // var lastmove = this.ChessGame.history();
+          // lastmove = lastmove[lastmove.length - 1];
+          // EventBus.$emit("newmove", lastmove);
+          StartMove = null
+          // console.log(lastmove);
+          this.Chessboard.removeHightlight()
+          // EventBus.$emit("newfen", this.ChessGame.fen());
+          // EventBus.$emit("newfenAndmove", [this.ChessGame.fen(),lastmove]);
+
+        }else{
+          StartMove = null
+          this.Chessboard.removeHightlight()
+        }
+
+      }
+        // board.move(StartMove + "-"+square)
+        // StartMove = null
+        // board.removeHightlight()
+      }
+
+
+  // setTimeout(() => {this.Mounted = true; setTimeout(() => {Board = Chessboard('Board1', config); this.Chessboard = Board;}, 900) ;}, 800)
+  // EventBus.$emit("Toggle", true)
+ 
+
     //DONE Recieve Chess Object with the Setup Position From ChessBoard.js (2min)
      //Create a ChessBoard.js instance
     
+    }
     }
 }
 </script>
