@@ -9,7 +9,18 @@
                     <v-spacer></v-spacer>
                     <span class = "text-subtitle-1 font-weight-light ml-5" style = "color: white">Add a snapshot</span>
                 </v-sheet>
+                <!-- <v-sheet class="primary mt-2 ml-2" height="200" width="150"  rounded = "lg" elevation="4">
+                    <v-skeleton-loader class="ProfileImage mt-1" dark type="image" ></v-skeleton-loader>
+                    <v-row justify="center" align="center" class="pt-2">
+                    <v-skeleton-loader  class = "mb-0" dark type="avatar" ></v-skeleton-loader>
+                    <v-skeleton-loader class="StoryName mb-0 ml-1 text-caption" dark type="chip" ></v-skeleton-loader>
+                    </v-row>
+                </v-sheet> -->
+                 <v-sheet v-if="lodding"   >
+                       <v-skeleton-loader   type="card-avatar" light elevation="4" class=" mt-2 ml-2"  width="150" height="200px"  ></v-skeleton-loader> 
+                 </v-sheet>
                 <div class="Story">
+                   
                     <v-sheet class="primary mt-2 ml-2" height="200" width="200"  rounded = "lg" elevation="4" v-for="(story,index) in getFirst7Stories" :key="index" v-on:click="SetStoriesIndexTo(index)">
                     <router-link  v-if="story.Type !='add'"   :to="{ name: 'Snapshots' }" >
                         <StoryCard   class="ProfileImage mt-1"  :startpos="index" :chessid='story.StoryID'></StoryCard>
@@ -23,7 +34,7 @@
                     </v-sheet>
                 </div>
             </div>
-            <v-btn width="95%" class="ml-3 text-subtitle-1 font-weight-bold text-capitalize">Open all snapshots</v-btn>
+            <v-btn width="95%" @click="$router.push('/Snapshots')" class="ml-3 text-subtitle-1 font-weight-bold text-capitalize">Open all snapshots</v-btn>
         </div>
     </div>
 </template>
@@ -33,6 +44,11 @@ import StoryCard from "@/components/MobileComponents/StoryCard"
 import firebase from "firebase"
 import { mapActions,mapGetters } from "vuex"
 export default {
+    data(){
+        return{
+            lodding : true
+        }
+    },
     // data: () => ({
     // }),
     components: {
@@ -44,7 +60,7 @@ export default {
     methods: {
         ...mapActions(["fetchStories","SetStoriesIndexTo"])
     },
-    async created(){
+    async mounted(){
         
         // setTimeout (async () =>{
         let self = this
@@ -58,13 +74,20 @@ export default {
                 
             console.log("story header is created")
             await self.fetchStories()
-                } 
+            self.lodding = await false
+                } else if (self.getStories.length > 0){
+                    self.lodding = await false
+                }
         });
     },
 }
 </script>
 
 <style lang="css" scoped>
+::v-deep  .v-skeleton-loader__image {
+    height: 150px; 
+  }
+
 .Container{
   height: 270px;
   width: 100%;

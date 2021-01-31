@@ -21,7 +21,7 @@
     "@capacitor/ios": "^2.0.0",
     "@mdi/font": "^3.6.95",
     "chess.js": "^0.11.0",
-    "chessboardjs-vue": "^1.0.6",
+    "chessboardjs-vue": "^1.0.7",
     "core-js": "^3.6.5",
     "firebase": "^8.2.3",
     "isepic-chess": "^5.3.5",

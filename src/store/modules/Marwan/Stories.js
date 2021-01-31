@@ -46,6 +46,7 @@ const actions = {
         var user = await firebase.auth().currentUser
                 var followingdata = await firebase.firestore().collection('Follows').doc(user.uid).get()
                 var followingUsers = await followingdata.data().Following
+                await followingUsers.unshift(user.uid)
                 var fetchedstories = [];
                 await followingUsers.forEach(async fuser =>{
                     var userstories =  await firebase.firestore().collection("ChessStories").where("UserID","==",fuser).get()

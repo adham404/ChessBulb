@@ -36,8 +36,10 @@
             v-model="blackPlayer"
           ></v-text-field>
         </v-sheet>
+        
         <v-sheet class="mt-8 py-3">
-            <v-row class = "mt-1 mb-1" justify="center">
+            <StockFish />
+            <v-row class = "mt-0 mb-1" justify="center">
                 <v-col>
                     <ChessBoardInput id ="1"/>
                 </v-col>
@@ -82,6 +84,7 @@
 <script>
 import ChessBoardInput from "@/components/MobileComponents/ChessBoardInput"
 import PgnReviewInput from "@/components/MobileComponents/PgnReviewInput"
+import StockFish from "@/components/MarawanComponents/StockFish"
 import { mapActions,mapGetters } from "vuex"
 import firebase from 'firebase'
 import {EventBus} from "@/main"
@@ -89,7 +92,8 @@ import Chess from "chess.js"
     export default {
         components: {
             ChessBoardInput,
-            PgnReviewInput
+            PgnReviewInput,
+            StockFish
         },
         computed:{
             ...mapGetters(['GETUserFULLDATA','GetProfilePicUrl','GETUserFullName'])
