@@ -7,7 +7,7 @@
                         <img src="img\icons\pexels-pixabay-220453.jpg" alt="" style="object-fit: cover">
                     </v-avatar>
                     <br>
-                    <span class="text-subtitle-1 ml-4">Smouha Chess Academy</span>
+                    <span class="text-subtitle-1 ml-4">{{GetAcademyData.AcademyName}}</span>
                     <v-col >
                     <!-- <v-btn rounded color="primary" class="text-capitalize">
                         Edit Academy About
@@ -96,7 +96,7 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <v-sheet rounded="lg" height="250">
+                        <v-sheet style="overflow-y:auto;" rounded="lg" height="250">
                             <component v-bind:is="component"></component>
                         </v-sheet>
                     </v-col>
@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from "vuex"
 import MemberList from "@/components/DesktopComponents/MemberList"
 import AcademyAboutEditing from "@/components/DesktopComponents/AcademyAboutEditing"
 import LiveSessionsList from "@/components/DesktopComponents/LiveSessionsList"
@@ -140,11 +141,25 @@ import LiveForm from "@/components/DesktopComponents/LiveForm"
             CreateCourse,
             LiveForm
         },
+        async mounted()
+        {
+            //Check for Mob Users Accident log
+            // if(this.GetFirstTimeLoggedIn)
+            // {
+            //     this.$router.push('/Login');
+            // }
+            // //Fetch My Academy Data
+            await this.FetchMyAcademyData();
+        },
+        computed:{
+            ...mapGetters(['GetFirstTimeLoggedIn','GetAcademyData'])
+        },
         methods: {
+            ...mapActions(['FetchMyAcademyData']),
             Navigate(link){
                 if(link == "Edit Academy Description"){
                     this.ChangeComponent("AcademyAboutEditing")
-                } else if (link == "Live sessions list") {
+                } else if (link == "Live Sessions List") {
                     this.ChangeComponent("LiveSessionsList")
                 } else if (link == "Courses") {
                     this.ChangeComponent("CourseList")
