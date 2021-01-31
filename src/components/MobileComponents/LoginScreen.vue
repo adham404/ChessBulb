@@ -6,7 +6,7 @@
         </svg>
         <v-container rounded class="pt-0">
             <h1 class=" font-weight-normal text-h2 mt- pl-2 mb-2 pb-2 pt-0" style="color: #215679;">Login</h1>
-            <span class="text-subtitle-1 ml-2 mb-10">Don't have an account? <a href="/">Sign  Up.</a></span>
+            <span class="text-subtitle-1 ml-2 mb-10">Don't have an account? <a href="/SignUp">Sign  Up.</a></span>
             <v-text-field
             label="Email"
             outlined

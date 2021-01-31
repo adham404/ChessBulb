@@ -144,11 +144,11 @@ import LiveForm from "@/components/DesktopComponents/LiveForm"
         async mounted()
         {
             //Check for Mob Users Accident log
-            if(this.GetFirstTimeLoggedIn)
-            {
-                this.$router.push('/Login');
-            }
-            //Fetch My Academy Data
+            // if(this.GetFirstTimeLoggedIn)
+            // {
+            //     this.$router.push('/Login');
+            // }
+            // //Fetch My Academy Data
             await this.FetchMyAcademyData();
         },
         computed:{
