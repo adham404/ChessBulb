@@ -9,7 +9,6 @@
             placeholder = "search"
             type="text"
             v-model="qurey"
-            @keyup="(event)=>  (search() ? event.keyCode === 13 : false)"
           ></v-text-field>
           <v-icon @click="search" right color="white">
               fa-search

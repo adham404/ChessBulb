@@ -28,8 +28,7 @@ import {EventBus} from "@/main.js"
     export default {
         data: () => ({
       links: [
-        'Instructors',
-        'Courses',
+        'Courses'
       ],
     }),
     methods: {

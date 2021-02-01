@@ -15,7 +15,7 @@ import {EventBus} from "@/main.js"
     export default {
         data(){
             return{
-                component: "InstructorList"
+                component: "CourseList"
             }
         },
         components:{

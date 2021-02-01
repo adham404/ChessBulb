@@ -4,7 +4,7 @@ import UserData from "../UserData/UserInfo"
 const state = {
     ChessBoardStartingPositionForSnapshots:"",
     TheChessBoardPositionIsValidate:false,
-    PostType:"Snapshot"
+    PostType:"Move"
 }
 
 const mutations = {
@@ -64,6 +64,7 @@ const actions = {
         StartingFen: state.ChessBoardStartingPositionForSnapshots,
         UserName: currentUser.FirstName + " " + currentUser.LastName,
         StoryID: StoryID,
+        UserPhoto: currentUser.UserPhoto,
         UserID: currentUser.UserId
       })
       alert("your Story has been Posted Successfully");

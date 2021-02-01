@@ -148,7 +148,11 @@ import {mapMutations,mapGetters,mapActions} from "vuex"
                     console.log("Review Data: "+ ReviewData.Review);
                     await this.SubmitReviewForThisCourse(ReviewData);
                     //TODO Professional Popup that your rate have benn successfully Posted
-                    //TODO Clear Rate and Refetch all the Reviews all again
+                    this.Review = ""
+                    this.Rate = 0
+                    await this.FetchAllReviewsForThisCourse(this.$route.query.CourseID);
+
+                   //TODO Clear Rate and Refetch all the Reviews all again
                 }
             }
         },
