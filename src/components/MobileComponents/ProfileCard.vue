@@ -54,8 +54,9 @@ import {mapGetters,mapActions, mapMutations} from "vuex";
       async VisitProfile()
       {
         //Visit This Person Profile
-        await this.SetCurrentVisitorProfileId(this.FollowerData.UserId);
-        await this.SetVisitorProfileData();                
+        console.log(this.FollowerData.UserId);
+        // await this.SetCurrentVisitorProfileId(this.FollowerData.UserId);
+        await this.SetVisitorProfileData(this.FollowerData);                
         EventBus.$emit("HiIAmAVisitor");
       },
       UnFollow()

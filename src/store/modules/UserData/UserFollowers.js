@@ -22,6 +22,7 @@ const state = {
     UsersTillTheSearchEngineWorksFine:[],
     IfUsersTillTheSearchEngineWorksFineFetched:false,
     VisitorProfileData:"",
+    UserListCardData:[],
     CurrentVisitorProfileId:""
 }
 
@@ -29,7 +30,8 @@ const getters = {
     GetUserFollowersList:(state)=> state.UserFollowers,
     GetUserFollowingList:(state)=> state.FollowingTheUser,
     GetTenUsersTillTheSearchEngineWorksFine:(state) => (state.UsersTillTheSearchEngineWorksFine ? state.UsersTillTheSearchEngineWorksFine.slice(7, 15) : []),
-    GetCurrentVisitorProfileData:(state) => (state.VisitorProfileData)
+    GetCurrentVisitorProfileData:(state) => (state.VisitorProfileData),
+    GetUsersDataforUserListCards:(state) => (state.UserListCardData)
 }
 
 const mutations = {
@@ -40,13 +42,14 @@ const mutations = {
     SetCurrentVisitorProfileId:(state,data) => {
         state.CurrentVisitorProfileId = data;
     },
-    SetVisitorProfileData:(state) => {
-        state.UsersTillTheSearchEngineWorksFine.forEach((doc) => {
-            if(doc.UserId == state.CurrentVisitorProfileId)
-            {
-                state.VisitorProfileData = doc;
-            }
-        })
+    SetVisitorProfileData:(state,data) => {
+        // state.UsersTillTheSearchEngineWorksFine.forEach((doc) => {
+        //     if(doc.UserId == state.CurrentVisitorProfileId)
+        //     {
+        //         state.VisitorProfileData = doc;
+        //     }
+        // })
+        state.VisitorProfileData = data; 
     },
     UserFollowDataIsFetched:(state)=>{state.IsUserFollowDataFetched=true},
 }
@@ -104,6 +107,16 @@ const actions = {
             })
             state.IfUsersTillTheSearchEngineWorksFineFetched = true;
        }
+    },
+    async fetchUsersFromSearchEngine({state},ids)
+    {
+        state.UserListCardData = []
+        var db = firebase.firestore();
+        ids.forEach((id) => {
+            db.collection("Users").doc(id).get().then((doc) => {
+                state.UserListCardData.push(doc.data());
+            })
+        })
     }
 }
 

@@ -22,6 +22,7 @@
     "@mdi/font": "^3.6.95",
     "chess.js": "^0.11.0",
     "chessboardjs-vue": "^1.0.7",
+    "algoliasearch": "^4.5.1",
     "core-js": "^3.6.5",
     "firebase": "^8.2.3",
     "isepic-chess": "^5.3.5",

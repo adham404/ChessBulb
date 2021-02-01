@@ -1,6 +1,6 @@
 <template>
       <div>
-        <v-row class="px-8 mt-1">
+        <!-- <v-row class="px-8 mt-1">
             <v-text-field
             height="40"
             color="white"
@@ -12,29 +12,57 @@
           <v-icon right color="white">
               fa-search
           </v-icon>
-        </v-row>
-        <ProfileCard v-for="(data,x) in GetTenUsersTillTheSearchEngineWorksFine" :FollowerData="data" :key = "x"/>        
+        </v-row> -->
+        <SearchEngine SearchIndex="Users" :ShowFilters="false"></SearchEngine>
+        <ProfileCard v-for="(data,x) in UserDataList" :FollowerData="data" :key = "x"/>        
     </div>
 </template>
 
 <script>
 import ProfileCard from "./ProfileCard"
+import SearchEngine from "../MarawanComponents/SearchEngine"
+import firebase from "firebase"
 import {mapActions, mapGetters} from "vuex"
+import { EventBus } from '../../main'
 
 export default {
 components:{
-    ProfileCard
+    ProfileCard,
+    SearchEngine
 },
 computed:{
-    ...mapGetters(['GetTenUsersTillTheSearchEngineWorksFine'])
+    ...mapGetters(['GetTenUsersTillTheSearchEngineWorksFine','GetUsersDataforUserListCards'])
+},
+data()
+{
+    return{
+        UserDataList:[]
+    }
 },
 methods:{
-    ...mapActions(['fetchUsersTillTheSearchEngineWorksFine'])
+    ...mapActions(['fetchUsersTillTheSearchEngineWorksFine','fetchUsersFromSearchEngine']),
+    GetUserData(ids)
+    {
+        this.UserDataList = [];
+        var db = firebase.firestore();
+        ids.forEach((id) => {
+            db.collection("Users").doc(id).get().then((doc) => {
+                this.UserDataList.push(doc.data());
+            })
+        })
+    }
+},
+beforeDestroy(){
+    EventBus.$off();
 },
 async mounted()
 {
+    await EventBus.$on("TheSearchResult", async (res) => {
+        this.GetUserData(res);
+        // console.log("Hey Look What i have recieved: "+ res);
+        // await this.fetchUsersFromSearchEngine(res);
+    });
     //In General Case I Have all the Ids of ChessPlayers so I am Going to Fetch them till the algolia function works fine
-    await this.fetchUsersTillTheSearchEngineWorksFine();
 }   
 }
 </script>
