@@ -63,7 +63,6 @@ import {mapActions,mapGetters} from "vuex";
         'Academies',
         'Courses',
         'Posts',
-        'My Snapshots',
         'Explore',
         'Profile Settings'
       ],
@@ -108,7 +107,6 @@ import {mapActions,mapGetters} from "vuex";
         'Academies',
         'Courses',
         'Posts',
-        'My Snapshots',
         'Explore',
         'Profile Settings'
       ]

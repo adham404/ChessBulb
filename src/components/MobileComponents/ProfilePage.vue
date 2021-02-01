@@ -19,11 +19,13 @@ import PlayerCard from "@/components/MobileComponents/PlayerCard"
 import UsersList from "@/components/MobileComponents/UsersList.vue"
 import CourseList from "@/components/MobileComponents/CourseList.vue"
 import AcademiesList from "@/components/MobileComponents/AcademiesList.vue"
+import ProfileSettings from "@/components/MobileComponents/ProfileSettings.vue"
 
 export default {
   components: {
       ProfilePageHeader,
       AcademiesList,
+      ProfileSettings,
       NewsFeed,
       CourseList,
       LiveCard,
@@ -63,7 +65,7 @@ export default {
     }
     else
     {
-        this.ChangeComponent("AcademyCard");
+        this.ChangeComponent("ProfileSettings");
     }
     }
     )

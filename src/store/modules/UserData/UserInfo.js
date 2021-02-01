@@ -94,9 +94,60 @@ const actions = {
 
             state.IsUserpicFetched = true
         }
-        
+},
+async RemoveProfilePic({state}){
+    var StorageRef = firebase.storage().ref();
+    var db = firebase.firestore();
+    //Remove it from storage
+    if(state.ProfilePicPath != "")
+    {
+        var desertRef = StorageRef.child(state.ProfilePicPath);
+        // Delete the file
+        await desertRef.delete().then(() => {
+            console.log("Deleted Successfully");
+        // File deleted successfully
+        }).catch((error) => {
+            console.log("Some Error "+ error);
+        // Uh-oh, an error occurred!
+        });
+    }
+    //Remove Profile Pic from db
+    db.collection("Users").doc(state.Uid).update({
+        UserPhoto: ""
+    })
+    state.ProfilePicUrl = "";
 
+},
+async SaveProfileSettingDataEdit({state},data)
+{
+    var db = firebase.firestore()
+    await db.collection("Users").doc(state.Uid).update({
+        FirstName: data.FirstName,
+        LastName: data.LastName,
+        UserBio: data.UserBio
+    })
+    alert("Data Updated Successfully");
+},
+async UploadProfilePic({state,dispatch},photodata){
+    var StorageRef = firebase.storage().ref();
+    //Remove Old Photo From Cloud Storage if it exists
+    dispatch("RemoveProfilePic");
+
+    // Upload New One
+    state.ProfilePicPath = photodata.Url
+    var db = firebase.firestore();
+    var ImageRef = StorageRef.child(photodata.Url);
+    await ImageRef.put(photodata.FileObject).then((snap) => {
+      alert("Profile Updated Sucessfully: ");
+      console.log("succesffully uploaded: "+ snap)  
+    }).catch(err => {
+        console.log("Error uploading: "+err);
+    })
+    await db.collection("Users").doc(state.Uid).update({
+        UserPhoto: photodata.Url
+    })
 }
+
 }
 
 export default {

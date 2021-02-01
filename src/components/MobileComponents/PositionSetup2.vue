@@ -6,11 +6,11 @@
             <v-row>
                 <v-col cols = "2">
                 <v-avatar class="ml-2">
-                    <img src="@/assets/ProfilePic2.jpg" alt="" style="object-fit: cover">
+                    <img  :src="GetProfilePicUrl ? GetProfilePicUrl : '/img/icons/pexels-pixabay-220453.jpg'" alt="" style="object-fit: cover">
                 </v-avatar>
             </v-col>
             <v-col cols="9" >
-                    <span class="text-h6 ml-3">Mostafa Hamido</span>
+                    <span class="text-h6 ml-3">{{GETUserFullName}}</span>
                     <v-textarea
                     solo
                     name="input-7-4"
@@ -90,9 +90,8 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import {mapMutations,mapGetters} from "vuex";
 import ic from "isepic-chess";
-
 import Board from "chessboardjs-vue"
 
 export default {
@@ -106,8 +105,15 @@ data()
         square2:""
     }
 },
+computed:{
+    ...mapGetters(['GetProfilePicUrl','GETUserFullName'])
+},
 methods:{
     ...mapMutations(['SetStartingPositionForSnapShot','SetChessBoardPositionValidationStatus']),
+    GetImgUrl()
+    {
+
+    },
     Save()
     {
        this.Fen = this.board.fen() + ' w - - 0 1'; 

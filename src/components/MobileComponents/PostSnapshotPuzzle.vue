@@ -4,11 +4,11 @@
             <v-row>
                 <v-col cols = "2">
                 <v-avatar class="ml-2">
-                    <img src="@/assets/ProfilePic2.jpg" alt="" style="object-fit: cover">
+                    <img :src="GetProfilePicUrl ? GetProfilePicUrl : '/img/icons/pexels-pixabay-220453.jpg'" alt="" style="object-fit: cover">
                 </v-avatar>
             </v-col>
             <v-col cols="9" >
-                    <span class="text-h6 ml-3">Mostafa Hamido</span>
+                    <span class="text-h6 ml-3">{{GETUserFullName}}</span>
                     <v-textarea
                     v-model="StoryDescription"
                     solo
@@ -123,7 +123,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['GetChessBoardStartingPositionForSnapshots','GetSnapshotPostingType'])
+        ...mapGetters(['GetChessBoardStartingPositionForSnapshots','GetSnapshotPostingType','GetProfilePicUrl','GETUserFullName'])
     },
     mounted()
     {
@@ -179,6 +179,8 @@ export default {
                     ChessMoveObject: this.ChessMoveObject
                 }
                 this.PostThisPuzzleSnapShotToTheDatabase(DataToSend);
+                //TODO POP up you did it sucessfully
+                this.$router.push('/');
           }
       },
       DeleteLine(LineCounter)
