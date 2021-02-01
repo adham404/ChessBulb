@@ -47,6 +47,14 @@ const routes = [
     } 
   },
   {
+    path : '/PostScreen',
+    name : 'PostScreen',
+    components:{
+      Desktop : ()=> import('@/components/DesktopComponents/Development.vue'),
+      Mobile : ()=> import('@/components/MarawanComponents/PostScreen.vue')
+    }
+  },
+  {
     path: '/LiveViewer',
     name: 'LiveViewer',
     components: {

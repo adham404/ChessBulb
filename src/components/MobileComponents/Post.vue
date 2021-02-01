@@ -136,6 +136,17 @@ import { EventBus } from "@/main";
             }
         },
         methods: {
+            async SendUpdate(){
+                await firebase
+                .firestore()
+                .collection("Matches")
+                .doc(this.Match.MatchId)
+                .update({
+                    noOfBrilliants: this.Match.noOfBrilliants,
+                    BrilliantUsers: this.Match.BrilliantUsers,
+                });
+                console.log("added noOfBrilliants ")
+            },
             BrilliantClicked() {
                 if (this.Match.BrilliantUsers.includes(this.UserId) && !this.Match.noOfBrilliants == 0){
                     this.Match.noOfBrilliants--;
@@ -154,6 +165,7 @@ import { EventBus } from "@/main";
                     this.Match.BrilliantUsers.push(this.UserId);
                     console.log(this.UserId)
                 }
+                this.SendUpdate()
             },
             sharePost(){
 			    this.share = true
@@ -201,16 +213,10 @@ import { EventBus } from "@/main";
                 this.id = new Date().getTime().toString() + "hi"
                 console.log(this.id)
             },
-            updated() {		
-                firebase
-                .firestore()
-                .collection("Matches")
-                .doc(this.Match.MatchId)
-                .update({
-                    noOfBrilliants: this.Match.noOfBrilliants,
-                    BrilliantUsers: this.Match.BrilliantUsers,
-                });
+            async updated() {		
+                
             },
+
 
             
 
