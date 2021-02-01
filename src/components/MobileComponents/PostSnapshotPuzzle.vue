@@ -65,7 +65,7 @@
             <div style="height: 200px; overflow-y: scroll">
                 <v-sheet color="primary" width="95%" class="ml-2 mt-2 mb-2 px-2" rounded = "lg" v-for="(Line,x) in ChessMoveObject" :key="x">
                 <!-- <PgnReviewOutput  :pgn="Match.PGN" :id="Match.MatchId" :key ='Match.MatchId' class="text-subtitle-2" style="color: white;"/> -->
-                <span class="text-h6" style="color: white"> <v-icon @click="GoToLine(Line.Line)" left color="white">fa-close</v-icon>Line {{x}}</span>
+                <span class="text-h6" style="color: white"> <v-icon @click="DeleteLine(Line.Line)"  left color="white">fa-close</v-icon><span @click="GoToLine(Line.Line)">Line {{x+1}}</span></span>
                 <br>
                 <span style = "color: white">
                 <div class="Line">
@@ -115,6 +115,8 @@ export default {
         MoveClicked:false,
         PuzzleFormFlag:false,
         LineCounter:0,
+        square1:"",
+        square2:"",
         ChessCurrentMovePos:"", //Hold the Position value of the White Move in the White moves array of the current child in the main object
         OverWriteType:"" //Hold the Type overwrite if it's an overwrite for White Moves or black moves
 
@@ -127,12 +129,12 @@ export default {
     {
         var config = {
         draggable: true,
+        touchSquare: this.touchSquare,
         dropOffBoard: 'trash',
         position: this.GetChessBoardStartingPositionForSnapshots,
         showErrors : 'alert',
         onDrop: this.onDrop,
         onDragStart: this.onDragStart,
-
         }
         this.ChessBoard = Board("board1",config);
         //Create a Chess.js Object with the Recieved Fen from the PositionSetup
@@ -178,6 +180,13 @@ export default {
                 }
                 this.PostThisPuzzleSnapShotToTheDatabase(DataToSend);
           }
+      },
+      DeleteLine(LineCounter)
+      {
+        console.log("Line is deleted");
+        if (LineCounter != 0) {
+          this.ChessMoveObject.splice(LineCounter,1);
+        }
       },
       GoToLine(LineCounter) //This Function triggered when the title of the line is clicked to navigate smoothly between Lines
       {
@@ -282,6 +291,69 @@ export default {
         this.LineCounter = SolutionLine;
       this.LoadTargetFen(this.LineCounter);
     },
+    async touchSquare(square,valid)
+    {
+        console.log("touched", square, "and it is " , valid)
+        if(this.square1 != "")
+        {
+            this.square2 = square;
+        }
+        else
+        {
+            this.square1 = square 
+        }
+        this.ChessBoard.highlight(square)
+        if(this.square2 != "")
+        {
+          this.onDrop(this.square1,this.square2)
+          // this.ChessBoard.move(this.square1 + "-"+this.square2);
+            this.square1=""
+            this.square2=""
+            this.ChessBoard.removeHightlight()
+        }
+    },
+    // async touchSquare(square, valid)
+    // {
+    //   var StartMove = null
+    //   console.log("touched", square, "and it is " , valid)
+    //   if(valid){
+    //     if(this.ChessMoveObject[this.LineCounter].ChessEngine.turn()== this.ChessMoveObject[this.LineCounter].ChessEngine.get(square).color){
+    //       this.ChessBoard.removeHightlight()
+    //     this.ChessBoard.highlight(square)
+    //     StartMove = square
+    //     }
+
+    //   }
+    //   else if(StartMove){
+    //     if (this.ChessMoveObject[this.LineCounter].ChessEngine.game_over()) {
+    //     alert("game is over ");
+    //   } else {
+    //     var moo =  await this.ChessMoveObject[this.LineCounter].ChessEngine.move(StartMove + "-"+square, { sloppy: true });
+    //     if(moo){
+    //       await this.ChessBoard.move(StartMove + "-"+square);
+    //       await this.ChessBoard.position(this.ChessMoveObject[this.LineCounter].ChessEngine.fen());
+    //       // var lastmove = game.history();
+    //       // lastmove = lastmove[lastmove.length - 1];
+    //       // EventBus.$emit("newmove", lastmove);
+    //       StartMove = null
+    //       // console.log(lastmove);
+    //       this.ChessBoard.removeHightlight()
+    //       // EventBus.$emit("newfen", game.fen());
+    //       // EventBus.$emit("newfenAndmove", [game.fen(),lastmove]);
+
+    //     }else{
+    //       StartMove = null
+    //       this.ChessBoard.removeHightlight()
+    //     }
+
+    //   }
+    //     // board.move(StartMove + "-"+square)
+    //     // StartMove = null
+    //     // board.removeHightlight()
+    //   }
+
+
+    // },
       onDrop(source, target)
       {
           console.log('Source: ' + source)
@@ -312,7 +384,11 @@ export default {
             console.log("E7M the pure move of the black piece is "+ move.san);
             this.ChessMoveObject[this.LineCounter].BlackMoves.push(move.san);
             console.log("Current Line is: "+ this.LineCounter);
-
+          }
+          if(this.square2 != "")
+          {
+          this.ChessBoard.move(source + "-"+target);
+          this.square2 = ""
           }
           console.log("Chess Moves hoped to be like:")
           console.log(this.ChessMoveObject[this.LineCounter].ChessEngine.ascii());

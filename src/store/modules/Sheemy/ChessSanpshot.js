@@ -4,7 +4,7 @@ import UserData from "../UserData/UserInfo"
 const state = {
     ChessBoardStartingPositionForSnapshots:"",
     TheChessBoardPositionIsValidate:false,
-    PostType:"Snapshot"
+    PostType:"Move"
 }
 
 const mutations = {

@@ -55,7 +55,7 @@
             
        </v-sheet> -->
         <!-- <v-sheet > -->
-        <PositionSetup v-if="!GetValidatyChessBoardPosition"/>
+        <PositionSetup2 v-if="!GetValidatyChessBoardPosition"/>
         <!-- <v-row justify="space-around" class="my-1">
             <v-btn @click="Save">
                 Save
@@ -119,14 +119,17 @@
 </template>
 
 <script>
-import PositionSetup from "@/components/MobileComponents/PositionSetup"
+// import PositionSetup from "@/components/MobileComponents/PositionSetup"
 // import ChessBoardDisplay from "@/components/MobileComponents/ChessBoardDisplay"
 import PostSnapshotPuzzle from "@/components/MobileComponents/PostSnapshotPuzzle"
+import PositionSetup2 from "@/components/MobileComponents/PositionSetup2"
+
 import {mapGetters,mapMutations, mapActions} from "vuex";
 
 export default {
         components: {
-            PositionSetup,
+            // PositionSetup,
+            PositionSetup2,
             // ChessBoardDisplay,
             PostSnapshotPuzzle
         },
@@ -138,7 +141,7 @@ export default {
             },
             PostSnap()
             {
-                this.SetSnapshotPostingType("Snapshot")
+                this.SetSnapshotPostingType("Move")
             }
         },
         async mounted()

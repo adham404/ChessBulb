@@ -55,7 +55,7 @@
       </v-card>
 
       </v-dialog>
-      <div id="Board1" ></div>
+      <div id="Board2" ></div>
       <!-- <PositionSetup/> -->
     </div>
     <!-- <div class="StoryData">
@@ -166,6 +166,7 @@ export default {
     },
     async touchSquare(square, valid)
     {
+      console.log("Hey there: "+ this.ChessBoard);
       var StartMove = null
             console.log("touched", square, "and it is " , valid)
       if( valid){
@@ -215,29 +216,21 @@ export default {
       // EventBus.$emit("SendPosition",this.Fen);
      }
     },
-    mounted(){
+    async mounted(){
       //Taken from [ChessBoardDisplay] component
     // var Board = {}
     this.ChessGame = new Chess();
-      var config = {
-              draggable: true,
-              dropOffBoard: 'trash',
-              touchSquare : touchSquare,
-              showErrors : 'alert',
-              sparePieces: true,
-            }
-    this.ChessBoard = Chessboard('Board1', config);
 
   var StartMove = null
   var touchSquare = async function(square,valid)
   {
     console.log("touched", square, "and it is " , valid)
-      if( valid){
-        if(this.ChessGame.turn()== this.ChessGame.get(square).color){
-          this.Chessboard.removeHightlight()
+      if(valid){
+        // if(this.ChessGame.turn()== this.ChessGame.get(square).color){
+        //   this.Chessboard.removeHightlight()
+        // }
         this.Chessboard.highlight(square)
         StartMove = square
-        }
 
       }
       else if(StartMove){
@@ -269,7 +262,6 @@ export default {
       }
 
 
-  // setTimeout(() => {this.Mounted = true; setTimeout(() => {Board = Chessboard('Board1', config); this.Chessboard = Board;}, 900) ;}, 800)
   // EventBus.$emit("Toggle", true)
  
 
@@ -277,6 +269,16 @@ export default {
      //Create a ChessBoard.js instance
     
     }
+        var config = {
+          draggable: true,
+          dropOffBoard: 'trash',
+          touchSquare : touchSquare,
+                  showErrors : 'alert',
+                  sparePieces: true,
+          }
+          // setTimeout(() => {this.Mounted = true; setTimeout(() => {var Board = Chessboard('Board2', config); this.Chessboard = Board;}, 900) ;}, 800)
+        var board = Chessboard("Board2", config);
+        this.ChessBoard = board
     }
 }
 </script>
