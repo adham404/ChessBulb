@@ -1,34 +1,35 @@
 <template>
-    <div>
+  <div>
     <v-sheet>
       <v-row class="mt-1 px-1 pb-1">
         <v-col>
-          <v-avatar size="25" cols= "1" class="mx-0 px-0">
-            <img src="img\icons\pexels-pixabay-220453.jpg" alt="" style="object-fit: cover">
+          <v-avatar size="25" cols="1" class="mx-0 px-0">
+            <img
+              src="img\icons\pexels-pixabay-220453.jpg"
+              alt=""
+              style="object-fit: cover"
+            />
           </v-avatar>
         </v-col>
         <v-col cols="9">
           <span class="text-Subtitle-2">Mostafa Hamido</span>
-          <br>
-          <br>
+          <br />
+          <br />
         </v-col>
       </v-row>
     </v-sheet>
-    </div>
+  </div>
 </template>
 
 <script>
-import {EventBus} from "@/main.js"
-    export default {
-    methods: {
-      emitevent(link){
-        EventBus.$emit("ChangeComponent",link)
-      }
+import { EventBus } from "@/main.js";
+export default {
+  methods: {
+    emitevent(link) {
+      EventBus.$emit("ChangeComponent", link);
     }
-        
-    }
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

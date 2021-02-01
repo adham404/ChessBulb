@@ -37,7 +37,7 @@
           </v-icon>
         </v-btn>
       </v-row>
-      
+
       <div v-if="ShowSolution" style="height: 200px; overflow-y: scroll">
         <v-sheet
           color="primary"
@@ -79,8 +79,22 @@
             </v-icon>
           </v-btn>
         </v-row>
-        <v-alert v-if="ShowRightMassage" width="95%" class="ml-2 mt-2 mb-2 px-2"    type="success" justify= 'center' >Your Solution Was Right </v-alert>
-        <v-alert v-if="ShowWrongMassage" width="95%" class="ml-2 mt-2 mb-2 px-2"   type="error" justify= 'center' >Your Solution Was Wrong </v-alert>
+        <v-alert
+          v-if="ShowRightMassage"
+          width="95%"
+          class="ml-2 mt-2 mb-2 px-2"
+          type="success"
+          justify="center"
+          >Your Solution Was Right
+        </v-alert>
+        <v-alert
+          v-if="ShowWrongMassage"
+          width="95%"
+          class="ml-2 mt-2 mb-2 px-2"
+          type="error"
+          justify="center"
+          >Your Solution Was Wrong
+        </v-alert>
       </div>
     </v-sheet>
   </div>
@@ -98,7 +112,7 @@ export default {
     ChessBoardDisplay,
     ChessBoardInput,
     MovePreviewOutput,
-    MovePreviewInput,
+    MovePreviewInput
   },
   props: ["TheStoryData"],
   data() {
@@ -107,13 +121,13 @@ export default {
       CurrentLine: 0,
       ShowSolution: false,
       TheSolution: null,
-      SolutionAlertMessage : null , 
-      ShowRightMassage :false , 
-      ShowWrongMassage :false , 
+      SolutionAlertMessage: null,
+      ShowRightMassage: false,
+      ShowWrongMassage: false
     };
   },
   mounted() {
-    EventBus.$on("MovesPreviewList", (data) => {
+    EventBus.$on("MovesPreviewList", data => {
       this.TheSolution = data;
     });
   },
@@ -133,7 +147,7 @@ export default {
       var BreakException = {};
       var myline = JSON.stringify(this.TheSolution);
       try {
-        this.TheStoryData.Moves.forEach((line) => {
+        this.TheStoryData.Moves.forEach(line => {
           var sline = JSON.stringify(line.Moves);
           if (myline == sline) {
             this.SolutionAlert(true);
@@ -146,23 +160,20 @@ export default {
         if (e !== BreakException) throw e;
       }
     },
-     SolutionAlert(res){
-          if(res){
-              
-              this.ShowRightMassage = true
-              setTimeout(() => {
-                  this.ShowRightMassage = false
-              }, 3000);
-              
-          }else{
-              
-              this.ShowWrongMassage = true
-              setTimeout(() => {
-                  this.ShowWrongMassage = false
-              }, 2000);
-          }
-      },
-  },
+    SolutionAlert(res) {
+      if (res) {
+        this.ShowRightMassage = true;
+        setTimeout(() => {
+          this.ShowRightMassage = false;
+        }, 3000);
+      } else {
+        this.ShowWrongMassage = true;
+        setTimeout(() => {
+          this.ShowWrongMassage = false;
+        }, 2000);
+      }
+    }
+  }
 };
 </script>
 

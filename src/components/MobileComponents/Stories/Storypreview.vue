@@ -1,6 +1,6 @@
 <template>
-    <div>
-      <v-sheet class="mt-8 py-3">
+  <div>
+    <v-sheet class="mt-8 py-3">
       <v-row class="mt-1 mb-1" justify="center">
         <v-col>
           <ChessBoardDisplay id="1" />
@@ -38,49 +38,50 @@
           :key="index"
           @click="changeline(index)"
         >
-          
-          <span class="text-h6" style="color: white">Line {{ index+1 }} {{ CurrentLine ==index ? "*" : '' }}</span>
+          <span class="text-h6" style="color: white"
+            >Line {{ index + 1 }} {{ CurrentLine == index ? "*" : "" }}</span
+          >
           <br />
-          <MovePreviewOutput key="index" :moves="Line.Moves" :startpos="TheStoryData.StartingFen" :activeLine="  CurrentLine ==index  "   />
-          
+          <MovePreviewOutput
+            key="index"
+            :moves="Line.Moves"
+            :startpos="TheStoryData.StartingFen"
+            :activeLine="CurrentLine == index"
+          />
         </v-sheet>
       </div>
     </v-sheet>
-    
-    </div>    
+  </div>
 </template>
 
 <script>
-import MovePreviewOutput from "@/components/MobileComponents/MovePreview/MovePreviewOutput.vue"
+import MovePreviewOutput from "@/components/MobileComponents/MovePreview/MovePreviewOutput.vue";
 import ChessBoardDisplay from "@/components/MobileComponents/ChessBoardDisplay";
 //import { EventBus1 } from "@/main.js";
-import { EventBus } from '../../../main';
+import { EventBus } from "../../../main";
 export default {
-    components:{
-        ChessBoardDisplay,
-        MovePreviewOutput
+  components: {
+    ChessBoardDisplay,
+    MovePreviewOutput
+  },
+  props: ["TheStoryData"],
+  data() {
+    return {
+      //EventBus : EventBus1,
+      CurrentLine: 0
+    };
+  },
+  methods: {
+    emitcontrol(data) {
+      EventBus.$emit("Control", data);
+      //console.log(data)
     },
-    props:["TheStoryData"],
-    data(){
-        return{
-            //EventBus : EventBus1,
-            CurrentLine: 0 ,
-        }
-    },
-    methods:{
-        emitcontrol(data){
-			EventBus.$emit('Control',data)
-			//console.log(data)
-        },
-        changeline(index){
-            //console.log('pop in line',index)
-            this.CurrentLine = index
-        }
+    changeline(index) {
+      //console.log('pop in line',index)
+      this.CurrentLine = index;
     }
-
-}
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

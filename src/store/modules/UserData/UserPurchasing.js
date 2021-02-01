@@ -15,64 +15,75 @@ import firebase from "firebase";
     
 */
 const state = {
-    IsUserAcadmiesDataFethched:false,
-    UserSubedAcadmies: [],
-    IsUserCoursesDataFethched:false,
-    UserBoughtCourses:[],
-}
+  IsUserAcadmiesDataFethched: false,
+  UserSubedAcadmies: [],
+  IsUserCoursesDataFethched: false,
+  UserBoughtCourses: []
+};
 
 const getters = {
-    GetUserBoughtCoursers:(state)=>state.UserBoughtCourses,
-    GetUserSubedAcadmies:(state)=>state.UserSubedAcadmies,
-}
+  GetUserBoughtCoursers: state => state.UserBoughtCourses,
+  GetUserSubedAcadmies: state => state.UserSubedAcadmies
+};
 
 const mutations = {
-    AddUserSubedAcademy:(state,indata)=>{state.UserSubedAcadmies.push(indata)},
+  AddUserSubedAcademy: (state, indata) => {
+    state.UserSubedAcadmies.push(indata);
+  },
 
-    UserAcadmiesDataIsFethched:()=>{state.IsUserAcadmiesDataFethched = true},
+  UserAcadmiesDataIsFethched: () => {
+    state.IsUserAcadmiesDataFethched = true;
+  },
 
-    AddUserBoughtCourse:(state,indata)=>{state.UserBoughtCourses.push(indata)},
+  AddUserBoughtCourse: (state, indata) => {
+    state.UserBoughtCourses.push(indata);
+  },
 
-    UserCoursesDataIsFethched:()=>{state.IsUserCoursesDataFethched = true},
-}
+  UserCoursesDataIsFethched: () => {
+    state.IsUserCoursesDataFethched = true;
+  }
+};
 
 const actions = {
-    async fetchUserSubscribedAcadmies({commit,state}){
-        var user = await firebase.auth().currentUser
-        if(user && !state.IsUserAcadmiesDataFethched ){
-            // var DBUserDoc = await firebase.firestore().collection('Follows').doc(user.uid).get()
-            firebase.firestore().collection("AcademyEnrollments").where("UserId", "==", user.uid).get()
-            .then((querySnapshot) => {querySnapshot.forEach((doc) => {
-                    commit("AddUserSubedAcademy",doc.data().AcademyId)
-                    
-					
-                });
-                commit("UserAcadmiesDataIsFethched")
-			});
-            
-        }
-    },
-    async fetchUserBoughtCourses({commit,state}){
-        var user = await firebase.auth().currentUser
-        if(user && !state.IsUserCoursesDataFethched ){
-            // var DBUserDoc = await firebase.firestore().collection('Follows').doc(user.uid).get()
-            firebase.firestore().collection("CourseOrders").where("UserId", "==", user.uid).get()
-            .then((querySnapshot) => {querySnapshot.forEach((doc) => {
-                    commit("AddUserBoughtCourse",doc.data().CourseId)
-                    
-					
-                });
-                commit("UserCoursesDataIsFethched")
-			});
-            
-        }
-    },
-}
-
+  async fetchUserSubscribedAcadmies({ commit, state }) {
+    var user = await firebase.auth().currentUser;
+    if (user && !state.IsUserAcadmiesDataFethched) {
+      // var DBUserDoc = await firebase.firestore().collection('Follows').doc(user.uid).get()
+      firebase
+        .firestore()
+        .collection("AcademyEnrollments")
+        .where("UserId", "==", user.uid)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            commit("AddUserSubedAcademy", doc.data().AcademyId);
+          });
+          commit("UserAcadmiesDataIsFethched");
+        });
+    }
+  },
+  async fetchUserBoughtCourses({ commit, state }) {
+    var user = await firebase.auth().currentUser;
+    if (user && !state.IsUserCoursesDataFethched) {
+      // var DBUserDoc = await firebase.firestore().collection('Follows').doc(user.uid).get()
+      firebase
+        .firestore()
+        .collection("CourseOrders")
+        .where("UserId", "==", user.uid)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            commit("AddUserBoughtCourse", doc.data().CourseId);
+          });
+          commit("UserCoursesDataIsFethched");
+        });
+    }
+  }
+};
 
 export default {
-    state,
-    getters,
-    actions,
-    mutations,
-}
+  state,
+  getters,
+  actions,
+  mutations
+};

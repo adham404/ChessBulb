@@ -1,20 +1,16 @@
 <template>
-    <div>
-        <AcademiesList/>
-
-    </div>
+  <div>
+    <AcademiesList />
+  </div>
 </template>
 
 <script>
-import AcademiesList from "@/components/MobileComponents/AcademiesList"
-    export default {
-        components: {
-            AcademiesList
-        }
-        
-    }
+import AcademiesList from "@/components/MobileComponents/AcademiesList";
+export default {
+  components: {
+    AcademiesList
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,29 +1,30 @@
 <template>
   <div>
-    <LiveCard v-for="(LiveData,x) in GetLiveCardsForTheAcademy" :LiveData="LiveData" :key="x"></LiveCard>      
+    <LiveCard
+      v-for="(LiveData, x) in GetLiveCardsForTheAcademy"
+      :LiveData="LiveData"
+      :key="x"
+    ></LiveCard>
   </div>
 </template>
 
 <script>
-import LiveCard from "../MobileComponents/LiveCard"
-import {mapActions,mapGetters} from "vuex"
+import LiveCard from "../MobileComponents/LiveCard";
+import { mapActions, mapGetters } from "vuex";
 export default {
-components:{
+  components: {
     LiveCard
-    },
-methods:{
-    ...mapActions(['FetchLiveCardDataForDashboard'])
-},
-mounted()
-{
+  },
+  methods: {
+    ...mapActions(["FetchLiveCardDataForDashboard"])
+  },
+  mounted() {
     this.FetchLiveCardDataForDashboard();
-},
-computed:{
-    ...mapGetters(['GetLiveCardsForTheAcademy'])
-}
-}
+  },
+  computed: {
+    ...mapGetters(["GetLiveCardsForTheAcademy"])
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
