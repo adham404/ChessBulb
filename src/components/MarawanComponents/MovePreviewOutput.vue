@@ -3,6 +3,8 @@
     <v-tooltip bottom v-model="showboard">
       <template v-slot:activator="{ on, attrs }">
         <v-slider
+        class="ma-auto"
+         style="width:90%"
           dense
           ticks="always"
           v-model="SliderMove"
@@ -11,13 +13,13 @@
           v-bind="attrs"
           tick-size="1"
           thumb-label
-          :max="movesdata.length - 1"
+          :max="movesdata ? movesdata.length - 1 : 2"
           min="-1"
           @start="showboard = true"
           @end="showboard = false"
         >
           <template v-slot:thumb-label="{ value }">
-            {{ movesdata[value] }}
+            {{movesdata? movesdata[value] : 0 }}
           </template>
         </v-slider>
       </template>

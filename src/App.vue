@@ -70,7 +70,7 @@ export default {
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        this.fetchUserInfo();
+        self.fetchUserInfo();
         console.log("Current User Logged in is: ");
         console.log(user.email);
         console.log(user.uid);

@@ -72,7 +72,7 @@ const mutations = {
 };
 
 const actions = {
-  async fetchUserInfo({ commit, state }) {
+  async fetchUserInfo({ commit, state,dispatch }) {
     var user = await firebase.auth().currentUser;
     console.log("Hey up here: " + user.uid);
     if (user && !state.IsUserInfoFetched) {
@@ -84,8 +84,8 @@ const actions = {
         .get();
       await commit("MapUserDataToState", DBUserDoc.data());
       await commit("SETUSERINFOFULLDATA", DBUserDoc.data());
-      //await dispatch('fetchProfilePic')
       commit("UserInfoIsFetched");
+      await dispatch('fetchProfilePic');
     }
   },
   async fetchProfilePic({ state, commit }) {

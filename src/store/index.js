@@ -20,7 +20,7 @@ import Courses from "./modules/Sheemy/Courses";
 import UserFollowers from "./modules/UserData/UserFollowers";
 import Academies from "./modules/Sheemy/Academies";
 import Dashboard from "./modules/Sheemy/Dashboard";
-
+import Analysis from './modules/Marwan/Analysis/Analysis'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -32,6 +32,7 @@ export default new Vuex.Store({
     UserInfo,
     UserFollowers,
     Courses,
-    NewsFeed
+    NewsFeed,
+    Analysis
   }
 });
