@@ -198,7 +198,8 @@ export default {
       var data = {
         Email: this.UserEmail,
         FirstName: this.FirstName,
-        LastName: this.LastName
+        LastName: this.LastName,
+        UserPhoto:""
       };
       const Test = firebase.functions().httpsCallable("CreateDocs-CreateDocs");
       await Test(data)
