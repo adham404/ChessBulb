@@ -65,10 +65,10 @@ export default {
   methods: {
     ...mapActions(["fetchUserInfo"])
   },
-  created() {
+  async created() {
     let self = this;
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(async function(user) {
       if (user) {
         self.fetchUserInfo();
         console.log("Current User Logged in is: ");
@@ -79,8 +79,12 @@ export default {
         // User is signed in.
       } else {
         console.log("Bateee5");
-        self.ShowHeader = false;
-        self.$router.push("/Login");
+        self.ShowHeader = false; 
+        if(await self.$route.path != '/SignUp' )
+        {
+          console.log("Blue: "+ self.$route.path);
+          self.$router.push("/Login");
+        }
         // No user is signed in.
       }
     });

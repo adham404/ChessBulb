@@ -128,7 +128,7 @@ export default {
       //TODO pop up "sorry to see you leave"
       const auth = firebase.auth();
       await auth.signOut();
-      alert("Passwords don't match");
+      // alert("Passwords don't match");
       this.$router.push("/Login");
     },
     DiscardEdit() {

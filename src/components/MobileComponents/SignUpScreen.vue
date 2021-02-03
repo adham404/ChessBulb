@@ -33,7 +33,7 @@
         Sign Up
       </h1>
       <span class="text-subtitle-1 ml-2 mb-10"
-        >Already have an account? <a href="/Login">Login.</a></span
+        >Already have an account? <a @click="GoToLogin">Login.</a></span
       >
       <v-text-field label="First name" outlined rounded v-model="FirstName"
         >hello</v-text-field
@@ -162,13 +162,17 @@ export default {
       show2: false,
       dialog: false,
       checkbox: false
-    };
+    };  
   },
   mounted() {
     //this.CheckUser();
   },
   methods: {
     //DONE Define SignUp function (1min)
+    GoToLogin()
+    {
+      this.$router.push("/Login");
+    },
     async SignUp() {
       // this.UserValidate = this.ValidateInput();
       //DONE use firebase auth to sign up user account using the following data properties (FirstName, LastName, UserEmail, UserPassword) (20MIN)
@@ -210,6 +214,7 @@ export default {
           console.log("Error is ", error);
         });
       this.$router.push("/Home");
+      
       EventBus.$emit("LoggedIn", true);
     },
     async gSignUp() {

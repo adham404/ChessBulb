@@ -33,7 +33,7 @@
         Login
       </h1>
       <span class="text-subtitle-1 ml-2 mb-10"
-        >Don't have an account? <a @click="GoSignUp" href="">Sign Up.</a></span
+        >Don't have an account? <a @click="GoSignUp">Sign Up.</a></span
       >
       <v-text-field
         label="Email"

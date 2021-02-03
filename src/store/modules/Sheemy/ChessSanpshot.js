@@ -2,7 +2,7 @@ import firebase from "firebase";
 import UserData from "../UserData/UserInfo";
 
 const state = {
-  ChessBoardStartingPositionForSnapshots: "",
+  ChessBoardStartingPositionForSnapshots: "8/8/8/8/8/8/8/8 w - - 0 1",
   TheChessBoardPositionIsValidate: false,
   PostType: "Move"
 };
@@ -65,7 +65,7 @@ const actions = {
         UserPhoto: currentUser.UserPhoto,
         UserID: currentUser.UserId
       });
-    alert("your Story has been Posted Successfully");
+    // alert("your Story has been Posted Successfully");
   }
 };
 
