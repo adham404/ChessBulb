@@ -18,17 +18,22 @@
         </v-col>
         <v-col cols="9">
           <span class="text-h6 ml-3">{{ GETUserFullName }}</span>
-          <v-textarea
+          <hr>
+          <hr>
+          <span>Setup Your SnapShot Position first!</span>
+          <hr>
+          <hr>
+          <!-- <v-textarea
             solo
             name="input-7-4"
             placeholder="Add a comment"
             flat
             rows="2"
           >
-          </v-textarea>
+          </v-textarea> -->
           <v-row justify="space-around" class="my-1">
-            <v-btn rounded class="primary">Post</v-btn>
-            <v-btn rounded class="primary">Discard</v-btn>
+            <!-- <v-btn rounded class="primary">Post</v-btn>
+            <v-btn rounded class="primary">Discard</v-btn> -->
           </v-row>
         </v-col>
       </v-row>
@@ -36,7 +41,7 @@
 
     <v-sheet>
       <div class="Container">
-        <div v-if="Mounted" class="ChessBoard">
+        <div  class="ChessBoard">
           <v-dialog v-model="dialog" width="500">
             <v-card class="py-3" rounded="lg">
               <v-card-actions>
@@ -110,13 +115,14 @@ export default {
     return {
       board: "",
       ChessGame: "",
+      dialog:false,
       Fen: "",
       square1: "",
       square2: ""
     };
   },
   computed: {
-    ...mapGetters(["GetProfilePicUrl", "GETUserFullName"])
+    ...mapGetters(["GetProfilePicUrl", "GETUserFullName","GetChessBoardStartingPositionForSnapshots"])
   },
   methods: {
     ...mapMutations([
@@ -160,6 +166,7 @@ export default {
     var config = {
       draggable: true,
       dropOffBoard: "trash",
+      position: this.GetChessBoardStartingPositionForSnapshots,
       touchSquare: this.touchSquare,
       showErrors: "alert",
       sparePieces: true

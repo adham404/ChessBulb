@@ -6,7 +6,7 @@
     <v-row>
       <v-col cols="8">
         <v-sheet class="px-2 py-2">
-          <ChessBoardDisplay id="1" />
+          <ChessBoardPointerReciever />
         </v-sheet>
       </v-col>
       <v-col align-self="center">
@@ -80,7 +80,8 @@
 
 <script>
 import VideoPlayer from "@/components/MobileComponents/VideoPlayer";
-import ChessBoardDisplay from "@/components/MobileComponents/ChessBoardDisplay";
+// import ChessBoardDisplay from "@/components/MobileComponents/ChessBoardDisplay";
+import ChessBoardPointerReciever from "@/components/MobileComponents/ChessBoardPointerReciever"
 import TimeStamps from "@/components/MobileComponents/TimeStamps";
 import { mapActions } from "vuex";
 
@@ -95,7 +96,8 @@ export default {
   },
   components: {
     VideoPlayer,
-    ChessBoardDisplay,
+    // ChessBoardDisplay,
+    ChessBoardPointerReciever,
     TimeStamps
   },
   methods: {

@@ -35,6 +35,11 @@ const mutations = {
       }
       count++;
     });
+  },
+  SetCoursesDataToTheGeneralArray(state,data)
+  {
+    state.Courses = []
+    state.Courses = data;
   }
 };
 

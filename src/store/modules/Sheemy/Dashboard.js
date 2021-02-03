@@ -45,7 +45,7 @@ const actions = {
         });
       });
   },
-  async CheckInstructorValidaty({ state }, id) {
+  async CheckInstructorValidaty({state}, id) {
     console.log("I am here");
     state.HandlerID = id;
     var db = firebase.firestore();

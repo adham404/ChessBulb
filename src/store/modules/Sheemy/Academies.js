@@ -13,7 +13,12 @@ const getters = {
   GetAcademyLiveCards: state => state.ThisAcademyLiveCards
 };
 
-const mutations = {};
+const mutations = {
+  SetAcademiesDataToTheGeneralArray(state,data){
+    state.AllAcademies = [];
+    state.AllAcademies = data;
+  }
+};
 
 const actions = {
   async FetchAllAcademies({ state }) {
