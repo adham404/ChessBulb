@@ -24,7 +24,7 @@
           <br />
           <span class="text-caption">established a very long time ago</span>
           <br />
-          <v-btn xs class="text-capitalize primary" height="25">enroll</v-btn>
+          <v-btn @click="Enroll" xs class="text-capitalize primary" height="25">enroll</v-btn>
         </v-col>
       </v-row>
     </v-sheet>
@@ -62,6 +62,10 @@ export default {
   methods: {
     emitevent(link) {
       EventBus.$emit("ChangeComponent", link);
+    },
+    Enroll()
+    {
+      this.$router.push({ path:`/Subscribe/${this.GetAcademyDataProfile.PriceId}`, query:{ProductID: this.GetAcademyDataProfile.PriceId}})
     }
   },
   computed: {

@@ -66,13 +66,13 @@ export default {
   methods: {
     ...mapActions(["fetchUserInfo"])
   },
-  created() {
+  async created() {
     let self = this;
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
       self.MobileDevice = true
         }
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(async function(user) {
       if (user) {
         self.fetchUserInfo();
         console.log("Current User Logged in is: ");
@@ -83,11 +83,12 @@ export default {
         // User is signed in.
       } else {
         console.log("Bateee5");
-        self.ShowHeader = false;
-        if(self.$route.fullPath != "/Login" || self.$route.fullPath != "/SignUp"){
-           self.$router.push("/Login");
+        self.ShowHeader = false; 
+        if(await self.$route.path != '/SignUp' )
+        {
+          console.log("Blue: "+ self.$route.path);
+          self.$router.push("/Login");
         }
-       
         // No user is signed in.
       }
     });

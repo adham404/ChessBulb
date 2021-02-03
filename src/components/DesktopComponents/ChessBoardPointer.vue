@@ -188,6 +188,8 @@ export default {
             // context.lineWidth = 2;
             context.stroke();
             context.closePath();
+            
+            
             var PointerData = { //Object that hold the whole details of the pointer
                 x1: fromx,
                 y1: fromy,

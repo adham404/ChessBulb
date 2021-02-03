@@ -37,6 +37,51 @@
     <v-sheet class="mt-8 py-3">
       <v-row class="mt-1 mb-1" justify="center">
         <v-col>
+<!-- Pop up Dialog For Missing Description -->
+          <v-dialog v-model="dialog" width="500">
+            <v-card class="py-3" rounded="lg">
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-card-text>
+                  Description Missing!
+                </v-card-text>
+                <v-btn
+                  color="primary"
+                  @click="dialog = false"
+                  flat
+                  rounded
+                  width="100"
+                >
+                  OK
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+<!------------------------------------------ -->
+
+<!-- Pop up Dialog For Successful Post -->
+          <v-dialog v-model="dialog2" width="500">
+            <v-card class="py-3" rounded="lg">
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-card-text>
+                  Your Story has been posted Successfully!
+                </v-card-text>
+                <v-btn
+                  color="primary"
+                  @click="dialog2 = false"
+                  flat
+                  rounded
+                  width="100"
+                >
+                  OK
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+<!------------------------------------------ -->
+
+
           <div id="board1"></div>
           <!-- <ChessBoardDisplay id ="2"/> -->
         </v-col>
@@ -125,13 +170,15 @@
 <script>
 // import ChessBoardDisplay from "@/components/MobileComponents/ChessBoardDisplay"
 import Board from "chessboardjs-vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import * as Chess from "chess.js";
 
 export default {
   data() {
     return {
       ChessBoard: "",
+      dialog:false,
+      dialog2:false,
       StoryDescription: "",
       ChessMoveObject: [
         // Array Of Object that contain all lines of moves
@@ -180,6 +227,12 @@ export default {
   },
   methods: {
     ...mapActions(["PostThisPuzzleSnapShotToTheDatabase"]),
+    ...mapMutations(['SetChessBoardPositionValidationStatus']),
+    Discard()
+    {
+      this.SetChessBoardPositionValidationStatus(false);
+        // this.SetStartingPositionForSnapShot(this.Fen);
+    },
     WhiteMoveClicked(
       LineCounter,
       WhiteMove //This Function Update the status of the Move and Line ready for action when a White move is clicked
@@ -203,26 +256,33 @@ export default {
       this.OverWriteType = "white"; //Assign OverWriteType as White
       this.LineCounter = LineCounter; //Assign the LineCounter property to the Line number passed
     },
-    Post() {
+    async Post() {
       //Post It
       if (this.StoryDescription == "") {
+        this.dialog = true;
         //TODO professional popup
-        alert("Where is the description you fat head");
+        // alert("Where is the description you fat head");
       } else {
         var DataToSend = {
           Description: this.StoryDescription,
           ChessMoveObject: this.ChessMoveObject
         };
-        this.PostThisPuzzleSnapShotToTheDatabase(DataToSend);
+        await this.PostThisPuzzleSnapShotToTheDatabase(DataToSend);
         //TODO POP up you did it sucessfully
-        this.$router.push("/");
+        this.dialog2 = true;
+          this.$router.push("/");
+        // if(!this.dialog2)
+        // {
+        // }
       }
     },
     DeleteLine(LineCounter) {
       console.log("Line is deleted");
       if (LineCounter != 0) {
         this.ChessMoveObject.splice(LineCounter, 1);
+        this.LineCounter --;
       }
+
     },
     GoToLine(
       LineCounter //This Function triggered when the title of the line is clicked to navigate smoothly between Lines
@@ -260,6 +320,7 @@ export default {
     },
     OverWriteMove() {
       //This Function OverWrite the Selected Move
+      this.MoveClicked = false;
       console.log("We are on Line: " + this.LineCounter);
       var WhiteLength = 0;
       var BlackLength = 0;
@@ -305,6 +366,7 @@ export default {
     },
     OpenLine() {
       //This Function to Create a new Line
+      this.MoveClicked = false;
       console.log("Hi From Here");
       this.ChessMoveObject[this.LineCounter].MoveClicked = false;
       var SolutionLine = this.ChessMoveObject.length;

@@ -19,7 +19,7 @@
             >>by {{LiveData.InstractorName}} (instructor at {{LiveData.AcademyName}})</span
           >
           <br />
-          <span class="text-subtitle-1">starts on {{ LiveData.LiveDate.toDate().toDateString() }}</span>
+          <span class="text-subtitle-1">starts on {{ LiveData.LiveDate }}</span>
           <v-btn
             xs
             class="text-lowercase primary"

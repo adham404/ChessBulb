@@ -135,7 +135,7 @@ export default {
   },
   methods: {
     ...mapActions(["fetchUserInfo"]),
-    ...mapMutations(["SetSnapshotPostingType"]),
+    ...mapMutations(["SetSnapshotPostingType","SetStartingPositionForSnapShot","SetChessBoardPositionValidationStatus"]),
     PostPuzzle() {
       this.SetSnapshotPostingType("Puzzle");
     },
@@ -145,7 +145,11 @@ export default {
   },
   async mounted() {
     //FetchUserData
+    this.SetStartingPositionForSnapShot("8/8/8/8/8/8/8/8 w - - 0 1");
     await this.fetchUserInfo();
+  },
+  beforeDestroy() {
+    this.SetChessBoardPositionValidationStatus(false);
   },
   computed: {
     ...mapGetters(["GetValidatyChessBoardPosition"])
