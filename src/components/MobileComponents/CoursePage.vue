@@ -44,6 +44,7 @@
           </v-avatar>
         </v-col>
         <v-col cols="9">
+          <span class="text-h6 ml-3">Adham Elshafei</span>
           <v-textarea
             solo
             name="input-7-4"
@@ -76,6 +77,7 @@
           </v-avatar>
         </v-col>
         <v-col cols="9">
+          <span class="text-h6 ml-3">Adham Elshafei</span>
           <v-textarea
             solo
             name="input-7-4"
