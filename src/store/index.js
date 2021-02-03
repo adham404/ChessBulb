@@ -20,7 +20,10 @@ import Courses from "./modules/Sheemy/Courses";
 import UserFollowers from "./modules/UserData/UserFollowers";
 import Academies from "./modules/Sheemy/Academies";
 import Dashboard from "./modules/Sheemy/Dashboard";
-import Analysis from './modules/Marwan/Analysis/Analysis'
+import Analysis from "./modules/Marwan/Analysis/Analysis";
+import DatetimePicker from 'vuetify-datetime-picker'
+// import 'vuetify-datetime-picker/src/stylus'
+Vue.use(DatetimePicker)
 Vue.use(Vuex);
 
 export default new Vuex.Store({

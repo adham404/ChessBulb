@@ -18,7 +18,7 @@
           width="180"
           height="35"
           viewBox="0 0 151 40.001"
-          class="ml-0"
+          class="ml-1"
         >
           <path
             id="Icon_awesome-lightbulb"
@@ -57,7 +57,7 @@ export default {
   name: "App",
 
   data: () => ({
-    MobileDevice : false
+    MobileDevice: false
     //
   }),
   components: {
@@ -68,9 +68,13 @@ export default {
   },
   async created() {
     let self = this;
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      self.MobileDevice = true
-        }
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      self.MobileDevice = true;
+    }
 
     firebase.auth().onAuthStateChanged(async function(user) {
       if (user) {
@@ -83,10 +87,9 @@ export default {
         // User is signed in.
       } else {
         console.log("Bateee5");
-        self.ShowHeader = false; 
-        if(await self.$route.path != '/SignUp' )
-        {
-          console.log("Blue: "+ self.$route.path);
+        self.ShowHeader = false;
+        if ((await self.$route.path) != "/SignUp") {
+          console.log("Blue: " + self.$route.path);
           self.$router.push("/Login");
         }
         // No user is signed in.
@@ -98,7 +101,11 @@ export default {
       if (
         this.$route.name == "Profile" ||
         this.$route.name == "SignUp" ||
-        this.$route.name == "Login"
+        this.$route.name == "Login" ||
+        this.$route.name == "CourseStreaming" ||
+        this.$route.name == "CreateCourse" ||
+        this.$route.name == "LiveViewer" ||
+        this.$route.name == "Streamer"
       ) {
         return false;
       }

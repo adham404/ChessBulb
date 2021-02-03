@@ -9,6 +9,7 @@
         {{ GetListOfCourses[order].privileges }}
       </span>
       <v-btn
+        v-if="GetCoursePlayingFlag"
         xs
         class="text-capitalize primary"
         height="25"
@@ -22,6 +23,7 @@
         "
         >Open</v-btn
       >
+      <v-btn v-if="!GetCoursePlayingFlag" @click="Purchase()">purchase</v-btn>
     </v-sheet>
     <span class="text-h6" style="color: white">Reviews and Ratings</span>
     <v-divider size="5" color="white"> </v-divider>
@@ -41,7 +43,9 @@
           </v-avatar>
         </v-col>
         <v-col cols="9">
-          <span class="text-h6 ml-3">Adham Elshafei</span>
+          <span class="text-h6 ml-3"
+            >{{ Review.FirstName }} {{ Review.LastName }}</span
+          >
           <v-textarea
             solo
             name="input-7-4"
@@ -74,7 +78,7 @@
           </v-avatar>
         </v-col>
         <v-col cols="9">
-          <span class="text-h6 ml-3">Adham Elshafei</span>
+          <span class="text-h6 ml-3">{{ GETUserFullName }}</span>
           <v-textarea
             solo
             name="input-7-4"
@@ -142,8 +146,15 @@ export default {
     ...mapActions([
       "FetchAllReviewsForThisCourse",
       "SubmitReviewForThisCourse",
+      "CanIPLayThisCourse",
       "fetchUserInfo"
     ]),
+    Purchase() {
+      this.$router.push({
+        path: `/Purchase/${this.GetListOfCourses[this.order].PriceId}`,
+        query: { ProductID: this.GetListOfCourses[this.order].PriceId }
+      });
+    },
     ...mapMutations(["SetTheOrderOfThisCourseAccordingToItsID"]),
     test() {
       this.fetchUserInfo();
@@ -173,12 +184,16 @@ export default {
     ...mapGetters([
       "GetTheOrderOfThisCourseInTheList",
       "GetListOfCourses",
+      "GETUserFullName",
+      "GetCoursePlayingFlag",
       "GetReviewsOfThisParticularCourse"
     ])
   },
   mounted() {
     //Fetch the Course Data
     console.log("Course ID: " + this.$route.query.CourseID);
+    //Fetch Course Purchase Validaty
+    this.CanIPLayThisCourse(this.GetListOfCourses[this.order].PriceId);
     this.SetTheOrderOfThisCourseAccordingToItsID(this.$route.query.CourseID);
     this.order = this.GetTheOrderOfThisCourseInTheList;
     //Fetch The Course Reviews

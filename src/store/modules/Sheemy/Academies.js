@@ -14,7 +14,7 @@ const getters = {
 };
 
 const mutations = {
-  SetAcademiesDataToTheGeneralArray(state,data){
+  SetAcademiesDataToTheGeneralArray(state, data) {
     state.AllAcademies = [];
     state.AllAcademies = data;
   }

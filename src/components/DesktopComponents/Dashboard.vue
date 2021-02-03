@@ -79,14 +79,14 @@
           <v-col>
             <v-sheet cols="5" rounded="lg" height="150" class="px-2">
               <p class="text-h6 text-center">Monthly Income</p>
-              
+
               <p class="text-h2 text-center">200 Egp</p>
             </v-sheet>
           </v-col>
           <v-col>
-            <v-sheet cols="5" rounded="lg" height="150" class="px-2" >
-              <p  class="text-h6 text-center">Number of Members</p>
-              
+            <v-sheet cols="5" rounded="lg" height="150" class="px-2">
+              <p class="text-h6 text-center">Number of Members</p>
+
               <p class="text-h2 text-center">10</p>
             </v-sheet>
           </v-col>
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import firebase from "firebase"
+import firebase from "firebase";
 import { mapGetters, mapActions } from "vuex";
 import MemberList from "@/components/DesktopComponents/MemberList";
 import AcademyAboutEditing from "@/components/DesktopComponents/AcademyAboutEditing";
@@ -145,19 +145,18 @@ export default {
     //     this.$router.push('/Login');
     // }
     // //Fetch My Academy Data
-    firebase.auth().onAuthStateChanged(async(user)=>{
-      if(user){
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
         await this.CheckInstructorValidaty(user.uid);
         await this.FetchMyAcademyData();
       }
-    })
-    
+    });
   },
   computed: {
     ...mapGetters(["GetFirstTimeLoggedIn", "GetAcademyData"])
   },
   methods: {
-    ...mapActions(["FetchMyAcademyData","CheckInstructorValidaty"]),
+    ...mapActions(["FetchMyAcademyData", "CheckInstructorValidaty"]),
     Navigate(link) {
       if (link == "Edit Academy Description") {
         this.ChangeComponent("AcademyAboutEditing");
@@ -166,7 +165,7 @@ export default {
       } else if (link == "Courses") {
         this.ChangeComponent("CourseList");
       } else if (link == "Create Course") {
-        this.$router.push("/CreateCourse")
+        this.$router.push("/CreateCourse");
         //alert("now we are in course creating");
       } else {
         this.ChangeComponent("LiveForm");

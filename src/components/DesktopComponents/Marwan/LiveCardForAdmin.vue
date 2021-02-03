@@ -5,7 +5,11 @@
         <v-col>
           <v-avatar size="70" cols="2" class="mx-0 px-0">
             <img
-              :src="LiveData.InstractorPic ? LiveData.InstractorPic :'/img/icons/pexels-pixabay-220453.jpg'"
+              :src="
+                LiveData.InstractorPic
+                  ? LiveData.InstractorPic
+                  : '/img/icons/pexels-pixabay-220453.jpg'
+              "
               alt=""
               style="object-fit: cover"
             />
@@ -16,13 +20,16 @@
           <span class="text-h6">{{ LiveData.LiveTitle }}</span>
           <br />
           <span class="text-caption"
-            >by {{LiveData.InstractorName}} (instructor at {{LiveData.AcademyName}})</span
+            >by {{ LiveData.InstractorName }} (instructor at
+            {{ LiveData.AcademyName }})</span
           >
           <br />
-          <span class="text-subtitle-1">starts on {{ LiveData.LiveDate.toDate().toDateString() }}</span>
+          <span class="text-subtitle-1"
+            >starts on {{ LiveData.LiveDate.toDate().toDateString() }}</span
+          >
           <v-btn
-          :loading="loading"
-          :disabled="loading"
+            :loading="loading"
+            :disabled="loading"
             xs
             class="red"
             height="25"
@@ -36,27 +43,31 @@
 </template>
 
 <script>
-import firebase from "firebase"
+import firebase from "firebase";
 export default {
   props: ["LiveData"],
-  data(){
-    return{
-      loading : false,
-    }
+  data() {
+    return {
+      loading: false
+    };
   },
-  methods:{
-    StartStreaming(){
-    this.loading = true
-    console.log(this.LiveData.id)
-      var StartLive =  firebase.functions().httpsCallable("liveturnserver-StratLive")
-      StartLive({"liveid" : this.LiveData.id}).then((s)=>{
-        console.log(s)
-        this.$router.push("/Streamer/" + this.LiveData.id)
-      }).catch((e)=>{
-        alert("error")
-        this.loading= false
-        console.log(e)
-      })
+  methods: {
+    StartStreaming() {
+      this.loading = true;
+      console.log(this.LiveData.id);
+      var StartLive = firebase
+        .functions()
+        .httpsCallable("liveturnserver-StratLive");
+      StartLive({ liveid: this.LiveData.id })
+        .then(s => {
+          console.log(s);
+          this.$router.push("/Streamer/" + this.LiveData.id);
+        })
+        .catch(e => {
+          alert("error");
+          this.loading = false;
+          console.log(e);
+        });
     }
   }
 };

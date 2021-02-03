@@ -1,78 +1,116 @@
 <template>
   <div>
-    <div class="Container">
-      <div class="SignUpHeader">
-        <h1>Create Live</h1>
-        <!-- <div id="SubHeader">Already have an account?<router-link to="/Login"><span>Login</span></router-link></div> -->
-      </div>
-      <!-- DONE Create Two input fields one for Email and one for password and assign them to (UserEmail) and (UserPassword) (5MIN) -->
-      <div
-        style="display: flex; flex-direction: column; width: 50%"
-        class="Form"
-      >
-        <label for="Email">Live Title</label>
-        <input v-model="LiveTitle" type="text" name="" id="Email" />
-        <label for="Password">Live Description</label>
-        <!-- <input v-model="UserPassword" type="password" name="" id="Password"> -->
-        <textarea v-model="LiveDescription" name="" id="Password" cols="30" rows="10"></textarea>
-        <label for="PhoneNumber">Live Date</label>
-        <input type="datetime-local" id="birthdaytime" v-model="LiveDate" name="birthdaytime">
-        <!-- DONE Create 'Login' button and assign the button to the function {Login} (2min) -->
-        <button @click="addlive">Create</button>
-      
-      </div>
-    </div>
+    <v-row  style="width :90%" class="mx-auto py-5 " justify="center" align="center">
+      <v-col>
+        <v-row>
+          <v-text-field
+        
+          
+          v-model="LiveTitle"
+          label="Live Title"
+          
+          ></v-text-field>
+        </v-row>
+        
+        <v-row>
+          <v-datetime-picker
+        
+          light
+          v-model="LiveDate"
+          
+          
+          
+          >
+           <template slot="dateIcon">
+             <v-icon>
+               mdi-calendar-range
+             </v-icon>
+             
+           </template>
+           <template slot="timeIcon">
+             <v-icon>
+               mdi-clock-outline
+             </v-icon>
+             
+           </template>
+          </v-datetime-picker>
+        </v-row>
+        <v-row>
+          <v-textarea
+        
+          
+          v-model="LiveDescription"
+          label="Live Description"
+         
+          
+          ></v-textarea>
+        </v-row>
+        <v-row justify="center" align="center">
+          <v-btn light @click="validate" >
+            Submit
+            
+          </v-btn>
+        </v-row>
+      </v-col>
+
+    </v-row>
   </div>
 </template>
 
 <script>
 //DONE Assign Firebase (1min)
 import firebase from "firebase";
-import {mapGetters} from "vuex"
+import { mapGetters } from "vuex";
+// import DatetimePicker from 'vuetify-datetime-picker'
 // import { EventBus } from "@/main.js";
 export default {
+  components:{
+    // DatetimePicker
+  },
   //DONE Assign Data Properties in the vue data object which are (UserEmail(S), UserPassword(S)) (1min)
   data: function() {
     return {
       LiveTitle: "",
       LiveDescription: "",
-      LiveDate: "",
-
+      LiveDate: ""
     };
   },
-  computed:{
-    ...mapGetters(["GetAcademyData","GETUserFullName","GetProfilePicUrl"])
+  computed: {
+    ...mapGetters(["GetAcademyData", "GETUserFullName", "GetProfilePicUrl"])
   },
   //DONE define Login Function (1min)
   methods: {
-      
-    async addlive(){
-        if(this.LiveTitle != "" && this.LiveDescription != "" && this.LiveDate != "" ){
-            var db = await firebase.firestore()
-            var doc = await db.collection('Lives').doc()
-              
-              doc.set( {
-                AcademyId : this.GetAcademyData.AcademyId,
-                AcademyName : this.GetAcademyData.AcademyName,
-                InstractorName :this.GETUserFullName,
-                InstractorPic : this.GetProfilePicUrl,
-                LiveDate : firebase.firestore.Timestamp.fromDate( new Date(this.LiveDate)) ,
-                LiveDescription : this.LiveDescription,
-                status : "OffLine",
-                id : doc.id,
-                LiveTitle : this.LiveTitle,
-                });
-                console.log('added')
-        }
-      
+    async addlive() {
+      if (
+        this.LiveTitle != "" &&
+        this.LiveDescription != "" &&
+        this.LiveDate != ""
+      ) {
+        var db = await firebase.firestore();
+        var doc = await db.collection("Lives").doc();
 
+        doc.set({
+          AcademyId: this.GetAcademyData.AcademyId,
+          AcademyName: this.GetAcademyData.AcademyName,
+          InstractorName: this.GETUserFullName,
+          InstractorPic: this.GetProfilePicUrl,
+          LiveDate: firebase.firestore.Timestamp.fromDate(
+            new Date(this.LiveDate)
+          ),
+          LiveDescription: this.LiveDescription,
+          status: "OffLine",
+          id: doc.id,
+          LiveTitle: this.LiveTitle
+        });
+        console.log("added");
+      }
     }
-  },
+  }
 };
 </script>
 
 <style scoped>
-.Shadow {
+/* .Shadow {
   -webkit-box-shadow: 0px 0px 21px -10px rgba(0, 0, 0, 1);
   -moz-box-shadow: 0px 0px 21px -10px rgba(0, 0, 0, 1);
   box-shadow: 0px 0px 21px -10px rgba(0, 0, 0, 1);
@@ -145,7 +183,7 @@ a {
 }
 a:hover {
   color: #044bb6;
-}
+} */
 </style>
 
 //TODO Total Time to finish Component 39min

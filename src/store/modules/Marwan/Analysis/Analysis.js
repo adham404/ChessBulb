@@ -1,5 +1,5 @@
-import firebase from "firebase"
-import Vue from 'vue'
+import firebase from "firebase";
+import Vue from "vue";
 /* eslint-disable */
 const state = {
     TheAnalysisComments : {},

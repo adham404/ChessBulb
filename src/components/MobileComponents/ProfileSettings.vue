@@ -94,7 +94,7 @@ export default {
       "SaveProfileSettingDataEdit",
       "fetchUserInfo"
     ]),
-    ...mapMutations(['ClearAllUserDataField']),
+    ...mapMutations(["ClearAllUserDataField"]),
     Edit() {
       this.EditFlag = true;
     },

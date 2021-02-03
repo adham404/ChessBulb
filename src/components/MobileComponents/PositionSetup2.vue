@@ -18,11 +18,11 @@
         </v-col>
         <v-col cols="9">
           <span class="text-h6 ml-3">{{ GETUserFullName }}</span>
-          <hr>
-          <hr>
+          <hr />
+          <hr />
           <span>Setup Your SnapShot Position first!</span>
-          <hr>
-          <hr>
+          <hr />
+          <hr />
           <!-- <v-textarea
             solo
             name="input-7-4"
@@ -41,7 +41,7 @@
 
     <v-sheet>
       <div class="Container">
-        <div  class="ChessBoard">
+        <div class="ChessBoard">
           <v-dialog v-model="dialog" width="500">
             <v-card class="py-3" rounded="lg">
               <v-card-actions>
@@ -115,14 +115,18 @@ export default {
     return {
       board: "",
       ChessGame: "",
-      dialog:false,
+      dialog: false,
       Fen: "",
       square1: "",
       square2: ""
     };
   },
   computed: {
-    ...mapGetters(["GetProfilePicUrl", "GETUserFullName","GetChessBoardStartingPositionForSnapshots"])
+    ...mapGetters([
+      "GetProfilePicUrl",
+      "GETUserFullName",
+      "GetChessBoardStartingPositionForSnapshots"
+    ])
   },
   methods: {
     ...mapMutations([

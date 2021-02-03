@@ -37,7 +37,7 @@
     <v-sheet class="mt-8 py-3">
       <v-row class="mt-1 mb-1" justify="center">
         <v-col>
-<!-- Pop up Dialog For Missing Description -->
+          <!-- Pop up Dialog For Missing Description -->
           <v-dialog v-model="dialog" width="500">
             <v-card class="py-3" rounded="lg">
               <v-card-actions>
@@ -57,9 +57,9 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-<!------------------------------------------ -->
+          <!------------------------------------------ -->
 
-<!-- Pop up Dialog For Successful Post -->
+          <!-- Pop up Dialog For Successful Post -->
           <v-dialog v-model="dialog2" width="500">
             <v-card class="py-3" rounded="lg">
               <v-card-actions>
@@ -79,8 +79,7 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-<!------------------------------------------ -->
-
+          <!------------------------------------------ -->
 
           <div id="board1"></div>
           <!-- <ChessBoardDisplay id ="2"/> -->
@@ -177,8 +176,8 @@ export default {
   data() {
     return {
       ChessBoard: "",
-      dialog:false,
-      dialog2:false,
+      dialog: false,
+      dialog2: false,
       StoryDescription: "",
       ChessMoveObject: [
         // Array Of Object that contain all lines of moves
@@ -227,11 +226,10 @@ export default {
   },
   methods: {
     ...mapActions(["PostThisPuzzleSnapShotToTheDatabase"]),
-    ...mapMutations(['SetChessBoardPositionValidationStatus']),
-    Discard()
-    {
+    ...mapMutations(["SetChessBoardPositionValidationStatus"]),
+    Discard() {
       this.SetChessBoardPositionValidationStatus(false);
-        // this.SetStartingPositionForSnapShot(this.Fen);
+      // this.SetStartingPositionForSnapShot(this.Fen);
     },
     WhiteMoveClicked(
       LineCounter,
@@ -270,7 +268,7 @@ export default {
         await this.PostThisPuzzleSnapShotToTheDatabase(DataToSend);
         //TODO POP up you did it sucessfully
         this.dialog2 = true;
-          this.$router.push("/");
+        this.$router.push("/");
         // if(!this.dialog2)
         // {
         // }
@@ -280,9 +278,8 @@ export default {
       console.log("Line is deleted");
       if (LineCounter != 0) {
         this.ChessMoveObject.splice(LineCounter, 1);
-        this.LineCounter --;
+        this.LineCounter--;
       }
-
     },
     GoToLine(
       LineCounter //This Function triggered when the title of the line is clicked to navigate smoothly between Lines

@@ -7,6 +7,7 @@ const state = {
   InstructorDataRecords: 0,
   InstructorData: [],
   InstructorDataFetched: false,
+  CanIPLayThisCourse: false,
   Reviews: [],
   CourseOrder: 0
 };
@@ -14,6 +15,9 @@ const state = {
 const getters = {
   GetListOfCourses(state) {
     return state.Courses;
+  },
+  GetCoursePlayingFlag(state) {
+    return state.CanIPLayThisCourse;
   },
   GetInstructorData(state) {
     return state.InstructorData;
@@ -36,9 +40,8 @@ const mutations = {
       count++;
     });
   },
-  SetCoursesDataToTheGeneralArray(state,data)
-  {
-    state.Courses = []
+  SetCoursesDataToTheGeneralArray(state, data) {
+    state.Courses = [];
     state.Courses = data;
   }
 };
@@ -58,6 +61,19 @@ const actions = {
         });
       console.log("from State here Courses are: " + state.Courses);
     }
+  },
+  async CanIPLayThisCourse({ state }, id) {
+    var user = await firebase.auth().currentUser;
+    var db = firebase.firestore();
+    await db
+      .collection("CourseOrders")
+      .where("UserId", "==", user.uid)
+      .where("CourseId", "==", id)
+      .get(doc => {
+        if (doc.exists()) {
+          state.CanIPLayThisCourse = true;
+        }
+      });
   },
   async FetchAllReviewsForThisCourse({ state }, id) {
     state.Reviews = [];
