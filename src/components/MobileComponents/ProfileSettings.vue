@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import firebase from "firebase";
 
 export default {
@@ -94,6 +94,7 @@ export default {
       "SaveProfileSettingDataEdit",
       "fetchUserInfo"
     ]),
+    ...mapMutations(['ClearAllUserDataField']),
     Edit() {
       this.EditFlag = true;
     },
@@ -128,6 +129,7 @@ export default {
       //TODO pop up "sorry to see you leave"
       const auth = firebase.auth();
       await auth.signOut();
+      this.ClearAllUserDataField();
       // alert("Passwords don't match");
       this.$router.push("/Login");
     },

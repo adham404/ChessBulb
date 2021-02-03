@@ -50,6 +50,7 @@
         @click:append="show2 = !show2"
         v-model="UserPassword"
       ></v-text-field>
+        <span @click="ForgotPass" class="text-h8" cols="3">Forgot Password?</span>
       <v-row justify="center">
         <v-btn
           class="mb-5 primary text-h6"
@@ -70,7 +71,32 @@
         >
       </v-row>
     </v-container>
-    <v-dialog v-model="dialog" width="500" activator="#privacy">
+
+<!-- Show all Login Popups for user -->
+          <v-dialog v-model="dialog" width="500">
+            <v-card class="py-3" rounded="lg">
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-card-text>
+                  {{LoginError}}
+                  <!-- Login Details are missing! -->
+                </v-card-text>
+                <v-btn
+                  color="primary"
+                  @click="dialog = false"
+                  flat
+                  rounded
+                  width="100"
+                >
+                  OK
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+<!-------------------------------------------->
+
+
+    <v-dialog v-model="dialo" width="500" activator="#privacy">
       <!-- <template v-slot:activator="{ on, attrs }">
         <v-btn
           color="red lighten-2"
@@ -126,6 +152,8 @@ export default {
     return {
       UserEmail: "",
       UserPassword: "",
+      dialog:false,
+      LoginError:"",
       ErrorMessage: "",
       UserID: "",
       LoginCorrect: false
@@ -146,6 +174,8 @@ export default {
         auth
           .signInWithEmailAndPassword(this.UserEmail, this.UserPassword)
           .catch(error => {
+            this.dialog = true;
+            this.LoginError = error.message
             console.log(error.message);
           });
         await auth.onAuthStateChanged(user => {
@@ -160,6 +190,9 @@ export default {
             // alert("");
             setTimeout(function() {
               console.log("Working on it");
+            this.dialog = true;
+            this.LoginError = "Wrong Email entered or password"
+            // this.dialog4 = true;
               self.ErrorMessage = "Wrong email entered or password";
             }, 2000);
             console.log("Enter");
@@ -172,27 +205,34 @@ export default {
         // }
       }
     },
-    async ResetPass() {
+    async ForgotPass() {
       if (this.UserEmail) {
         await firebase
           .auth()
           .sendPasswordResetEmail(this.UserEmail)
           .then(() => {
-            alert(
-              "Password reset email was sent to your email " + this.UserEmail
-            );
+            // alert(
+            //   "Password reset email was sent to your email " + this.UserEmail
+            // );
+            this.dialog = true;
+            this.LoginError = "Password reset email was sent to your email " + this.UserEmail
           })
           .catch(err => {
             console.log(err);
           });
       } else {
-        alert("Please fill in your email to send you a reset pass email");
-      }
+        // alert("Please fill in your email to send you a reset pass email");
+            this.dialog = true;
+            this.LoginError = "Please fill in your email to send you a reset pass email"
+        }
     },
     Validate() {
       if (this.UserEmail == "" || this.UserPassword == "") {
-        alert("Please fill in the missing content");
-        return false;
+        // alert("Please fill in the missing content");
+            this.dialog = true;
+            this.LoginError = "Please fill in the missing content"
+
+return false;
       } else {
         return true;
       }

@@ -96,7 +96,30 @@
         >
       </v-row>
     </v-container>
-    <v-dialog v-model="dialog" width="500" activator="#privacy">
+<!-- Show all SignUp Popups for user -->
+          <v-dialog v-model="dialog" width="500">
+            <v-card class="py-3" rounded="lg">
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-card-text>
+                  {{SignUpError}}
+                  <!-- Login Details are missing! -->
+                </v-card-text>
+                <v-btn
+                  color="primary"
+                  @click="dialog = false"
+                  flat
+                  rounded
+                  width="100"
+                >
+                  OK
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+<!-------------------------------------------->
+
+    <v-dialog v-model="dialo" width="500" activator="#privacy">
       <!-- <template v-slot:activator="{ on, attrs }">
         <v-btn
           color="red lighten-2"
@@ -155,6 +178,7 @@ export default {
       LastName: "",
       UserEmail: "",
       UserPassword: "",
+      SignUpError:"",
       ConfirmPassword: "",
       UserValidate: false,
       UserID: "",
@@ -177,24 +201,29 @@ export default {
       // this.UserValidate = this.ValidateInput();
       //DONE use firebase auth to sign up user account using the following data properties (FirstName, LastName, UserEmail, UserPassword) (20MIN)
       if (this.ValidateInput()) {
-        alert("Sign Up Succesfull");
+        // alert("Sign Up Succesfull");
         const auth = firebase.auth();
         await auth
           .createUserWithEmailAndPassword(this.UserEmail, this.UserPassword)
           .catch(error => {
-            alert(error.message);
+            this.dialog = true;
+            this.SignUpError = error.message
+            // alert(error.message);
           });
-        let self = this;
-        await auth.onAuthStateChanged(user => {
-          if (user) {
-            self.UserID = user.uid;
-          } else {
-            console.log("User is out");
+        if(!this.dialog)
+        {
+          let self = this;
+          await auth.onAuthStateChanged(user => {
+            if (user) {
+              self.UserID = user.uid;
+            } else {
+              console.log("User is out");
+            }
+            // console.log("The Best ID is "+ this.UserID);
+          });
+          if (this.UserID != "") {
+            this.CreateUserDoc();
           }
-          // console.log("The Best ID is "+ this.UserID);
-        });
-        if (this.UserID != "") {
-          this.CreateUserDoc();
         }
       }
     },
@@ -203,7 +232,7 @@ export default {
         Email: this.UserEmail,
         FirstName: this.FirstName,
         LastName: this.LastName,
-        UserPhoto:""
+        UserImage:""  
       };
       const Test = firebase.functions().httpsCallable("CreateDocs-CreateDocs");
       await Test(data)
@@ -259,15 +288,20 @@ export default {
         this.UserPassword == "" ||
         this.ConfirmPassword == ""
       ) {
-        alert("Please Fill in the missing content");
-        return false;
+        // alert("Please Fill in the missing content");
+            this.dialog = true;
+            this.SignUpError = "Please Fill in the missing content"
+            return false;
       } else {
         if (this.ConfirmPassword == this.UserPassword) {
           return true;
         } else {
-          alert(
-            "the Confirm password is not compatiable with your pasword please re-enter your password"
-          );
+            this.dialog = true;
+            this.SignUpError = "the Confirm password is not compatiable with your pasword please re-enter your password"
+
+// alert(
+//             "the Confirm password is not compatiable with your pasword please re-enter your password"
+//           );
           return false;
         }
       }

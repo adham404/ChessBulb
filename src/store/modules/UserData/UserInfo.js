@@ -62,6 +62,15 @@ const mutations = {
     state.ProfilePicPath = UserData.UserPhoto;
     state.IsInstructor = UserData.Instructor;
   },
+  ClearAllUserDataField:(state) => {
+    state.FULLDATA = null;
+    state.FirstName = ""
+    state.Email = ""
+    state.LastName = ""
+    state.FullName = ""
+    state.Bio = ""
+    state.ProfilePicUrl = ""
+  },
   SetUserProfilePic: (state, url) => (state.ProfilePicUrl = url),
   SETUSERINFOFULLDATA: (state, DATA) => {
     state.FULLDATA = DATA;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row class="px-8 mt-1">
+    <!-- <v-row class="px-8 mt-1">
       <v-text-field
         height="40"
         color="white"
@@ -29,7 +29,8 @@
         <v-checkbox v-model="checkbox" label="Intermediate"></v-checkbox>
         <v-checkbox v-model="checkbox" label="Advanced"></v-checkbox>
       </v-row>
-    </v-sheet>
+    </v-sheet> -->
+    <SearchEngine  SearchIndex="Courses" :ShowFilters="true"></SearchEngine>
 
     <CourseCard
       v-for="(course, x) in GetListOfCourses"
@@ -42,21 +43,56 @@
 
 <script>
 import CourseCard from "@/components/MobileComponents/CourseCard";
-import { mapActions, mapGetters } from "vuex";
+import SearchEngine from "../MarawanComponents/SearchEngine"
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import {EventBus} from "../../main"
+import firebase from "firebase"
 
 export default {
   mounted() {
     //Fetch Courses List
-    this.FetchAllCourses();
+    // this.FetchAllCourses();
+
+    //Recieve Search Signal
+    EventBus.$on("TheSearchResult", (ids) => {
+      console.log("Hey:  "+ ids);
+      this.FetchIdsQuick(ids)
+    })
+  },
+  beforeDestroy()
+  {
+    EventBus.$off("SearchIndex");
+  },
+  data:function()
+  {
+    return{
+      Courses:[]
+    }
   },
   methods: {
-    ...mapActions(["FetchAllCourses"])
+    ...mapActions(["FetchAllCourses"]),
+    ...mapMutations(['SetCoursesDataToTheGeneralArray']),
+    async FetchIdsQuick(ids)
+    {
+      this.Courses = [];
+      var db = firebase.firestore();
+      ids.forEach( async id => {
+        await db.collection("Courses")
+          .doc(id)
+          .get()
+          .then(doc => {
+            this.Courses.push(doc.data());
+          });
+      });
+      this.SetCoursesDataToTheGeneralArray(this.Courses);
+    }
   },
   computed: {
     ...mapGetters(["GetListOfCourses"])
   },
   components: {
-    CourseCard
+    CourseCard,
+    SearchEngine
   }
 };
 </script>

@@ -74,6 +74,14 @@ export default {
           console.log("Error Getting Doc: " + error);
         });
     },
+    ClearArrowsOnBoard()
+    {
+      EventBus.$emit("ClearArrows");
+    },
+    SendArrowsBoard()
+    {
+      EventBus.$emit("SendArrow",this.timestampOrginal[this.TimeCounter].ArrowData);
+    },
     NavigateVideoMove(
       Input //Send the Time of the Move Selected
     ) {
@@ -88,7 +96,7 @@ export default {
     },
     NavigateVideoTime(
       Input //Send the Time of the Timestamp Selected
-    ) {
+) {
       EventBus.$emit("Navigate", Input);
     },
     DisplayTimeStamp() {
@@ -105,6 +113,11 @@ export default {
         this.timestampOrginal[this.TimeCounter].fen
       );
     }
+  },
+  beforeDestroy(){
+      EventBus.$off("SendArrow");
+      EventBus.$off("ClearArrows");
+      EventBus.$off("SendTime");
   },
   mounted() {
     if (this.data) {
@@ -128,8 +141,22 @@ export default {
               " and " +
               time
           );
-          this.DisplayTimeStamp();
-          this.SendFenToBoard();
+          if(this.timestampOrginal[this.TimeCounter].show)
+          {
+            this.DisplayTimeStamp();
+            this.SendFenToBoard();
+            this.ClearArrowsOnBoard();
+          }
+          else if(!this.timestampOrginal[this.TimeCounter].show)
+          {
+            this.SendArrowsBoard();
+          }
+          // else
+          // {
+          //   this.DisplayTimeStamp();
+          //   this.SendFenToBoard();
+          //   this.ClearArrowsOnBoard();
+          // }
           // if(this.TimeLength)
           // {
           // }
