@@ -175,6 +175,10 @@ p{
   font-weight: bold;
   color: black;
 }
+video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 </style>
 
 //DONE make a flow chart

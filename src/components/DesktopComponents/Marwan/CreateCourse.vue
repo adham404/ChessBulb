@@ -140,6 +140,7 @@ h2{
   border-radius: 10px;
   /* background-color: blueviolet; */
 }
+
 </style>
 
 //TODO finish component total time 53min
