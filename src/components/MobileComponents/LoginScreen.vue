@@ -33,7 +33,7 @@
         Login
       </h1>
       <span class="text-subtitle-1 ml-2 mb-10"
-        >Don't have an account? <router-link to="/SignUp">Sign Up.</router-link></span
+        >Don't have an account? <a @click="GoSignUp" href="">Sign Up.</a></span
       >
       <v-text-field
         label="Email"
@@ -133,6 +133,10 @@ export default {
   },
   //DONE define Login Function (1min)
   methods: {
+    GoSignUp()
+    {
+      this.$router.push("/SignUp");
+    },
     async Login() {
       this.LoginCorrect = this.Validate();
       if (this.LoginCorrect) {
