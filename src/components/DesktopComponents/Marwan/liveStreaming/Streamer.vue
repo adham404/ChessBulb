@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import ChessBoardInput from '@/components/MobileComponents/ChessBoardInput'
+import ChessBoardInput from '../../ChessBoardPointer'
 import StockFish from '@/components/MarawanComponents/StockFish'
 import firebase from "firebase"
 import {EventBus} from "@/main.js"
@@ -68,6 +68,11 @@ export default {
     }
   },
    mounted(){
+     EventBus.$on("PointerDrawn",(e)=>{
+       if(socket){
+         socket.emit("NewArrow", e)
+       }
+     })
        iceServer = {}
        let self = this
         firebase.auth().onAuthStateChanged(async function(user) {

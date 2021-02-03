@@ -56,7 +56,7 @@
 
 <script>
 // import {EventBus} from "@/main.js"
-import ChessBoardDisplay from '@/components/MobileComponents/ChessBoardDisplay'
+import ChessBoardDisplay from '@/components/MobileComponents/ChessBoardPointerReciever.vue'
 import LiveChat from "./LiveChatp"
 import StockFish from "./StockFish"
 // import Chat from "@/components/MarawanComponents/LiveChat.vue"
@@ -226,10 +226,14 @@ export default {
      socket.on('chess-move', data => {
       EventBus.$emit('displayboardfen',data)
       EventBus.$emit('newfen',data)
+      EventBus.$emit('ClearArrows')
       console.log(data)
       })
      socket.on('HideOrShowTheEngine', data => {
       this.ShowOrhideEngine = data ; 
+      })
+     socket.on('DrawArrrow', data => {
+      EventBus.$emit('SendArrow',data)
       })
     },
        sendmessage(e){
