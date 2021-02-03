@@ -1,17 +1,15 @@
-//TODO if the change event tregared in the board (5min) 
-//TODO get the pgn from the board(5min) 
-//TODO import pgnreview output(5min) 
-//TODO make the last movehighlight(5min)
+//TODO if the change event tregared in the board (5min) //TODO get the pgn from
+the board(5min) //TODO import pgnreview output(5min) //TODO make the last
+movehighlight(5min)
 <template>
-<div class="NewsFeedPgn">
-          <span  v-for="(i,index) in pgnoutput  " :key="index" >
-              <span>{{i.number}}.</span>
-              <span class="pgnmove" @click="moveto(i.move1num)" >{{i.move1}} </span>
-              <span class="pgnmove" @click="moveto(i.move2num)">{{i.move2}} </span>
-              <span>{{i.comment}} </span>
-          </span>
-      </div>
-
+  <div class="NewsFeedPgn">
+    <span v-for="(i, index) in pgnoutput" :key="index">
+      <span>{{ i.number }}.</span>
+      <span class="pgnmove" @click="moveto(i.move1num)">{{ i.move1 }} </span>
+      <span class="pgnmove" @click="moveto(i.move2num)">{{ i.move2 }} </span>
+      <span>{{ i.comment }} </span>
+    </span>
+  </div>
 </template>
 
 <script>
@@ -25,19 +23,17 @@ var currentmove = -1;
 export default {
   data() {
     return {
-      
-      pgnoutput:[],
+      pgnoutput: []
     };
   },
-  beforeDestroy(){
-    EventBus.$off('newmove');
-    EventBus.$off('Control');
-
+  beforeDestroy() {
+    EventBus.$off("newmove");
+    EventBus.$off("Control");
   },
   async mounted() {
     chess = await new Chess();
     game = await new Chess();
-    await EventBus.$on("newmove", async (move) => {
+    await EventBus.$on("newmove", async move => {
       if (currentmove == moves.length - 1) {
         console.log(await game.move(move));
         console.log(move);
@@ -55,10 +51,10 @@ export default {
         console.log("currentmove=" + currentmove);
         console.log("moves.length" + moves.length);
       }
-      this.displaypgn()
-      EventBus.$emit('newPgn',game.pgn())
+      this.displaypgn();
+      EventBus.$emit("newPgn", game.pgn());
     });
-    EventBus.$on("Control", async (data) => {
+    EventBus.$on("Control", async data => {
       console.log(moves);
       if (data == "next") {
         // await console.log("currentmove = " + currentmove);
@@ -85,7 +81,7 @@ export default {
       } else if (data == "first") {
         this.moveto(-1);
       } else if (data == "end") {
-        this.moveto(moves.length -1);
+        this.moveto(moves.length - 1);
       }
     });
   },
@@ -116,7 +112,7 @@ export default {
     },
     displaypgn() {
       var counter = 1;
-      this.pgnoutput = []
+      this.pgnoutput = [];
       moves.forEach((value, index) => {
         if (index % 2 == 0) {
           var p = {
@@ -124,33 +120,32 @@ export default {
             move1: moves[index],
             move2: moves[index + 1],
             move1num: index,
-            move2num: index + 1,
-            
+            move2num: index + 1
           };
           this.pgnoutput.push(p);
           counter++;
         }
       });
       console.log(this.pgnoutput);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
-.NewsFeedPgn{
-    height: 85%;
-    /* background-color: pink; */
-    width: 100%;
-    /* overflow-y: scroll ; */
-    font-family: 'open-sans',sans-serif;
-    color: black;
-  }
-  span{
-    margin: 0px;
-    font-family: 'Raleway',sans-serif;
-    font-weight: 600;
-    color: white;
-    font-size: 0.9rem;
-  }
+.NewsFeedPgn {
+  height: 85%;
+  /* background-color: pink; */
+  width: 100%;
+  /* overflow-y: scroll ; */
+  font-family: "open-sans", sans-serif;
+  color: black;
+}
+span {
+  margin: 0px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  color: white;
+  font-size: 0.9rem;
+}
 </style>

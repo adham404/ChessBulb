@@ -1,16 +1,11 @@
 <template>
-    <div>
-        <p>This is create course</p>
-
-    </div>
+  <div>
+    <p>This is create course</p>
+  </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

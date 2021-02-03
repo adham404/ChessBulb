@@ -1,19 +1,16 @@
 <template>
-    <div>
-        <LearnScreen/>
-    </div>
+  <div>
+    <LearnScreen />
+  </div>
 </template>
 
 <script>
-import LearnScreen from "@/components/MobileComponents/LearnScreen"
-    export default {
-        components: {
-            LearnScreen
-        }
-        
-    }
+import LearnScreen from "@/components/MobileComponents/LearnScreen";
+export default {
+  components: {
+    LearnScreen
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

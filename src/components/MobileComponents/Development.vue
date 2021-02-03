@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import firebase from "firebase"
+import firebase from "firebase";
 // import ProfilePage from "@/components/MobileComponents/ProfilePage"
 // import CoursePage from "@/components/MobileComponents/CoursePage"
 // import CourseList from "@/components/MobileComponents/CourseList.vue"
@@ -29,37 +29,31 @@ import firebase from "firebase"
 // import LiveViewer from "@/components/MobileComponents/LiveViewer"
 export default {
   components: {
-      // ProfilePage
-      // Stories,
-      // AddCard,
-      // NewsFeed
-      // CourseList
-      // CoursePage
-      // StoryScreen
-      // AddSnapshot
-      // AddPost
-      // CourseStreaming
-      // LiveViewer
+    // ProfilePage
+    // Stories,
+    // AddCard,
+    // NewsFeed
+    // CourseList
+    // CoursePage
+    // StoryScreen
+    // AddSnapshot
+    // AddPost
+    // CourseStreaming
+    // LiveViewer
   },
-  data(){
-    return{
-      links: [
-        'About',
-        'Posts',
-        'Courses',
-      ],
+  data() {
+    return {
+      links: ["About", "Posts", "Courses"],
       component: "InstructorPageAboutText"
-    }
-      
-    },
+    };
+  },
   methods: {
-      SignOut(){
-          const auth = firebase.auth();
-          auth.signOut();
-          alert("the User ID right now is " + this.UserID);
-          this.$router.push('/SignUp')                
-      },
-},
-}
+    SignOut() {
+      const auth = firebase.auth();
+      auth.signOut();
+      alert("the User ID right now is " + this.UserID);
+      this.$router.push("/SignUp");
+    }
+  }
+};
 </script>
-

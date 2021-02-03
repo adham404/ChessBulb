@@ -1,21 +1,16 @@
 <template>
-    <div>
-        <CoursePage/>
-
-    </div>
+  <div>
+    <CoursePage />
+  </div>
 </template>
 
 <script>
-import CoursePage from "@/components/MobileComponents/CoursePage"
-    export default {
-        components:{
-            CoursePage
-        },
-        
-        
-    }
+import CoursePage from "@/components/MobileComponents/CoursePage";
+export default {
+  components: {
+    CoursePage
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

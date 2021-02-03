@@ -1,19 +1,17 @@
 <template>
-    <div>
-        <LiveViewerScreen/>
-    </div>
+  <div>
+    <LiveViewerScreen />
+  </div>
 </template>
 
 <script>
-import LiveViewerScreen from "@/components/MobileComponents/LiveViewerScreen"
-    export default {
-        name: "LiveViewer",
-        components: {
-            LiveViewerScreen
-        }
-    }
+import LiveViewerScreen from "@/components/MobileComponents/LiveViewerScreen";
+export default {
+  name: "LiveViewer",
+  components: {
+    LiveViewerScreen
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -8,22 +8,18 @@
 </template>
 
 <script>
-
-  export default {
-    name: 'NotFound'
-  }
-
+export default {
+  name: "NotFound"
+};
 </script>
 
 <style scoped>
+center {
+  margin: 15vw;
+}
 
-  center {
-    margin: 15vw;
-  }
-
-  h1 {
-    color: var(--border);
-    font-size: 2em;
-  }
-
+h1 {
+  color: var(--border);
+  font-size: 2em;
+}
 </style>

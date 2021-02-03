@@ -6,11 +6,9 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "@mdi/font/css/materialdesignicons.css";
-import firebase from 'firebase';
+import firebase from "firebase";
 
-
-
-Vue.use(firebase)
+Vue.use(firebase);
 var firebaseConfig = {
   apiKey: "AIzaSyDdsjuIqIrD415e2ILt_zPs9E0ikPT5Mug",
   authDomain: "chessbulb.firebaseapp.com",
@@ -27,7 +25,7 @@ firebase.analytics();
 
 Vue.config.productionTip = false;
 
-export const EventBus  = new Vue();
+export const EventBus = new Vue();
 
 new Vue({
   router,

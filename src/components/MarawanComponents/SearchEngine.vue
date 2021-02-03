@@ -1,43 +1,48 @@
 <template>
   <div class="SearchEngine">
     <v-row class="px-8 mt-1">
-            <v-text-field
-            height="40"
-            color="white"
-            background-color = "white"
-            rounded
-            placeholder = "search"
-            type="text"
-            v-model="qurey"
-          ></v-text-field>
-          <v-icon @click="search" right color="white">
-              fa-search
-          </v-icon>
-        </v-row>
+      <v-text-field
+        height="40"
+        color="white"
+        background-color="white"
+        rounded
+        placeholder="search"
+        type="text"
+        v-model="qurey"
+      ></v-text-field>
+      <v-icon @click="search" right color="white">
+        fa-search
+      </v-icon>
+    </v-row>
     <div class="Filter" v-if="ShowFilters">
-            <v-sheet class="white " height="100" width="100%" rounded="lg" elevation="5">
-            <v-row class="ml-1 text-subtitle-1 font-weight-bold">
-                <span>Choose course difficulty for further filtering</span>
-            </v-row>
-            <v-row  justify="space-around">
-                <v-checkbox
-                v-model="checkedFilters"
-                label= "Beginner"
-                @change="search"
-                ></v-checkbox>
-                <v-checkbox
-                v-model="checkedFilters"
-                label= "Intermediate"
-                @change="search"
-                ></v-checkbox>
-                <v-checkbox
-                v-model="checkedFilters"
-                label= "Advanced"
-                @change="search"
-                ></v-checkbox>
-            </v-row>
-            
-        </v-sheet>
+      <v-sheet
+        class="white "
+        height="100"
+        width="100%"
+        rounded="lg"
+        elevation="5"
+      >
+        <v-row class="ml-1 text-subtitle-1 font-weight-bold">
+          <span>Choose course difficulty for further filtering</span>
+        </v-row>
+        <v-row justify="space-around">
+          <v-checkbox
+            v-model="checkedFilters"
+            label="Beginner"
+            @change="search"
+          ></v-checkbox>
+          <v-checkbox
+            v-model="checkedFilters"
+            label="Intermediate"
+            @change="search"
+          ></v-checkbox>
+          <v-checkbox
+            v-model="checkedFilters"
+            label="Advanced"
+            @change="search"
+          ></v-checkbox>
+        </v-row>
+      </v-sheet>
     </div>
   </div>
 </template>
@@ -47,7 +52,7 @@
 //firebase functions:config:set algolia.app=6QLSJPKZLF algolia.key=73c12cce64ff2c58497bac33bc843859
 import algoliasearch from "algoliasearch/lite";
 import { EventBus } from "@/main.js";
-import {mapMutations} from "vuex";
+import { mapMutations } from "vuex";
 
 var index;
 export default {
@@ -61,18 +66,18 @@ export default {
       index = await client.initIndex(this.SearchIndex);
       this.search();
     }
-    EventBus.$on("SearchIndex", (ind) => {
+    EventBus.$on("SearchIndex", ind => {
       index = client.initIndex(ind);
     });
   },
   data() {
     return {
       checkedFilters: [],
-      qurey: "",
+      qurey: ""
     };
   },
   methods: {
-    ...mapMutations(['SetSearchedIDs']),
+    ...mapMutations(["SetSearchedIDs"]),
     async search() {
       var options = "";
       this.checkedFilters.forEach((i, index) => {
@@ -80,19 +85,19 @@ export default {
       });
       // console.log(options)
       var val = await index.search(this.qurey, {
-        filters: options,
+        filters: options
       });
       var res = [];
       // console.log(val)
-      await val.hits.forEach((doc) => {
+      await val.hits.forEach(doc => {
         res.push(doc.objectID);
       });
       await console.log(res);
       await this.SetSearchedIDs(res);
       EventBus.$emit("TheSearchResult", res);
       EventBus.$emit("ResultOfSearch");
-    },
-  },
+    }
+  }
 };
 </script>
 
