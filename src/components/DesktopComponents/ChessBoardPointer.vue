@@ -7,7 +7,7 @@
         id="Canva"
         :width="CanvaWidth"
         :height="CanvaHeight"
-        style="border:1px solid #000000; position:absolute; top:0px; left:0px;"
+        style="border: none; position:absolute; top:0px; left:0px;"
       >
       </canvas>
     </div>
@@ -52,7 +52,7 @@ export default {
       CanvaWidth: "",
       CanvaHeight: "",
       ChessBoardStyle: {
-        width: "45%"
+        width: "100%"
       },
       CanvaBoardStyle: {
         width: "",

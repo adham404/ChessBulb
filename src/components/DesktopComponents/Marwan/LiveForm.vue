@@ -5,7 +5,8 @@
         <v-row>
           <v-text-field
         
-          
+          outlined
+        rounded
           v-model="LiveTitle"
           label="Live Title"
           

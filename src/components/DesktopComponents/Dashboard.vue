@@ -11,7 +11,7 @@
             />
           </v-avatar>
           <br />
-          <span class="text-subtitle-1 ml-4">{{
+          <span class="text-h6 ml-4">{{
             GetAcademyData.AcademyName
           }}</span>
           <v-col>
@@ -77,23 +77,23 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-sheet cols="5" rounded="lg" height="150" class="px-2">
-              <p class="text-h6 text-center">Monthly Income</p>
+            <v-sheet cols="5" rounded="lg" height="100" class="px-2">
+              <p class="text-h6">Monthly Income</p>
 
-              <p class="text-h2 text-center">200 Egp</p>
+              <p class="text-subtitle-1">200 Egp</p>
             </v-sheet>
           </v-col>
           <v-col>
-            <v-sheet cols="5" rounded="lg" height="150" class="px-2">
-              <p class="text-h6 text-center">Number of Members</p>
+            <v-sheet cols="5" rounded="lg" height="100" class="px-2">
+              <p class="text-h6">Number of Members</p>
 
-              <p class="text-h2 text-center">10</p>
+              <p class="text-subtitle-1">10</p>
             </v-sheet>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <v-sheet style="overflow-y:auto;" rounded="lg" height="400">
+            <v-sheet style="overflow-y:auto; overflow-x: hidden" rounded="lg" height="300">
               <component v-bind:is="component"></component>
             </v-sheet>
           </v-col>

@@ -9,7 +9,6 @@
     />
 
     <!-- </keep-alive> -->
-    <h1>hello</h1>
     <!-- <template v-slot:activator="{ on, attrs }">
         <v-btn
           color="red lighten-2"

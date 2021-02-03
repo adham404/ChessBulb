@@ -83,13 +83,13 @@
 
           brilliant
         </v-btn>
-        <v-btn cols="4" text @click="OpenCommentSheet">
+        <v-btn cols="4" text @click="OpenCommentSheet" v-if="false">
           <v-icon left>
             fa-comment
           </v-icon>
           comment
         </v-btn>
-        <v-btn cols="4" text id="share" @click="OpenShare">
+        <v-btn cols="4" text id="share" @click="OpenShare" v-if="false">
           <v-icon left>
             fa-share-alt
           </v-icon>

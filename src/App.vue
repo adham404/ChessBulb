@@ -39,7 +39,7 @@
       </v-row>
     </div>
 
-    <Header v-if="ShowHeader" class="Mobile" />
+    <Header v-if="MobileDevice&&ShowHeader" class="Mobile" />
     <v-main v-if="!MobileDevice" class="primary Desktop">
       <router-view name="Desktop" />
     </v-main>
@@ -105,7 +105,8 @@ export default {
         this.$route.name == "CourseStreaming" ||
         this.$route.name == "CreateCourse" ||
         this.$route.name == "LiveViewer" ||
-        this.$route.name == "Streamer"
+        this.$route.name == "Streamer" ||
+        this.$route.name == "AcademyPage" 
       ) {
         return false;
       }

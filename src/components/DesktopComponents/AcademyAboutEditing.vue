@@ -7,6 +7,7 @@
       v-model="AcademyBio"
       :disabled="!Editing"
       flat
+      rows = "8"
     ></v-textarea>
     <v-row justify="end" class="px-8">
       <v-btn rounded color="primary" v-if="Editing" @click="Edit">

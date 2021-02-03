@@ -1,7 +1,7 @@
 <template>
   <div>
     <CourseCard
-      style="width:100%;"
+      style="width:90%; margin-left: 5%;"
       v-for="(course, x) in GetListOfCourses"
       :order="x"
       :key="x"
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import CourseCard from "@/components/MobileComponents/CourseCard";
+import CourseCard from "@/components/DesktopComponents/CourseCard";
 import { mapActions, mapGetters } from "vuex";
 
 export default {

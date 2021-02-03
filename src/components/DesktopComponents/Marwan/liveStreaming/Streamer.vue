@@ -1,45 +1,126 @@
 <template>
-  <div class="Productive">
-    <div class="ChessBoard">
-      <ChessBoardInput id="id" />
-    </div>
+  <div >
+    <v-row>
+      <v-col cols="6" align="center">
+        <v-row justify="center" class="mt-5">
+          <v-sheet width="80%">
+            <ChessBoardInput id="id"/>
+          </v-sheet>
+        </v-row>
+      </v-col>
 
-    <div class="CourseStream">
+      <v-col cols="6">
+        <v-row>
+          <v-sheet height="280px" class="mt-8">
+            <video style="height: 100%" id="recordervideo"></video>
+          </v-sheet>
+          
+        </v-row>
+        <v-row class = "mt-7">
+          <v-btn v-if="!live" @click="checkandconnect" rounded>
+            <span class="text-subtitle2 text-capitalize">
+              Start Streaming
+            </span>
+          </v-btn>
+          <v-btn @click="remountStockFish" rounded class="text-subtitle-2 text-capitalize">Restart StockFish</v-btn>
+          <v-btn cols="2" @click="emitcontrol('back')">
+            <v-icon>
+              fa-caret-left
+            </v-icon>
+          </v-btn>
+          <v-btn cols="2" @click="emitcontrol('next')">
+            <v-icon>
+              fa-caret-right
+            </v-icon>
+          </v-btn>
+        </v-row>
+        <v-row>
+          <v-col class="px-0">
+            <v-row>
+              <StockFish v-if="showStockfish"></StockFish>
+            </v-row>
+            <!-- <div class="TimeStamps">
+                <div class="Chat">
+                  <h2 id="SmallHeader">Chat</h2>
+                  <div
+                    class="Messages"
+                    v-chat-scroll="{ always: false, smooth: true }"
+                  >
+                    <p v-for="(i, index) in messages" :key="index">
+                      {{ i.name }} : {{ i.message }}
+                    </p>
+                  </div>
+                  <p v-for="(i, index) in messages" :key="index">
+                    {{ i.name }} : {{ i.message }}
+                  </p>
+                  <p v-for="i in UsersArray" :key="i.id">{{ i.name }}</p>
+                  <div class="sendmessage">
+                    <input
+                      type="text"
+                      v-model="message"
+                      v-on:keyup.enter="sendmessage"
+                    />
+                    <button @click="sendmessage">Send</button>
+                  </div>
+                </div>
+            </div> -->
+            <v-card width="90%">
+              <v-card-title height="20px" class="py-0">
+                <v-row class="my-1">
+                    <!-- <v-btn text @click="sheet = !sheet">
+                      <v-icon>
+                        fa-arrow-left
+                      </v-icon>
+                    </v-btn> -->
+                    <span class="text-h6">Chat Room</span>
+                </v-row>
+              </v-card-title>
+              <v-divider></v-divider>
+              <v-card-text class="mt-3" >
+                <div style = "overflow-y: scroll; height: 100px" v-chat-scroll="{ always: false, smooth: true }">
+                  <p v-for="(i, index) in messages" :key="index">
+                    {{ i.name }} : {{ i.message }}
+                  </p>
+                </div>
+              </v-card-text>
+              <v-divider></v-divider>
+              <v-card-actions>
+                <!-- <v-btn fab text>
+                  <v-icon>
+                    fa-chess-board
+                  </v-icon>
+                </v-btn> -->
+                <v-text-field
+                  rounded
+                  background-color="grey lighten-2"
+                  width="300px"
+                  type="text"
+                  browser-autocomplete="new-password"
+                  v-model="message"
+                  v-on:keyup.enter="sendmessage"
+                >
+                </v-text-field>
+                <v-btn fab text @click="sendmessage">
+                  <v-icon>
+                    fa-paper-plane
+                  </v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+    <!-- <div class="ChessBoard">     
+    </div> -->
+    <!-- <div class="CourseStream"> -->
       <!-- <div class="VideoPlayer"> -->
-      <video class="VideoPlayer" id="recordervideo"></video>
       <!-- <h2>The sicillian najdorf by Mostafa Hamido</h2> -->
-      <button v-if="!live" @click="checkandconnect">Start Streaming</button>
+      <!-- <button >Start Streaming</button> -->
       <!-- </div> -->
-      <div class="CourseData">
-        <div class="TimeStamps">
-          <div class="Chat">
-            <h2 id="SmallHeader">Chat</h2>
-            <div
-              class="Messages"
-              v-chat-scroll="{ always: false, smooth: true }"
-            >
-              <p v-for="(i, index) in messages" :key="index">
-                {{ i.name }} : {{ i.message }}
-              </p>
-            </div>
-            <p v-for="(i, index) in messages" :key="index">
-              {{ i.name }} : {{ i.message }}
-            </p>
-            <p v-for="i in UsersArray" :key="i.id">{{ i.name }}</p>
-            <div class="sendmessage">
-              <input
-                type="text"
-                v-model="message"
-                v-on:keyup.enter="sendmessage"
-              />
-              <button @click="sendmessage">Send</button>
-            </div>
-          </div>
-        </div>
-        <button @click="remountStockFish">Remont StockFish</button>
-        <StockFish v-if="showStockfish"></StockFish>
-      </div>
-    </div>
+      <!-- <div class="CourseData"> -->
+      <!-- </div> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -140,6 +221,10 @@ export default {
       setTimeout(() => {
         this.showStockfish = true;
       }, 100);
+    },
+    emitcontrol(data) {
+      EventBus.$emit('Control',data)
+			console.log(data)
     },
     async PlayMoveFromFEN(FEN) {
       if (this.CurrentMove == this.MovesArray.length - 1) {
@@ -366,8 +451,9 @@ h2 {
 .ChessBoard {
   padding-top: 2px;
   padding-left: 3px;
-  width: 50.6%;
+  width: 100%;
   /* background-color: tomato; */
+  height: 100%;
   background-color: #00112c;
 }
 .CourseStream {
@@ -377,7 +463,7 @@ h2 {
   /* background-color: turquoise; */
 }
 .VideoPlayer {
-  height: 55%;
+  height: 400px;
   /* background-color:violet; */
   /* border-bottom: 3px solid grey; */
 }
@@ -395,7 +481,7 @@ h2 {
   /* background-color: aqua; */
 }
 .Messages {
-  height: 50%;
+  height: 100px;
   /* background-color: green; */
   overflow-y: scroll;
   overflow-wrap: break-word;
@@ -434,7 +520,7 @@ h2 {
   width: 50%;
   height: 100%;
 }
-button {
+/* button {
   height: 30px;
   width: 150px;
   border: none;
@@ -445,5 +531,5 @@ button {
   background-color: #022a68;
   color: white;
   margin-top: 5px;
-}
+} */
 </style>

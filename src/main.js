@@ -7,6 +7,12 @@ import vuetify from "./plugins/vuetify";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "@mdi/font/css/materialdesignicons.css";
 import firebase from "firebase";
+import VueChatScroll from 'vue-chat-scroll';
+
+
+
+
+Vue.use(VueChatScroll);
 
 Vue.use(firebase);
 var firebaseConfig = {
