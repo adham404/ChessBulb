@@ -19,7 +19,7 @@
             >by Mostafa Hamido (instructor at Smouha Chess Academy)</span
           >
           <br />
-          <span class="text-subtitle-1">starts on {{ LiveData.LiveDate }}</span>
+          <span class="text-subtitle-1">starts on {{ LiveData.LiveDate.toDate().toDateString() }}</span>
           <v-btn
             xs
             class="text-lowercase primary"

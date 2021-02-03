@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div style="height: 70px; background-color: white" v-if="ShowTitle">
+    <div style="height: 45px; background-color: white" v-if="ShowTitle">
       <v-row class="px-3 my-1">
         <v-icon
           left
@@ -16,9 +16,9 @@
           data-name="Group 56"
           xmlns="http://www.w3.org/2000/svg"
           width="180"
-          height="50.001"
+          height="35"
           viewBox="0 0 151 40.001"
-          class="ml-1"
+          class="ml-0"
         >
           <path
             id="Icon_awesome-lightbulb"
@@ -40,10 +40,10 @@
     </div>
 
     <Header v-if="ShowHeader" class="Mobile" />
-    <v-main class="primary Desktop">
+    <v-main v-if="!MobileDevice" class="primary Desktop">
       <router-view name="Desktop" />
     </v-main>
-    <v-main :class="classname">
+    <v-main v-if="MobileDevice" :class="classname">
       <router-view name="Mobile" />
     </v-main>
   </v-app>
@@ -57,6 +57,7 @@ export default {
   name: "App",
 
   data: () => ({
+    MobileDevice : false
     //
   }),
   components: {
@@ -67,6 +68,9 @@ export default {
   },
   async created() {
     let self = this;
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      self.MobileDevice = true
+        }
 
     firebase.auth().onAuthStateChanged(async function(user) {
       if (user) {
@@ -117,7 +121,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-@media only screen and (max-width: 930px) {
+/* @media only screen and (max-width: 930px) {
   .Desktop {
     display: none;
     height: 100vh;
@@ -132,6 +136,6 @@ export default {
   }
   .Mobile {
     display: none;
-  }
-}
+  } */
+/* } */
 </style>
