@@ -7,7 +7,7 @@
     class="ml-2 mt-2 mb-2"
     rounded="lg"
   >
-    <v-chip-group class="pl-2" >
+    <v-chip-group class="pl-2">
       <!-- <p v-if="loading" > Loading...</p> -->
       <v-skeleton-loader
         dark

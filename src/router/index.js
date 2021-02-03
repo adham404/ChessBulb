@@ -18,43 +18,47 @@ const routes = [
     path: "/CreateCourse",
     name: "CreateCourse",
     components: {
-      Desktop: () => import("@/components/DesktopComponents/Marwan/CreateCourse.vue"), //SignUp
+      Desktop: () =>
+        import("@/components/DesktopComponents/Marwan/CreateCourse.vue"), //SignUp
       Mobile: () => import("@/views/NotFound.vue")
     }
   },
   {
     path: "/Purchase/:id",
     name: "Purchase",
-    props : true,
+    props: true,
     components: {
       Desktop: () => import("@/views/NotFound.vue"), //SignUp
-      Mobile: () => import("@/components/MarawanComponents/Purchase/Purchase.vue")
+      Mobile: () =>
+        import("@/components/MarawanComponents/Purchase/Purchase.vue")
     }
   },
   {
     path: "/Subscribe/:id",
     name: "Subscribe",
-    props : true,
+    props: true,
     components: {
       Desktop: () => import("@/views/NotFound.vue"), //SignUp
-      Mobile: () => import("@/components/MarawanComponents/Purchase/Subscribe.vue")
+      Mobile: () =>
+        import("@/components/MarawanComponents/Purchase/Subscribe.vue")
     }
   },
   {
     path: "/Streamer/:id",
     name: "Streamer",
-    props : true,
+    props: true,
     components: {
-      Desktop: () => import("@/components/DesktopComponents/Marwan/liveStreaming/Streamer"), //SignUp
+      Desktop: () =>
+        import("@/components/DesktopComponents/Marwan/liveStreaming/Streamer"), //SignUp
       Mobile: () => import("@/views/NotFound.vue")
     }
   },
   {
     path: "/LiveViewer/:id",
     name: "LiveViewer",
-    props : true,
+    props: true,
     components: {
-      Desktop: () => import("@/views/NotFound.vue"), 
+      Desktop: () => import("@/views/NotFound.vue"),
       Mobile: () => import("@/components/MarawanComponents/Viewer.vue")
     }
   },

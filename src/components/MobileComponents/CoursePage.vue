@@ -21,10 +21,9 @@
             });
           }
         "
-        >Open</v-btn>
-      <v-btn
-      v-if="!GetCoursePlayingFlag"
-       @click="Purchase()">purchase</v-btn>
+        >Open</v-btn
+      >
+      <v-btn v-if="!GetCoursePlayingFlag" @click="Purchase()">purchase</v-btn>
     </v-sheet>
     <span class="text-h6" style="color: white">Reviews and Ratings</span>
     <v-divider size="5" color="white"> </v-divider>
@@ -44,7 +43,9 @@
           </v-avatar>
         </v-col>
         <v-col cols="9">
-          <span class="text-h6 ml-3">{{Review.FirstName}} {{Review.LastName}}</span>
+          <span class="text-h6 ml-3"
+            >{{ Review.FirstName }} {{ Review.LastName }}</span
+          >
           <v-textarea
             solo
             name="input-7-4"
@@ -77,7 +78,7 @@
           </v-avatar>
         </v-col>
         <v-col cols="9">
-          <span class="text-h6 ml-3">{{GETUserFullName}}</span>
+          <span class="text-h6 ml-3">{{ GETUserFullName }}</span>
           <v-textarea
             solo
             name="input-7-4"
@@ -145,12 +146,14 @@ export default {
     ...mapActions([
       "FetchAllReviewsForThisCourse",
       "SubmitReviewForThisCourse",
-       "CanIPLayThisCourse",
+      "CanIPLayThisCourse",
       "fetchUserInfo"
     ]),
-    Purchase()
-    {
-      this.$router.push({ path:`/Purchase/${this.GetListOfCourses[this.order].PriceId}`, query:{ProductID: this.GetListOfCourses[this.order].PriceId}})
+    Purchase() {
+      this.$router.push({
+        path: `/Purchase/${this.GetListOfCourses[this.order].PriceId}`,
+        query: { ProductID: this.GetListOfCourses[this.order].PriceId }
+      });
     },
     ...mapMutations(["SetTheOrderOfThisCourseAccordingToItsID"]),
     test() {
@@ -181,7 +184,7 @@ export default {
     ...mapGetters([
       "GetTheOrderOfThisCourseInTheList",
       "GetListOfCourses",
-      "GETUserFullName", 
+      "GETUserFullName",
       "GetCoursePlayingFlag",
       "GetReviewsOfThisParticularCourse"
     ])

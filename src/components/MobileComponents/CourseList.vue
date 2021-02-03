@@ -30,7 +30,7 @@
         <v-checkbox v-model="checkbox" label="Advanced"></v-checkbox>
       </v-row>
     </v-sheet> -->
-    <SearchEngine  SearchIndex="Courses" :ShowFilters="true"></SearchEngine>
+    <SearchEngine SearchIndex="Courses" :ShowFilters="true"></SearchEngine>
 
     <CourseCard
       v-for="(course, x) in GetListOfCourses"
@@ -43,10 +43,10 @@
 
 <script>
 import CourseCard from "@/components/MobileComponents/CourseCard";
-import SearchEngine from "../MarawanComponents/SearchEngine"
+import SearchEngine from "../MarawanComponents/SearchEngine";
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import {EventBus} from "../../main"
-import firebase from "firebase"
+import { EventBus } from "../../main";
+import firebase from "firebase";
 
 export default {
   mounted() {
@@ -54,30 +54,28 @@ export default {
     // this.FetchAllCourses();
 
     //Recieve Search Signal
-    EventBus.$on("TheSearchResult", (ids) => {
-      console.log("Hey:  "+ ids);
-      this.FetchIdsQuick(ids)
-    })
+    EventBus.$on("TheSearchResult", ids => {
+      console.log("Hey:  " + ids);
+      this.FetchIdsQuick(ids);
+    });
   },
-  beforeDestroy()
-  {
+  beforeDestroy() {
     EventBus.$off("SearchIndex");
   },
-  data:function()
-  {
-    return{
-      Courses:[]
-    }
+  data: function() {
+    return {
+      Courses: []
+    };
   },
   methods: {
     ...mapActions(["FetchAllCourses"]),
-    ...mapMutations(['SetCoursesDataToTheGeneralArray']),
-    async FetchIdsQuick(ids)
-    {
+    ...mapMutations(["SetCoursesDataToTheGeneralArray"]),
+    async FetchIdsQuick(ids) {
       this.Courses = [];
       var db = firebase.firestore();
-      ids.forEach( async id => {
-        await db.collection("Courses")
+      ids.forEach(async id => {
+        await db
+          .collection("Courses")
           .doc(id)
           .get()
           .then(doc => {

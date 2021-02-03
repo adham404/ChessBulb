@@ -26,30 +26,29 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import AcademyCard from "@/components/MobileComponents/AcademyCard";
-import SearchEngine from "../MarawanComponents/SearchEngine"
-import firebase from "firebase"
-import {EventBus} from "../../main"
+import SearchEngine from "../MarawanComponents/SearchEngine";
+import firebase from "firebase";
+import { EventBus } from "../../main";
 
 export default {
   components: {
     AcademyCard,
     SearchEngine
   },
-  data()
-  {
-    return{
-      Academies:[]
-    }
+  data() {
+    return {
+      Academies: []
+    };
   },
   methods: {
     ...mapActions(["FetchAllAcademies"]),
-    ...mapMutations(['SetAcademiesDataToTheGeneralArray']),
-  async FetchIdsQuick(ids)
-    {
+    ...mapMutations(["SetAcademiesDataToTheGeneralArray"]),
+    async FetchIdsQuick(ids) {
       this.Academies = [];
       var db = firebase.firestore();
-      ids.forEach( async id => {
-        await db.collection("Academies")
+      ids.forEach(async id => {
+        await db
+          .collection("Academies")
           .doc(id)
           .get()
           .then(doc => {
@@ -61,10 +60,10 @@ export default {
   },
   async mounted() {
     //Fetch All Academies
-    EventBus.$on("TheSearchResult", (ids) => {
-      console.log("Hey:  "+ ids);
-      this.FetchIdsQuick(ids)
-    })
+    EventBus.$on("TheSearchResult", ids => {
+      console.log("Hey:  " + ids);
+      this.FetchIdsQuick(ids);
+    });
 
     // await this.FetchAllAcademies();
   },

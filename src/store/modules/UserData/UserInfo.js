@@ -62,14 +62,14 @@ const mutations = {
     state.ProfilePicPath = UserData.UserPhoto;
     state.IsInstructor = UserData.Instructor;
   },
-  ClearAllUserDataField:(state) => {
+  ClearAllUserDataField: state => {
     state.FULLDATA = null;
-    state.FirstName = ""
-    state.Email = ""
-    state.LastName = ""
-    state.FullName = ""
-    state.Bio = ""
-    state.ProfilePicUrl = ""
+    state.FirstName = "";
+    state.Email = "";
+    state.LastName = "";
+    state.FullName = "";
+    state.Bio = "";
+    state.ProfilePicUrl = "";
   },
   SetUserProfilePic: (state, url) => (state.ProfilePicUrl = url),
   SETUSERINFOFULLDATA: (state, DATA) => {
@@ -81,7 +81,7 @@ const mutations = {
 };
 
 const actions = {
-  async fetchUserInfo({ commit, state,dispatch }) {
+  async fetchUserInfo({ commit, state, dispatch }) {
     var user = await firebase.auth().currentUser;
     console.log("Hey up here: " + user.uid);
     if (user && !state.IsUserInfoFetched) {
@@ -94,7 +94,7 @@ const actions = {
       await commit("MapUserDataToState", DBUserDoc.data());
       await commit("SETUSERINFOFULLDATA", DBUserDoc.data());
       commit("UserInfoIsFetched");
-      await dispatch('fetchProfilePic');
+      await dispatch("fetchProfilePic");
     }
   },
   async fetchProfilePic({ state, commit }) {

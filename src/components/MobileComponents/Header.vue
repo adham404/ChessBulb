@@ -18,7 +18,7 @@
       >
         <v-layout justify-center class="px-0" size="10">
           <v-tab
-            v-for="(link,index) in links"
+            v-for="(link, index) in links"
             :key="index"
             class="mx-0 px-0"
             retain-focus-on-click="false"

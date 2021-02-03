@@ -81,7 +81,7 @@
 <script>
 import VideoPlayer from "@/components/MobileComponents/VideoPlayer";
 // import ChessBoardDisplay from "@/components/MobileComponents/ChessBoardDisplay";
-import ChessBoardPointerReciever from "@/components/MobileComponents/ChessBoardPointerReciever"
+import ChessBoardPointerReciever from "@/components/MobileComponents/ChessBoardPointerReciever";
 import TimeStamps from "@/components/MobileComponents/TimeStamps";
 import { mapActions } from "vuex";
 

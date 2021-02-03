@@ -1,86 +1,178 @@
 <template>
-<div style="width :100%" >
-<div class="Containerim">
-  <div style="display: flex; flex-direction: column; width: 50%" class="Form">
-      
-          <label for="Course Name">Course Name</label>
-          <input :class="errors.name" type="text" name="Course Name" id="CourseName"  v-model="course.name">
-      
-      
+  <v-overlay :value="show" absolute >
+    <v-sheet color="white" class="rounded-xl py-7" width="30vw">
+      <v-row class=" mb-4 ml-4 " align="start"  no-gutters justify="start"   style="color:black" >
+        <v-col cols="1">
+          <v-btn @click="$router.go(-1)" light icon>
+
+        <v-icon  left light size="35">
+          mdi-arrow-left
+        </v-icon>
+          </v-btn>
+        </v-col>
+        <v-col class="text-h5" style="color:black">Fill The Form To Start Creating You Course</v-col>
+        </v-row>
+      <v-divider light></v-divider>
+    <v-row  style="width :90%" class="mx-auto py-5 " justify="center" align="center">
+      <v-col>
+        <v-row>
+          <v-text-field
+        
+          light
+          v-model="course.name"
+          label="Course Name"
+          :error="!errors.name"
+          ></v-text-field>
+        </v-row>
+        <v-row>
+          <v-select
+        
+          light
+          :items="['Beginner','Intermediate','Advanced']"
+          v-model="course.difficulty"
+          label="Difficulty"
+          :error="!errors.difficulty"
+          ></v-select>
+        </v-row>
+        <v-row>
+          <v-text-field
+        
+          light
+          v-model="course.price"
+          label="Price"
+          prefix="$"
+          type="number"
+          :error="!errors.price"
+          ></v-text-field>
+        </v-row>
+        <v-row>
+          <v-textarea
+        
+          light
+          v-model="course.privileges"
+          label="Privileges"
+         
+          :error="!errors.privileges"
+          ></v-textarea>
+        </v-row>
+        <v-row justify="center" align="center">
+          <v-btn light @click="validate" >
+            Submit
+            
+          </v-btn>
+        </v-row>
+      </v-col>
+
+    </v-row>
+    </v-sheet>
+    <!-- <div class="Containerim">
+      <div
+        style="display: flex; flex-direction: column; width: 50%"
+        class="Form"
+      >
+        <label for="Course Name">Course Name</label>
+        <input
+          :class="errors.name"
+          type="text"
+          name="Course Name"
+          id="CourseName"
+          v-model="course.name"
+        />
+
         <label for="Difficulty">Difficulty</label>
-        <select  :class="errors.difficulty" name="Difficulty" id="Difficulty" v-model="course.difficulty">
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
+        <select
+          :class="errors.difficulty"
+          name="Difficulty"
+          id="Difficulty"
+          v-model="course.difficulty"
+        >
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
         </select>
-      
-      
+
         <label for="Price">Price</label>
-        <input :class="errors.price" type="number" name="Price" id="Price"  v-model="course.price">
-      
+        <input
+          :class="errors.price"
+          type="number"
+          name="Price"
+          id="Price"
+          v-model="course.price"
+        />
 
-      
         <label for="Privileges">Privileges</label>
-        <input type="text" :class="errors.privileges" name="Privileges" id="Privileges"  v-model="course.privileges">
-      
+        <input
+          type="text"
+          :class="errors.privileges"
+          name="Privileges"
+          id="Privileges"
+          v-model="course.privileges"
+        />
 
-      <button @click="validate">Submit</button>
-  </div>
-</div>
-</div>
+        <button @click="validate">Submit</button>
+      </div>
+    </div> -->
+  </v-overlay>
 </template>
 
 <script>
-import {EventBus} from '@/main.js'
+import { EventBus } from "@/main.js";
 export default {
-    data(){
-        return{
-            course:{
-                name : '',
-                difficulty : null,
-                price : 0 ,
-                privileges :''
-            },
-            errors : {
-                name : 'ok',
-                difficulty : 'ok',
-                price : 'ok' ,
-                privileges :'ok'
-            },
+  data() {
+    return {
+      course: {
+        show: true,
+        name: "",
+        difficulty: null,
+        price: 0,
+        privileges: ""
+      },
+      errors: {
+        name: "ok",
+        difficulty: "ok",
+        price: "ok",
+        privileges: "ok"
+      }
+    };
+  },
+  methods: {
+    validate() {
+      var go = 0;
+      console.log(this.course);
+      this.errors.name = this.course.name.length >= 5 /*? "ok" : "error";*/
+      this.errors.difficulty = this.course.difficulty 
+      this.errors.price = this.course.price > 0 
+      this.errors.privileges =
+        this.course.privileges.length >= 5 
+      console.log(this.errors);
+      for (var i in this.errors) {
+        if (this.errors[i] ) {
+          go += 1;
         }
-    },methods:{
-         validate(){
-            var go = 0 ;
-            console.log(this.course)
-            this.errors.name = (this.course.name.length >= 5 ) ? 'ok' :  'error' ; 
-            this.errors.difficulty = (this.course.difficulty ) ? 'ok' :  'error' ; 
-            this.errors.price = (this.course.price > 0 ) ? 'ok' :  'error' ; 
-            this.errors.privileges = (this.course.privileges.length >= 5 ) ? 'ok' :  'error' ; 
-            console.log(this.errors)
-            for(var i in this.errors){
-                if(this.errors[i]== 'ok' ){
-                    go += 1 
-                }
-
-            }
-            if(go == 4 ){
-                this.submit()
-            }
-            
-        },
-        submit(){
-            console.log(this.course)
-            EventBus.$emit('CourseForm',this.course)
-            
-            
-        }
+      }
+      if (go == 4) {
+        this.submit();
+      }else{
+        setTimeout(()=>{
+         this.errors.name = true
+      this.errors.difficulty = true
+      this.errors.price = true
+      this.errors.privileges =true
+        
+        },3000)
+      }
+    },
+    submit() {
+      console.log(this.course);
+      EventBus.$emit("CourseForm", this.course);
+      this.show =false
     }
-
-}
+  }
+};
 </script>
 
 <style scoped>
-.Shadow {
+/* .Shadow {
   -webkit-box-shadow: 0px 0px 21px -10px rgba(0, 0, 0, 1);
   -moz-box-shadow: 0px 0px 21px -10px rgba(0, 0, 0, 1);
   box-shadow: 0px 0px 21px -10px rgba(0, 0, 0, 1);
@@ -154,18 +246,14 @@ a {
 a:hover {
   color: #044bb6;
 }
-.error{
-    border: red 2px solid;
+.error {
+  border: red 2px solid;
 }
 .ok {
-    border: white ;
-}
-
+  border: white;
+} */
 </style>
-//TODO create html inputs(10min)
-//TODO create data object(10min)
-//TODO connent data object to UI(10min)
-//TODO check if data will be sent to academy or courses(2min)
-//TODO get course /academy id(5min)
-//TODO sent data to firbase firestore(3min)
-//FIXME thier is no XD
+//TODO create html inputs(10min) //TODO create data object(10min) //TODO connent
+data object to UI(10min) //TODO check if data will be sent to academy or
+courses(2min) //TODO get course /academy id(5min) //TODO sent data to firbase
+firestore(3min) //FIXME thier is no XD

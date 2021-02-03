@@ -96,28 +96,28 @@
         >
       </v-row>
     </v-container>
-<!-- Show all SignUp Popups for user -->
-          <v-dialog v-model="dialog" width="500">
-            <v-card class="py-3" rounded="lg">
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-card-text>
-                  {{SignUpError}}
-                  <!-- Login Details are missing! -->
-                </v-card-text>
-                <v-btn
-                  color="primary"
-                  @click="dialog = false"
-                  flat
-                  rounded
-                  width="100"
-                >
-                  OK
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-<!-------------------------------------------->
+    <!-- Show all SignUp Popups for user -->
+    <v-dialog v-model="dialog" width="500">
+      <v-card class="py-3" rounded="lg">
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-card-text>
+            {{ SignUpError }}
+            <!-- Login Details are missing! -->
+          </v-card-text>
+          <v-btn
+            color="primary"
+            @click="dialog = false"
+            flat
+            rounded
+            width="100"
+          >
+            OK
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-------------------------------------------->
 
     <v-dialog v-model="dialo" width="500" activator="#privacy">
       <!-- <template v-slot:activator="{ on, attrs }">
@@ -178,7 +178,7 @@ export default {
       LastName: "",
       UserEmail: "",
       UserPassword: "",
-      SignUpError:"",
+      SignUpError: "",
       ConfirmPassword: "",
       UserValidate: false,
       UserID: "",
@@ -186,15 +186,14 @@ export default {
       show2: false,
       dialog: false,
       checkbox: false
-    };  
+    };
   },
   mounted() {
     //this.CheckUser();
   },
   methods: {
     //DONE Define SignUp function (1min)
-    GoToLogin()
-    {
+    GoToLogin() {
       this.$router.push("/Login");
     },
     async SignUp() {
@@ -207,11 +206,10 @@ export default {
           .createUserWithEmailAndPassword(this.UserEmail, this.UserPassword)
           .catch(error => {
             this.dialog = true;
-            this.SignUpError = error.message
+            this.SignUpError = error.message;
             // alert(error.message);
           });
-        if(!this.dialog)
-        {
+        if (!this.dialog) {
           let self = this;
           await auth.onAuthStateChanged(user => {
             if (user) {
@@ -232,7 +230,7 @@ export default {
         Email: this.UserEmail,
         FirstName: this.FirstName,
         LastName: this.LastName,
-        UserImage:""  
+        UserImage: ""
       };
       const Test = firebase.functions().httpsCallable("CreateDocs-CreateDocs");
       await Test(data)
@@ -243,7 +241,7 @@ export default {
           console.log("Error is ", error);
         });
       this.$router.push("/Home");
-      
+
       EventBus.$emit("LoggedIn", true);
     },
     async gSignUp() {
@@ -289,19 +287,20 @@ export default {
         this.ConfirmPassword == ""
       ) {
         // alert("Please Fill in the missing content");
-            this.dialog = true;
-            this.SignUpError = "Please Fill in the missing content"
-            return false;
+        this.dialog = true;
+        this.SignUpError = "Please Fill in the missing content";
+        return false;
       } else {
         if (this.ConfirmPassword == this.UserPassword) {
           return true;
         } else {
-            this.dialog = true;
-            this.SignUpError = "the Confirm password is not compatiable with your pasword please re-enter your password"
+          this.dialog = true;
+          this.SignUpError =
+            "the Confirm password is not compatiable with your pasword please re-enter your password";
 
-// alert(
-//             "the Confirm password is not compatiable with your pasword please re-enter your password"
-//           );
+          // alert(
+          //             "the Confirm password is not compatiable with your pasword please re-enter your password"
+          //           );
           return false;
         }
       }

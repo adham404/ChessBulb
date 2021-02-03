@@ -1,23 +1,22 @@
 <template>
   <div class="Productive">
-    <CourseForm v-if="form" />
+    <CourseForm  />
     <!-- <div    v-if="!form" > -->
 
-      <div v-if="Mounted&&!form" class="ChessBoard">
-        <ChessBoardInput id="1" />
+    <div v-if="Mounted " class="ChessBoard">
+      <ChessBoardInput id="1" />
+    </div>
+    <div  class="CourseStream">
+      <div class="VideoPlayer">
+        <VideoRecording />
       </div>
-      <div v-if="!form" class="CourseStream">
-        <div class="VideoPlayer">
-          <VideoRecording />
-        </div>
-        <div v-if="!form" class="CourseData">
-          <TimeStampsRecording class="TimeStamps"  />
-          <StockFish/>
-          
-        </div>
-        <UploadPgn />
-        <PostCourse />  
+      <div class="CourseData">
+        <TimeStampsRecording class="TimeStamps" />
+        <StockFish />
       </div>
+      <UploadPgn />
+      <PostCourse />
+    </div>
     <!-- </div> -->
   </div>
 </template>

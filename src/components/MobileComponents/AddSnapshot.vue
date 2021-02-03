@@ -135,7 +135,11 @@ export default {
   },
   methods: {
     ...mapActions(["fetchUserInfo"]),
-    ...mapMutations(["SetSnapshotPostingType","SetStartingPositionForSnapShot","SetChessBoardPositionValidationStatus"]),
+    ...mapMutations([
+      "SetSnapshotPostingType",
+      "SetStartingPositionForSnapShot",
+      "SetChessBoardPositionValidationStatus"
+    ]),
     PostPuzzle() {
       this.SetSnapshotPostingType("Puzzle");
     },

@@ -1,22 +1,16 @@
 <template>
   <div>
-      Success
-      hi
+    Success hi
   </div>
 </template>
- 
+
 <script>
 // import firebase from "firebase"
 export default {
-    async mounted(){
-        
-        console.log(this.$route.params.sessionid)
-        
-    }
-
-}
+  async mounted() {
+    console.log(this.$route.params.sessionid);
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
