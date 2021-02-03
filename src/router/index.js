@@ -50,6 +50,15 @@ const routes = [
     }
   },
   {
+    path: "/LiveViewer/:id",
+    name: "LiveViewer",
+    props : true,
+    components: {
+      Desktop: () => import("@/views/NotFound.vue"), 
+      Mobile: () => import("@/components/MarawanComponents/Viewer.vue")
+    }
+  },
+  {
     path: "/Profile",
     name: "Profile",
     components: {
@@ -92,14 +101,14 @@ const routes = [
       Mobile: () => import("@/components/MarawanComponents/PostScreen.vue")
     }
   },
-  {
-    path: "/LiveViewer",
-    name: "LiveViewer",
-    components: {
-      Desktop: () => import("@/components/DesktopComponents/Development.vue"), //SignUp
-      Mobile: () => import("@/views/MobileViews/LiveViewer.vue")
-    }
-  },
+  // {
+  //   path: "/LiveViewer",
+  //   name: "LiveViewer",
+  //   components: {
+  //     Desktop: () => import("@/components/DesktopComponents/Development.vue"), //SignUp
+  //     Mobile: () => import("@/views/MobileViews/LiveViewer.vue")
+  //   }
+  // },
   {
     path: "/Academies",
     name: "Academies",

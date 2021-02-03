@@ -2,7 +2,7 @@
   <div class="TimeStamps">
       <h2 id="SmallHeader">TimeStamps</h2>
       <div v-for="(i,index) in timestamps" :key="index" >
-          <p>{{formattime(i.time)}} : {{i.event}}</p>
+          <p v-if="i.show" > {{formattime(i.time)}} : {{i.event}}</p>
       </div>
   </div>
 </template>
@@ -35,6 +35,22 @@ export default {
           }
           
       });
+      EventBus.$on("PointerDrawn",async data =>{
+        if(recording){
+              
+              if(currentStamp < this.timestamps.length -1){
+                  currentStamp = await  this.timestamps.length -1
+                  console.log('pog')
+              }else{
+                 await currentStamp++
+              }
+              
+              await this.addatimestampArroW(data)
+              
+          }
+        
+
+      })
       
     this.clock = stopwatch()
     EventBus.$on('StartRecording',()=>{
@@ -80,12 +96,28 @@ export default {
       }
     });
   },
+  beforeDestroy(){
+    EventBus.$off("PointerDrawn")
+    EventBus.$off("PuseRecording")
+    EventBus.$off("Control")
+    EventBus.$off("StopRecording")
+    EventBus.$off("newfenAndmove")
+  },
   methods:{
       addatimestamp(e){
           var newst = {
               time : this.clock.duration().seconds() ,
               event : e[1],
-              fen : e[0]
+              fen : e[0],
+              show : true ,
+          }
+          this.timestamps.push(newst)
+      },
+      addatimestampArroW(e){
+          var newst = {
+              time : this.clock.duration().seconds() ,
+              ArrowData : e,
+              show : false ,
           }
           this.timestamps.push(newst)
       },

@@ -26,7 +26,7 @@
 /*eslint-disable*/
 import { EventBus } from "@/main.js";
 import StockFish from "@/components/MarawanComponents/StockFish.vue"
-import ChessBoardInput from "@/components/MobileComponents/ChessBoardInput";
+import ChessBoardInput from "../ChessBoardPointer.vue"
 import VideoRecording from "./VideoRecording.vue";
 import UploadPgn from "./UploadPgn.vue";
 import PostCourse from "./PostCourse.vue";

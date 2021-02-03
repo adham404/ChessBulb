@@ -18,7 +18,7 @@
           width="180"
           height="35"
           viewBox="0 0 151 40.001"
-          class="ml-0"
+          class="ml-1"
         >
           <path
             id="Icon_awesome-lightbulb"
@@ -97,7 +97,11 @@ export default {
       if (
         this.$route.name == "Profile" ||
         this.$route.name == "SignUp" ||
-        this.$route.name == "Login"
+        this.$route.name == "Login"  ||
+        this.$route.name == "CourseStreaming"  ||
+        this.$route.name == "CreateCourse"  ||
+        this.$route.name == "LiveViewer"  ||
+        this.$route.name == "Streamer"  
       ) {
         return false;
       }

@@ -1,40 +1,65 @@
 <template>
-  <div class="Productive">
-    <div v-if="Mounted" class="ChessBoard">
-      <ChessBoardDisplay id = 'id'  />
-    </div>
-
-    <div class="CourseStream">
+  <div>
+    <v-sheet height="93vh">
+      <v-row  no-gutters justify="center" >
+        <v-col  >
+          <ChessBoardDisplay class="ma-auto pa-0" style="width:100%" id = 'id'    />
+          
+        </v-col>
+      </v-row>
+      <v-row class="ma-0"  no-gutters justify="space-around">
+        
+          <video style="width:70vw"  class="VideoPlayer" id="fffd"  ></video>
+        <v-btn v-if="ShowPlaybtn" @click="palyvideo">Play</v-btn>
+      </v-row>
+      <v-row no-gutters >
+        <StockFish v-if="ShowOrhideEngine"/>
+      </v-row>
       
-        <video class="VideoPlayer" id="fffd" ></video>
-        <!-- <h2>The sicillian najdorf by Mostafa Hamido</h2> -->
+      <!-- <v-row no-gutters style="width:100vw" > 
+        <Chat />
+      </v-row> -->
+     
+    </v-sheet>
+    <v-footer  max-height="7.1vh" min-height="7vh">
+      <v-row  >
+        <v-btn 
         
-      <!-- <button v-if="!live" @click="connect">Reconnect</button> -->
-      <div class="CourseData">
+         @click="()=> e.$emit('ShowLiveChat') "
+        rounded
+        x-large
+        text>
+
+          <v-icon size="40">
+            mdi-chevron-up
+          </v-icon>
+          Open Chat
+        </v-btn>
+      </v-row>
+      
         
-        <div class="Chat">
-          <h2 id="SmallHeader">Chat</h2>
-          <div class="Messages"  v-chat-scroll="{always: false, smooth: true}">
-            <p v-for="(i,index) in messages" :key="index" >{{i.name}} : {{i.message}}</p>
-          </div>          
-          <div class="sendmessage" >
-            
-            
-              <!-- <ChessBoardInput v-if="ShowChatBoard" id="fhefhefh" style="position:absolute;width: 200px; bottom: 0;right:0"  /> -->
-              <input type="text" v-model="message" v-on:keyup.enter = "sendmessage">
-            
-            
-          <button @click="sendmessage" >Send</button>
-          <button @click="ShowChatBoard = !ShowChatBoard" >Show Board</button>
-          </div>          
-        </div>
-      </div>
-    </div>
+      </v-footer>
+      <LiveChat :messages="messages" sheet='true' />
+    
+    
   </div>
+    
+      
+    
+      
+        
+     
+     
+                 
+        
 </template>
 
 <script>
-import ChessBoardDisplay from '@/components/MarawanComponents/ChessBoard/ChessBoardDisplay'
+// import {EventBus} from "@/main.js"
+import ChessBoardDisplay from '@/components/MobileComponents/ChessBoardDisplay'
+import LiveChat from "./LiveChatp"
+import StockFish from "./StockFish"
+// import Chat from "@/components/MarawanComponents/LiveChat.vue"
 // import ChessBoardInput from "@/components/MarawanComponents/ChessBoard/ChessBoardInput"
 import {EventBus} from "@/main.js"
 import firebase from "firebase"
@@ -49,11 +74,17 @@ var username ;
 export default {
   components:{
     ChessBoardDisplay,
+    LiveChat,
+    StockFish
+    // Chat
     // ChessBoardInput,
   },
   
   data(){
     return{
+      ShowPlaybtn : false,
+      e : EventBus,
+      sheet:false,
       uid : null ,
       room : null,
       message: null,
@@ -65,6 +96,9 @@ export default {
     }
   },
    async mounted(){
+     EventBus.$on("SendChatMassage",(e)=>{
+       this.sendmessage(e)
+     })
      setTimeout(() => {this.Mounted = true}, 1000)
           iceServer = {}
        let self = this
@@ -153,7 +187,11 @@ export default {
   ]} /* Sample servers, please use appropriate ones */
 })
     console.log(mypeer)
-    socket = await io('https://livechessbulbdd.herokuapp.com')
+    socket = await io("https://livechessbulbdd.herokuapp.com")
+    console.log( "socket Connection", socket)
+    // if(!socket.connected){
+    //   socket =  io("https://livechessbulbdd.herokuapp.com")
+    // }
     await socket.emit('joined-room',this.room, userid)
     await mypeer.on('call',async call=>{
         console.log('fdwd')
@@ -172,6 +210,7 @@ export default {
   }).catch(() => {
     console.log('notplaying ')
     vv.setAttribute("controls","controls")
+    this.ShowPlaybtn = true
     // Autoplay was prevented.
     // Show a "Play" button so that user can start playback.
   });
@@ -181,130 +220,38 @@ export default {
     },e =>{console.log(e)});
      socket.on('chat-message', data => {
       this.messages.push(data)
+      EventBus.$emit("NewChatMassage",data)
       console.log(data)
       })
      socket.on('chess-move', data => {
       EventBus.$emit('displayboardfen',data)
+      EventBus.$emit('newfen',data)
       console.log(data)
       })
      socket.on('HideOrShowTheEngine', data => {
       this.ShowOrhideEngine = data ; 
       })
     },
-       sendmessage(){
-      if(socket && this.message != '' ){
-        socket.emit('send-chat-message', {message : this.message, name : username})
-        this.messages.push({message : this.message, name : username})
-        this.message = ''
+       sendmessage(e){
+      if(socket && e != '' ){
+        socket.emit('send-chat-message', {message : e, name : username})
+        EventBus.$emit("NewChatMassage",{message : e, name : username})
+        // this.messages.push()
+        // this.message = ''
       }
      
+    },
+    palyvideo(){
+      var vv =  document.getElementById('fffd')
+      vv.play()
+      this.ShowPlaybtn = false
     }
   },
   
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
-.Messages{
-  height: 82%;
-  /* background-color: green; */
-  overflow-y: scroll;
-  overflow-wrap: break-word;
-}
-.sendmessage{
-  height: 10%;
-  /* width: 90%;
-  display: flex;
-  justify-content: space-between; */
-  
-  /* background-color: red; */
-}
-#inputchat{
-  position: relative;
-  height: 22px;
-  width: 400px;
-}
-.sendmessage input{
-  
-   font-family: "Raleway", sans-serif;
-  font-weight: lighter;
-  border: 1px solid #cac7c7;
-  border-radius: 12px;
-  padding-left: 5px;
-  height: 22px;
-  font-size: 1vw;
-  outline: none;
-  width: 400px;
-  overflow-wrap: break-word;
-}
-p{
-  margin: 5px 0px 5px 10px;
-  font-family: 'QuickSand', sans-serif;
-  font-weight: bold;
-  color: black;
-}
-button{
-		height: 30px;
-		width: 75px;
-		border: none;
-		outline: none;
-		border-radius: 1.2rem;
-		font-size: 0.9rem;
-		font-family: 'Raleway', sans-serif;
-		background-color: #022A68;
-		color: white;
-	}
-#SmallHeader{
-  border-bottom: 3px solid white;
-  font-size: 1.3rem;
-}
-h2{
-  margin: 2px 0px 10px 2px;
-  font-family: 'Raleway', sans-serif;
-  font-weight: 600;
-  color: black;
-  font-size: 1.7rem;
-}
-.Productive{
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  background-color: white;
-  overflow-x: hidden;
-}
-.ChessBoard{ 
-  padding-top: 2px;
-  padding-left: 3px; 
-  width: 49%;
-  /* background-color: tomato; */
-  background-color:  #00112c;
-}
-.CourseStream{
-  display: flex;
-  flex-direction: column;
-  width: 51%;
-  /* background-color: turquoise; */
-}
-.VideoPlayer{
-  height: 55%;
-  /* background-color:violet; */
-  /* border-bottom: 3px solid grey; */
-}
-.CourseData{
-  display: flex;
-  height: 45%;
-  width: 100%;
-  /* background-color: yellowgreen; */
-}
-.Chat{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color:#1DACA8 ;
-  border-radius: 10px;
-  overflow: auto;
-  /* background-color: aqua; */
-}
 
 </style>
