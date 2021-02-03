@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import LiveCard from "../MobileComponents/LiveCard";
+import LiveCard from "./Marwan/LiveCardForAdmin";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {

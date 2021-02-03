@@ -8,7 +8,7 @@
         <text id="Chessbulb" transform="translate(0 32)" font-size="32" font-family="Quicksand-Regular, Quicksand"><tspan x="0" y="0">Chessbulb</tspan></text>
       </svg> -->
     <!-- </v-app-bar-title> -->
-    <v-app-bar color="white px-0 mx-0" flat>
+    <v-app-bar dense color="white px-0 mx-0" flat>
       <v-tabs
         centered
         color="white"

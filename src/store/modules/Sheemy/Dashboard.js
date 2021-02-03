@@ -30,15 +30,17 @@ const actions = {
     }
   },
   async FetchLiveCardDataForDashboard({ state }) {
+    console.log("live Sa")
     state.LiveSessions = [];
     var db = firebase.firestore();
     await db
-      .collection("Lives")
+      .collection("Lives").where('AcademyId', '==', state.MyAcademyData.AcademyId)
       .get()
       .then(snap => {
         snap.forEach(doc => {
           if (doc.data().AcademyId == state.MyAcademyData.AcademyId) {
             state.LiveSessions.push(doc.data());
+            console.log("live Sa")
           }
         });
       });
@@ -63,7 +65,7 @@ const actions = {
     console.log("Hey wassup: " + state.HandlerID);
     var db = firebase.firestore();
     await db
-      .collection("Academies")
+      .collection("Academies").where("OwnerId","==",state.HandlerID)
       .get()
       .then(snap => {
         snap.forEach(doc => {
