@@ -27,7 +27,7 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn fab text>
+          <v-btn @click="ShowBoard" fab text>
             <v-icon>
               fa-chess-board
             </v-icon>
@@ -49,6 +49,7 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+      <SmallBoard :pos="LiveBoardPos"/>
     </v-bottom-sheet>
 
     <!-- <h2 id="SmallHeader">Chat</h2>
@@ -68,10 +69,13 @@
 
 <script>
 import { EventBus } from "../../main";
-
+import SmallBoard from "./SmallBoardChat/SmaillBoard"
 // import { EventBus } from "../../main";
 
 export default {
+  components:{
+    SmallBoard
+  },
   // prop:["messages"],
   // computed:{
   //     massa:function(){
@@ -80,17 +84,23 @@ export default {
   // },
   data() {
     return {
+      e : EventBus,
       sheet: false,
       messages: [],
-      ChatMassage: ""
+      ChatMassage: "",
+      LiveBoardPos: null
     };
   },
   mounted() {
+    console.log("Chat is Mounted")
     EventBus.$on("ShowLiveChat", () => {
       this.sheet = true;
     });
     EventBus.$on("NewChatMassage", e => {
       this.messages.push(e);
+    });
+    EventBus.$on("displayboardfen", e => {
+      this.LiveBoardPos = e
     });
   },
   methods: {
@@ -98,6 +108,9 @@ export default {
       //console.log("ddddddddddddddddddd")
       EventBus.$emit("SendChatMassage", this.ChatMassage);
       this.ChatMassage = "";
+    },
+    ShowBoard(){
+      EventBus.$emit('ShowSmallBoard',this.LiveBoardPos)
     }
   }
 };

@@ -47,7 +47,7 @@
           ></v-textarea>
         </v-row>
         <v-row justify="center" align="center">
-          <v-btn light @click="validate" >
+          <v-btn light @click="addlive" >
             Submit
             
           </v-btn>
