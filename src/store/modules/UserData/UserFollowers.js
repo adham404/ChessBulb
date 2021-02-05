@@ -23,7 +23,8 @@ const state = {
   IfUsersTillTheSearchEngineWorksFineFetched: false,
   VisitorProfileData: "",
   UserListCardData: [],
-  CurrentVisitorProfileId: ""
+  CurrentVisitorProfileId: "",
+  IamVisitingSomeOneProfile:false
 };
 
 const getters = {
@@ -34,7 +35,9 @@ const getters = {
       ? state.UsersTillTheSearchEngineWorksFine.slice(7, 15)
       : [],
   GetCurrentVisitorProfileData: state => state.VisitorProfileData,
-  GetUsersDataforUserListCards: state => state.UserListCardData
+  GetUsersDataforUserListCards: state => state.UserListCardData,
+  GetVisitngFlagForUsers: state => state.IamVisitingSomeOneProfile,
+  GetVisitorProfileId : state => state.VisitorProfileData.UserId
 };
 
 const mutations = {
@@ -53,6 +56,9 @@ const mutations = {
     //     }
     // })
     state.VisitorProfileData = data;
+  },
+  SetProfileVisitingWatcher:(state,data) => {
+    state.IamVisitingSomeOneProfile = data
   },
   UserFollowDataIsFetched: state => {
     state.IsUserFollowDataFetched = true;

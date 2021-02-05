@@ -153,7 +153,7 @@ const actions = {
     var StorageRef = firebase.storage().ref();
     //Remove Old Photo From Cloud Storage if it exists
     dispatch("RemoveProfilePic");
-
+  
     // Upload New One
     state.ProfilePicPath = photodata.Url;
     var db = firebase.firestore();
