@@ -9,13 +9,6 @@
           width="150"
           rounded="lg"
           elevation="4"
-           @click="
-              () => {
-                $router.push({
-                  path: `/Snapshots`,
-                });
-              }
-            "
         >
           <v-icon class="ml-13 mt-12" size="50" color="white">
             fa-plus
