@@ -4,7 +4,7 @@ accepet a file type (15min) //DONE upload file to firebase (3min)
 <template>
   <div>
     <input type="file" ref="pgninput" accept=".pgn,.txt" style="display:none" />
-    <button @click="chossfile">Upload Pgn</button>
+    <v-btn rounded @click="chossfile">Upload Pgn</v-btn>
   </div>
 </template>
 

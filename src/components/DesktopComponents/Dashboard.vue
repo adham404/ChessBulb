@@ -2,7 +2,7 @@
   <div class="mt-5">
     <v-row justify="space-around">
       <v-col cols="2">
-        <v-sheet rounded="lg" elevation="4" height="600">
+        <v-sheet rounded="lg" elevation="4" height="620">
           <v-avatar size="100" cols="2" class="ml-16 mt-2">
             <img
               :src="
@@ -77,11 +77,11 @@
               Upload cover photo
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn @click="Remove(true)" v-if="!ToUpdatePic" class="text-capitalize primary" rounded elevation="2">
+            <v-btn @click="Remove(true)" v-if="!ToUpdatePic" class="text-capitalize primary mt-2" rounded elevation="2">
               Remove Profile
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn @click="Remove(false)" v-if="!ToUpdatePic" class="text-capitalize primary" rounded elevation="2">
+            <v-btn @click="Remove(false)" v-if="!ToUpdatePic" class="text-capitalize primary mt-2" rounded elevation="2">
               Remove Cover
             </v-btn>
           </v-col>
@@ -102,14 +102,14 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col>
+          <v-col v-if="false">
             <v-sheet cols="5" rounded="lg" height="100" class="px-2">
               <p class="text-h6">Monthly Income</p>
 
               <p class="text-subtitle-1">200 Egp</p>
             </v-sheet>
           </v-col>
-          <v-col>
+          <v-col v-if="false">
             <v-sheet cols="5" rounded="lg" height="100" class="px-2">
               <p class="text-h6">Number of Members</p>
 
@@ -125,7 +125,7 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="2" v-if="false">
         <v-sheet rounded="lg" height="500" class="px-2">
           <span class="text-h6">List of Members</span>
           <MemberList />

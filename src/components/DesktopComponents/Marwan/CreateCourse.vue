@@ -1,23 +1,112 @@
 <template>
-  <div class="Productive">
+  <div>
     <CourseForm  />
     <!-- <div    v-if="!form" > -->
-
-    <div v-if="Mounted " class="ChessBoard">
-      <ChessBoardInput id="1" />
-    </div>
-    <div  class="CourseStream">
-      <div class="VideoPlayer">
-        <VideoRecording />
-      </div>
-      <div class="CourseData">
-        <TimeStampsRecording class="TimeStamps" />
-        <StockFish />
-      </div>
-      <UploadPgn />
-      <PostCourse />
-    </div>
     <!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+    <v-row>
+      <v-col cols="6" align="center">
+        <v-row justify="center" class="mt-5">
+          <v-sheet width="80%">
+            <ChessBoardInput id="id"/>
+          </v-sheet>
+        </v-row>
+      </v-col>
+
+      <v-col cols="6">
+        <v-row>
+          <v-sheet height="280px" class="mt-8">
+           <VideoRecording />
+          </v-sheet>
+          
+        </v-row>
+        <v-row class = "mt-7">
+          <UploadPgn />
+          <PostCourse />
+          <v-btn v-if="!live" @click="checkandconnect" rounded>
+            <span class="text-subtitle2 text-capitalize">
+              Start Streaming
+            </span>
+          </v-btn>
+          <v-btn @click="remountStockFish" rounded class="text-subtitle-2 text-capitalize">Restart StockFish</v-btn>
+          <v-btn cols="2" @click="emitcontrol('back')">
+            <v-icon>
+              fa-caret-left
+            </v-icon>
+          </v-btn>
+          <v-btn cols="2" @click="emitcontrol('next')">
+            <v-icon>
+              fa-caret-right
+            </v-icon>
+          </v-btn>
+        </v-row>
+        <v-row>
+          <v-col class="px-0">
+            <v-row>
+              <StockFish ></StockFish>
+            </v-row>
+            <div style="height: 250px;">
+              <TimeStampsRecording  />
+            </div>
+            
+
+
+            <!-- <v-card width="90%">
+              <v-card-title height="20px" class="py-0">
+                <v-row class="my-1">
+                    <span class="text-h6">Chat Room</span>
+                </v-row>
+              </v-card-title>
+              <v-divider></v-divider>
+              <v-card-text class="mt-3" >
+                <div style = "overflow-y: scroll; height: 100px" v-chat-scroll="{ always: false, smooth: true }">
+                  <p v-for="(i, index) in messages" :key="index">
+                    {{ i.name }} : {{ i.message }}
+                  </p>
+                </div>
+              </v-card-text>
+              <v-divider></v-divider>
+              <v-card-actions>
+
+                <v-text-field
+                  rounded
+                  background-color="grey lighten-2"
+                  width="300px"
+                  type="text"
+                  browser-autocomplete="new-password"
+                  v-model="message"
+                  v-on:keyup.enter="sendmessage"
+                >
+                </v-text-field>
+                <v-btn fab text @click="sendmessage">
+                  <v-icon>
+                    fa-paper-plane
+                  </v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-card> -->
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+
+
+
+
+
+
+
+
+
   </div>
 </template>
 
@@ -71,6 +160,10 @@ export default {
   destroyed() {
     EventBus.$emit("Toggle", false);
   },
+  emitcontrol(data) {
+      EventBus.$emit('Control',data)
+			console.log(data)
+    },
   //TODO Assign Data Properties in the vue data object which are (CourseData(O), ChessPGN(s)) (2min)
   //TODO define UploadPgn function (1min)
   //FIXME Upload PGN file from the user's internal storage and validate it and assign it to (ChessPGN) and send it to [ChessBoard] (20min)

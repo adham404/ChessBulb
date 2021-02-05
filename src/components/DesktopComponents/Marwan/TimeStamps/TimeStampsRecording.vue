@@ -142,6 +142,7 @@ h2 {
 }
 .TimeStamps {
   width: 100%;
+  height: 100%;
   background-color: #0487af;
   border-radius: 10px;
   overflow: auto;

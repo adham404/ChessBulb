@@ -46,12 +46,12 @@
         ></v-textarea>
       </v-col>
       <v-row justify="space-around">
-        <v-btn v-if="!EditFlag" @click="Edit">Edit</v-btn>
+        
         <v-btn v-if="EditFlag" @click="Save">Save</v-btn>
         <v-btn v-if="EditFlag" @click="DiscardEdit">Discard</v-btn>
       </v-row>
     </v-form>
-    <v-btn v-if="!UpdatePassFlag" @click="UpdatePass">Update Pass</v-btn>
+    
     <v-form v-if="UpdatePassFlag">
       <label>Enter New Pass</label>
       <v-text-field type="password" v-model="NewPass"></v-text-field>
@@ -60,7 +60,12 @@
       <v-btn @click="SaveNewPass">Save</v-btn>
       <v-btn @click="DiscardPass">Discard</v-btn>
     </v-form>
-    <v-btn @click="SignOut">Sign Out</v-btn>
+    <v-row class="mt-8 mb-5" justify="space-around">
+      <v-btn @click="SignOut">Sign Out</v-btn>
+      <v-btn v-if="!EditFlag" @click="Edit">Edit</v-btn>
+      <v-btn v-if="!UpdatePassFlag" @click="UpdatePass">Update Pass</v-btn>
+    </v-row>
+    
   </v-sheet>
 </template>
 

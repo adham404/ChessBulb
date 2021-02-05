@@ -139,13 +139,7 @@
         </v-card-title>
 
         <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          I agree that in order for me to be an academy owner or an instructor I must be above 13 years old and have been verified by the operations team of chessbulb.com any access to the course creating and live session dashboard without the permission and verification of the chessbulb.com team will be considered unauthorized access and the account will be deleted immediatly.
         </v-card-text>
 
         <v-divider></v-divider>

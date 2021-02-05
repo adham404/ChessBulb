@@ -3,10 +3,10 @@
     <div><video id="recorder" ref="recorder"></video></div>
     <p>{{ status }}</p>
     <div>
-      <button id="btnstart" v-on:click="startrecord">START RECORD</button>
-      <button id="btnstop" v-on:click="stoprecord">STOP</button>
-      <button id="btnstop" v-on:click="puserecording">PUSE</button>
-      <button id="btnstop" v-on:click="resumerecording">RESUME</button>
+      <v-btn rounded id="btnstart" v-on:click="startrecord">START RECORD</v-btn>
+      <v-btn rounded id="btnstop" v-on:click="stoprecord">STOP</v-btn>
+      <v-btn rounded id="btnstop" v-on:click="puserecording">PaUSE</v-btn>
+      <v-btn  rounded id="btnstop" v-on:click="resumerecording">RESUME</v-btn>
     </div>
   </div>
 </template>

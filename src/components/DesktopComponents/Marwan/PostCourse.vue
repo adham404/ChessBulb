@@ -6,7 +6,7 @@ samp objects to the firestore doc (10min) //TODO add the video link and corse
 data in firebase storge(2min) //TODO show confirmation massage(2min)
 <template>
   <div>
-    <button @click="postcourse" ref="button">Post Course</button>
+    <v-btn rounded @click="postcourse" ref="button" class="white">Post Course</v-btn>
     <p>{{ uplaoading }}</p>
   </div>
 </template>
