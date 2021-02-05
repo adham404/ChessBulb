@@ -23,7 +23,7 @@
     "@stripe/stripe-js": "^1.11.0",
     "algoliasearch": "^4.8.4",
     "chess.js": "^0.11.0",
-    "chessboardjs-vue": "^1.0.7",
+    "chessboardjs-vue": "^1.0.9",
     "core-js": "^3.6.5",
     "durations": "^3.4.2",
     "firebase": "^8.2.3",
