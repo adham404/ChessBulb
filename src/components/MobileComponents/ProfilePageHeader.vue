@@ -77,7 +77,7 @@
 <script>
 import { EventBus } from "@/main.js";
 import { mapActions, mapGetters } from "vuex";
-
+import firebase from "firebase"
 export default {
   data: () => ({
     links: ["Academies", "Courses", "Posts", "Explore", "Profile Settings"],
@@ -110,7 +110,9 @@ export default {
     },
     async FetchMyData() {
       //Fetch User All Data
-      await this.fetchUserInfo();
+      await firebase.auth().onAuthStateChanged(async(user)=>{
+        if(user){
+           await this.fetchUserInfo();
       //Assign The Current Data to the Current Data Object
       this.CurrentUserData = this.GETUserFULLDATA;
       //Fetch User Profile Pic and Show it If exists
@@ -119,6 +121,9 @@ export default {
       this.GetImgUrl();
       //Fetch User Following Data
       await this.fetchUserFollowingData();
+        }
+      })
+     
       this.links = [
         "Academies",
         "Courses",

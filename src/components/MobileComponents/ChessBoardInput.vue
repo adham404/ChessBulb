@@ -1,6 +1,6 @@
 <template>
   
-    <div  :id="id"  style="100%" ></div>
+    <div  :id="id"   ></div>
 
 </template>
 

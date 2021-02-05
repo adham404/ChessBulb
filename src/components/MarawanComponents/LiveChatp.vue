@@ -1,30 +1,13 @@
 <template>
-  <div class="Chat">
-    <v-bottom-sheet v-model="sheet" scrollable>
-      <v-card min-height="40vh" max-height="60vh">
+  <div  class="Chat">
+    <v-bottom-sheet  v-model="sheet" scrollable>
+      <v-card  min-height="40vh" max-height="60vh">
         <!-- <v-card-title>Chat</v-card-title> -->
-        <v-card-text>
-          <v-row
-            class="mt-4"
-            no-gutters
-            justify="start"
-            v-for="(i, index) in messages"
+        <v-card-text  id="LiveChat" style=" scroll-behavior: smooth;"  >
+          <ChatMassage v-for="(i, index) in messages"
             :key="index"
-          >
-            <v-col class="mt-2 pr-1" cols="4">
-              {{ i.name }}
-            </v-col>
-            <v-col cols="7">
-              <v-sheet
-                color="grey lighten-2"
-                class="pa-2 rounded-xl"
-                max-width="350px"
-              >
-                {{ i.message }}
-              </v-sheet>
-            </v-col>
-          </v-row>
-        </v-card-text>
+            :text="i" />
+        </v-card-text> 
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn @click="ShowBoard" fab text>
@@ -39,7 +22,7 @@
             background-color="grey lighten-2"
             width="300px"
             type="text"
-            browser-autocomplete="new-password"
+            
           >
           </v-text-field>
           <v-btn @click="SendMassage" fab text>
@@ -68,13 +51,15 @@
 </template>
 
 <script>
+import ChatMassage from "./ChatMassage"
 import { EventBus } from "../../main";
 import SmallBoard from "./SmallBoardChat/SmaillBoard"
 // import { EventBus } from "../../main";
 
 export default {
   components:{
-    SmallBoard
+    SmallBoard,
+    ChatMassage
   },
   // prop:["messages"],
   // computed:{
@@ -98,6 +83,16 @@ export default {
     });
     EventBus.$on("NewChatMassage", e => {
       this.messages.push(e);
+      setTimeout(()=>{
+        var element = window.document.body.querySelector("#LiveChat");
+        console.log(element)
+        if(element){
+        //console.log(element.scrollHeight)
+        element.scrollTop = element.scrollHeight*2;
+        }
+      },100)
+      
+      
     });
     EventBus.$on("displayboardfen", e => {
       this.LiveBoardPos = e

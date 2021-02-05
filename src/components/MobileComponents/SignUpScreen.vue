@@ -79,6 +79,7 @@
       <v-row justify="center">
         <v-btn
           class="mb-5 primary text-h6"
+          :loading = "bottomLodding"
           cols="12"
           x-large
           width="90%"
@@ -106,6 +107,7 @@
             <!-- Login Details are missing! -->
           </v-card-text>
           <v-btn
+          
             color="primary"
             @click="dialog = false"
             flat
@@ -185,7 +187,8 @@ export default {
       show1: false,
       show2: false,
       dialog: false,
-      checkbox: false
+      checkbox: false,
+      bottomLodding: false
     };
   },
   mounted() {
@@ -201,12 +204,14 @@ export default {
       //DONE use firebase auth to sign up user account using the following data properties (FirstName, LastName, UserEmail, UserPassword) (20MIN)
       if (this.ValidateInput()) {
         // alert("Sign Up Succesfull");
+        this.bottomLodding = true
         const auth = firebase.auth();
         await auth
           .createUserWithEmailAndPassword(this.UserEmail, this.UserPassword)
           .catch(error => {
             this.dialog = true;
             this.SignUpError = error.message;
+             this.bottomLodding = false
             // alert(error.message);
           });
         if (!this.dialog) {
@@ -240,7 +245,7 @@ export default {
         .catch(error => {
           console.log("Error is ", error);
         });
-      this.$router.push("/Home");
+      this.$router.push("/");
 
       EventBus.$emit("LoggedIn", true);
     },

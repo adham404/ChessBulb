@@ -9,19 +9,11 @@
                       </v-icon>
                   </v-btn>
               </v-col>
-              <v-col offset-md="4" cols="4" class="mr-3" >
-                  <v-btn @click="SendInChat" class="mt-2" rounded  >
-                      Send
-                  <v-icon right  >
-                      fa-paper-plane
-                  </v-icon>
-                  
-              </v-btn>
-              </v-col>
+              
           </v-row>
           <v-row no-gutters class="ma-auto">
               <v-col>
-              <ChessBoardInput style="width:80vw" multi= true class="ml-4 my-3" id="ugv8gvb8g" />
+              <ChessBoardDisplay style="width:80vw" multi= true class="ml-4 my-3" id="ugv8gvb8g" />
 
               </v-col>
           </v-row>
@@ -53,8 +45,8 @@
 </template>
 
 <script>
-import ChessBoardInput from "@/components/MobileComponents/ChessBoardInput"
-import SmollBoard from "./ChatinputBoard"
+import ChessBoardDisplay from "@/components/MobileComponents/ChessBoardDisplay"
+import SmollBoard from "./displaychess"
 import {EventBus} from "@/main"
 import Chess from "chess.js"
 var logic 
@@ -64,47 +56,48 @@ export default {
             DisplayedData: "",
             id :"ugv8gvb8g" ,
             ShowBoard:false,
-            CurrentFen : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+            CurrentPgn : ""
         }
     },
     components:{
-        ChessBoardInput,
+        ChessBoardDisplay,
     },
     async mounted(){
         let self = this
         console.log("ChatBoard is Mounted")
         // logic= await SmollBoard("rnbqkbnr/p1pp1ppp/8/1p2p3/3P1P1P/8/PPP1P1P1/RNBQKBNR b KQkq f3 0 3")
         //await EventBus.$emit('boradfen',logic.TheFen())
-        EventBus.$on("ShowSmallBoard" , async (e)=>{
+        EventBus.$on("ShowSmallBoardDisplay" , async (e)=>{
             self.ShowBoard =true
             //console.log(e)
-            logic= await SmollBoard(e||this.CurrentFen)
-            await EventBus.$emit('boradfen',logic.TheFen())
+            logic= await SmollBoard(e)
+            await EventBus.$emit('displayboardfenbyid',logic.getFEN(),"ugv8gvb8g")
+            self.DisplayedData = self.RemoveHeaders(e)
         })
-        EventBus.$on("newmoveInMulti",async data=>{
-            console.log("gggggggg",data.lastmove)
-            if(data.id == self.id){
-               await logic.PlayMove(data.lastmove)
-               // console.log(await logic.TheFen())
-                //EventBus.$emit('boradfen',logic.TheFen())
-                self.DisplayedData =await  self.RemoveHeaders(logic.ThePgn())
-                // console.log(logic.ThePgn())
-                // console.log(self.RemoveHeaders(logic.ThePgn()))
-            }
-        })
+        // EventBus.$on("newmoveInMulti",async data=>{
+        //     console.log("gggggggg",data.lastmove)
+        //     if(data.id == self.id){
+        //        await logic.PlayMove(data.lastmove)
+        //        // console.log(await logic.TheFen())
+        //         //EventBus.$emit('boradfen',logic.TheFen())
+        //         self.DisplayedData =await  self.RemoveHeaders(logic.ThePgn())
+        //         // console.log(logic.ThePgn())
+        //         // console.log(self.RemoveHeaders(logic.ThePgn()))
+        //     }
+        // })
     },
     beforeDestroy(){
-        EventBus.$off("newmoveInMulti")
-        EventBus.$off("ShowSmallBoard")
+        //EventBus.$off("newmoveInMulti")
+        EventBus.$off("ShowSmallBoardDisplay")
     },
     methods:{
         async Undo(){
-            await logic.Undo()
-            await EventBus.$emit('boradfen',logic.TheFen())
+            await logic.PreviousMove()
+            await EventBus.$emit('displayboardfenbyid',logic.getFEN(),"ugv8gvb8g")
         },
         async Redo(){
-            await logic.Redo()
-            await EventBus.$emit('boradfen',logic.TheFen())
+            await logic.NextMove()
+            await EventBus.$emit('displayboardfenbyid',logic.getFEN(),"ugv8gvb8g")
         },
         RemoveHeaders(pgn){
             const engine = new Chess();
@@ -122,10 +115,7 @@ export default {
             }
             
         },
-        SendInChat(){
-            EventBus.$emit("SendChatMassage",logic.ThePgn())
-            this.ShowBoard=false
-        }
+        
     }
 
 }

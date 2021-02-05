@@ -7,7 +7,7 @@
         </v-col>
       </v-row>
       <v-row class="ma-0" no-gutters justify="space-around">
-        <video style="width:70vw" class="VideoPlayer" id="fffd"></video>
+        <video style="max-hight:30vh" class="VideoPlayer" id="fffd"></video>
         <v-btn v-if="ShowPlaybtn" @click="palyvideo">Play</v-btn>
       </v-row>
       <v-row no-gutters>
@@ -74,6 +74,15 @@ export default {
     };
   },
   async mounted() {
+    // var element = window.document.body.querySelector("#app");
+    //     console.log(element)
+    //     if(element){
+    //     console.log(element.scrollHeight)
+    //     element.scrollTop = element.scrollHeight*2;
+    //     }
+    // EventBus.$on("SendMsgInChat",(e)=>{
+
+    // })
     EventBus.$on("SendChatMassage", e => {
       this.sendmessage(e);
     });
@@ -141,6 +150,7 @@ export default {
       // console.log('a7a a7a a7a')
     }
     EventBus.$off("Link");
+    EventBus.$off("SendChatMassage");
   },
   methods: {
     async connect() {

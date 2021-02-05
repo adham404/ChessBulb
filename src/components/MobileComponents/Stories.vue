@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div height="300" class="Container">
-      <div class="mt-3 Stories">
+    <div height="150" class="Container">
+      <div class="mt-1 Stories">
         <v-sheet
+        @click="$router.push('/AddSnapshot')"
           class="primary mt-2 ml-2"
-          height="200"
+          height="170"
           width="150"
           rounded="lg"
           elevation="4"
@@ -33,14 +34,14 @@
             elevation="4"
             class=" mt-2 ml-2"
             width="150"
-            height="200px"
+            height="170px"
           ></v-skeleton-loader>
         </v-sheet>
         <div class="Story">
           <v-sheet
             class="primary mt-2 ml-2"
-            height="200"
-            width="200"
+            height="170"
+            width="170"
             rounded="lg"
             elevation="4"
             v-for="(story, index) in getFirst7Stories"
@@ -53,15 +54,15 @@
                 :startpos="index"
                 :chessid="story.StoryID"
               ></StoryCard>
-              <v-row justify="center" align="center" class="pt-2">
-                <v-avatar size="30" class="mb-0">
+              <v-row  justify="start" align="center" class="pt-2">
+                <v-avatar left size="30" class="ml-4">
                   <img
                     src="img\icons\pexels-pixabay-220453.jpg"
                     alt=""
                     style="object-fit: cover"
                   />
                 </v-avatar>
-                <p class="StoryName mb-0 ml-1 text-caption">
+                <p style="font-size: 9px" class="StoryName mb-0 ml-1 ">
                   {{ story.UserName ? story.UserName : "" }}
                 </p>
               </v-row>
@@ -72,7 +73,7 @@
       <v-btn
         width="95%"
         @click="$router.push('/Snapshots')"
-        class="ml-3 text-subtitle-1 font-weight-bold text-capitalize"
+        class="ml-3 mt-0 text-subtitle-1 font-weight-bold text-capitalize"
         >Open all snapshots</v-btn
       >
     </div>
@@ -89,13 +90,21 @@ export default {
       lodding: true
     };
   },
+  watch:{
+    getFirst7Stories:function(){
+      console.warn("getFirst7Stories",this.getFirst7Stories.length)
+      if( this.getFirst7Stories.length == 7 || this.getExpectedStories == 0){
+        this.lodding = false
+      }
+    }
+  },
   // data: () => ({
   // }),
   components: {
     StoryCard
   },
   computed: {
-    ...mapGetters(["getStories", "getFirst7Stories"])
+    ...mapGetters(["getStories", "getFirst7Stories","getExpectedStories"])
   },
   methods: {
     ...mapActions(["fetchStories", "SetStoriesIndexTo"])
@@ -113,8 +122,15 @@ export default {
 
         console.log("story header is created");
         await self.fetchStories();
-        self.lodding = await false;
-      } else if (self.getStories.length > 0) {
+        if(self.getFirst7Stories && self.getStories.length < 7){
+          self.lodding = await false;
+        }
+        // else{
+        //   //self.lodding = false
+        // }
+        
+      } 
+      else if (self.getStories.length > 0) {
         self.lodding = await false;
       }
     });
@@ -124,22 +140,22 @@ export default {
 
 <style lang="css" scoped>
 ::v-deep .v-skeleton-loader__image {
-  height: 150px;
+  height: 120px;
 }
 
 .Container {
-  height: 270px;
+  height: 225px;
   width: 100%;
   background-color: white;
 }
 .Story {
   width: 50px;
-  height: 220px;
+   height: 185px;
   display: flex;
 }
 .Stories {
   width: 100%;
-  height: 220px;
+  
   overflow-x: scroll;
   background-color: white;
   display: flex;
@@ -159,8 +175,10 @@ a {
 }
 .ProfileImage {
   height: 130px;
-  width: 150px;
+  width: 120px;
+  
   border-radius: 5px;
   margin-left: 5px;
+  margin-right: 5px;
 }
 </style>
