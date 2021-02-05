@@ -64,7 +64,7 @@ export default {
   props: ["FollowerData"],
   methods: {
     ...mapActions(["FollowThisProfile", "UnFollowThisProfile"]),
-    ...mapMutations(["SetCurrentVisitorProfileId", "SetVisitorProfileData"]),
+    ...mapMutations(["SetCurrentVisitorProfileId", "SetVisitorProfileData","SetProfileVisitingWatcher"]),
     emitevent(link) {
       EventBus.$emit("ChangeComponent", link);
     },
@@ -77,6 +77,7 @@ export default {
       console.log(this.FollowerData.UserId);
       // await this.SetCurrentVisitorProfileId(this.FollowerData.UserId);
       await this.SetVisitorProfileData(this.FollowerData);
+      this.SetProfileVisitingWatcher(true);
       EventBus.$emit("HiIAmAVisitor");
     },
     UnFollow() {

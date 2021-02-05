@@ -193,7 +193,7 @@ export default {
     //Fetch the Course Data
     console.log("Course ID: " + this.$route.query.CourseID);
     //Fetch Course Purchase Validaty
-    this.CanIPLayThisCourse(this.GetListOfCourses[this.order].PriceId);
+    this.CanIPLayThisCourse(this.$route.query.CourseID);
     this.SetTheOrderOfThisCourseAccordingToItsID(this.$route.query.CourseID);
     this.order = this.GetTheOrderOfThisCourseInTheList;
     //Fetch The Course Reviews

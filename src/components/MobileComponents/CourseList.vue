@@ -13,7 +13,6 @@
         fa-search
       </v-icon>
     </v-row>
-
     <v-sheet
       class="white "
       height="100"
@@ -47,12 +46,10 @@ import SearchEngine from "../MarawanComponents/SearchEngine";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { EventBus } from "../../main";
 import firebase from "firebase";
-
 export default {
   mounted() {
     //Fetch Courses List
     // this.FetchAllCourses();
-
     //Recieve Search Signal
     EventBus.$on("TheSearchResult", ids => {
       console.log("Hey:  " + ids);

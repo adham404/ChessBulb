@@ -76,7 +76,7 @@
 
 <script>
 import { EventBus } from "@/main.js";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   data: () => ({
@@ -86,14 +86,19 @@ export default {
     FollowingState: false,
     Url: ""
   }),
+  beforeDestroy()
+  {
+    EventBus.$off("ChangeComponent");
+  },
   methods: {
     ...mapActions([
       "fetchUserInfo",
       "fetchProfilePic",
       "fetchUserFollowingData",
       "FollowThisProfile",
-      "UnFollowThisProfile"
+      "UnFollowThisProfile",
     ]),
+    ...mapMutations(['SetProfileVisitingWatcher']),
     emitevent(link) {
       EventBus.$emit("ChangeComponent", link);
     },
@@ -126,15 +131,17 @@ export default {
         "Explore",
         "Profile Settings"
       ];
+      //Zero the Visitor's Data
+      this.SetProfileVisitingWatcher(false);
       this.emitevent("Academies");
       this.VisitorFlag = false;
     },
     Follow() {
-      this.FollowThisProfile(this.FollowerData.UserId);
+      this.FollowThisProfile(this.CurrentUserData.UserId);
       this.FollowingState = true;
     },
     UnFollow() {
-      this.UnFollowThisProfile(this.FollowerData.UserId);
+      this.UnFollowThisProfile(this.CurrentUserData.UserId);
       this.FollowingState = false;
     }
   },

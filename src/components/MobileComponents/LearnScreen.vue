@@ -2,7 +2,7 @@
   <div>
     <LearnScreenHeader />
     <keep-alive>
-      <component v-bind:is="component"></component>
+      <component :General="true" v-bind:is="component"></component>
     </keep-alive>
   </div>
 </template>

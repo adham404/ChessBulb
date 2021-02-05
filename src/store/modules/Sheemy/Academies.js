@@ -2,6 +2,8 @@ import firebase from "firebase";
 
 const state = {
   AllAcademies: [],
+  AcademyProfileUrl:"",
+  AcademyCoverUrl:"",
   AcademyProfileData: "",
   IsAllAcademiesDataFetched: false,
   ThisAcademyLiveCards: []
@@ -10,7 +12,9 @@ const state = {
 const getters = {
   GetAllAcademies: state => state.AllAcademies,
   GetAcademyDataProfile: state => state.AcademyProfileData,
-  GetAcademyLiveCards: state => state.ThisAcademyLiveCards
+  GetAcademyLiveCards: state => state.ThisAcademyLiveCards,
+  GetAcademmyProfileUrl: state => state.AcademyProfileUrl,
+  GetAcademmyCoverUrl: state => state.AcademyCoverUrl,
 };
 
 const mutations = {
@@ -33,6 +37,28 @@ const actions = {
           });
         });
       state.IsAllAcademiesDataFetched = true;
+    }
+  },
+  async FetchAcademyPhotos({state})
+  {      
+    var StorageRef = firebase.storage().ref();
+    var PicRef
+    if (state.AcademyProfileData.AcademyProfile) {
+      //Get Academy Profile First
+      PicRef = StorageRef.child(state.AcademyProfileData.AcademyProfile);
+      //fetch Downloadable url from Cloud Storage
+      await PicRef.getDownloadURL().then(url => {
+          state.AcademyProfileUrl = url;
+      });
+    }
+    if(state.AcademyProfileData.AcademyCover)
+    {
+      //Get Academy Profile First
+      PicRef = StorageRef.child(state.AcademyProfileData.AcademyCover);
+      //fetch Downloadable url from Cloud Storage
+      await PicRef.getDownloadURL().then(url => {
+          state.AcademyCoverUrl = url;
+      });
     }
   },
   async FetchAcademyProfileData({ state }, id) {

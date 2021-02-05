@@ -6,14 +6,18 @@
           lazy-src="@/assets/ChessAcademy.jpg"
           max-height="150"
           max-width="100%"
-          src="@/assets/ChessAcademy.jpg"
+          :src="
+          CurrentCoverUrl ? CurrentCoverUrl : GetCover()
+          "
         ></v-img>
       </v-row>
       <v-row class="mt-1 px-1 pb-1">
         <v-col>
           <v-avatar size="70" cols="2" class="mx-0 px-0">
             <img
-              src="img\icons\pexels-pixabay-220453.jpg"
+              :src="
+              CurrentProfileUrl ? CurrentProfileUrl : '/img/icons/pexels-pixabay-220453.jpg'
+              "
               alt=""
               style="object-fit: cover"
             />
@@ -55,15 +59,27 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters,mapActions } from "vuex";
 import { EventBus } from "@/main.js";
 export default {
   data: () => ({
-    links: ["About", "Live sessions", "Posts", "Courses"]
-  }),
+    links: ["About", "Live sessions", "Posts", "Courses"],
+    CurrentCoverUrl:"",
+    CurrentProfileUrl:""
+}),
+async mounted()
+{
+  await this.FetchAcademyPhotos();
+  this.CurrentCoverUrl = this.GetAcademmyCoverUrl
+  this.CurrentProfileUrl = this.GetAcademmyProfileUrl;
+},
   methods: {
+    ...mapActions(['FetchAcademyPhotos']),
     emitevent(link) {
       EventBus.$emit("ChangeComponent", link);
+    },
+    GetCover(){
+      return require("@/assets/ChessAcademy.jpg");
     },
     Enroll() {
       this.$router.push({
@@ -73,7 +89,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["GetAcademyDataProfile"])
+    ...mapGetters(["GetAcademyDataProfile","GetAcademmyProfileUrl","GetAcademmyCoverUrl"])
   }
 };
 </script>
