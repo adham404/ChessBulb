@@ -275,6 +275,7 @@ export default {
           this.LastName = "";
           this.Email = user.email;
           console.log("User Data is: ", user);
+          this.$router.push("/")
         })
         .catch(error => {
           // Handle Errors here.
