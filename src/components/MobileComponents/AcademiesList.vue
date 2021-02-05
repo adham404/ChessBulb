@@ -15,6 +15,7 @@
     </v-row> -->
 
     <SearchEngine SearchIndex="Academies" :ShowFilters="false"></SearchEngine>
+    <AcademyCardLodding v-if="GetAllAcademies.length == 0" />
     <AcademyCard
       v-for="(AcademyData, x) in GetAllAcademies"
       :AcademyData="AcademyData"
@@ -26,6 +27,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import AcademyCard from "@/components/MobileComponents/AcademyCard";
+import AcademyCardLodding from "@/components/MobileComponents/AcademyCardLoder";
 import SearchEngine from "../MarawanComponents/SearchEngine";
 import firebase from "firebase";
 import { EventBus } from "../../main";
@@ -33,7 +35,8 @@ import { EventBus } from "../../main";
 export default {
   components: {
     AcademyCard,
-    SearchEngine
+    SearchEngine,
+    AcademyCardLodding
   },
   data() {
     return {

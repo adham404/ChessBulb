@@ -56,6 +56,7 @@
           class="mb-5 primary text-h6"
           cols="12"
           x-large
+          :loading = "bottomLodding"
           width="90%"
           @click="Login"
           >Login</v-btn
@@ -156,7 +157,8 @@ export default {
       LoginError: "",
       ErrorMessage: "",
       UserID: "",
-      LoginCorrect: false
+      LoginCorrect: false,
+       bottomLodding : false
     };
   },
   //DONE define Login Function (1min)
@@ -167,6 +169,7 @@ export default {
     async Login() {
       this.LoginCorrect = this.Validate();
       if (this.LoginCorrect) {
+         this.bottomLodding = true
         //DONE use firebase Auth to login using the two data properties (UserEmail) and (UserPassword) (25min)
         const auth = firebase.auth();
         let self = this;
@@ -176,6 +179,7 @@ export default {
             this.dialog = true;
             this.LoginError = error.message;
             console.log(error.message);
+             this.bottomLodding = false
           });
         await auth.onAuthStateChanged(user => {
           if (user) {
@@ -188,6 +192,7 @@ export default {
           } else {
             // alert("");
             setTimeout(function() {
+               this.bottomLodding = false
               console.log("Working on it");
               this.dialog = true;
               this.LoginError = "Wrong Email entered or password";

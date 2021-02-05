@@ -5,7 +5,9 @@
         <v-sheet rounded="lg" elevation="4" height="600">
           <v-avatar size="100" cols="2" class="ml-16 mt-2">
             <img
-              src="img\icons\pexels-pixabay-220453.jpg"
+              :src="
+          CurrentProfileUrl ? CurrentProfileUrl : '/img/icons/pexels-pixabay-220453.jpg'
+              " 
               alt=""
               style="object-fit: cover"
             />
@@ -53,15 +55,34 @@
               </v-list>
             </v-card>
             <br />
-            <v-btn class="text-capitalize primary mb-2" rounded elevation="2">
+            <v-btn @click="UploadProfilePic" v-if="!ToUpdatePic" class="text-capitalize primary mb-2" rounded elevation="2">
               Upload Profile Photo
             </v-btn>
+            <v-btn @click="Save" v-if="ToUpdatePic" class="text-capitalize primary mb-2" rounded elevation="2">
+              Save
+            </v-btn>
+            <v-btn @click="Discard" v-if="ToUpdatePic" class="text-capitalize primary mb-2" rounded elevation="2">
+              Discard
+            </v-btn>
+            <input
+            @change="BrowsePhoto"
+            type="file"
+            enctype="multipart/form-data"
+            style="display: none"
+            accept="image/*"
+            ref="input1"
+           />
             <v-spacer></v-spacer>
-            <v-btn class="text-capitalize primary" rounded elevation="2">
+            <v-btn @click="UploadCover" v-if="!ToUpdatePic" class="text-capitalize primary" rounded elevation="2">
               Upload cover photo
             </v-btn>
-            <v-btn class="text-capitalize primary mt-2" rounded elevation="2" @click="SignOut">
-              Sign Out
+            <v-spacer></v-spacer>
+            <v-btn @click="Remove(true)" v-if="!ToUpdatePic" class="text-capitalize primary" rounded elevation="2">
+              Remove Profile
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn @click="Remove(false)" v-if="!ToUpdatePic" class="text-capitalize primary" rounded elevation="2">
+              Remove Cover
             </v-btn>
           </v-col>
         </v-sheet>
@@ -73,7 +94,9 @@
               lazy-src="@/assets/ChessAcademy.jpg"
               max-height="100"
               max-width="100%"
-              src="@/assets/ChessAcademy.jpg"
+              :src="
+              CurrentCoverUrl ? CurrentCoverUrl : GetCover()
+              "
               class="mb-1"
             ></v-img>
           </v-col>
@@ -124,6 +147,11 @@ import LiveForm from "@/components/DesktopComponents/Marwan/LiveForm.vue";
 export default {
   data: () => ({
     selectedItem: 1,
+    PicData:"",
+    ToUpdatePic:false,
+    PicType:"",
+    CurrentCoverUrl:"",
+    CurrentProfileUrl:"",
     items: [
       { text: "Live Sessions List", icon: "fa-video" },
       { text: "Edit Academy Description", icon: "fa-edit" },
@@ -152,14 +180,120 @@ export default {
       if (user) {
         await this.CheckInstructorValidaty(user.uid);
         await this.FetchMyAcademyData();
+        await this.FetchAcademyPhotos();
+        this.CurrentProfileUrl = this.GetAcademyProfileUrl
+        this.CurrentCoverUrl =  this.GetAcademyCoverUrl        
       }
     });
   },
   computed: {
-    ...mapGetters(["GetFirstTimeLoggedIn", "GetAcademyData"])
+    ...mapGetters(["GetFirstTimeLoggedIn", "GetAcademyData","GetAcademyProfileUrl","GetAcademyCoverUrl"])
   },
   methods: {
-    ...mapActions(["FetchMyAcademyData", "CheckInstructorValidaty"]),
+    ...mapActions(["FetchMyAcademyData","RemovePic", "CheckInstructorValidaty","UploadAcademyPic","FetchAcademyPhotos"]),
+    UploadProfilePic()
+    {
+      this.PicType = true;
+      this.ToUpdatePic = true;
+      this.$refs.input1.click();
+
+    },
+    Remove(flag)
+    {
+      this.RemovePic(flag);
+      if(flag)
+      {
+        this.CurrentProfileUrl = ""
+      }
+      else 
+      {
+        this.CurrentCoverUrl = ""
+      }
+    },
+    Discard()
+    {
+      this.ToUpdatePic = false;
+      if(this.PicType)
+      {
+        this.CurrentProfileUrl = this.GetAcademyProfileUrl;        
+      }
+      else{
+        this.CurrentCoverUrl = this.GetAcademyCoverUrl;
+      }
+    },
+    UploadCover()
+    {
+      this.ToUpdatePic = true;
+      this.PicType = false;
+      this.$refs.input1.click();
+    },
+    BrowsePhoto(e)
+    {
+      //Fetch File object and preview it before uploading
+      this.PicData = e.target.files;
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        if(this.PicType)
+        {
+          this.CurrentProfileUrl = e.target.result;
+        }
+        else
+        {
+          this.CurrentCoverUrl = e.target.result;
+        }
+      };
+      // console.log("Pic data is: ", this.PicData[0]);
+      reader.readAsDataURL(this.PicData[0]);
+      // console.log("the Url is: " + this.CurrentImgUrl);
+      // this.UpdateMyProfile = true;
+    },
+    async Save()
+    {
+      var PhotoData = {
+        //Object to hold the photo info
+        Url: "",
+        FileObject: "",
+        PhotoType:false
+      };
+      PhotoData.PhotoType = this.PicType 
+      if(this.PicType)
+      {
+      PhotoData.Url =
+        "AcademyPics/" +
+        this.GetAcademyData.AcademyId +
+        "/Profile" + "/" +
+        this.PicData[0].name +
+        ".jpg";
+      PhotoData.FileObject = this.PicData[0];
+      await this.UploadAcademyPic(PhotoData);
+      //TODO Progress Loading Bar
+      //DONE Trigger Action to get the uploaded profile pic
+      await this.FetchAcademyPhotos()
+      this.ToUpdatePic = false;
+      // this.CurrentImgUrl =  await this.GetProfilePicUrl;
+      }
+      else
+      {
+      PhotoData.Url =
+        "AcademyPics/" +
+        this.GetAcademyData.AcademyId +
+        "/Cover" + "/" +
+        this.PicData[0].name +
+        ".jpg";
+      PhotoData.FileObject = this.PicData[0];
+      await this.UploadAcademyPic(PhotoData);
+      //TODO Progress Loading Bar
+      //DONE Trigger Action to get the uploaded profile pic
+      await this.FetchAcademyPhotos()
+      this.ToUpdatePic = false;
+      // this.CurrentImgUrl =  await this.GetProfilePicUrl;
+      }
+
+    },
+    GetCover()
+    {
+      return require("@/assets/ChessAcademy.jpg");
+    },
     Navigate(link) {
       if (link == "Edit Academy Description") {
         this.ChangeComponent("AcademyAboutEditing");

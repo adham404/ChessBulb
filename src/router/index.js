@@ -24,13 +24,30 @@ const routes = [
     }
   },
   {
+    path: "/Cancel/:id",
+    name: "Cancel",
+    props: true,
+    components: {
+      Desktop: () => import("@/views/NotFound.vue"), //SignUp
+      Mobile: () => import("@/components/MarawanComponents/Purchase/PurchaseCancel.vue")
+    }
+  },
+  {
+    path: "/Success/:id",
+    name: "Success",
+    props: true,
+    components: {
+      Desktop: () => import("@/views/NotFound.vue"), //SignUp
+      Mobile: () => import("@/components/MarawanComponents/Purchase/PurchaseSuccess.vue")
+    }
+  },
+  {
     path: "/Purchase/:id",
     name: "Purchase",
     props: true,
     components: {
       Desktop: () => import("@/views/NotFound.vue"), //SignUp
-      Mobile: () =>
-        import("@/components/MarawanComponents/Purchase/Purchase.vue")
+      Mobile: () => import("@/components/MarawanComponents/Purchase/Purchase.vue")
     }
   },
   {
@@ -68,6 +85,14 @@ const routes = [
     components: {
       Desktop: () => import("@/components/DesktopComponents/Development.vue"), //SignUp
       Mobile: () => import("@/views/MobileViews/Profile.vue")
+    }
+  },
+  {
+    path: "/UsersList",
+    name: "UsersList",
+    components: {
+      Desktop: () => import("@/components/DesktopComponents/Development.vue"), //SignUp
+      Mobile: () => import("@/components/MobileComponents/UsersList.vue")
     }
   },
   {

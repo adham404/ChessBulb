@@ -1,7 +1,7 @@
 <template>
-  <div style="height: 100%;">
-    <div  :id="id" style="width: 100%; height: 100%;"></div>
-  </div>
+  
+    <div  :id="id"   ></div>
+
 </template>
 
 <script>
@@ -26,6 +26,7 @@ export default {
   },
 
   mounted() {
+    let self = this
     var isboeardactive = true;
     //FIXME add to the docs
     EventBus.$on("boardactive", data => {
@@ -36,7 +37,9 @@ export default {
       game = await new Chess(infen);
 
       await board.position(game.fen());
-      EventBus.$emit("newfen", infen);
+      if(!this.multi){
+        EventBus.$emit("newfen", infen);
+      }
     });
     EventBus.$on("boardmove", async inmove => {
       if (game.game_over()) {
@@ -47,10 +50,13 @@ export default {
         await board.position(game.fen());
         var lastmove = game.history();
         lastmove = lastmove[lastmove.length - 1];
-        EventBus.$emit("newmove", lastmove);
+        
         // console.log(lastmove);
-        EventBus.$emit("newfen", game.fen());
-        EventBus.$emit("newfenAndmove", [game.fen(), lastmove]);
+        if(!this.multi){
+          EventBus.$emit("newmove", lastmove);
+          EventBus.$emit("newfen", game.fen());
+          EventBus.$emit("newfenAndmove", [game.fen(), lastmove]);
+        }
       }
     });
     var game;
@@ -99,8 +105,8 @@ export default {
       var lastmove = game.history();
       lastmove = lastmove[lastmove.length - 1];
       if (this.multi) {
-        EventBus.$emit("newmoveInMulti", lastmove, this.id);
-        EventBus.$emit("newfen", game.fen(), this.id);
+        EventBus.$emit("newmoveInMulti", {lastmove, id: this.id});
+        EventBus.$emit("newfenInMulti", { fen :game.fen(), id :this.id});
       } else {
         EventBus.$emit("newmove", lastmove);
         EventBus.$emit("newfen", game.fen());
@@ -130,8 +136,15 @@ export default {
             StartMove = null;
             // console.log(lastmove);
             board.removeHightlight();
-            EventBus.$emit("newfen", game.fen());
-            EventBus.$emit("newfenAndmove", [game.fen(), lastmove]);
+            if(!self.multi){
+              console.log("new move in touch malti is false", self.multi)
+              EventBus.$emit("newfen", game.fen());
+              EventBus.$emit("newfenAndmove", [game.fen(), lastmove]);
+            }else{
+              EventBus.$emit("newmoveInMulti", {lastmove, id: self.id});
+              EventBus.$emit("newfenInMulti", { fen :game.fen(), id :self.id});
+
+            }
           } else {
             StartMove = null;
             board.removeHightlight();

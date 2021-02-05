@@ -2,10 +2,10 @@
   <div>
     <v-divider class="grey darken-1"></v-divider>
     <v-sheet rounded="false">
-      <v-container>
+      <v-container class="ma-0 pa-2">
         <v-row justify="center" align-self="center">
           <v-col cols="2" align-self="center" class="py-3">
-            <v-avatar size="50" class="mb-1">
+            <v-avatar size="35" class="mb-3">
               <img
                 :src="
                   GetProfilePicUrl
@@ -16,7 +16,7 @@
               />
             </v-avatar>
           </v-col>
-          <v-col cols="8" class="mt-2">
+          <v-col cols="8" class="mt-1">
             <v-btn
               rounded
               text
@@ -29,9 +29,10 @@
           </v-col>
         </v-row>
         <v-divider></v-divider>
-        <v-row class="mt-1" justify="space-around">
+        <v-row no-gutters class="mt-0 pt-1" justify="space-around">
           <v-col cols="4">
             <v-btn
+            small
               class="text-capitalize text-subtitle-2"
               text
               @click="() => $router.push('/AddPost')"
@@ -42,9 +43,10 @@
               <span>Chess game</span>
             </v-btn>
           </v-col>
-          <v-divider vertical inset class="mb-1" cols="4"></v-divider>
+          <v-divider vertical inset class="mb-0" cols="4"></v-divider>
           <v-col cols="4">
             <v-btn
+            small
               class="text-capitalize text-subtitle-2"
               text
               @click="

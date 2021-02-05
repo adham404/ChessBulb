@@ -3,10 +3,12 @@ import firebase from "firebase";
 const state = {
   Stories: [],
   currentindex: 1,
-  cureentStory: null
+  cureentStory: null,
+  ExpectedStories : 1 ,
 };
 const getters = {
   getStories: state => state.Stories,
+  getExpectedStories: state => state.ExpectedStories,
   getFirst7Stories: state => (state.Stories ? state.Stories.slice(0, 7) : []),
   getStoriesbyindex: state => index => state.Stories[index],
   getCurrentStory: state => state.Stories[state.currentindex]
@@ -58,6 +60,7 @@ const actions = {
         .collection("ChessStories")
         .where("UserID", "==", fuser)
         .get();
+      state.ExpectedStories = followingUsers.size
       await userstories.forEach(async doc => {
         await fetchedstories.unshift(doc.data());
         await commit("AddStory", doc.data());

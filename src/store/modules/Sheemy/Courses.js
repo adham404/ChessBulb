@@ -63,17 +63,39 @@ const actions = {
     }
   },
   async CanIPLayThisCourse({ state }, id) {
+    state.CanIPLayThisCourse = false;
     var user = await firebase.auth().currentUser;
     var db = firebase.firestore();
+    console.log("Am testing: "+ user.uid+ " and "+ id);
+
+    // await db.collection("CourseOrders").get().then((doc) => {
+    //   doc.forEach((doc) => {
+    //     if(doc.data().CourseId == id && doc.data().UserId == user.uid)
+    //     {
+    //       console.log(doc.data());
+    //       console.log(id);
+    //       state.CanIPLayThisCourse = true;
+    //       console.log("Match Happensss")
+    //     }
+    //   })
+    // })
+
     await db
       .collection("CourseOrders")
       .where("UserId", "==", user.uid)
       .where("CourseId", "==", id)
-      .get(doc => {
-        if (doc.exists()) {
-          state.CanIPLayThisCourse = true;
-        }
-      });
+      .get().then(doc => {
+        doc.forEach((doc) => {
+          if(doc.exists)
+          {
+            state.CanIPLayThisCourse = true;
+            console.log("Match Happen");
+          }
+        })
+        // if (doc.exists()) {
+        // }
+      })
+
   },
   async FetchAllReviewsForThisCourse({ state }, id) {
     state.Reviews = [];

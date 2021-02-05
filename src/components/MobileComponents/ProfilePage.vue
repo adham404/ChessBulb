@@ -2,13 +2,14 @@
   <div>
     <ProfilePageHeader />
     <keep-alive>
-      <component v-bind:is="component"></component>
+      <component :General="false"  v-bind:is="component"></component>
     </keep-alive>
   </div>
 </template>
 
 <script>
 import NewsFeed from "@/components/MobileComponents/Newsfeed.vue";
+import UsersPosts from "@/components/MobileComponents/UsersPosts.vue";
 import AcademyPageAboutText from "@/components/MobileComponents/AcademyPageAboutText";
 import ProfilePageHeader from "@/components/MobileComponents/ProfilePageHeader.vue";
 import LiveCard from "@/components/MobileComponents/LiveCard";
@@ -20,6 +21,7 @@ import UsersList from "@/components/MobileComponents/UsersList.vue";
 import CourseList from "@/components/MobileComponents/CourseList.vue";
 import AcademiesList from "@/components/MobileComponents/AcademiesList.vue";
 import ProfileSettings from "@/components/MobileComponents/ProfileSettings.vue";
+import {mapGetters} from "vuex"
 
 export default {
   components: {
@@ -27,6 +29,7 @@ export default {
     AcademiesList,
     ProfileSettings,
     NewsFeed,
+    UsersPosts,
     CourseList,
     LiveCard,
     UsersList,
@@ -34,6 +37,9 @@ export default {
     AcademyPageAboutText,
     AcademyCard,
     PlayerCard
+  },
+  computed:{
+    ...mapGetters(['GetCurrentVisitorProfileData'])
   },
   data() {
     return {
@@ -46,12 +52,16 @@ export default {
       this.component = NewComponent;
     }
   },
+  beforeDestroy()
+  {
+    EventBus.$off("ChangeComponent");
+  },
   mounted() {
     EventBus.$on("ChangeComponent", link => {
-      if (link == "Academies") {
+if (link == "Academies") {
         this.ChangeComponent("AcademiesList");
       } else if (link == "Posts") {
-        this.ChangeComponent("NewsFeed");
+        this.ChangeComponent("UsersPosts");
       } else if (link == "Courses") {
         this.ChangeComponent("CourseList");
       } else if (link == "Explore") {

@@ -1,12 +1,27 @@
 <template>
   <div>
     <!-- <keep-alive> -->
+      <v-sheet v-if="ShowFollowPepole" height="35vh" class="mt-7" >
+        <v-row class=" pt-15 text-h5" justify="center">
+          There is No Posts Yet
+        </v-row>
+        <v-row class="pt-5 text-h5" justify="center">
+          Try Following People To See Posts
+        </v-row>
+        <v-row class="pt-5" justify="center">
+         <v-btn @click="$router.push('/UsersList')" x-large  >
+           Find People To Follow
+         </v-btn>
+        </v-row>
+      </v-sheet>
+      <PostLoader v-if="ShowLodding" />
     <Post
       v-for="(item, index) in GetPosts"
       :key="index"
       :Match="item"
       :UserId="UserId"
     />
+    
 
     <!-- </keep-alive> -->
     <!-- <template v-slot:activator="{ on, attrs }">
@@ -187,10 +202,12 @@
 import firebase from "firebase";
 import { mapActions, mapGetters } from "vuex";
 import Post from "@/components/MobileComponents/Post.vue";
+import PostLoader from "@/components/MobileComponents/PostLoader.vue";
 import { EventBus } from "@/main.js";
 export default {
   data: () => ({
     showi: false,
+    showLoader: true,
     UserId: "",
     Following: [],
     Matches: [],
@@ -202,19 +219,44 @@ export default {
     SeeReplies: false
   }),
   components: {
-    Post
+    Post,
+    PostLoader
   },
   computed: {
-    ...mapGetters(["GetPosts"])
+    ...mapGetters(["GetPosts","GetPostsLength"]),
+    ShowLodding:function(){
+      if(this.GetPosts.length > 0 || this.GetPostsLength == 0 ){
+        return false
+      }else{
+        return true
+      }
+    },
+    ShowFollowPepole:function(){
+      if(this.GetPostsLength == 0){
+        return true 
+      }else{
+        return false
+      }
+    }
   },
   methods: {
     ...mapActions(["fetchPostsFromDP"])
   },
-  async created() {
+  async mounted() {
+    EventBus.$on("OpenShare", flag => {
+      this.dialog = flag;
+    });
+    EventBus.$on("OpenCommentSheet", data => {
+      this.sheet = data;
+    });
     let self = this;
     await firebase.auth().onAuthStateChanged(async function(user) {
       if (user) {
-        self.fetchPostsFromDP();
+        await self.fetchPostsFromDP();
+        console.error("GetPosts",await self.GetPostsLength)
+        if(self.GetPostsLength > 0){
+          self.showLoader = false
+        }
       }
     });
     //____________________________________________________Check if user is logged in
@@ -285,15 +327,12 @@ export default {
     //   }
     //___________________________________________________________________
   },
-  mounted() {
-    EventBus.$on("OpenShare", flag => {
-      this.dialog = flag;
-    });
-    EventBus.$on("OpenCommentSheet", data => {
-      this.sheet = data;
-    });
-  }
+  // mounted() {
+    
+  // }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

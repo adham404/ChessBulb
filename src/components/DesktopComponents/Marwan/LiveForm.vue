@@ -88,9 +88,10 @@
               outlined
             ></v-textarea>
         <v-row justify="center" align="center">
-            <v-btn light @click="validate" >
-              Submit
-            </v-btn>
+          <v-btn light @click="addlive" >
+            Submit
+            
+          </v-btn>
         </v-row>
       </v-col>
     </v-row>

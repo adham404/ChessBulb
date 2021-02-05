@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <!-- <div> -->
     <!-- //DONE create board div(5min) -->
-    <div :id="id" style="width:100%"></div>
-  </div>
+    <div :id="id" ></div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -13,7 +13,7 @@ import { EventBus } from "@/main.js";
 
 export default {
   //DONE add a fen prop
-  props: ["fen", "id", "hideNotation"],
+  props: ["fen", "id", "hideNotation","muti"],
   data() {
     return {
       board: null
@@ -21,9 +21,11 @@ export default {
   },
   mounted() {
     let self = this;
-    EventBus.$on("displayboardfen", move => {
-      self.board.position(move);
-    });
+    if(!self.muti){
+      EventBus.$on("displayboardfen", move => {
+        self.board.position(move);
+      });
+    }
     EventBus.$on("displayboardfenbyid", (move, idd) => {
       // console.log('resiving data : '+ idd + 'my id is ' + this.id)
       if (idd == self.id) {

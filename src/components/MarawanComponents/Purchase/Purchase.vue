@@ -1,9 +1,28 @@
 <template>
-  <div>
-    <square />
-    <h1>Loading your Cart...</h1>
-    <router-view></router-view>
-  </div>
+<div>
+  <v-sheet class="pt-16" height="86vh">
+    <v-row class=" height:86vh pt-16"  no-gutters justify="center" align="center"  >
+      <v-col class="mt-15 mb-10" cols="3">
+        <v-progress-circular
+      indeterminate
+      color="primary"
+      :size="100"
+      :width="15"
+      
+    ></v-progress-circular>
+      </v-col>
+    </v-row>
+    <v-row no-gutters justify="center" >
+      <p class="text-subtitle-1 font-weight-bold text-justify text-center">
+        You will be redirected To Checkout shortly
+      </p>
+      <!-- <p class="text-subtitle-1 font-weight-bold text-justify text-center">
+        Your Product will be added to your items shortly
+      </p> -->
+      
+    </v-row>
+  </v-sheet>
+</div>
 </template>
 
 <script>
