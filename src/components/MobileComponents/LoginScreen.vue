@@ -287,7 +287,8 @@ export default {
           console.log("Error Credential msg is: ", error.credential);
           // ...
         });
-      this.CreateUserDoc();
+        this.$router.push("/");
+      // this.CreateUserDoc();
     }
   }
 };
