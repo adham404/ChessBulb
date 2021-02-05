@@ -103,19 +103,19 @@
         </v-row>
         <v-row>
           <v-col v-if="false">
-            <v-sheet cols="5" rounded="lg" height="100" class="px-2">
+            <!-- <v-sheet cols="5" rounded="lg" height="100" class="px-2">
               <p class="text-h6">Monthly Income</p>
 
               <p class="text-subtitle-1">200 Egp</p>
             </v-sheet>
-          </v-col>
-          <v-col v-if="false">
+          </v-col> -->
+          <!-- <v-col v-if="false">
             <v-sheet cols="5" rounded="lg" height="100" class="px-2">
               <p class="text-h6">Number of Members</p>
 
               <p class="text-subtitle-1">10</p>
             </v-sheet>
-          </v-col>
+          </v-col> -->
         </v-row>
         <v-row>
           <v-col>
@@ -125,12 +125,12 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="2" v-if="false">
+      <!-- <v-col cols="2" v-if="false">
         <v-sheet rounded="lg" height="500" class="px-2">
           <span class="text-h6">List of Members</span>
           <MemberList />
         </v-sheet>
-      </v-col>
+      </v-col> -->
     </v-row>
   </div>
 </template>
