@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app >
     <div style="height: 45px; background-color: white" v-if="ShowTitle">
       <v-row class="px-3 my-1">
         <v-icon
@@ -129,6 +129,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 /* @media only screen and (max-width: 930px) {
   .Desktop {
     display: none;

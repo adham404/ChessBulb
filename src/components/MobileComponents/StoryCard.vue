@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bb">
     <ChessBoardDisplay
       hideNotation="true"
       :fen="getStoriesbyindex(startpos).StartingFen"
@@ -26,4 +26,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.bb{
+  line-height: 0  !important ; 
+}
+</style>
