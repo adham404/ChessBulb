@@ -240,7 +240,6 @@ export default {
           console.log("Error is ", error);
         });
       this.$router.push("/");
-
       EventBus.$emit("LoggedIn", true);
     },
     async gSignUp() {
