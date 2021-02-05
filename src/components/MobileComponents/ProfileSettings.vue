@@ -1,17 +1,16 @@
 <template>
   <v-sheet style="margin-top:10%">
     <v-row>
-      <v-img
-        lazy-src="@/assets/ChessAcademy.jpg"
-        max-height="150"
-        max-width="50%"
-        :src="
-          CurrentImgUrl ? CurrentImgUrl : '/img/icons/pexels-pixabay-220453.jpg'
-        "
-      >
-      </v-img>
-      <v-col cols="2">
-        <v-btn v-if="!UpdateMyProfile" @click="Update">Update</v-btn>
+      <v-col>
+          <v-avatar size="100" cols="2" class="mx-0 px-0">
+            <img :src="
+            CurrentImgUrl ? CurrentImgUrl : '/img/icons/pexels-pixabay-220453.jpg'
+            " alt="" style="object-fit: cover" />
+          </v-avatar>
+      </v-col>
+      
+      <v-col cols="8" align = "center">
+        <v-btn v-if="!UpdateMyProfile" @click="Update" class="primary mt-2">Change Profile Photo</v-btn>
         <input
           @change="BrowsePhoto"
           type="file"
@@ -20,20 +19,19 @@
           accept="image/*"
           ref="input1"
         />
-        <v-btn @click="Remove" v-if="!UpdateMyProfile">Remove</v-btn>
-        <v-btn @click="UploadPhoto" v-if="UpdateMyProfile">Save</v-btn>
-        <v-btn @click="DiscardPhoto" v-if="UpdateMyProfile">Discard</v-btn>
+        <v-btn @click="Remove" v-if="!UpdateMyProfile" class="primary mt-2">Remove</v-btn>
+        <v-btn @click="UploadPhoto" v-if="UpdateMyProfile" class="primary mt-2">Save</v-btn>
+        <v-btn @click="DiscardPhoto" v-if="UpdateMyProfile" class="primary mt-2">Discard</v-btn>
       </v-col>
     </v-row>
     <v-form style="margin-top:10%">
       <v-row>
         <v-col>
-          <label for="FirstName">First Name</label>
-          <span v-if="!EditFlag">{{ FirstName }}</span>
+          <label for="FirstName" class="font-weight-bold">First Name: </label>
+          <span v-if="!EditFlag" class="text-subtitle-1">{{ FirstName }}</span>
           <v-text-field v-if="EditFlag" v-model="FirstName"></v-text-field>
-        </v-col>
-        <v-col>
-          <label for="FirstName">Last Name</label>
+          <br>
+          <label for="FirstName" class="font-weight-bold">Last Name: </label>
           <span v-if="!EditFlag">{{ LastName }}</span>
           <v-text-field v-if="EditFlag" v-model="LastName"></v-text-field>
         </v-col>
@@ -47,9 +45,11 @@
           aria-placeholder="User Bio"
         ></v-textarea>
       </v-col>
-      <v-btn v-if="!EditFlag" @click="Edit">Edit</v-btn>
-      <v-btn v-if="EditFlag" @click="Save">Save</v-btn>
-      <v-btn v-if="EditFlag" @click="DiscardEdit">Discard</v-btn>
+      <v-row justify="space-around">
+        <v-btn v-if="!EditFlag" @click="Edit">Edit</v-btn>
+        <v-btn v-if="EditFlag" @click="Save">Save</v-btn>
+        <v-btn v-if="EditFlag" @click="DiscardEdit">Discard</v-btn>
+      </v-row>
     </v-form>
     <v-btn v-if="!UpdatePassFlag" @click="UpdatePass">Update Pass</v-btn>
     <v-form v-if="UpdatePassFlag">

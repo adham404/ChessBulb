@@ -22,7 +22,7 @@
         <v-col cols="9">
           <span class="text-h6">{{ GetAcademyDataProfile.AcademyName }}</span>
           <br />
-          <span class="text-caption">established a very long time ago</span>
+          <span class="text-caption">Chess Academy</span>
           <br />
           <v-btn @click="Enroll" xs class="text-capitalize primary" height="25"
             >enroll</v-btn

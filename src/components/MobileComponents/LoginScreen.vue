@@ -50,8 +50,8 @@
         @click:append="show2 = !show2"
         v-model="UserPassword"
       ></v-text-field>
-      <span @click="ForgotPass" class="text-h8" cols="3">Forgot Password?</span>
-      <v-row justify="center">
+      <span @click="ForgotPass" class="text-subtitle-2 mb-16 ml-2" cols="3">Forgot Password?</span>
+      <v-row justify="center" class="mt-3">
         <v-btn
           class="mb-5 primary text-h6"
           cols="12"
@@ -66,7 +66,7 @@
         <v-btn fab cols="3" flat class="primary" @click="gSignUp">
           <v-icon>mdi-google</v-icon></v-btn
         >
-        <v-btn cols="3" flat height="50" width="170" class="primary">
+        <v-btn cols="3" flat height="50" width="170" class="primary" v-if = "false">
           <v-icon left>fa-chess-knight</v-icon> Lichess</v-btn
         >
       </v-row>

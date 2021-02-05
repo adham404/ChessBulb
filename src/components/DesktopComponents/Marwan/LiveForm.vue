@@ -2,58 +2,97 @@
   <div>
     <v-row  style="width :90%" class="mx-auto py-5 " justify="center" align="center">
       <v-col>
-        <v-row>
           <v-text-field
-        
-          outlined
-        rounded
-          v-model="LiveTitle"
-          label="Live Title"
-          
+              v-model="LiveTitle"
+              label="Live Title"
+              outlined
+              rounded
+              dense
           ></v-text-field>
-        </v-row>
-        
-        <v-row>
+
           <v-datetime-picker
-        
           light
           v-model="LiveDate"
-          
-          
-          
           >
-           <template slot="dateIcon">
-             <v-icon>
-               mdi-calendar-range
-             </v-icon>
-             
-           </template>
-           <template slot="timeIcon">
-             <v-icon>
-               mdi-clock-outline
-             </v-icon>
-             
-           </template>
+            <template slot="dateIcon">
+              <v-icon>
+                mdi-calendar-range
+              </v-icon>
+            </template>
+            <template slot="timeIcon">
+              <v-icon>
+                mdi-clock-outline
+              </v-icon>
+            </template>
           </v-datetime-picker>
-        </v-row>
-        <v-row>
-          <v-textarea
-        
-          
-          v-model="LiveDescription"
-          label="Live Description"
-         
-          
-          ></v-textarea>
-        </v-row>
+
+
+<v-dialog
+        ref="dialog"
+        v-model="modal"
+        :return-value.sync="date"
+        persistent
+        width="290px"
+      >
+        <!-- <template v-slot:activator="{ on, attrs }"> -->
+          <v-text-field
+            v-model="date"
+            label="Picker in dialog"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        <!-- </template> -->
+        <v-datetime-picker
+          light
+          v-model="LiveDate"
+          scrollable
+          >
+            <template slot="dateIcon">
+              <v-icon>
+                mdi-calendar-range
+              </v-icon>
+            </template>
+            <template slot="timeIcon">
+              <v-icon>
+                mdi-clock-outline
+              </v-icon>
+            </template>
+          </v-datetime-picker>
+      </v-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <v-textarea
+              v-model="LiveDescription"
+              label="Live Description" 
+              outlined
+            ></v-textarea>
         <v-row justify="center" align="center">
-          <v-btn light @click="validate" >
-            Submit
-            
-          </v-btn>
+            <v-btn light @click="validate" >
+              Submit
+            </v-btn>
         </v-row>
       </v-col>
-
     </v-row>
   </div>
 </template>

@@ -2,7 +2,8 @@
   <v-app>
     <div style="height: 45px; background-color: white" v-if="ShowTitle">
       <v-row class="px-3 my-1">
-        <v-icon
+        <v-btn xs text>
+          <v-icon
           left
           color="primary"
           class="ml-1 Mobile"
@@ -11,14 +12,15 @@
         >
           fa-arrow-left
         </v-icon>
+        </v-btn>
+        
         <svg
           id="Group_56"
           data-name="Group 56"
           xmlns="http://www.w3.org/2000/svg"
-          width="180"
+          width="120"
           height="35"
           viewBox="0 0 151 40.001"
-          class="ml-1"
         >
           <path
             id="Icon_awesome-lightbulb"

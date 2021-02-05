@@ -16,7 +16,7 @@
     </v-row>
     <div class="Filter" v-if="ShowFilters">
       <v-sheet
-        class="white "
+        class="white mt-3 "
         height="100"
         width="100%"
         rounded="lg"
@@ -102,9 +102,6 @@ export default {
 </script>
 
 <style scoped>
-.Filter {
-  margin-left: 30px;
-}
 label {
   margin-right: 10px;
   font-family: "Quicksand", sans-serif;

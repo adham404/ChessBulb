@@ -2,7 +2,7 @@
   <div class="mt-5">
     <v-row justify="space-around">
       <v-col cols="2">
-        <v-sheet rounded="lg" elevation="4" height="550">
+        <v-sheet rounded="lg" elevation="4" height="600">
           <v-avatar size="100" cols="2" class="ml-16 mt-2">
             <img
               src="img\icons\pexels-pixabay-220453.jpg"
@@ -59,6 +59,9 @@
             <v-spacer></v-spacer>
             <v-btn class="text-capitalize primary" rounded elevation="2">
               Upload cover photo
+            </v-btn>
+            <v-btn class="text-capitalize primary mt-2" rounded elevation="2" @click="SignOut">
+              Sign Out
             </v-btn>
           </v-col>
         </v-sheet>
@@ -170,6 +173,14 @@ export default {
       } else {
         this.ChangeComponent("LiveForm");
       }
+    },
+   async SignOut() {
+      //TODO pop up "sorry to see you leave"
+      const auth = firebase.auth();
+      await auth.signOut();
+      this.ClearAllUserDataField();
+      // alert("Passwords don't match");
+      this.$router.push("/Login");
     },
     ChangeComponent(NewComponent) {
       this.component = NewComponent;

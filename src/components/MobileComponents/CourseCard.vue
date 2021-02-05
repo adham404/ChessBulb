@@ -18,7 +18,7 @@
               style="object-fit: cover"
             />
           </v-avatar>
-          <span class="text-caption ml-2">{{ FullName }}</span>
+          <span class="text-caption text-center">{{ FullName }}</span>
         </v-col>
         <v-col cols="9">
           <span class="text-h6">{{ GetListOfCourses[order].CourseName }}</span>
